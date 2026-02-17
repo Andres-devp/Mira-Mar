@@ -143,26 +143,22 @@ nav.scrolled {
 .nav-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items:center;
 }
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: -1px;
-}
 
 nav.scrolled .logo {
     color: var(--secondary);
+    
 }
 
 .nav-links {
     display: flex;
     gap: 2rem;
     list-style: none;
+    align-items: center;
 }
+
 
 .nav-links a {
     color: var(--white);
@@ -182,6 +178,7 @@ nav.scrolled .logo {
     left: 0;
     background-color: var(--baby-blue);
     transition: width 0.3s var(--ease);
+
 }
 
 .nav-links a:hover::after {
@@ -194,15 +191,19 @@ nav.scrolled .nav-links a {
 
 .book-btn-nav {
     background-color: var(--white);
-    color: var(--secondary);
+    color: var(--secondary) !important;
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
     font-weight: 600;
+    display: inline-block;      
 }
+
 
 nav.scrolled .book-btn-nav {
     background-color: var(--secondary);
-    color: var(--white);
+    color: var(--white) !important;
+    display: inline-block;
+
 }
 
 /* Mobile Menu */
@@ -219,7 +220,7 @@ nav.scrolled .hamburger {
 /* --- HERO SECTION --- */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(48, 76, 137, 0.3), rgba(48, 76, 137, 0.1)), url('https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop');
+    background: linear-gradient(rgba(48, 76, 137, 0.603), rgba(48, 76, 137, 0)), url('https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     display: flex;
