@@ -3,183 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mira Mar | Hotel Caribeño</title>
+    <title>Mira Mar | Caribbean Luxury</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <link rel="stylesheet" href="../CSS/styles.css">
 </head>
 <body>
+
     <nav id="navbar">
         <div class="container nav-container">
-            <a href="#inicio" class="logo">Mira Mar</a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#habitaciones">Habitaciones</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#galeria">Galería</a></li>
-                <li><a href="#testimonios">Testimonios</a></li>
-                <li><a href="#ubicacion">Ubicación</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li><a href="login.html" class="btn nav-login">Login</a></li>
+            <a href="#" class="logo">Mira Mar</a>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#rooms">Suites</a></li>
+                <li><a href="#dining">Gastronomía</a></li>
+                <li><a href="#experiences">Experiencias</a></li>
+                <li><a href="../IMG/Mira Mar logo.png" class="book-btn-nav">Reservar</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Abrir menú">☰</button>
+            <div class="hamburger">
+                <i class="ph ph-list"></i>
+            </div>
         </div>
     </nav>
 
-    <header class="hero" id="inicio">
-        <div class="tropical-decoration palm"></div>
-        <div class="tropical-decoration wave"></div>
-        <div class="container hero-content">
-            <h1>Mira Mar</h1>
-            <p>Tu escape caribeño entre brisa cálida, palmeras y atardeceres de postal.</p>
-            <div class="hero-cta">
-                <a href="#reserva" class="btn">Reservar ahora</a>
-                <a href="login.html" class="btn btn-outline">Login</a>
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>Alma Costera</h1>
+            <p>Donde la elegancia se encuentra con la brisa del mar.</p>
+            <a href="#rooms" class="btn btn-outline">Ver Suites</a>
+        </div>
+
+        <div class="booking-widget">
+            <div class="input-group">
+                <label>Llegada</label>
+                <input type="date">
             </div>
+            <div class="input-group">
+                <label>Salida</label>
+                <input type="date">
+            </div>
+            <div class="input-group">
+                <label>Huéspedes</label>
+                <select>
+                    <option>2 Adultos</option>
+                    <option>1 Adulto</option>
+                    <option>Familia (2A + 2N)</option>
+                </select>
+            </div>
+            <button class="btn">Consultar</button>
         </div>
     </header>
 
-    <section class="section container" id="sobre">
+    <section class="amenities container">
         <div class="section-header">
-            <span>Por qué Mira Mar</span>
-            <h2>Vacaciones con alma tropical</h2>
+            <span>Relaxed Luxury</span>
+            <h2>Creado para tus Sentidos</h2>
         </div>
-        <div class="highlight-grid">
-            <article class="card highlight-card"><h3>🌊 Vista al mar</h3><p>Habitaciones orientadas al océano para despertar con el sonido de las olas.</p></article>
-            <article class="card highlight-card"><h3>🥭 Desayuno tropical</h3><p>Buffet fresco con frutas locales, panes artesanales y café caribeño.</p></article>
-            <article class="card highlight-card"><h3>⛵ Tours exclusivos</h3><p>Excursiones a islas cercanas, snorkel guiado y paseos al atardecer.</p></article>
-            <article class="card highlight-card"><h3>🍹 Lounge sunset</h3><p>Cocteles de autor y música suave para cerrar el día frente al horizonte.</p></article>
+        <div class="amenities-grid">
+            <div class="amenity-card">
+                <i class="ph ph-waves"></i>
+                <h3>Playa Privada</h3>
+                <p>Arenas blancas prístinas con servicio de toallas exclusivo.</p>
+            </div>
+            <div class="amenity-card">
+                <i class="ph ph-martini"></i>
+                <h3>Blue Lounge</h3>
+                <p>Coctelería de autor inspirada en los colores del océano.</p>
+            </div>
+            <div class="amenity-card">
+                <i class="ph ph-sparkle"></i>
+                <h3>Spa & Wellness</h3>
+                <p>Tratamientos con ingredientes locales como sal marina y aloe.</p>
+            </div>
+            <div class="amenity-card">
+                <i class="ph ph-sailboat"></i>
+                <h3>Navegación</h3>
+                <p>Charters privados al atardecer en nuestro velero clásico.</p>
+            </div>
         </div>
     </section>
 
-    <section class="section" id="habitaciones">
+    <section class="vibe container">
+        <div class="vibe-image">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070&auto=format&fit=crop" alt="Ocean View Interior">
+        </div>
+        <div class="vibe-text">
+            <h2>El Ritmo de la Marea</h2>
+            <p>En Mira Mar, el tiempo se mide en olas. Ubicado en las costas más serenas, nuestro resort boutique ofrece una paleta de colores inspirada en la naturaleza: <span class="highlight-text">lino suave, salvia seca y el azul profundo del mar.</span></p>
+            <p>Ya sea disfrutando de un café matutino en su terraza privada o sumergiéndose en nuestra piscina infinita, cada espacio está diseñado para restaurar su calma interior.</p>
+            <a href="#" class="btn" style="margin-top: 1rem;">Nuestra Historia</a>
+        </div>
+    </section>
+
+    <section class="rooms" id="rooms">
         <div class="container">
             <div class="section-header">
-                <span>Habitaciones</span>
-                <h2>Tu descanso ideal</h2>
+                <span>Tu Refugio</span>
+                <h2>Alojamientos</h2>
             </div>
-            <div class="rooms-grid">
-                <article class="card room-card"><h3>Normal</h3><p>🛏️ Cómoda y funcional para escapadas cortas con estilo caribeño.</p><button class="btn btn-small">Explorar</button></article>
-                <article class="card room-card"><h3>Executive</h3><p>💼 Espacio superior con escritorio, balcón y amenidades premium.</p><button class="btn btn-small">Explorar</button></article>
-                <article class="card room-card"><h3>VIP</h3><p>✨ Diseño elegante con vista parcial al mar y atención personalizada.</p><button class="btn btn-small">Explorar</button></article>
-                <article class="card room-card"><h3>Luxury</h3><p>👑 Suite exclusiva con terraza privada, jacuzzi y vista panorámica.</p><button class="btn btn-small">Explorar</button></article>
+            <div class="room-grid">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2670&auto=format&fit=crop" alt="Luxury Bedroom">
+                    <div class="room-overlay">
+                        <h3>Villa Oceanfront</h3>
+                        <p class="room-price">Desde $450 / noche</p>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=2670&auto=format&fit=crop" alt="Bright Suite">
+                    <div class="room-overlay">
+                        <h3>Suite Garden</h3>
+                        <p class="room-price">Desde $320 / noche</p>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2670&auto=format&fit=crop" alt="Pool View">
+                    <div class="room-overlay">
+                        <h3>The Penthouse</h3>
+                        <p class="room-price">Desde $850 / noche</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section class="section container" id="servicios">
-        <div class="section-header">
-            <span>Servicios</span>
-            <h2>Menú de experiencias</h2>
-        </div>
-        <div class="services-grid">
-            <article class="card service-card"><h3>🍽️ Restaurante frente al mar</h3><p>Sabores del Caribe con ingredientes frescos y vista privilegiada.</p><button class="btn btn-small details-btn" data-service="restaurante">Ver detalles</button></article>
-            <article class="card service-card"><h3>💆 Spa y masajes</h3><p>Rituales de bienestar con aceites naturales y técnicas relajantes.</p><button class="btn btn-small details-btn" data-service="spa">Ver detalles</button></article>
-            <article class="card service-card"><h3>🛥️ Tours a islas</h3><p>Aventura guiada a cayos cercanos con paisajes inolvidables.</p><button class="btn btn-small details-btn" data-service="tours">Ver detalles</button></article>
-            <article class="card service-card"><h3>🚐 Transporte aeropuerto</h3><p>Traslado cómodo y seguro desde y hacia el aeropuerto.</p><button class="btn btn-small details-btn" data-service="transporte">Ver detalles</button></article>
-            <article class="card service-card"><h3>🍸 Pool bar</h3><p>Coctelería tropical, snacks ligeros y música junto a la piscina.</p><button class="btn btn-small details-btn" data-service="pool">Ver detalles</button></article>
-            <article class="card service-card"><h3>🤿 Snorkel y deportes acuáticos</h3><p>Equipos y guías para disfrutar del mar con seguridad.</p><button class="btn btn-small details-btn" data-service="snorkel">Ver detalles</button></article>
-            <article class="card service-card"><h3>💻 Coworking lounge</h3><p>Zona tranquila con Wi‑Fi veloz para trabajar sin perder el paraíso.</p><button class="btn btn-small details-btn" data-service="coworking">Ver detalles</button></article>
-            <article class="card service-card"><h3>🏋️ Gimnasio</h3><p>Entrena con equipos modernos y rutinas personalizadas.</p><button class="btn btn-small details-btn" data-service="gimnasio">Ver detalles</button></article>
-        </div>
-    </section>
-
-    <section class="section" id="galeria">
-        <div class="container">
-            <div class="section-header">
-                <span>Galería</span>
-                <h2>Instantes tropicales</h2>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">Amanecer dorado</div>
-                <div class="gallery-item">Piscina infinita</div>
-                <div class="gallery-item">Cena frente al mar</div>
-                <div class="gallery-item">Relax en hamacas</div>
-                <div class="gallery-item">Paseo en lancha</div>
-                <div class="gallery-item">Noches caribeñas</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section container" id="testimonios">
-        <div class="section-header">
-            <span>Testimonios</span>
-            <h2>Lo que dicen nuestros huéspedes</h2>
-        </div>
-        <div class="testimonials-grid">
-            <article class="card"><h3>Carla M.</h3><p>“El mejor atardecer que he visto, y una atención increíble.”</p></article>
-            <article class="card"><h3>David R.</h3><p>“Habitación impecable, comida deliciosa y tours muy bien organizados.”</p></article>
-            <article class="card"><h3>Lucía P.</h3><p>“Volvería mil veces. Es tranquilidad total con vibra tropical.”</p></article>
-        </div>
-    </section>
-
-    <section class="section" id="ubicacion">
-        <div class="container location-wrap">
-            <div class="map-placeholder">Mapa interactivo (placeholder)</div>
-            <div>
-                <h2>Ubicación privilegiada</h2>
-                <p>Av. Costa Coral 123, Playa Esmeralda, Caribe.</p>
-                <a href="#" class="btn">Cómo llegar</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="section container" id="reserva">
-        <div class="section-header">
-            <span>Reserva</span>
-            <h2>Planifica tu próxima escapada</h2>
-        </div>
-        <form id="reserva-form" class="card form-card">
-            <label>Fecha de entrada <input type="date" id="entrada" required></label>
-            <label>Fecha de salida <input type="date" id="salida" required></label>
-            <label>Número de huéspedes <input type="number" id="huespedes" min="1" required></label>
-            <button type="submit" class="btn">Consultar disponibilidad</button>
-            <p id="reserva-msg" class="form-msg"></p>
-        </form>
-    </section>
-
-    <section class="section" id="contacto">
-        <div class="container">
-            <div class="section-header">
-                <span>Contacto</span>
-                <h2>Hablemos de tu estadía</h2>
-            </div>
-            <form id="contacto-form" class="card form-card">
-                <label>Nombre <input type="text" id="nombre" required></label>
-                <label>Email <input type="email" id="email" required></label>
-                <label>Mensaje <textarea id="mensaje" rows="4" required></textarea></label>
-                <button type="submit" class="btn">Enviar mensaje</button>
-                <p id="contacto-msg" class="form-msg"></p>
-            </form>
         </div>
     </section>
 
     <footer>
-        <div class="container footer-grid">
-            <div><a href="#inicio" class="logo">Mira Mar</a></div>
-            <div>
-                <h4>Links rápidos</h4>
-                <a href="#habitaciones">Habitaciones</a>
-                <a href="#servicios">Servicios</a>
-                <a href="#contacto">Contacto</a>
-            </div>
-            <div>
-                <h4>Redes</h4>
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-                <a href="#">TikTok</a>
-            </div>
+        <a href="#" class="footer-logo">Mira Mar</a>
+        <p>123 Palm Ave, Costa del Caribe</p>
+        <p>+1 (555) 019-2834 | hello@miramar-hotel.com</p>
+        
+        <div class="socials">
+            <i class="ph ph-instagram-logo"></i>
+            <i class="ph ph-facebook-logo"></i>
+            <i class="ph ph-twitter-logo"></i>
+        </div>
+
+        <div class="copyright">
+            &copy; 2024 Mira Mar Hotel & Resort. Todos los derechos reservados.
         </div>
     </footer>
-
-    <div class="modal" id="service-modal" aria-hidden="true">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
-            <h3 id="modal-title"></h3>
-            <p id="modal-text"></p>
-        </div>
-    </div>
 
     <script src="../JS/script.js"></script>
 </body>
