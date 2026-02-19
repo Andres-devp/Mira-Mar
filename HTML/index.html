@@ -36,7 +36,7 @@
         <div class="hero-content">
             <h1>Alma Costera</h1>
             <p>Donde la elegancia se encuentra con la brisa del mar.</p>
-            <a href="#rooms" class="btn btn-outline">Reservar ahora</a>
+            <a href="#rooms" class="btn btn-outline btn-hero ">Reservar ahora</a>
         </div>
 
         <div class="booking-widget">
@@ -91,7 +91,7 @@
 
     <section class="vibe container">
         <div class="vibe-image">
-            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070&auto=format&fit=crop" alt="Ocean View Interior">
+            <img src="../IMG/Ocean View Interior.avif" alt="Ocean View Interior">
         </div>
         <div class="vibe-text">
             <h2>El Ritmo de la Marea</h2>
@@ -139,28 +139,44 @@
         <h2>Gastronomía</h2>
     </div>
 
-    <div class="dining-grid">
-        <article class="dining-card">
-        <div class="dining-icon"><i class="ph ph-fork-knife"></i></div>
-        <h3>Restaurante Ocean Table</h3>
-        <p>Cocina fresca con ingredientes locales, mariscos y opciones saludables.</p>
-        <a href="#dining" class="btn btn-outline" style="margin-top: 1rem;">Ver menú</a>
+            <div class="dining-strips">
+        <article class="dining-strip">
+            <div class="strip-left">
+            <h3>Ocean Table</h3>
+            <p>Cocina fresca con ingredientes locales, mariscos y opciones saludables.</p>
+            <div class="strip-meta">
+                <span><i class="ph ph-clock"></i> 7:00 - 22:00</span>
+                <span><i class="ph ph-leaf"></i> Opciones healthy</span>
+            </div>
+            </div>
+            <a href="#dining" class="btn btn-outline is-gold">Ver menú</a>
         </article>
 
-        <article class="dining-card">
-        <div class="dining-icon"><i class="ph ph-cocktail"></i></div>
-        <h3>Pool Bar</h3>
-        <p>Cocteles tropicales, jugos naturales y snacks para tardes de sol.</p>
-        <a href="#dining" class="btn btn-outline" style="margin-top: 1rem;">Especiales</a>
+        <article class="dining-strip">
+            <div class="strip-left">
+            <h3>Pool Bar</h3>
+            <p>Cocteles tropicales, jugos naturales y snacks para tardes de sol.</p>
+            <div class="strip-meta">
+                <span><i class="ph ph-sun"></i> Todo el día</span>
+                <span><i class="ph ph-cocktail"></i> Signature drinks</span>
+            </div>
+            </div>
+            <a href="#dining" class="btn btn-outline is-gold ">Especiales</a>
         </article>
 
-        <article class="dining-card">
-        <div class="dining-icon"><i class="ph ph-sun-horizon"></i></div>
-        <h3>Sunset Lounge</h3>
-        <p>Tapas caribeñas y música suave mientras cae el atardecer.</p>
-        <a href="#dining" class="btn btn-outline" style="margin-top: 1rem;">Reservar</a>
+        <article class="dining-strip">
+            <div class="strip-left">
+            <h3>Sunset Lounge</h3>
+            <p>Tapas caribeñas y música suave mientras cae el atardecer.</p>
+            <div class="strip-meta">
+                <span><i class="ph ph-music-notes"></i> Live sessions</span>
+                <span><i class="ph ph-sun-horizon"></i> Atardecer</span>
+            </div>
+            </div>
+            <a href="#dining" class="btn btn-outline is-gold">Reservar</a>
         </article>
-    </div>
+        </div>
+
     </section>
 
     <!-- CONTACTO -->
@@ -211,21 +227,70 @@
     </section>
 
 
-    <footer>
-        <a href="#" class="footer-logo"><img src="../IMG/Mira Mar logo.png" alt="logo mirarmar" width="120"></a>
-        <p>Monte libano, Costa del Caribe</p>
-        <p>+57 (302) -2834 | reseervar@miramarhotel.com</p>
-        
-        <div class="socials">
-            <i class="ph ph-instagram-logo"></i>
-            <i class="ph ph-facebook-logo"></i>
-            <i class="ph ph-twitter-logo"></i>
-        </div>
+<footer class="site-footer">
+  <div class="container footer-inner">
 
-        <div class="copyright">
-            &copy; 2024 Mira Mar Hotel & Resort. Todos los derechos reservados.
-        </div>
-    </footer>
+    <!-- Col 1: Marca -->
+    <div class="footer-brand">
+      <a href="#home" class="footer-logo">
+        <img src="../IMG/Mira Mar logo.png" alt="logo mirarmar" width="130">
+      </a>
+      <p class="footer-desc">
+        Boutique resort frente al mar: calma, elegancia y experiencias diseñadas para reconectar.
+      </p>
+
+      <div class="footer-socials" aria-label="Redes sociales">
+        <a href="#" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+        <a href="#" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+        <a href="#" aria-label="Twitter"><i class="ph ph-twitter-logo"></i></a>
+      </div>
+    </div>
+
+    <!-- Col 2: Links -->
+    <div class="footer-links">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href="#home">Inicio</a></li>
+        <li><a href="#rooms">Suites</a></li>
+        <li><a href="#dining">Gastronomía</a></li>
+        <li><a href="#contact">Contacto</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: Contacto + newsletter -->
+    <div class="footer-contact">
+      <h4>Contacto</h4>
+      <ul class="footer-contact-list">
+        <li><i class="ph ph-map-pin"></i> Monte Líbano, Costa del Caribe</li>
+        <li><i class="ph ph-phone"></i> +57 (302) 2834</li>
+        <li><i class="ph ph-envelope"></i> reservar@miramarhotel.com</li>
+      </ul>
+
+      <div class="footer-newsletter">
+        <p class="footer-newsletter-title">Recibe ofertas y novedades</p>
+        <form class="footer-form">
+          <input type="email" placeholder="Tu correo" aria-label="Correo" required>
+          <button type="submit" class="btn footer-btn">Suscribirme</button>
+        </form>
+        <small class="footer-note">Sin spam. Puedes salir cuando quieras.</small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>&copy; 2024 Mira Mar Hotel & Resort. Todos los derechos reservados.</span>
+      <span class="footer-legal">
+        <a href="#">Privacidad</a>
+        <span class="dot">•</span>
+        <a href="#">Términos</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
 
     <script src="../JS/script.js"></script>
 </body>
