@@ -262,8 +262,7 @@ nav.scrolled .hamburger { color: var(--secondary); }
 /* --- HERO SECTION --- */
 .hero {
   height: 100vh;
-  background: linear-gradient(rgba(48, 76, 137, 0.603), rgba(48, 76, 137, 0)),
-    url('https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop');
+  background: linear-gradient(rgba(48, 76, 137, 0.603), rgba(48, 76, 137, 0)),url('../IMG/Hero.avif');
   background-size: cover;
   background-position: center;
   display: flex;
