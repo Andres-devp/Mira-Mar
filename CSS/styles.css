@@ -158,6 +158,7 @@ nav.scrolled {
   backdrop-filter: blur(12px);
   padding: 1rem 0;
   box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
+  
 }
 
 .nav-container {
