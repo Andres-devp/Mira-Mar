@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
@@ -15,8 +15,9 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/rooms-list.css" />
   </head>
-  <body>
+  <body class="rooms-list-page">
     <nav id="navbar">
       <div class="container nav-container">
         <a href="/" class="logo"
@@ -49,23 +50,39 @@
         </div>
         <div class="room-grid" th:if="${not #lists.isEmpty(rooms)}">
           <div class="room-card" th:each="room : ${rooms}">
-            <img th:src="${room.imageUrl}" 
-                 th:alt="${room.name}"
-                 onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'">
+            <img
+              th:src="${room.imageUrl}"
+              th:alt="${room.name}"
+              onerror="
+                this.src =
+                  'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'
+              "
+            />
             <div class="room-overlay">
               <h3 th:text="${room.name}">Nombre de Habitación</h3>
-              <p class="room-price" th:text="'Desde $' + ${room.pricePerNight} + ' / noche'">$0 / noche</p>
+              <p
+                class="room-price"
+                th:text="'Desde $' + ${room.pricePerNight} + ' / noche'"
+              >
+                $0 / noche
+              </p>
               <div class="room-details">
                 <span class="room-type" th:text="${room.roomType}">Tipo</span>
-                <span class="room-capacity" th:text="${room.capacity} + ' huéspedes'">0 huéspedes</span>
+                <span
+                  class="room-capacity"
+                  th:text="${room.capacity} + ' huéspedes'"
+                  >0 huéspedes</span
+                >
               </div>
-              <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline">Ver detalles</a>
+              <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline"
+                >Ver detalles</a
+              >
             </div>
           </div>
         </div>
-        
+
         <div th:if="${#lists.isEmpty(rooms)}" class="text-center py-5">
-          <div class="alert" style="background: var(--soft-linen); border: 2px solid var(--dry-sage); color: var(--text-main);">
+          <div class="alert rooms-list-empty-alert">
             <h4 class="alert-heading">No hay habitaciones disponibles</h4>
             <p>En este momento no contamos con habitaciones disponibles.</p>
           </div>
