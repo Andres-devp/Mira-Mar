@@ -70,12 +70,17 @@
                 $0 / noche
               </p>
               <div class="room-details">
+<<<<<<< HEAD
                 <span class="room-type" th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</span>
+=======
+                <span class="room-type" th:text="${room.roomType}">Tipo</span>
+>>>>>>> 2c8fe9dad6f1c9873a02fe526b6e262468429670
                 <span
                   class="room-capacity"
                   th:text="${room.capacity} + ' huéspedes'"
                   >0 huéspedes</span
                 >
+<<<<<<< HEAD
               </div>
               <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline"
                 >Ver detalles</a
@@ -86,6 +91,12 @@
                   <button type="submit" class="btn btn-outline" style="width: 100%;" onclick="return confirm('¿Confirma que desea eliminar esta habitación?')">Eliminar</button>
                 </form>
               </div>
+=======
+              </div>
+              <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline"
+                >Ver detalles</a
+              >
+>>>>>>> 2c8fe9dad6f1c9873a02fe526b6e262468429670
             </div>
           </div>
         </div>
