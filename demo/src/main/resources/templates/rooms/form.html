@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${isNew} ? 'Nueva Habitación | Mira Mar' : 'Editar Habitación | Mira Mar'"></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+      .form-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 40px;
+        background: #f8f8f8;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-container h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 0.95rem;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #cdc392;
+        box-shadow: 0 0 0 3px rgba(205, 195, 146, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .form-group.two-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-group.two-cols > div {
+        margin-bottom: 0;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+      }
+
+      .btn-primary {
+        background: #cdc392;
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: #b8ad7a;
+      }
+
+      .btn-secondary {
+        background: #ddd;
+        color: #333;
+      }
+
+      .btn-secondary:hover {
+        background: #ccc;
+      }
+
+      .error-message {
+        color: #d32f2f;
+        font-size: 0.85rem;
+        margin-top: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 20px;
+          margin: 20px;
+        }
+
+        .form-container h1 {
+          font-size: 1.8rem;
+        }
+
+        .form-group.two-cols {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body class="room-form-page">
+    <nav id="navbar">
+      <div class="container nav-container">
+        <a href="/" class="logo"
+          ><img
+            id="nav-logo"
+            src="/images/Mira Mar logo Blanco.png"
+            alt="Mira Mar logo"
+            width="120"
+            data-default="/images/Mira Mar logo Blanco.png"
+            data-scrolled="/images/Mira Mar logo.png"
+        /></a>
+        <ul class="nav-links">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/rooms">Suites</a></li>
+          <li><a href="/services/cards">Servicios</a></li>
+          <li><a href="/#contact">Contacto</a></li>
+          <li><a href="/login.html" class="book-btn-nav">Login</a></li>
+        </ul>
+        <div class="hamburger">
+          <i class="ph ph-list"></i>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="form-container">
+        <h1 th:text="${isNew} ? 'Nueva Habitación' : 'Editar Habitación'"></h1>
+
+        <form th:action="${isNew} ? '/rooms' : '/rooms/' + ${room.id}" method="POST">
+          <div class="form-group">
+            <label for="name">Nombre de la Habitación *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              th:value="${room.name}"
+              placeholder="Ej: Suite Oceanfront"
+              required
+            />
+          </div>
+
+          <div class="form-group two-cols">
+            <div>
+              <label for="roomType">Tipo de Habitación *</label>
+              <select id="roomType" name="roomType" required>
+                <option value="">-- Seleccionar --</option>
+                <option th:each="rt : ${roomTypes}" th:value="${rt.code}" th:text="${rt.displayName}" th:selected="${room.roomType == rt.code}"></option>
+              </select>
+            </div>
+            <div>
+              <label for="capacity">Capacidad (huéspedes) *</label>
+              <input
+                type="number"
+                id="capacity"
+                name="capacity"
+                th:value="${room.capacity}"
+                min="1"
+                max="10"
+                placeholder="2"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group two-cols">
+            <div>
+              <label for="pricePerNight">Precio por Noche ($) *</label>
+              <input
+                type="number"
+                id="pricePerNight"
+                name="pricePerNight"
+                th:value="${room.pricePerNight}"
+                min="0"
+                step="0.01"
+                placeholder="150.00"
+                required
+              />
+            </div>
+            <div>
+              <label for="imageUrl">URL de Imagen</label>
+              <input
+                type="url"
+                id="imageUrl"
+                name="imageUrl"
+                th:value="${room.imageUrl}"
+                placeholder="https://ejemplo.com/imagen.jpg"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Descripción *</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe la habitación, sus características y comodidades..."
+              required
+              th:text="${room.description}"
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <span th:text="${isNew} ? 'Crear Habitación' : 'Guardar Cambios'"></span>
+            </button>
+            <a href="/rooms" class="btn btn-secondary">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <!-- Col 1: Marca -->
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <img
+              src="/images/Mira Mar logo Blanco.png"
+              alt="logo mirarmar"
+              width="130"
+            />
+          </a>
+          <p class="footer-desc">
+            Boutique resort frente al mar: calma, elegancia y experiencias
+            diseñadas para reconectar.
+          </p>
+
+          <div class="footer-socials" aria-label="Redes sociales">
+            <a href="#" aria-label="Instagram"
+              ><i class="ph ph-instagram-logo"></i
+            ></a>
+            <a href="#" aria-label="Facebook"
+              ><i class="ph ph-facebook-logo"></i
+            ></a>
+            <a href="#" aria-label="Twitter"
+              ><i class="ph ph-twitter-logo"></i
+            ></a>
+          </div>
+        </div>
+
+        <!-- Col 2: Links -->
+        <div class="footer-links">
+          <h4>Explorar</h4>
+          <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/rooms">Suites</a></li>
+            <li><a href="/#dining">Gastronomía</a></li>
+            <li><a href="/#contact">Contacto</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contacto + newsletter -->
+        <div class="footer-contact">
+          <h4>Contacto</h4>
+          <ul class="footer-contact-list">
+            <li><i class="ph ph-map-pin"></i> Monte ria, Costa del Caribe</li>
+            <li><i class="ph ph-phone"></i> +57 (310) 8929034</li>
+            <li><i class="ph ph-envelope"></i> reservar@miramarhotel.com</li>
+          </ul>
+
+          <div class="footer-newsletter">
+            <p class="footer-newsletter-title">Recibe ofertas y novedades</p>
+            <form class="footer-form">
+              <input
+                type="email"
+                placeholder="Tu correo"
+                aria-label="Correo"
+                required
+              />
+              <button type="submit" class="btn footer-btn">Suscribirme</button>
+            </form>
+            <small class="footer-note"
+              >Sin spam. Puedes salir cuando quieras.</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container footer-bottom-inner">
+          <span
+            >&copy; 2026 Mira Mar Hotel & Resort. Todos los derechos
+            reservados.</span
+          >
+          <span class="footer-legal">
+            <a href="#">Privacidad</a>
+            <span class="dot">•</span>
+            <a href="#">Términos</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>

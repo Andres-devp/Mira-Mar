@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agregar/Editar Servicio</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/services.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+        <nav id="navbar">
+            <div class="container nav-container">
+                <a href="/" class="logo">
+                    <img id="nav-logo" src="/images/Mira Mar logo Blanco.png" alt="Mira Mar logo" width="120" data-default="/images/Mira Mar logo Blanco.png" data-scrolled="/images/Mira Mar logo.png" />
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/rooms">Suites</a></li>
+                    <li><a href="/services/cards" class="active">Servicios</a></li>
+                    <li><a href="/#contact">Contacto</a></li>
+                    <li><a href="/login.html" class="book-btn-nav">Login</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="ph ph-list"></i>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container">
+            <div class="form-container" style="max-width: 800px; margin: 60px auto; padding: 40px; background: #f8f8f8; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h1 th:text="${servicio.id} != null ? 'Editar Servicio' : 'Nuevo Servicio'"></h1>
+                <form th:action="${servicio.id} != null ? @{'/services/edit/' + ${servicio.id}} : @{/services/add}" th:object="${servicio}" method="post">
+                    <div class="form-group">
+                        <label for="nombre">Nombre del Servicio *</label>
+                        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" placeholder="Ej: Spa & Wellness" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción *</label>
+                        <textarea id="descripcion" name="descripcion" th:field="*{descripcion}" placeholder="Describe el servicio..." required style="min-height: 120px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageUrl">URL de Imagen</label>
+                        <input type="url" id="imageUrl" name="imageUrl" th:field="*{imageUrl}" placeholder="https://ejemplo.com/imagen.jpg" />
+                    </div>
+                    <div class="form-actions" style="display: flex; gap: 15px; margin-top: 40px;">
+                        <button type="submit" class="btn btn-primary">
+                            <span th:text="${servicio.id} != null ? 'Guardar Cambios' : 'Crear Servicio'"></span>
+                        </button>
+                        <a href="/services" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer-inner">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <img src="/images/Mira Mar logo Blanco.png" alt="logo mirarmar" width="130" />
+                    </a>
+                    <p class="footer-desc">
+                        Boutique resort frente al mar: calma, elegancia y experiencias diseñadas para reconectar.
+                    </p>
+                    <div class="footer-socials" aria-label="Redes sociales">
+                        <a href="#" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="ph ph-twitter-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Explorar</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/rooms">Suites</a></li>
+                        <li><a href="/#dining">Gastronomía</a></li>
+                        <li><a href="/#contact">Contacto</a></li>
+                        <li><a href="/login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contacto</h4>
+                    <ul class="footer-contact-list">
+                        <li><i class="ph ph-map-pin"></i> Monte ria, Costa del Caribe</li>
+                        <li><i class="ph ph-phone"></i> +57 (310) 8929034</li>
+                        <li><i class="ph ph-envelope"></i> reservar@miramarhotel.com</li>
+                    </ul>
+                    <div class="footer-newsletter">
+                        <p class="footer-newsletter-title">Recibe ofertas y novedades</p>
+                        <form class="footer-form">
+                            <input type="email" placeholder="Tu correo" aria-label="Correo" required />
+                            <button type="submit" class="btn footer-btn">Suscribirme</button>
+                        </form>
+                        <small class="footer-note">Sin spam. Puedes salir cuando quieras.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container footer-bottom-inner">
+                    <span>&copy; 2026 Mira Mar Hotel & Resort. Todos los derechos reservados.</span>
+                    <span class="footer-legal">
+                        <a href="#">Privacidad</a>
+                        <span class="dot">•</span>
+                        <a href="#">Términos</a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+
+        <script src="/js/script.js"></script>
+</body>
+</html>

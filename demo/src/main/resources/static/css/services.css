@@ -1,0 +1,244 @@
+/* --- SERVICES PAGE STYLES --- */
+body.rooms-list-page nav {
+  background: var(--dusk-blue);
+}
+
+.services-section {
+  padding: 7rem 1.5rem 4rem;
+  background: var(--white);
+  min-height: 80vh;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.services-header h1 {
+  font-size: 2.5rem;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+
+.services-header .btn {
+  margin-top: 1.5rem;
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--soft-linen);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(100, 141, 229, 0.10);
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.services-table th, .services-table td {
+  padding: 1rem 1.2rem;
+  text-align: left;
+}
+
+.services-table th {
+  background: var(--primary);
+  color: var(--white);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.services-table tr:nth-child(even) {
+  background: var(--white);
+}
+
+.services-table tr:nth-child(odd) {
+  background: var(--soft-linen);
+}
+
+.services-table td {
+  color: var(--secondary);
+  font-size: 1rem;
+}
+
+.services-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.services-actions button, .services-actions form button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.services-actions .edit-btn {
+  background: var(--primary);
+  color: var(--white);
+}
+.services-actions .edit-btn:hover {
+  background: var(--primary-hover);
+}
+
+.services-actions .delete-btn {
+  background: var(--gold);
+  color: var(--white);
+}
+.services-actions .delete-btn:hover {
+  background: var(--secondary);
+}
+
+/* --- SERVICES CARDS --- */
+.services-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.service-card {
+  display: block;
+  text-decoration: none;
+  background: var(--soft-linen);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(100, 141, 229, 0.10);
+  transition: transform 0.15s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+}
+
+.service-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.service-card-body {
+  padding: 1.2rem 1.2rem 1.4rem;
+}
+
+.service-card-body h3 {
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.service-card-body p {
+  color: var(--secondary);
+  opacity: 0.95;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.service-card-cta {
+  display: inline-block;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* --- SERVICES FORM --- */
+.services-form-section {
+  padding: 7rem 1.5rem 4rem;
+  background: var(--white);
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.services-form-container {
+  background: var(--soft-linen);
+  padding: 2.5rem 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 32px rgba(100, 141, 229, 0.10);
+  min-width: 350px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.services-form-container h1 {
+  color: var(--secondary);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.services-form label {
+  font-size: 0.95rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.services-form input[type="text"] {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  background: var(--white);
+  color: var(--secondary);
+  transition: border 0.2s;
+}
+
+.services-form input[type="text"]:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.services-form .form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.services-form button {
+  padding: 0.7rem 2rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  background: var(--primary);
+  color: var(--white);
+  transition: background 0.2s;
+}
+
+.services-form button[type="button"] {
+  background: var(--gold);
+}
+
+.services-form button:hover {
+  background: var(--primary-hover);
+}
+
+.services-form button[type="button"]:hover {
+  background: var(--secondary);
+}
+
+@media (max-width: 700px) {
+  .services-section, .services-form-section {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+  .services-table, .services-form-container {
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .services-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

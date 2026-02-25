@@ -1,0 +1,35 @@
+.rooms{
+  background-color:#e2e6b4 ;
+}
+.rooms-list-empty-alert {
+  background: var(--soft-linen);
+  border: 2px solid var(--dry-sage);
+  color: var(--text-main);
+}
+
+.section-header{
+  margin-top: 4rem;
+}
+
+body.rooms-list-page nav {
+  background: var(--dusk-blue);
+}
+
+body.rooms-list-page nav.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.rooms-list-page .rooms {
+  position: relative;
+  padding-top: 140px;
+}
+
+body.rooms-list-page .rooms::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: var(--dusk-blue);
+}

@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="${room.name} + ' | Mira Mar Caribbean Luxury'">Detalle de Habitación</title>
+    <title th:text="${room.name} + ' | Mira Mar Caribbean Luxury'">
+      Detalle de Habitación
+    </title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,95 +17,9 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <link rel="stylesheet" href="/css/styles.css" />
-    
-    <style>
-      .room-hero {
-        background: linear-gradient(135deg, var(--dusk-blue) 0%, var(--cornflower) 100%);
-        color: white;
-        padding: 80px 0;
-        margin-bottom: 3rem;
-      }
-      
-      .room-image {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        border-radius: var(--border-radius);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        margin-bottom: 2rem;
-      }
-      
-      .room-info-card {
-        background: var(--soft-linen);
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        margin-bottom: 2rem;
-      }
-      
-      .amenity-list {
-        list-style: none;
-        padding: 0;
-      }
-      
-      .amenity-list li {
-        padding: 0.5rem 0;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-        display: flex;
-        align-items: center;
-      }
-      
-      .amenity-list li i {
-        color: var(--primary);
-        margin-right: 1rem;
-        font-size: 1.2rem;
-      }
-      
-      .price-display {
-        background: linear-gradient(135deg, var(--gold) 0%, var(--primary) 100%);
-        color: white;
-        padding: 2rem;
-        border-radius: var(--border-radius);
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-      
-      .price-display .price {
-        font-size: 2.5rem;
-        font-weight: 600;
-        font-family: "Playfair Display", serif;
-      }
-      
-      .booking-section {
-        background: white;
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      }
-      
-      .room-features {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin: 2rem 0;
-      }
-      
-      .feature-item {
-        text-align: center;
-        padding: 1rem;
-        background: var(--soft-linen);
-        border-radius: var(--border-radius);
-      }
-      
-      .feature-item i {
-        font-size: 2rem;
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-        display: block;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/rooms-detail.css" />
   </head>
-  <body>
+  <body class="room-detail-page">
     <nav id="navbar">
       <div class="container nav-container">
         <a href="/" class="logo"
@@ -118,9 +34,9 @@
         <ul class="nav-links">
           <li><a href="/">Inicio</a></li>
           <li><a href="/rooms" class="active">Suites</a></li>
-          <li><a href="/#dining">Gastronomía</a></li>
+          <li><a href="/services/cards">Servicios</a></li>
           <li><a href="/#contact">Contacto</a></li>
-          <li><a href="login.html" class="book-btn-nav">Login</a></li>
+          <li><a href="/login.html" class="book-btn-nav">Login</a></li>
         </ul>
         <div class="hamburger">
           <i class="ph ph-list"></i>
@@ -132,15 +48,31 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-8">
-            <h1 class="display-4 fw-bold mb-3" th:text="${room.name}">Nombre de Habitación</h1>
-            <p class="lead mb-4" th:text="${room.description}">Descripción de la habitación</p>
-            <a href="/rooms" class="btn btn-outline btn-hero">
-              ← Volver a todas las suites
-            </a>
+            <h1 class="display-4 fw-bold mb-3" th:text="${room.name}">
+              Nombre de Habitación
+            </h1>
+            <p class="lead mb-4" th:text="${room.description}">
+              Descripción de la habitación
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="/rooms" class="btn btn-outline btn-hero">
+                ← Volver a todas las suites
+              </a>
+              <a th:href="@{'/rooms/' + ${room.id} + '/edit'}" class="btn btn-outline btn-hero">
+                ✎ Editar
+              </a>
+              <form th:action="@{'/rooms/' + ${room.id} + '/delete'}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-outline btn-hero" onclick="return confirm('¿Confirma que desea eliminar esta habitación?')">
+                  🗑 Eliminar
+                </button>
+              </form>
+            </div>
           </div>
           <div class="col-lg-4 text-center">
             <div class="price-display">
-              <small style="font-size: 0.8rem; opacity: 0.9;">Precio por noche</small>
+              <small style="font-size: 0.8rem; opacity: 0.9"
+                >Precio por noche</small
+              >
               <div class="price" th:text="'$' + ${room.pricePerNight}">$0</div>
             </div>
           </div>
@@ -151,14 +83,21 @@
     <main class="container">
       <div class="row">
         <div class="col-lg-8">
-          <img th:src="${room.imageUrl}" 
-               class="room-image" 
-               th:alt="${room.name}"
-               onerror="this.src='https://via.placeholder.com/800x500/cdc392/ffffff?text=Habitacion'">
+          <img
+            th:src="${room.imageUrl}"
+            class="room-image"
+            th:alt="${room.name}"
+            onerror="
+              this.src =
+                'https://via.placeholder.com/800x500/cdc392/ffffff?text=Habitacion'
+            "
+          />
 
           <div class="room-info-card">
             <h2 class="h3 mb-4 fw-bold">Descripción Detallada</h2>
-            <p th:text="${room.description}">Descripción completa de la habitación y todas sus características.</p>
+            <p th:text="${room.description}">
+              Descripción completa de la habitación y todas sus características.
+            </p>
           </div>
 
           <div class="room-info-card">
@@ -184,7 +123,7 @@
             </div>
             <div class="feature-item">
               <i class="ph ph-bed"></i>
-              <h4 th:text="${room.roomType}">Tipo</h4>
+              <h4 th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</h4>
             </div>
             <div class="feature-item">
               <i class="ph ph-ruler"></i>
@@ -198,48 +137,59 @@
         </div>
 
         <div class="col-lg-4">
-          <div class="booking-section sticky-top" style="top: 20px;">
+          <div class="booking-section sticky-top" style="top: 20px">
             <h4 class="text-center mb-4">Reservar Ahora</h4>
-            
+
             <div class="mb-3">
               <strong>Habitación:</strong>
               <p class="mb-0" th:text="${room.name}">Nombre de habitación</p>
             </div>
-            
+
             <div class="mb-3">
               <strong>Tipo:</strong>
-              <p class="mb-0" th:text="${room.roomType}">Tipo</p>
+              <p class="mb-0" th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</p>
             </div>
-            
+
             <div class="mb-3">
               <strong>Capacidad:</strong>
-              <p class="mb-0" th:text="${room.capacity} + ' huéspedes'">0 huéspedes</p>
+              <p class="mb-0" th:text="${room.capacity} + ' huéspedes'">
+                0 huéspedes
+              </p>
             </div>
-            
+
             <div class="mb-4">
               <strong>Precio:</strong>
-              <p class="mb-0 h4 text-primary" th:text="'$' + ${room.pricePerNight} + ' / noche'">$0 / noche</p>
+              <p
+                class="mb-0 h4 text-primary"
+                th:text="'$' + ${room.pricePerNight} + ' / noche'"
+              >
+                $0 / noche
+              </p>
             </div>
 
             <div class="mb-3">
               <label for="checkin" class="form-label">Fecha de llegada</label>
-              <input type="date" class="form-control" id="checkin">
+              <input type="date" class="form-control" id="checkin" />
             </div>
-            
+
             <div class="mb-3">
               <label for="checkout" class="form-label">Fecha de salida</label>
-              <input type="date" class="form-control" id="checkout">
+              <input type="date" class="form-control" id="checkout" />
             </div>
-            
+
             <div class="mb-4">
               <label for="guests" class="form-label">Huéspedes</label>
               <select class="form-control" id="guests">
-                <option th:each="i : ${#numbers.sequence(1, room.capacity)}" 
-                        th:text="${i} + ' huésped' + (${i} > 1 ? 'es' : '')"
-                        th:value="${i}">1 huésped</option>
+                <option
+                  th:each="i : ${#numbers.sequence(1, room.capacity)}"
+                  th:text="${i} + ' huésped' + (${i} > 1 ? 'es' : '')"
+                  th:value="${i}"
+                >
+                  1 huésped
+                </option>
               </select>
             </div>
-            
+
             <div class="d-grid gap-2">
               <button class="btn btn-lg">Reservar Ahora</button>
               <a href="/rooms" class="btn btn-outline">Ver otras suites</a>

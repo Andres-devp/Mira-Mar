@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
@@ -15,8 +15,9 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/rooms-list.css" />
   </head>
-  <body>
+  <body class="rooms-list-page">
     <nav id="navbar">
       <div class="container nav-container">
         <a href="/" class="logo"
@@ -31,9 +32,9 @@
         <ul class="nav-links">
           <li><a href="/">Inicio</a></li>
           <li><a href="/rooms" class="active">Suites</a></li>
-          <li><a href="/#dining">Gastronomía</a></li>
+          <li><a href="/services/cards">Servicios</a></li>
           <li><a href="/#contact">Contacto</a></li>
-          <li><a href="login.html" class="book-btn-nav">Login</a></li>
+          <li><a href="/login.html" class="book-btn-nav">Login</a></li>
         </ul>
         <div class="hamburger">
           <i class="ph ph-list"></i>
@@ -46,26 +47,51 @@
         <div class="section-header">
           <span>Tu Refugio</span>
           <h2>Alojamientos</h2>
+          <a href="/rooms/add" class="btn btn-primary" style="margin-top: 20px;">
+            <i class="ph ph-plus"></i> Crear Habitación
+          </a>
         </div>
         <div class="room-grid" th:if="${not #lists.isEmpty(rooms)}">
           <div class="room-card" th:each="room : ${rooms}">
-            <img th:src="${room.imageUrl}" 
-                 th:alt="${room.name}"
-                 onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'">
+            <img
+              th:src="${room.imageUrl}"
+              th:alt="${room.name}"
+              onerror="
+                this.src =
+                  'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'
+              "
+            />
             <div class="room-overlay">
               <h3 th:text="${room.name}">Nombre de Habitación</h3>
-              <p class="room-price" th:text="'Desde $' + ${room.pricePerNight} + ' / noche'">$0 / noche</p>
+              <p
+                class="room-price"
+                th:text="'Desde $' + ${room.pricePerNight} + ' / noche'"
+              >
+                $0 / noche
+              </p>
               <div class="room-details">
-                <span class="room-type" th:text="${room.roomType}">Tipo</span>
-                <span class="room-capacity" th:text="${room.capacity} + ' huéspedes'">0 huéspedes</span>
+                <span class="room-type" th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</span>
+                <span
+                  class="room-capacity"
+                  th:text="${room.capacity} + ' huéspedes'"
+                  >0 huéspedes</span
+                >
               </div>
-              <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline">Ver detalles</a>
+              <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn-outline"
+                >Ver detalles</a
+              >
+              <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <a th:href="@{'/rooms/' + ${room.id} + '/edit'}" class="btn btn-outline" style="flex: 1; text-align: center;">Editar</a>
+                <form th:action="@{'/rooms/' + ${room.id} + '/delete'}" method="POST" style="flex: 1;">
+                  <button type="submit" class="btn btn-outline" style="width: 100%;" onclick="return confirm('¿Confirma que desea eliminar esta habitación?')">Eliminar</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-        
+
         <div th:if="${#lists.isEmpty(rooms)}" class="text-center py-5">
-          <div class="alert" style="background: var(--soft-linen); border: 2px solid var(--dry-sage); color: var(--text-main);">
+          <div class="alert rooms-list-empty-alert">
             <h4 class="alert-heading">No hay habitaciones disponibles</h4>
             <p>En este momento no contamos con habitaciones disponibles.</p>
           </div>
@@ -108,9 +134,9 @@
           <ul>
             <li><a href="/">Inicio</a></li>
             <li><a href="/rooms">Suites</a></li>
-            <li><a href="/#dining">Gastronomía</a></li>
+            <li><a href="/services">Servicios</a></li>
             <li><a href="/#contact">Contacto</a></li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="/login.html">Login</a></li>
           </ul>
         </div>
 

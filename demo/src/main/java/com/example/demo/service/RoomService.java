@@ -1,18 +1,19 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Room;
+import com.example.demo.entities.Room;
 import com.example.demo.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class RoomService {
-    
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();

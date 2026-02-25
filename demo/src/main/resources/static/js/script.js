@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✅ Si agrandan pantalla, se cierra el menú (tu bug)
+
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) closeMenu();
   });
