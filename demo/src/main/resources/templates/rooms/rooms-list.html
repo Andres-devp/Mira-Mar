@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suites | Mira Mar Caribbean Luxury</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/habitaciones.css" />
+  </head>
+  <body class="page-rooms-list">
+    <nav id="navbar">
+      <div class="container nav-container">
+        <a href="/" class="logo"
+          ><img
+            id="nav-logo"
+            src="/images/Mira Mar logo Blanco.png"
+            alt="Mira Mar logo"
+            width="120"
+            data-default="/images/Mira Mar logo Blanco.png"
+            data-scrolled="/images/Mira Mar logo.png"
+        /></a>
+        <ul class="nav-links">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/rooms" class="active">Suites</a></li>
+          <li><a href="/services/cards">Servicios</a></li>
+          <li><a href="/#contact">Contacto</a></li>
+          <li><a href="/login.html" class="book-btn-nav">Login</a></li>
+        </ul>
+        <div class="hamburger">
+          <i class="ph ph-list"></i>
+        </div>
+      </div>
+    </nav>
+
+    <main class="rooms-list">
+      <div class="container">
+        <header class="rooms-list__header">
+          <h1>Suites</h1>
+          <p>Elige tu refugio ideal frente al mar.</p>
+          <div class="rooms-list__actions">
+            <a href="/rooms/add" class="btn btn--primary">
+              <i class="ph ph-plus"></i> Crear habitación
+            </a>
+            <a href="/rooms/table" class="btn btn--ghost">Ver en tabla</a>
+          </div>
+        </header>
+
+        <section class="cards-grid" th:if="${not #lists.isEmpty(rooms)}" aria-label="Listado de habitaciones">
+          <article class="card card--room" th:each="room : ${rooms}">
+            <div class="card__media">
+              <img
+                th:src="${room.imageUrl}"
+                th:alt="${room.name}"
+                onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'"
+              />
+            </div>
+
+            <div class="card__body">
+              <h2 class="card__title" th:text="${room.name}">Nombre de Habitación</h2>
+              <p class="card__subtitle" th:text="${room.description}">
+                Descripción breve de la habitación.
+              </p>
+
+              <div class="card__meta">
+                <span th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</span>
+                <span th:text="${room.capacity} + ' huéspedes'">0 huéspedes</span>
+              </div>
+
+              <div class="card__price" th:text="'Desde $' + ${room.pricePerNight} + ' / noche'">
+                Desde $0 / noche
+              </div>
+
+              <div class="card__actions">
+                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--ghost">Ver detalles</a>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section th:if="${#lists.isEmpty(rooms)}" class="rooms-list__empty" aria-live="polite">
+          <h2>No hay habitaciones disponibles</h2>
+          <p>En este momento no contamos con habitaciones disponibles.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <img src="/images/Mira Mar logo Blanco.png" alt="logo mirarmar" width="130" />
+          </a>
+          <p class="footer-desc">
+            Boutique resort frente al mar: calma, elegancia y experiencias diseñadas para reconectar.
+          </p>
+
+          <div class="footer-socials" aria-label="Redes sociales">
+            <a href="#" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+            <a href="#" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+            <a href="#" aria-label="Twitter"><i class="ph ph-twitter-logo"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Explorar</h4>
+          <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/rooms">Suites</a></li>
+            <li><a href="/services">Servicios</a></li>
+            <li><a href="/#contact">Contacto</a></li>
+            <li><a href="/login.html">Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contacto</h4>
+          <ul class="footer-contact-list">
+            <li><i class="ph ph-map-pin"></i> Monte ria, Costa del Caribe</li>
+            <li><i class="ph ph-phone"></i> +57 (310) 8929034</li>
+            <li><i class="ph ph-envelope"></i> reservar@miramarhotel.com</li>
+          </ul>
+
+          <div class="footer-newsletter">
+            <p class="footer-newsletter-title">Recibe ofertas y novedades</p>
+            <form class="footer-form">
+              <input type="email" placeholder="Tu correo" aria-label="Correo" required />
+              <button type="submit" class="btn footer-btn">Suscribirme</button>
+            </form>
+            <small class="footer-note">Sin spam. Puedes salir cuando quieras.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container footer-bottom-inner">
+          <span>&copy; 2026 Mira Mar Hotel & Resort. Todos los derechos reservados.</span>
+          <span class="footer-legal">
+            <a href="#">Privacidad</a>
+            <span class="dot">•</span>
+            <a href="#">Términos</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>

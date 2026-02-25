@@ -30,8 +30,18 @@ public class RoomController {
 		Map<String, String> roomTypeDisplayNames = roomTypeService.getAllRoomTypes().stream()
 				.collect(Collectors.toMap(rt -> rt.getCode(), rt -> rt.getDisplayName()));
 		model.addAttribute("roomTypeDisplayNames", roomTypeDisplayNames);
-        return "rooms/list";
+        return "rooms/rooms-list";
     }
+
+	@GetMapping("/table")
+	public String listRoomsTable(Model model) {
+		List<Room> rooms = roomService.getAllRooms();
+		model.addAttribute("rooms", rooms);
+		Map<String, String> roomTypeDisplayNames = roomTypeService.getAllRoomTypes().stream()
+				.collect(Collectors.toMap(rt -> rt.getCode(), rt -> rt.getDisplayName()));
+		model.addAttribute("roomTypeDisplayNames", roomTypeDisplayNames);
+		return "rooms/rooms-table";
+	}
 
     @GetMapping("/{id}")
     public String roomDetail(@PathVariable Long id, Model model) {
@@ -41,7 +51,7 @@ public class RoomController {
 			Map<String, String> roomTypeDisplayNames = roomTypeService.getAllRoomTypes().stream()
 					.collect(Collectors.toMap(rt -> rt.getCode(), rt -> rt.getDisplayName()));
 			model.addAttribute("roomTypeDisplayNames", roomTypeDisplayNames);
-            return "rooms/detail";
+            return "rooms/room-detail";
         } else {
             return "redirect:/rooms";
         }
@@ -52,7 +62,7 @@ public class RoomController {
         model.addAttribute("room", new Room());
         model.addAttribute("isNew", true);
 		model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
-        return "rooms/form";
+        return "rooms/room-form";
     }
 
     @PostMapping
@@ -68,7 +78,7 @@ public class RoomController {
             model.addAttribute("room", room.get());
             model.addAttribute("isNew", false);
 			model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
-            return "rooms/form";
+            return "rooms/room-form";
         } else {
             return "redirect:/rooms";
         }

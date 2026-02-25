@@ -1,0 +1,110 @@
+/* Shared: Formularios (alta/edición) */
+
+.form-page {
+  background: var(--white);
+  padding: 7.5rem 0 4.5rem;
+  min-height: 80vh;
+}
+
+.form-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2.5rem 2rem;
+}
+
+.form-shell__title {
+  color: var(--color-heading);
+  font-size: 2.25rem;
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 800px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-field--full {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid rgba(48, 76, 137, 0.18);
+  border-radius: 12px;
+  padding: 0.85rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-heading);
+  background: var(--white);
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: rgba(100, 141, 229, 0.55);
+}
+
+.form-field--error input,
+.form-field--error select,
+.form-field--error textarea {
+  border-color: rgba(178, 59, 59, 0.75);
+}
+
+.form-error {
+  color: #b23b3b;
+  font-size: 0.9rem;
+  min-height: 1.1em;
+}
+
+.form-actions {
+  margin-top: 1.75rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.form-actions .btn {
+  min-width: 220px;
+}
+
+@media (max-width: 640px) {
+  .form-actions .btn {
+    width: 100%;
+  }
+}

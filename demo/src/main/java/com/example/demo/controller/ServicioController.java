@@ -21,14 +21,19 @@ public class ServicioController {
 
 	@GetMapping
 	public String listServicios(Model model) {
+		return "redirect:/services/cards";
+	}
+
+	@GetMapping("/table")
+	public String listServiciosTable(Model model) {
 		model.addAttribute("servicios", servicioService.getAllServicios());
-		return "HotelServices/services";
+		return "HotelServices/services-table";
 	}
 
 	@GetMapping("/cards")
 	public String listServiciosCards(Model model) {
 		model.addAttribute("servicios", servicioService.getAllServicios());
-		return "HotelServices/services-cards";
+		return "HotelServices/services-cards-list";
 	}
 
 	@GetMapping("/{id}")
@@ -36,7 +41,7 @@ public class ServicioController {
 		Optional<Servicio> servicio = servicioService.getServicioById(id);
 		if (servicio.isPresent()) {
 			model.addAttribute("servicio", servicio.get());
-			return "HotelServices/services-detail";
+			return "HotelServices/service-detail";
 		}
 		return "redirect:/services";
 	}
@@ -44,7 +49,7 @@ public class ServicioController {
 	@GetMapping("/add")
 	public String showAddForm(Model model) {
 		model.addAttribute("servicio", new Servicio());
-		return "HotelServices/services-form";
+		return "HotelServices/service-form";
 	}
 
 	@PostMapping("/add")
@@ -58,7 +63,7 @@ public class ServicioController {
 		Optional<Servicio> servicio = servicioService.getServicioById(id);
 		if (servicio.isPresent()) {
 			model.addAttribute("servicio", servicio.get());
-			return "HotelServices/services-form";
+			return "HotelServices/service-form";
 		} else {
 			return "redirect:/services";
 		}

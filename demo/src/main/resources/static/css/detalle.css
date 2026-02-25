@@ -1,0 +1,160 @@
+/* Page: Detalle (habitacion/servicio) */
+
+.detail-page nav {
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.detail-page nav.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: fixed;
+}
+
+.detail-hero {
+  background: linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%);
+  color: var(--white);
+  padding: 180px 0 120px;
+  margin-bottom: 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-hero__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .detail-hero__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-hero__title {
+  font-size: 3.25rem;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.detail-hero__lead {
+  font-weight: 300;
+  opacity: 0.92;
+  max-width: 65ch;
+}
+
+.detail-hero__actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detail-main {
+  padding: 0 0 4.5rem;
+  background: var(--bg-body);
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1.7fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-figure {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 8px solid var(--white);
+}
+
+.detail-figure img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-section {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.detail-section__title {
+  color: var(--color-heading);
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+}
+
+.detail-aside {
+  position: sticky;
+  top: 20px;
+}
+
+.detail-aside__panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.75rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.detail-aside__panel h3 {
+  color: var(--color-heading);
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid rgba(48, 76, 137, 0.18);
+  border-radius: 12px;
+  padding: 0.85rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-heading);
+  background: var(--white);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: rgba(100, 141, 229, 0.55);
+}
