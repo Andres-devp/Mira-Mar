@@ -14,7 +14,7 @@ public class ServicioRepository {
         // 10 servicios de ejemplo
         addServicio(new Servicio("https://mojosurf.es/wp-content/uploads/2024/12/Clases-de-surf-que-tener-en-cuenta.jpg", "Restaurante", "Restaurante gourmet con menú internacional"));
         addServicio(new Servicio(null, "Clases de surf", "Clases de surf para todos los niveles"));
-        addServicio(new Servicio(null, "Caminatas guiadas", "Excursiones y caminatas por la naturaleza"));
+        addServicio(new Servicio(null, "Caminatas guiadas", "Excursiones ygit  caminatas por la naturaleza"));
         addServicio(new Servicio(null, "Spa & Wellness", "Masajes, sauna y tratamientos de spa"));
         addServicio(new Servicio(null, "Alquiler de bicicletas", "Bicicletas para recorrer la zona"));
         addServicio(new Servicio(null, "Piscina", "Piscina exterior con bar y solárium"));
