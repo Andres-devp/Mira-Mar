@@ -64,7 +64,7 @@
               <img
                 th:src="${servicio.imageUrl}"
                 th:alt="${servicio.nombre}"
-                onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Servicio'"
+          
               />
               <div class="room-price-badge" th:text="${servicio.price != null ? '$' + servicio.price : 'Consultar'}">$0</div>
             </div>

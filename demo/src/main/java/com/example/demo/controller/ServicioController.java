@@ -33,7 +33,7 @@ public class ServicioController {
 	@GetMapping("/cards")
 	public String listServiciosCards(Model model) {
 		model.addAttribute("servicios", servicioService.getAllServicios());
-		return "HotelServices/services-cards-list";
+		return "HotelServices/services-list";
 	}
 
 	@GetMapping("/{id}")
