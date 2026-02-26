@@ -43,16 +43,16 @@
       </div>
     </nav>
 
-    <main class="rooms-list">
+   <main class="rooms-list">
       <div class="container">
         <header class="rooms-list__header">
-          <h1>Suites</h1>
-          <p>Elige tu refugio ideal frente al mar.</p>
+          <h1>Nuestras Suites</h1>
+          <p>Descubre un refugio diseñado para tu descanso, donde el sonido del mar es el protagonista.</p>
           <div class="rooms-list__actions">
-            <a href="/rooms/add" class="btn btn--primary">
+            <a href="/rooms/add" class="btn btn--secondary">
               <i class="ph ph-plus"></i> Crear habitación
             </a>
-            <a href="/rooms/table" class="btn btn--ghost">Ver en tabla</a>
+            <a href="/rooms/table" class="btn btn--ghost">Vista administrativa</a>
           </div>
         </header>
 
@@ -64,6 +64,9 @@
                 th:alt="${room.name}"
                 onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'"
               />
+              <div class="room-price-badge" th:text="'$' + ${room.pricePerNight} + ' / noche'">
+                $0 / noche
+              </div>
             </div>
 
             <div class="card__body">
@@ -73,16 +76,12 @@
               </p>
 
               <div class="card__meta">
-                <span th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</span>
-                <span th:text="${room.capacity} + ' huéspedes'">0 huéspedes</span>
-              </div>
-
-              <div class="card__price" th:text="'Desde $' + ${room.pricePerNight} + ' / noche'">
-                Desde $0 / noche
+                <span><i class="ph ph-star"></i> <span th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}">Tipo</span></span>
+                <span><i class="ph ph-users"></i> <span th:text="${room.capacity} + ' huéspedes'">0 huéspedes</span></span>
               </div>
 
               <div class="card__actions">
-                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--ghost">Ver detalles</a>
+                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--ghost">Explorar suite</a>
               </div>
             </div>
           </article>
@@ -90,7 +89,7 @@
 
         <section th:if="${#lists.isEmpty(rooms)}" class="rooms-list__empty" aria-live="polite">
           <h2>No hay habitaciones disponibles</h2>
-          <p>En este momento no contamos con habitaciones disponibles.</p>
+          <p>En este momento no contamos con habitaciones publicadas.</p>
         </section>
       </div>
     </main>
