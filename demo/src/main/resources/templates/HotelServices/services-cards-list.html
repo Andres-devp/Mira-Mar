@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Servicios | Mira Mar</title>
+    <title>Servicios | Mira Mar Caribbean Luxury</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,9 +16,9 @@
 
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/base.css" />
-    <link rel="stylesheet" href="/css/servicios.css" />
+    <link rel="stylesheet" href="/css/habitaciones.css" />
   </head>
-  <body class="page-services">
+  <body class="page-rooms-list">
     <nav id="navbar">
       <div class="container nav-container">
         <a href="/" class="logo">
@@ -46,9 +46,9 @@
 
 <main class="services-page">
       <div class="container">
-        <header class="services-page__header">
-          <h1>Experiencias Únicas</h1>
-          <p>Comodidades diseñadas para elevar tu estadía y conectarte con el placer y la naturaleza.</p>
+        <header class="rooms-list__header">
+          <h1>Nuestros Servicios</h1>
+          <p>Comodidades y experiencias diseñadas para elevar tu estadía frente al mar.</p>
 
           <div class="services-page__actions">
             <a href="/services/add" class="btn btn--primary">
@@ -59,21 +59,26 @@
         </header>
 
         <section class="cards-grid" th:if="${not #lists.isEmpty(servicios)}" aria-label="Listado de servicios">
-          <article class="card card--service" th:each="servicio : ${servicios}">
+          <article class="card card--room" th:each="servicio : ${servicios}">
             <div class="card__media">
               <img
                 th:src="${servicio.imageUrl}"
                 th:alt="${servicio.nombre}"
                 onerror="this.src='https://via.placeholder.com/600x400/cdc392/ffffff?text=Servicio'"
               />
+              <div class="room-price-badge" th:text="${servicio.price != null ? '$' + servicio.price : 'Consultar'}">$0</div>
             </div>
 
             <div class="card__body">
               <h2 class="card__title" th:text="${servicio.nombre}">Nombre</h2>
               <p class="card__subtitle" th:text="${servicio.descripcion}">Descripción del servicio</p>
 
+              <div class="card__meta">
+                <span><i class="ph ph-star"></i> Servicio</span>
+              </div>
+
               <div class="card__actions">
-                <a th:href="@{'/services/' + ${servicio.id}}" class="btn btn--outline is-gold" style="color: var(--dusk-blue); border-color: var(--gold);">Descubrir más</a>
+                <a th:href="@{'/services/' + ${servicio.id}}" class="btn btn--ghost">Descubrir</a>
               </div>
             </div>
           </article>

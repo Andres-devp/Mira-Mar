@@ -5,6 +5,7 @@ public class Servicio {
     private String nombre;
     private String descripcion;
     private String imageUrl;
+    private Double price;
 
     public Servicio() {}
 
@@ -14,11 +15,26 @@ public class Servicio {
         this.descripcion = descripcion;
     }
 
+    public Servicio(String imageUrl, String nombre, String descripcion, Double price) {
+        this.imageUrl = imageUrl;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.price = price;
+    }
+
     public Servicio(Long id, String nombre, String descripcion, String imageUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imageUrl = imageUrl;
+    }
+
+    public Servicio(Long id, String nombre, String descripcion, String imageUrl, Double price) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.imageUrl = imageUrl;
+        this.price = price;
     }
 
     public Long getId() {
@@ -51,5 +67,13 @@ public class Servicio {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

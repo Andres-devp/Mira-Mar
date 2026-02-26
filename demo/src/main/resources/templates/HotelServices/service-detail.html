@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="${servicio.nombre} + ' | Servicios'">Detalle Servicio</title>
+    <title th:text="${servicio.nombre} + ' | Servicios | Mira Mar Caribbean Luxury'">Detalle Servicio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -67,8 +67,9 @@
           </div>
 
           <aside class="price-card" aria-label="Acción principal">
-            <div class="price-card__label">Reserva / consulta</div>
-            <div class="price-card__value" style="font-size: 1.8rem;">Disponible</div>
+            <div class="price-card__label">Precio</div>
+            <div class="price-card__value" style="font-size: 1.8rem;" th:text="${servicio.price != null ? '$' + servicio.price : 'Consultar'}">Disponible</div>
+            <div style="font-size:0.9rem; margin-top:0.5rem; color:var(--muted);">Incluye información y reservas. Contacta para más detalles.</div>
           </aside>
         </div>
       </div>
@@ -89,6 +90,12 @@
             <section class="detail-section">
               <h2 class="detail-section__title">Descripción</h2>
               <p th:text="${servicio.descripcion}">Descripción del servicio</p>
+              <p>
+                <strong>Detalles:</strong> Este servicio está diseñado para ofrecerte una experiencia memorable. Consulta disponibilidad, horarios y condiciones al momento de reservar.
+              </p>
+              <p>
+                <strong>Incluye:</strong> Personal profesional, equipamiento necesario y atención personalizada. Pregunta por paquetes y descuentos.
+              </p>
             </section>
           </div>
 
