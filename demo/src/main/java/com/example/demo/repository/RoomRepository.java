@@ -26,7 +26,7 @@ public class RoomRepository {
             "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600", 280.0, 2, "VIP"));
         addRoom(new Room(null, "Family Suite", 
             "Amplia suite familiar con dos habitaciones, sala de estar separada y cocina compacta. Perfecta para familias con niños.", 
-            "https://images.unsplash.com/photo-1584132967334-10e028bd69f5?w=600", 380.0, 5, "VIP"));
+            "https://i.pinimg.com/736x/d4/2b/3f/d42b3f33b58f15af42dbca307a535f05.jpg", 380.0, 5, "VIP"));
         addRoom(new Room(null, "Beach Bungalow", 
             "Acogedor bungalow a pocos pasos de la playa, con porche privado hamacas y acceso directo a la arena. Estilo caribeño auténtico.", 
             "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600", 250.0, 2, "NORMAL"));
@@ -35,7 +35,7 @@ public class RoomRepository {
             "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600", 420.0, 3, "EXECUTIVE"));
         addRoom(new Room(null, "Garden View Room", 
             "Habitación con vistas a los jardines tropicales, decoración elegante y acceso al spa y piscina principal del hotel.", 
-            "https://images.unsplash.com/photo-1598928506311-c55ded91e20b?w=600", 220.0, 2, "NORMAL"));
+            "https://i.pinimg.com/736x/5e/e1/db/5ee1dbaf2d2bd35010ff264830933837.jpg", 220.0, 2, "NORMAL"));
     }
 
     public List<Room> findAll() {
