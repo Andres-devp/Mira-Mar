@@ -23,14 +23,16 @@
 
     <main class="services-page">
       <div class="container">
-        <header class="services-page__header">
-          <h1>Tipos de habitación (Tabla)</h1>
-          <p>Gestiona los distintos tipos que puede tener una habitación.</p>
-
-          <div class="services-page__actions">
+        <section class="services-page__sectionHeader">
+          <div>
+            <h2>Tipos de habitación (Tabla)</h2>
+            <p>Gestiona los distintos tipos que puede tener una habitación.</p>
+          </div>
+          <div class="services-page__sectionActions">
+            <a href="/rooms/table" class="btn btn--ghost">Habitaciones (tabla)</a>
             <a href="/roomtypes/add" class="btn btn--primary">Crear tipo</a>
           </div>
-        </header>
+        </section>
 
         <table class="services-table" th:if="${not #lists.isEmpty(roomTypes)}">
           <thead>
@@ -47,26 +49,22 @@
               <td th:text="${type.displayName}"></td>
               <td th:text="${type.description}"></td>
               <td>
-                <div class="services-table__actions-row">
-                  <a
-                    th:href="@{'/roomtypes/edit/' + ${type.code}}"
-                    class="btn btn--ghost"
-                    >Editar</a
-                  >
-                  <form
-                    th:action="@{'/roomtypes/delete/' + ${type.code}}"
-                    method="post"
-                  >
+                <div class="icon-actions">
+                  <a th:href="@{'/roomtypes/edit/' + ${type.code}}" class="icon-action" title="Editar">
+                    <i class="ph ph-pencil-simple"></i>
+                  </a>
+                  <form th:action="@{'/roomtypes/delete/' + ${type.code}}" method="post">
                     <button
                       type="submit"
-                      class="btn btn--secondary"
+                      class="icon-action icon-action--danger"
+                      title="Eliminar"
                       onclick="
                         return confirm(
                           '¿Seguro que deseas eliminar este tipo?',
                         );
                       "
                     >
-                      Eliminar
+                      <i class="ph ph-trash"></i>
                     </button>
                   </form>
                 </div>

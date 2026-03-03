@@ -44,7 +44,13 @@
             <a href="/rooms/add" class="btn btn--ghost">
               <i class="ph ph-plus"></i> Crear habitación
             </a>
-            <a href="/rooms/table" class="btn btn--primary">Vista administrativa</a>
+            <details class="rooms-list__adminDropdown">
+              <summary class="btn btn--primary rooms-list__adminDropdownToggle">Vista administrativa</summary>
+              <div class="rooms-list__adminDropdownMenu" role="menu">
+                <a href="/rooms/table" class="btn btn--ghost" role="menuitem">Habitaciones (tabla)</a>
+                <a href="/roomtypes" class="btn btn--ghost" role="menuitem">Tipos de habitaciones (tabla)</a>
+              </div>
+            </details>
           </div>
         </section>
 

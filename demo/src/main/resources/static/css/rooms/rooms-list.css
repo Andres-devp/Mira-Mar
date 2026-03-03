@@ -260,6 +260,43 @@ body.page-rooms-list nav {
   justify-content: flex-end;
 }
 
+.rooms-list__adminDropdown {
+  position: relative;
+}
+
+.rooms-list__adminDropdownToggle {
+  list-style: none;
+}
+
+.rooms-list__adminDropdownToggle::-webkit-details-marker {
+  display: none;
+}
+
+.rooms-list__adminDropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 280px;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(48, 76, 137, 0.14);
+  box-shadow: 0 18px 45px rgba(48, 76, 137, 0.18);
+  backdrop-filter: blur(10px);
+  display: none;
+  z-index: 20;
+}
+
+.rooms-list__adminDropdown[open] .rooms-list__adminDropdownMenu {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.rooms-list__adminDropdownMenu .btn {
+  width: 100%;
+  justify-content: flex-start;
+}
+
 @media (max-width: 860px) {
   .rooms-list__sectionHeader {
     flex-direction: column;
@@ -269,6 +306,11 @@ body.page-rooms-list nav {
   .rooms-list__sectionActions {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .rooms-list__adminDropdownMenu {
+    right: auto;
+    left: 0;
   }
 }
 
