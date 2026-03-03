@@ -8,6 +8,9 @@ public interface UsuarioService {
     public Usuario searchById(int id);
     public Collection<Usuario> searchAll();
 
+    // obtiene un usuario por nombre de usuario (login)
+    public Usuario searchByUsername(String username);
+
     // create or update a user
     public Usuario save(Usuario usuario);
     

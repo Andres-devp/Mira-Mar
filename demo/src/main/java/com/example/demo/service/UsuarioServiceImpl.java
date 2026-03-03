@@ -25,6 +25,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario searchByUsername(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
+    @Override
     public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }

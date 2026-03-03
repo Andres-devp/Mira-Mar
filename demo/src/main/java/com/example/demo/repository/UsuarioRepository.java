@@ -23,6 +23,18 @@ public class UsuarioRepository {
         return usuarios.get(id);    
     }
 
+    /**
+     * Busca un usuario por su nombre de usuario (campo "usuario").
+     * @param username valor del campo usuario
+     * @return usuario encontrado o null si no existe
+     */
+    public Usuario findByUsername(String username) {
+        return usuarios.values().stream()
+                .filter(u -> u.getUsuario().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
+
     public Collection<Usuario> findAll() {
         return usuarios.values();
     }
