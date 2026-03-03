@@ -1,0 +1,144 @@
+/* Page: Usuarios (Tabla) */
+
+body.page-services nav {
+  background: var(--dusk-blue);
+}
+
+.services-page {
+  background: var(--bg-body);
+  padding: 6.5rem 0 4.5rem;
+  min-height: 80vh;
+}
+
+.services-page__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  background: linear-gradient(135deg, rgba(48, 76, 137, 0.65), rgba(100, 141, 229, 0.35));
+  color: var(--white);
+  padding: 4rem 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.services-page__header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(48, 76, 137, 0.25), rgba(48, 76, 137, 0.2)),
+    url("/images/Hero.avif");
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.03);
+  z-index: -1;
+}
+
+.services-page__header > * {
+  position: relative;
+}
+
+.services-page__header h1 {
+  color: var(--white);
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.services-page__header p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  font-weight: 500;
+}
+
+.services-page__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.services-page__header .btn--ghost {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.services-page__header .btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--white);
+}
+
+.services-page__header .btn--primary {
+  background: var(--dusk-blue);
+  border-color: var(--dusk-blue);
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(48, 76, 137, 0.08);
+  margin: 0 auto;
+}
+
+.services-table th,
+.services-table td {
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+}
+
+.services-table th {
+  background: var(--dusk-blue);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.services-table tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.services-table tr:hover {
+  background: var(--soft-linen);
+}
+
+.services-table__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 280px;
+  margin-left: auto;
+}
+
+.services-table__actions .btn--full {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.services-table__actions-row {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.services-table__actions-row .btn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.services-table__actions-row form {
+  flex: 1;
+}
+
+.services-table__actions-row button {
+  width: 100%;
+}
