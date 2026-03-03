@@ -2,21 +2,32 @@
 
 .detail-page nav {
   background: transparent;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 1000;
+  transition:
+    background 0.3s ease,
+    padding 0.3s ease,
+    box-shadow 0.3s ease;
+  padding: 1.5rem 0;
 }
 
 .detail-page nav.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  position: fixed;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px);
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
 }
 
 .detail-hero {
-  background: linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--dusk-blue) 0%,
+    #1a2a44 50%,
+    var(--cornflower) 100%
+  );
   color: var(--white);
   padding: 180px 0 120px;
   margin-bottom: 3.5rem;
