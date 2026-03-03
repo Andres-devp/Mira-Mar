@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -26,18 +26,27 @@
         <header class="rooms-list__header">
           <h1>Nuestras Suites</h1>
           <p>
-            Descubre un refugio diseñado para tu descanso, donde el sonido del
-            mar es el protagonista.
+            Descubre un refugio diseñado para tu descanso con vistas inigualables y
+            confort absoluto.
           </p>
           <div class="rooms-list__actions">
-            <a href="/rooms/add" class="btn btn--secondary">
-              <i class="ph ph-plus"></i> Crear habitación
-            </a>
-            <a href="/rooms/table" class="btn btn--ghost"
-              >Vista administrativa</a
-            >
+            <a href="#suites" class="btn btn--secondary">Ver todas</a>
+            <a href="/services" class="btn btn--ghost">Explorar Servicios</a>
           </div>
         </header>
+
+        <section class="rooms-list__sectionHeader" id="suites">
+          <div>
+            <h2>Suites Exclusivas</h2>
+            <p>Experiencias de lujo curadas para tu estancia.</p>
+          </div>
+          <div class="rooms-list__sectionActions">
+            <a href="/rooms/add" class="btn btn--ghost">
+              <i class="ph ph-plus"></i> Crear habitación
+            </a>
+            <a href="/rooms/table" class="btn btn--primary">Vista administrativa</a>
+          </div>
+        </section>
 
         <section
           class="cards-grid"
@@ -55,17 +64,26 @@
                 "
               />
               <div
-                class="room-price-badge"
-                th:text="'$' + ${room.pricePerNight} + ' / noche'"
+                class="room-tag-badge"
+                th:classappend="${room.roomType} == 'PREMIUM' ? ' room-tag-badge--premium' : (${room.roomType} == 'RELAX' ? ' room-tag-badge--relax' : ' room-tag-badge--exclusive')"
+                th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}"
               >
-                $0 / noche
+                Tipo
               </div>
             </div>
 
             <div class="card__body">
-              <h2 class="card__title" th:text="${room.name}">
-                Nombre de Habitación
-              </h2>
+              <div class="room-card__top">
+                <div>
+                  <h2 class="card__title" th:text="${room.name}">
+                    Nombre de Habitación
+                  </h2>
+                  <div class="room-card__priceLine">
+                    <span th:text="'$' + ${room.pricePerNight}">$0</span>
+                    <small>/noche</small>
+                  </div>
+                </div>
+              </div>
               <p class="card__subtitle" th:text="${room.description}">
                 Descripción breve de la habitación.
               </p>
@@ -87,9 +105,7 @@
               </div>
 
               <div class="card__actions">
-                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--ghost"
-                  >Explorar suite</a
-                >
+                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--primary">Reservar Suite</a>
               </div>
             </div>
           </article>

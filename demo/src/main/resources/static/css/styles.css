@@ -37,23 +37,30 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--bg-body);
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
   line-height: 1.2;
+  
 }
 
 img {
@@ -81,9 +88,7 @@ a {
   background-color: var(--primary);
   color: var(--white);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   border-radius: 50px;
   border: 2px solid var(--primary);
   cursor: pointer;
@@ -134,8 +139,6 @@ a {
 .section-header span {
   display: block;
   color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 3px;
   font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -184,10 +187,9 @@ nav {
 
 .nav-links a {
   color: var(--white);
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-transform: capitalize;
   position: relative;
 }
 
@@ -215,6 +217,7 @@ nav {
   color: var(--secondary) !important;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
+  font-size: 0.95rem;
   font-weight: 600;
   display: inline-block;
   transition:
@@ -323,7 +326,7 @@ nav {
   font-size: 1.3rem;
   margin-bottom: 2.5rem;
   font-weight: 300;
-  letter-spacing: 0.5px;
+  
 }
 
 /* Booking Bar Widget */
@@ -352,8 +355,6 @@ nav {
 
 .input-group label {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   color: var(--gold);
   font-weight: 700;
 }
@@ -363,7 +364,7 @@ nav {
   border: none;
   border-bottom: 1px solid #ddd;
   padding: 0.5rem 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   color: var(--secondary);
   outline: none;
@@ -647,8 +648,8 @@ nav {
 
 .field label {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  
+  
   color: var(--gold);
   font-weight: 700;
 }
@@ -658,7 +659,7 @@ nav {
   border: none;
   border-bottom: 1px solid #ddd;
   padding: 0.7rem 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   color: var(--secondary);
   outline: none;
@@ -732,7 +733,7 @@ nav {
 
 .footer-links h4,
 .footer-contact h4 {
-  font-family: "Playfair Display", serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: var(--white);
@@ -915,3 +916,4 @@ nav {
     text-align: center;
   }
 }
+

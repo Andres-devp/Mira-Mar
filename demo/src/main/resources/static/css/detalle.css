@@ -22,17 +22,53 @@
 }
 
 .detail-hero {
-  background: linear-gradient(
-    135deg,
-    var(--dusk-blue) 0%,
-    #1a2a44 50%,
-    var(--cornflower) 100%
-  );
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15)),
+    var(--hero-image, linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%));
+  background-size: cover;
+  background-position: center;
   color: var(--white);
-  padding: 180px 0 120px;
+  padding: 140px 0 70px;
   margin-bottom: 3.5rem;
   position: relative;
   overflow: hidden;
+}
+
+.detail-hero__content {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem 1.5rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.10));
+}
+
+.detail-hero__badge {
+  align-self: flex-start;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--white);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.detail-hero__location {
+  margin-top: 0.35rem;
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+.detail-hero__location i {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .detail-hero__grid {
@@ -109,10 +145,93 @@
   margin-top: 1.25rem;
 }
 
+.detail-gallery {
+  margin-top: -2.25rem;
+}
+
+.detail-gallery__strip {
+  display: grid;
+  grid-template-columns: 120px 120px 120px 1fr;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+@media (max-width: 640px) {
+  .detail-gallery__strip {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.detail-gallery__thumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.detail-gallery__thumb img {
+  width: 100%;
+  height: 88px;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-gallery__more {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  place-items: center;
+  color: var(--dusk-blue);
+  font-weight: 800;
+}
+
 .detail-section__title {
   color: var(--color-heading);
   margin-bottom: 0.75rem;
   font-size: 1.4rem;
+}
+
+.detail-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.detail-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  background: var(--white);
+  border: 1px solid rgba(48, 76, 137, 0.12);
+  color: var(--color-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.detail-chip i {
+  color: var(--cornflower);
+}
+
+.detail-map {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(48, 76, 137, 0.12);
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+}
+
+.detail-map iframe {
+  width: 100%;
+  height: 260px;
+  border: 0;
+  display: block;
 }
 
 .detail-aside {
@@ -132,6 +251,229 @@
   color: var(--color-heading);
   text-align: center;
   margin-bottom: 1.25rem;
+}
+
+.detail-booking__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail-booking__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.detail-booking__amount {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--dusk-blue);
+}
+
+.detail-booking__suffix {
+  color: rgba(48, 76, 137, 0.7);
+  font-weight: 700;
+}
+
+.detail-booking__rating {
+  color: rgba(48, 76, 137, 0.75);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.detail-booking__dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 1000px) {
+  .detail-booking__dates {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-booking__cta {
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+.detail-booking__note {
+  margin-top: 0.65rem;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(48, 76, 137, 0.65);
+  font-weight: 600;
+}
+
+.detail-booking__summary {
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(48, 76, 137, 0.12);
+  display: grid;
+  gap: 0.65rem;
+}
+
+.detail-booking__line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: rgba(48, 76, 137, 0.8);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.detail-booking__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--dusk-blue);
+  font-weight: 900;
+  font-size: 1rem;
+  padding-top: 0.25rem;
+}
+
+/* --- Service Detail (scoped) --- */
+body.service-detail-page .detail-hero {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.22)),
+    var(--hero-image, linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%));
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0 70px;
+}
+
+body.service-detail-page .detail-hero__lead {
+  max-width: 70ch;
+}
+
+body.service-detail-page .service-detail__intro {
+  background: transparent;
+  margin-top: 0;
+}
+
+body.service-detail-page .service-detail__title {
+  color: var(--dusk-blue);
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+body.service-detail-page .service-detail__text {
+  color: rgba(48, 76, 137, 0.75);
+  margin-bottom: 0.85rem;
+}
+
+body.service-detail-page .service-detail__includes {
+  margin-top: 1.5rem;
+}
+
+body.service-detail-page .service-detail__includesTitle {
+  color: var(--dusk-blue);
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+body.service-detail-page .service-detail__includesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 980px) {
+  body.service-detail-page .service-detail__includesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  body.service-detail-page .service-detail__includesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+body.service-detail-page .service-include-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem 1.15rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+body.service-detail-page .service-include-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(100, 141, 229, 0.12);
+  color: var(--dusk-blue);
+}
+
+body.service-detail-page .service-include-card__icon i {
+  font-size: 1.2rem;
+}
+
+body.service-detail-page .service-include-card__title {
+  color: var(--dusk-blue);
+  font-weight: 800;
+}
+
+body.service-detail-page .service-include-card__desc {
+  color: rgba(48, 76, 137, 0.75);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+body.service-detail-page .service-booking-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+body.service-detail-page .service-booking-card__title {
+  color: var(--dusk-blue);
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+body.service-detail-page .service-booking-card__grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+body.service-detail-page .service-booking-card__priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(48, 76, 137, 0.12);
+  margin-top: 0.85rem;
+  color: rgba(48, 76, 137, 0.85);
+  font-weight: 800;
+}
+
+body.service-detail-page .service-booking-card .btn {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
+body.service-detail-page .service-booking-card__note {
+  margin-top: 0.75rem;
+  text-align: center;
+  color: rgba(48, 76, 137, 0.65);
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .form-field {

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -17,64 +17,91 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/habitaciones.css" />
+    <link rel="stylesheet" href="/css/servicios.css" />
   </head>
-  <body class="page-rooms-list">
+  <body class="page-services">
     <div th:replace="fragments/navbar :: navbar"></div>
 
     <main class="services-page">
       <div class="container">
-        <header class="rooms-list__header">
+        <header class="rooms-list__header" id="servicios">
           <h1>Nuestros Servicios</h1>
           <p>
-            Comodidades y experiencias diseñadas para elevar tu estadía frente
-            al mar.
+            Comodidades y experiencias diseñadas para elevar tu estadía a un
+            nivel de lujo incomparable.
           </p>
-
-          <div class="services-page__actions">
-            <a href="/services/add" class="btn btn--primary">
-              <i class="ph ph-plus"></i> Nuevo servicio
-            </a>
-            <a href="/services/table" class="btn btn--ghost"
-              >Vista administrativa</a
-            >
+          <div class="rooms-list__actions">
+            <a href="#experiencias" class="btn btn--secondary">Ver todos</a>
+            <a href="/rooms" class="btn btn--ghost">Explorar Suites</a>
           </div>
         </header>
+
+        <section class="rooms-list__sectionHeader" id="experiencias">
+          <div>
+            <h2>Experiencias Exclusivas</h2>
+            <p>Comodidades pensadas para una estadía sin preocupaciones.</p>
+          </div>
+          <div class="rooms-list__sectionActions">
+            <a href="/services/add" class="btn btn--ghost">
+              <i class="ph ph-plus"></i> Nuevo servicio
+            </a>
+            <a href="/services/table" class="btn btn--primary">Vista administrativa</a>
+          </div>
+        </section>
 
         <section
           class="cards-grid"
           th:if="${not #lists.isEmpty(servicios)}"
           aria-label="Listado de servicios"
         >
-          <article class="card card--room" th:each="servicio : ${servicios}">
+          <article class="card card--service" th:each="servicio : ${servicios}">
             <div class="card__media">
-              <img th:src="${servicio.imageUrl}" th:alt="${servicio.nombre}" />
-              <div
-                class="room-price-badge"
-                th:text="${servicio.price != null ? '$' + servicio.price : 'Consultar'}"
-              >
-                $0
+              <img
+                th:src="${servicio.imageUrl}"
+                th:alt="${servicio.nombre}"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/600x400/cdc392/ffffff?text=Servicio'
+                "
+              />
+              <div class="service-icon" aria-hidden="true">
+                <i class="ph ph-sparkle"></i>
               </div>
             </div>
 
             <div class="card__body">
-              <h2 class="card__title" th:text="${servicio.nombre}">Nombre</h2>
+              <div class="service-titleRow">
+                <h2 class="card__title" th:text="${servicio.nombre}">Nombre</h2>
+                <div
+                  class="service-price"
+                  th:text="${servicio.price != null ? '$' + servicio.price : ''}"
+                >
+                  $0
+                </div>
+              </div>
               <p class="card__subtitle" th:text="${servicio.descripcion}">
                 Descripción del servicio
               </p>
 
               <div class="card__meta">
-                <span><i class="ph ph-star"></i> Servicio</span>
+                <span><i class="ph ph-clock"></i> <span>Todo el día</span></span>
               </div>
 
               <div class="card__actions">
                 <a
                   th:href="@{'/services/' + ${servicio.id}}"
-                  class="btn btn--ghost"
-                  >Descubrir</a
-                >
+                  class="btn btn--primary"
+                  >Descubrir</a>
               </div>
             </div>
           </article>
+        </section>
+
+        <section class="services-page__bottomActions">
+          <a href="/services/add" class="btn btn--primary">
+            <i class="ph ph-plus"></i> Nuevo servicio
+          </a>
+          <a href="/services/table" class="btn btn--ghost">Vista administrativa</a>
         </section>
 
         <section
