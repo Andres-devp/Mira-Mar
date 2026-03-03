@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping; // Importante añadir esta
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -13,16 +13,15 @@ import com.example.demo.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {
+public class AuthController {
 
-    @GetMapping("/login")
-    public String mostrarLogin() {
-        return "login"; 
-    }
-
-    
     @Autowired
     private UsuarioService usuarioService;
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String username,
@@ -44,5 +43,10 @@ public class LoginController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/create-account")
+    public String createAccount() {
+        return "create-account";
     }
 }
