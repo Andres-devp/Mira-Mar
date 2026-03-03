@@ -39,6 +39,20 @@
           </div>
         </header>
 
+        <header class="rooms-list__header">
+          <h1>Tipos de habitación</h1>
+          <p>Administra los distintos tipos de suites en el sistema.</p>
+
+          <div class="rooms-list__actions">
+            <a href="/roomtypes/add" class="btn btn--secondary">
+              <i class="ph ph-plus"></i> Crear tipo
+            </a>
+            <a href="/roomtypes" class="btn btn--ghost">
+              Vista administrativa
+            </a>
+          </div>
+        </header>
+
         <section
           class="cards-grid"
           th:if="${not #lists.isEmpty(rooms)}"

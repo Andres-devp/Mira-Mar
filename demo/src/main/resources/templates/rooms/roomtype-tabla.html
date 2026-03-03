@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tipos de habitación (Tabla) | Mira Mar</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/servicios.css" />
+  </head>
+  <body class="page-services">
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <main class="services-page">
+      <div class="container">
+        <header class="services-page__header">
+          <h1>Tipos de habitación (Tabla)</h1>
+          <p>Gestiona los distintos tipos que puede tener una habitación.</p>
+
+          <div class="services-page__actions">
+            <a href="/roomtypes/add" class="btn btn--primary">Crear tipo</a>
+          </div>
+        </header>
+
+        <table class="services-table" th:if="${not #lists.isEmpty(roomTypes)}">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="type : ${roomTypes}">
+              <td th:text="${type.code}"></td>
+              <td th:text="${type.displayName}"></td>
+              <td th:text="${type.description}"></td>
+              <td>
+                <div class="services-table__actions">
+                  <a
+                    th:href="@{'/roomtypes/' + ${type.code}}"
+                    class="btn btn--ghost btn--full"
+                    >Ver</a
+                  >
+                  <div class="services-table__actions-row">
+                    <a
+                      th:href="@{'/roomtypes/edit/' + ${type.code}}"
+                      class="btn btn--ghost"
+                      >Editar</a
+                    >
+                    <form
+                      th:action="@{'/roomtypes/delete/' + ${type.code}}"
+                      method="post"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn--secondary"
+                        onclick="
+                          return confirm(
+                            '¿Seguro que deseas eliminar este tipo?',
+                          );
+                        "
+                      >
+                        Eliminar
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <section
+          th:if="${#lists.isEmpty(roomTypes)}"
+          class="services-page__empty"
+          aria-live="polite"
+        >
+          <h2>No hay tipos definidos</h2>
+          <p>Añade un tipo para verlo aquí.</p>
+        </section>
+      </div>
+    </main>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>
