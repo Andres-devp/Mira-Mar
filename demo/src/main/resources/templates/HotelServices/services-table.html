@@ -53,30 +53,32 @@
                 <div class="services-table__actions">
                   <a
                     th:href="@{'/services/' + ${servicio.id}}"
-                    class="btn btn--ghost"
+                    class="btn btn--ghost btn--full"
                     >Ver</a
                   >
-                  <a
-                    th:href="@{'/services/edit/' + ${servicio.id}}"
-                    class="btn btn--ghost"
-                    >Editar</a
-                  >
-                  <form
-                    th:action="@{'/services/delete/' + ${servicio.id}}"
-                    method="post"
-                  >
-                    <button
-                      type="submit"
-                      class="btn btn--secondary"
-                      onclick="
-                        return confirm(
-                          '¿Seguro que deseas eliminar este servicio?',
-                        );
-                      "
+                  <div class="services-table__actions-row">
+                    <a
+                      th:href="@{'/services/edit/' + ${servicio.id}}"
+                      class="btn btn--ghost"
+                      >Editar</a
                     >
-                      Eliminar
-                    </button>
-                  </form>
+                    <form
+                      th:action="@{'/services/delete/' + ${servicio.id}}"
+                      method="post"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn--secondary"
+                        onclick="
+                          return confirm(
+                            '¿Seguro que deseas eliminar este servicio?',
+                          );
+                        "
+                      >
+                        Eliminar
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -95,7 +97,7 @@
     </main>
 
     <div th:replace="fragments/footer :: footer"></div>
-    
+
     <script src="/js/script.js"></script>
   </body>
 </html>

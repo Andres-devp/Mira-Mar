@@ -100,7 +100,9 @@
 }
 
 .form-actions .btn {
-  min-width: 220px;
+  flex: 1;
+  min-width: 150px;
+  max-width: 300px;
 }
 
 @media (max-width: 640px) {

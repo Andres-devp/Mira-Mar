@@ -51,30 +51,32 @@
                 <div class="services-table__actions">
                   <a
                     th:href="@{'/usuarios/' + ${usuario.id}}"
-                    class="btn btn--ghost"
+                    class="btn btn--ghost btn--full"
                     >Ver</a
                   >
-                  <a
-                    th:href="@{'/usuarios/edit/' + ${usuario.id}}"
-                    class="btn btn--ghost"
-                    >Editar</a
-                  >
-                  <form
-                    th:action="@{'/usuarios/delete/' + ${usuario.id}}"
-                    method="post"
-                  >
-                    <button
-                      type="submit"
-                      class="btn btn--secondary"
-                      onclick="
-                        return confirm(
-                          '¿Seguro que deseas eliminar este usuario?',
-                        );
-                      "
+                  <div class="services-table__actions-row">
+                    <a
+                      th:href="@{'/usuarios/edit/' + ${usuario.id}}"
+                      class="btn btn--ghost"
+                      >Editar</a
                     >
-                      Eliminar
-                    </button>
-                  </form>
+                    <form
+                      th:action="@{'/usuarios/delete/' + ${usuario.id}}"
+                      method="post"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn--secondary"
+                        onclick="
+                          return confirm(
+                            '¿Seguro que deseas eliminar este usuario?',
+                          );
+                        "
+                      >
+                        Eliminar
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </td>
             </tr>
