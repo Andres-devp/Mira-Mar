@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Usuarios (Tabla) | Mira Mar</title>
+    <title>Tipos de habitación (Tabla) | Mira Mar</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -24,44 +24,43 @@
     <main class="services-page">
       <div class="container">
         <header class="services-page__header">
-          <h1>Usuarios (Tabla)</h1>
-          <p>Vista administrativa/rápida.</p>
+          <h1>Tipos de habitación (Tabla)</h1>
+          <p>Gestiona los distintos tipos que puede tener una habitación.</p>
 
           <div class="services-page__actions">
-            <!-- same structure as servicios table but adapted -->
-            <a href="/usuarios/add" class="btn btn--primary">Crear usuario</a>
+            <a href="/roomtypes/add" class="btn btn--primary">Crear tipo</a>
           </div>
         </header>
 
-        <table class="services-table" th:if="${not #lists.isEmpty(usuarios)}">
+        <table class="services-table" th:if="${not #lists.isEmpty(roomTypes)}">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Usuario</th>
-              <th>Rol</th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="usuario : ${usuarios}">
-              <td th:text="${usuario.id}"></td>
-              <td th:text="${usuario.usuario}"></td>
-              <td th:text="${usuario.rol}"></td>
+            <tr th:each="type : ${roomTypes}">
+              <td th:text="${type.code}"></td>
+              <td th:text="${type.displayName}"></td>
+              <td th:text="${type.description}"></td>
               <td>
                 <div class="services-table__actions">
                   <a
-                    th:href="@{'/usuarios/' + ${usuario.id}}"
+                    th:href="@{'/roomtypes/' + ${type.code}}"
                     class="btn btn--ghost btn--full"
                     >Ver</a
                   >
                   <div class="services-table__actions-row">
                     <a
-                      th:href="@{'/usuarios/edit/' + ${usuario.id}}"
+                      th:href="@{'/roomtypes/edit/' + ${type.code}}"
                       class="btn btn--ghost"
                       >Editar</a
                     >
                     <form
-                      th:action="@{'/usuarios/delete/' + ${usuario.id}}"
+                      th:action="@{'/roomtypes/delete/' + ${type.code}}"
                       method="post"
                     >
                       <button
@@ -69,7 +68,7 @@
                         class="btn btn--secondary"
                         onclick="
                           return confirm(
-                            '¿Seguro que deseas eliminar este usuario?',
+                            '¿Seguro que deseas eliminar este tipo?',
                           );
                         "
                       >
@@ -84,12 +83,12 @@
         </table>
 
         <section
-          th:if="${#lists.isEmpty(usuarios)}"
+          th:if="${#lists.isEmpty(roomTypes)}"
           class="services-page__empty"
           aria-live="polite"
         >
-          <h2>No hay usuarios disponibles</h2>
-          <p>Crea un usuario para verlo aquí.</p>
+          <h2>No hay tipos definidos</h2>
+          <p>Añade un tipo para verlo aquí.</p>
         </section>
       </div>
     </main>

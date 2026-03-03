@@ -1,13 +1,14 @@
 package com.example.demo.repository;
 
-import com.example.demo.entities.RoomType;
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.entities.RoomType;
 
 @Repository
 public class RoomTypeRepository {
@@ -43,5 +44,17 @@ public class RoomTypeRepository {
     public Optional<RoomType> findByCode(String code) {
         if (code == null) return Optional.empty();
         return Optional.ofNullable(roomTypes.get(code));
+    }
+
+    public void save(RoomType type) {
+        if (type != null && type.getCode() != null) {
+            roomTypes.put(type.getCode(), type);
+        }
+    }
+
+    public void deleteByCode(String code) {
+        if (code != null) {
+            roomTypes.remove(code);
+        }
     }
 }

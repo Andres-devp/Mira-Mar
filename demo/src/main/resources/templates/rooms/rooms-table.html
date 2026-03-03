@@ -55,30 +55,34 @@
               <td th:text="'$' + ${room.pricePerNight}"></td>
               <td>
                 <div class="rooms-table__actions">
-                  <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--ghost"
+                  <a
+                    th:href="@{'/rooms/' + ${room.id}}"
+                    class="btn btn--ghost btn--full"
                     >Ver</a
                   >
-                  <a
-                    th:href="@{'/rooms/' + ${room.id} + '/edit'}"
-                    class="btn btn--ghost"
-                    >Editar</a
-                  >
-                  <form
-                    th:action="@{'/rooms/' + ${room.id} + '/delete'}"
-                    method="POST"
-                  >
-                    <button
-                      type="submit"
-                      class="btn btn--secondary"
-                      onclick="
-                        return confirm(
-                          '¿Confirma que desea eliminar esta habitación?',
-                        );
-                      "
+                  <div class="rooms-table__actions-row">
+                    <a
+                      th:href="@{'/rooms/' + ${room.id} + '/edit'}"
+                      class="btn btn--ghost"
+                      >Editar</a
                     >
-                      Eliminar
-                    </button>
-                  </form>
+                    <form
+                      th:action="@{'/rooms/' + ${room.id} + '/delete'}"
+                      method="POST"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn--secondary"
+                        onclick="
+                          return confirm(
+                            '¿Confirma que desea eliminar esta habitación?',
+                          );
+                        "
+                      >
+                        Eliminar
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </td>
             </tr>
