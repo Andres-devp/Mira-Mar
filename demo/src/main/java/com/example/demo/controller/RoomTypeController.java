@@ -3,10 +3,10 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +18,11 @@ import com.example.demo.service.RoomTypeService;
 @RequestMapping("/roomtypes")
 public class RoomTypeController {
 
-    @Autowired
-    private RoomTypeService roomTypeService;
+    private final RoomTypeService roomTypeService;
+
+    public RoomTypeController(RoomTypeService roomTypeService) {
+        this.roomTypeService = roomTypeService;
+    }
 
     @GetMapping("")
     public String listTypes(Model model) {
@@ -38,12 +41,8 @@ public class RoomTypeController {
     @GetMapping("/{code}")
     public String typeDetail(@PathVariable("code") String code, Model model) {
         Optional<RoomType> type = roomTypeService.getRoomTypeByCode(code);
-        if (type.isPresent()) {
-            model.addAttribute("type", type.get());
-            return "rooms/roomtype-detail";
-        } else {
-            return "redirect:/roomtypes";
-        }
+        if (type.isEmpty()) return "redirect:/roomtypes";
+        return "redirect:/roomtypes/edit/" + type.get().getCode();
     }
 
     @GetMapping("/add")
@@ -53,7 +52,7 @@ public class RoomTypeController {
     }
 
     @PostMapping("/add")
-    public String saveType(RoomType type) {
+    public String saveType(@ModelAttribute("type") RoomType type) {
         roomTypeService.saveRoomType(type);
         return "redirect:/roomtypes";
     }
@@ -70,7 +69,7 @@ public class RoomTypeController {
     }
 
     @PostMapping("/edit/{code}")
-    public String updateType(RoomType type, @PathVariable("code") String code) {
+    public String updateType(@ModelAttribute("type") RoomType type, @PathVariable("code") String code) {
         // ensure code is set
         type.setCode(code);
         roomTypeService.saveRoomType(type);

@@ -12,6 +12,13 @@ import com.example.demo.repository.RoomTypeRepository;
 public class RoomTypeServiceImpl implements RoomTypeService {
     private final RoomTypeRepository roomTypeRepository;
 
+    private String normalizeCode(String code) {
+        if (code == null) return null;
+        String normalized = code.trim();
+        if (normalized.isEmpty()) return null;
+        return normalized.toUpperCase();
+    }
+
     public RoomTypeServiceImpl(RoomTypeRepository roomTypeRepository) {
         this.roomTypeRepository = roomTypeRepository;
     }
@@ -23,20 +30,18 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override
     public Optional<RoomType> getRoomTypeByCode(String code) {
-        return roomTypeRepository.findByCode(code);
+        return roomTypeRepository.findByCode(normalizeCode(code));
     }
 
     @Override
     public void saveRoomType(RoomType type) {
-        if (type != null && type.getCode() != null) {
-            roomTypeRepository.save(type);
-        }
+        if (type == null) return;
+        type.setCode(normalizeCode(type.getCode()));
+        roomTypeRepository.save(type);
     }
 
     @Override
     public void deleteByCode(String code) {
-        if (code != null) {
-            roomTypeRepository.deleteByCode(code);
-        }
+        roomTypeRepository.deleteByCode(normalizeCode(code));
     }
 }

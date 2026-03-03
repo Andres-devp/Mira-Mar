@@ -44,7 +44,7 @@
                   id="code"
                   name="code"
                   th:field="*{code}"
-                  th:attr="${type.code} != null ? 'readonly' : null"
+                  th:readonly="${type.code} != null"
                   required
                 />
                 <div class="form-error"></div>

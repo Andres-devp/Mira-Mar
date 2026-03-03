@@ -14,6 +14,13 @@ import com.example.demo.entities.RoomType;
 public class RoomTypeRepository {
     private final Map<String, RoomType> roomTypes = new LinkedHashMap<>();
 
+    private String normalizeCode(String code) {
+        if (code == null) return null;
+        String normalized = code.trim();
+        if (normalized.isEmpty()) return null;
+        return normalized.toUpperCase();
+    }
+
     public RoomTypeRepository() {
         roomTypes.put("NORMAL", new RoomType(
                 "NORMAL",
@@ -42,19 +49,23 @@ public class RoomTypeRepository {
     }
 
     public Optional<RoomType> findByCode(String code) {
-        if (code == null) return Optional.empty();
-        return Optional.ofNullable(roomTypes.get(code));
+        String normalizedCode = normalizeCode(code);
+        if (normalizedCode == null) return Optional.empty();
+        return Optional.ofNullable(roomTypes.get(normalizedCode));
     }
 
     public void save(RoomType type) {
-        if (type != null && type.getCode() != null) {
-            roomTypes.put(type.getCode(), type);
-        }
+        if (type == null) return;
+        String normalizedCode = normalizeCode(type.getCode());
+        if (normalizedCode == null) return;
+
+        type.setCode(normalizedCode);
+        roomTypes.put(normalizedCode, type);
     }
 
     public void deleteByCode(String code) {
-        if (code != null) {
-            roomTypes.remove(code);
-        }
+        String normalizedCode = normalizeCode(code);
+        if (normalizedCode == null) return;
+        roomTypes.remove(normalizedCode);
     }
 }

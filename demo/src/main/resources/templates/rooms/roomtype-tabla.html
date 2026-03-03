@@ -47,35 +47,28 @@
               <td th:text="${type.displayName}"></td>
               <td th:text="${type.description}"></td>
               <td>
-                <div class="services-table__actions">
+                <div class="services-table__actions-row">
                   <a
-                    th:href="@{'/roomtypes/' + ${type.code}}"
-                    class="btn btn--ghost btn--full"
-                    >Ver</a
+                    th:href="@{'/roomtypes/edit/' + ${type.code}}"
+                    class="btn btn--ghost"
+                    >Editar</a
                   >
-                  <div class="services-table__actions-row">
-                    <a
-                      th:href="@{'/roomtypes/edit/' + ${type.code}}"
-                      class="btn btn--ghost"
-                      >Editar</a
+                  <form
+                    th:action="@{'/roomtypes/delete/' + ${type.code}}"
+                    method="post"
+                  >
+                    <button
+                      type="submit"
+                      class="btn btn--secondary"
+                      onclick="
+                        return confirm(
+                          '¿Seguro que deseas eliminar este tipo?',
+                        );
+                      "
                     >
-                    <form
-                      th:action="@{'/roomtypes/delete/' + ${type.code}}"
-                      method="post"
-                    >
-                      <button
-                        type="submit"
-                        class="btn btn--secondary"
-                        onclick="
-                          return confirm(
-                            '¿Seguro que deseas eliminar este tipo?',
-                          );
-                        "
-                      >
-                        Eliminar
-                      </button>
-                    </form>
-                  </div>
+                      Eliminar
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>
