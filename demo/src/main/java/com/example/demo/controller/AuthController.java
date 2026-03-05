@@ -32,7 +32,7 @@ public class AuthController {
         if (usuario != null && usuario.getContrasena().equals(password)) {
             // credenciales válidas; guardar en sesión para posteriores comprobaciones
             session.setAttribute("loggedUser", usuario);
-            return "redirect:/index";
+            return "redirect:/dashboard";
         }
         // falló autenticación
         flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
@@ -48,5 +48,43 @@ public class AuthController {
     @GetMapping("/create-account")
     public String createAccount() {
         return "create-account";
+    }
+
+    @PostMapping("/create-account")
+    public String procesarCrearCuenta(@RequestParam String nombre,
+                                    @RequestParam String usuario,
+                                    @RequestParam String email,
+                                    @RequestParam String contrasena,
+                                    @RequestParam String contrasenaConfirm,
+                                    RedirectAttributes flash) {
+        // Validar que las contraseñas coincidan
+        if (!contrasena.equals(contrasenaConfirm)) {
+            flash.addFlashAttribute("error", "Las contraseñas no coinciden");
+            return "redirect:/create-account";
+        }
+
+        // Validar que el usuario no exista
+        Usuario usuarioExistente = usuarioService.searchByUsername(usuario);
+        if (usuarioExistente != null) {
+            flash.addFlashAttribute("error", "El nombre de usuario ya está en uso");
+            return "redirect:/create-account";
+        }
+
+        // Crear nuevo usuario con rol CLIENTE por defecto
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setUsuario(usuario);
+        nuevoUsuario.setEmail(email);
+        nuevoUsuario.setContrasena(contrasena);
+        nuevoUsuario.setRol("CLIENTE");
+        nuevoUsuario.setTelefono(""); // vacío por defecto
+        nuevoUsuario.setFotoPerfil(null); // sin foto de perfil por defecto
+
+        // Guardar el usuario
+        usuarioService.save(nuevoUsuario);
+
+        // Redirigir al login con mensaje de éxito
+        flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
+        return "redirect:/login";
     }
 }

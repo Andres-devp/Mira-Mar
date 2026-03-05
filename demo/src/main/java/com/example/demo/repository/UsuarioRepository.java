@@ -13,14 +13,16 @@ public class UsuarioRepository {
     private final Map<Integer, Usuario> usuarios = new HashMap<>();
 
     public UsuarioRepository() {
-        // 10 usuarios de ejemplo
-        usuarios.put(1, new Usuario(1, "Andres Doncel", "andres", "password123456", "admin", "andres@gmail.com", "1234567890"));
-        usuarios.put(2, new Usuario(2, "Ohcar", "ohca", "password1234", "cliente", "ohcar@gmail.com", "9876543210"));
-        usuarios.put(3, new Usuario(3, "Maria", "mari", "password1234", "cliente", "maria@gmail.com", "9876543210"));   
+        
+        usuarios.put(1, new Usuario(1, "Administrador", "admin", "admin123", "ADMIN", "admin@miramar.com", "0000000000", null));
+        
+        usuarios.put(2, new Usuario(2, "Andres Doncel", "andres", "password123456", "ADMIN", "andres@gmail.com", "1234567890", null));
+        usuarios.put(3, new Usuario(3, "Ohcar", "ohca", "password1234", "CLIENTE", "ohcar@gmail.com", "9876543210", null));
+        usuarios.put(4, new Usuario(4, "Maria", "mari", "password1234", "CLIENTE", "maria@gmail.com", "9876543210", null));   
     }
 
     public Usuario findById(int id) {
-        return usuarios.get(id);    
+        return usuarios.get(id);
     }
 
     /**

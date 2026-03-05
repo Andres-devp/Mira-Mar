@@ -15,4 +15,5 @@ public class Usuario {
     private String rol; // "ADMIN" o "CLIENTE"
     private String email;
     private String telefono;
+    private String fotoPerfil;
 }

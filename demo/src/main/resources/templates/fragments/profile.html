@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - Mira Mar</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    
+    <style>
+      /* Estilos adicionales específicos para el perfil */
+      .profile-container {
+        margin-top: 100px;
+        padding: 40px 20px;
+      }
+
+      .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .profile-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--primary);
+        margin: 0 auto 20px;
+        display: block;
+      }
+
+      .profile-info {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--accent);
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        font-weight: 600;
+        color: var(--secondary);
+      }
+
+      .info-value {
+        color: var(--text-main);
+      }
+
+      .edit-button {
+        margin-top: 30px;
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .edit-button:hover {
+        background-color: var(--primary-hover);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Incluir navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="profile-container">
+      <div class="container">
+        <div class="profile-header">
+          <h1>Mi Perfil</h1>
+          
+          <!--ESTRUCTURA DE LA FOTO DE PERFIL:-->
+            
+            <!--Si el usuario tiene foto de perfil, mostrarla:-->
+            <img th:if="${user.fotoPerfil}" th:src="'/' + ${user.fotoPerfil}" alt="Foto de perfil" class="profile-photo"/>
+            
+            <!--Si no tiene foto, mostrar imagen genérica (descomentar la que uses):-->
+            <img src="/images/default-profile.png" alt="Foto de perfil" class="profile-photo" />
+            
+            <!--O un icono genérico de usuario:-->
+            <i class="ph ph-user-circle" style="font-size: 150px; color: var(--primary);"></i>
+          
+        </div>
+
+        <div class="profile-info">
+          <!-- INFORMACIÓN DEL USUARIO:-->
+            
+            <!--Mostrar los datos del usuario autenticado:-->
+            <div class="info-row">
+              <span class="info-label">Nombre:</span>
+              <span class="info-value" th:text="${user.nombre}">Nombre del usuario</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Usuario:</span>
+              <span class="info-value" th:text="${user.usuario}">username</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span class="info-value" th:text="${user.email}">email@example.com</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Teléfono:</span>
+              <span class="info-value" th:text="${user.telefono}">+57 (310) 123-4567</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Rol:</span>
+              <span class="info-value" th:text="${user.rol}">CLIENTE</span>
+            </div>
+          
+          
+          <!--BOTÓN DE EDITAR PERFIL:-->
+            
+            
+            <div style="text-align: center;">
+              <button class="edit-button">Editar Perfil</button>
+            </div>
+          <!-- PLACEHOLDER: Contenido descomentado para desarrollo -->
+          <p style="text-align: center; color: var(--text-main);">
+            La información del perfil se mostrará aquí.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incluir footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>
