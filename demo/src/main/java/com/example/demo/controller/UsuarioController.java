@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entities.Usuario;
 import com.example.demo.service.UsuarioService;
 
-import jakarta.servlet.http.HttpSession;
-
 
 @Controller
 @RequestMapping("/usuarios")
@@ -65,15 +63,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/delete/{id}")
-    public String eliminarUsuario(@PathVariable("id") Integer id, HttpSession session) {
-        // Validar que el usuario está autenticado y es administrador
-        Usuario usuarioAutenticado = (Usuario) session.getAttribute("loggedUser");
-        if (usuarioAutenticado == null || !usuarioAutenticado.getRol().equals("ADMIN")) {
-            // Usuario no autenticado o no es administrador
-            return "redirect:/usuarios?error=no_autorizado";
-        }
-        
-        // Proceder con la eliminación
+    public String eliminarUsuario(@PathVariable("id") Integer id) {
         usuarioService.deleteById(id);
         return "redirect:/usuarios";
     }

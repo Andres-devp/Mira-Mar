@@ -9,8 +9,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entities.Usuario;
 import com.example.demo.service.UsuarioService;
-
-import jakarta.servlet.http.HttpSession;
+ 
+import java.util.Collection;
 
 @Controller
 public class AuthController {
@@ -18,36 +18,38 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/login")
+    @GetMapping("/login-page")
     public String login() {
-        return "login";
+        return "Usuarios/login/login";
     }
 
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String username,
                                 @RequestParam String password,
-                                RedirectAttributes flash,
-                                HttpSession session) {
-        Usuario usuario = usuarioService.searchByUsername(username);
-        if (usuario != null && usuario.getContrasena().equals(password)) {
-            // credenciales válidas; guardar en sesión para posteriores comprobaciones
-            session.setAttribute("loggedUser", usuario);
-            return "redirect:/dashboard";
+                                RedirectAttributes flash) {
+        Collection<Usuario> usuarios = usuarioService.searchAll();
+        if (usuarios != null) {
+            for (Usuario u : usuarios) {
+                if (u != null && u.getUsuario() != null && u.getContrasena() != null
+                        && u.getUsuario().equals(username)
+                        && u.getContrasena().equals(password)) {
+                    return "redirect:/usuarios/" + u.getId();
+                }
+            }
         }
         // falló autenticación
         flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
-        return "redirect:/login";
+        return "redirect:/login-page";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout() {
         return "redirect:/";
     }
 
     @GetMapping("/create-account")
     public String createAccount() {
-        return "create-account";
+        return "Usuarios/login/create-account";
     }
 
     @PostMapping("/create-account")
@@ -85,6 +87,6 @@ public class AuthController {
 
         // Redirigir al login con mensaje de éxito
         flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
-        return "redirect:/login";
+        return "redirect:/login-page";
     }
 }
