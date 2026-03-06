@@ -17,24 +17,16 @@
             <li><a href="/services/cards">Servicios</a></li>
             <li><a href="/usuarios" class="active">Usuarios</a></li>
             <li><a href="/#contact">Contacto</a></li>
-            <li th:if="${session.loggedUser == null}"><a href="/login" class="book-btn-nav">Login</a></li>
-            <!-- Perfil del usuario autenticado -->
-            <li th:if="${session.loggedUser != null}" class="profile-dropdown-item">
-              <button class="profile-btn" type="button" id="profileBtn">
-                <!-- Foto de perfil del usuario -->
-                <img th:if="${session.loggedUser.fotoPerfil}" 
-                    th:src="'/' + ${session.loggedUser.fotoPerfil}" 
+            <li class="profile-dropdown-item">
+              <a href="/login-page" class="user-login-link">
+                <img
+                    id="nav-user-icon"
+                    src="/images/usuarioBlanco.png"
+                    data-default="/images/usuarioBlanco.png"
+                    data-scrolled="/images/usuarioNegro.png"
                     alt="Foto de perfil"
                     class="profile-img"/>
-                <!-- Icono genérico si no tiene foto de perfil -->
-                <i th:unless="${session.loggedUser.fotoPerfil}" class="ph ph-user-circle profile-icon"></i> 
-              </button>
-              <!-- Dropdown menu -->
-              <div class="profile-dropdown" id="profileDropdown">
-                <a href="/profile" class="dropdown-item">Ver Perfil</a>
-                <hr class="dropdown-divider" />
-                <a href="/logout" class="dropdown-item logout-item">Logout</a>
-              </div>
+              </a>
             </li>
           </ul>
           <div class="hamburger">

@@ -208,6 +208,22 @@ nav {
   width: 100%;
 }
 
+.nav-links a.user-login-link::after {
+  display: none;
+}
+
+.nav-links a.user-login-link {
+  text-decoration: none;
+}
+
+.nav-links a.user-login-link .profile-img {
+  transition: transform 0.2s var(--ease);
+}
+
+.nav-links a.user-login-link:hover .profile-img {
+  transform: scale(1.08);
+}
+
 #navbar.scrolled .nav-links a {
   color: var(--secondary);
 }
