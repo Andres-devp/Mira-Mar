@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.entities.Usuario;
 import com.example.demo.service.UsuarioService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AuthController {
 
@@ -25,32 +27,52 @@ public class AuthController {
 
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String username,
-                                @RequestParam String password,
-                                RedirectAttributes flash) {
-        Collection<Usuario> usuarios = usuarioService.searchAll();
-        if (usuarios != null) {
-            for (Usuario u : usuarios) {
-                if (u != null && u.getUsuario() != null && u.getContrasena() != null
-                        && u.getUsuario().equals(username)
-                        && u.getContrasena().equals(password)) {
-                    return "redirect:/usuarios/" + u.getId();
-                }
+                            @RequestParam String password,
+                            RedirectAttributes flash,
+                            HttpSession session) {
+    Collection<Usuario> usuarios = usuarioService.searchAll();
+
+    if (usuarios != null) {
+        for (Usuario u : usuarios) {
+            if (u != null && u.getUsuario() != null && u.getContrasena() != null
+                    && u.getUsuario().equals(username)
+                    && u.getContrasena().equals(password)) {
+
+                session.setAttribute("usuarioLogueado", u);
+                session.setAttribute("rol", u.getRol());
+
+                return "redirect:/perfil";
             }
         }
-        // falló autenticación
-        flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
-        return "redirect:/login-page";
+    }
+
+    // fallo autenticación
+    flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
+    return "redirect:/login-page";
     }
 
     @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/";
-    }
+        public String logout(jakarta.servlet.http.HttpSession session) {
+        session.invalidate();
+    return "redirect:/login-page";
+}
 
     @GetMapping("/create-account")
     public String createAccount() {
         return "Usuarios/login/create-account";
     }
+
+    @GetMapping("/perfil")
+    public String perfil(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login-page";
+    }
+
+    return "redirect:/usuarios/" + usuarioLogueado.getId();
+}
+
 
 @PostMapping("/create-account")
 public String procesarCrearCuenta(@RequestParam String nombre,

@@ -40,11 +40,16 @@
             <h2>Experiencias Exclusivas</h2>
             <p>Comodidades pensadas para una estadía sin preocupaciones.</p>
           </div>
-          <div class="rooms-list__sectionActions">
+          <div
+            class="rooms-list__sectionActions"
+            th:if="${session.usuarioLogueado != null and (session.usuarioLogueado.rol == 'ADMIN' or session.usuarioLogueado.rol == 'OPERADOR')}"
+          >
             <a href="/services/add" class="btn btn--ghost">
               <i class="ph ph-plus"></i> Nuevo servicio
             </a>
-            <a href="/services/table" class="btn btn--primary">Vista administrativa</a>
+            <a href="/services/table" class="btn btn--primary"
+              >Vista administrativa</a
+            >
           </div>
         </section>
 
@@ -83,24 +88,32 @@
               </p>
 
               <div class="card__meta">
-                <span><i class="ph ph-clock"></i> <span>Todo el día</span></span>
+                <span
+                  ><i class="ph ph-clock"></i> <span>Todo el día</span></span
+                >
               </div>
 
               <div class="card__actions">
                 <a
                   th:href="@{'/services/' + ${servicio.id}}"
                   class="btn btn--primary"
-                  >Descubrir</a>
+                  >Descubrir</a
+                >
               </div>
             </div>
           </article>
         </section>
 
-        <section class="services-page__bottomActions">
+        <section
+          class="services-page__bottomActions"
+          th:if="${session.usuarioLogueado != null and (session.usuarioLogueado.rol == 'ADMIN' or session.usuarioLogueado.rol == 'OPERADOR')}"
+        >
           <a href="/services/add" class="btn btn--primary">
             <i class="ph ph-plus"></i> Nuevo servicio
           </a>
-          <a href="/services/table" class="btn btn--ghost">Vista administrativa</a>
+          <a href="/services/table" class="btn btn--ghost"
+            >Vista administrativa</a
+          >
         </section>
 
         <section

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entities.Usuario;
 import com.example.demo.service.UsuarioService;
 
-
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -20,20 +19,86 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping("")
-    public String Usuarios(Model model) {
+    public String Usuarios(Model model, jakarta.servlet.http.HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login-page";
+        }
+
+        boolean esAdminOOperador = "ADMIN".equalsIgnoreCase(usuarioLogueado.getRol())
+                || "OPERADOR".equalsIgnoreCase(usuarioLogueado.getRol());
+
+        if (!esAdminOOperador) {
+            return "redirect:/perfil";
+        }
+
         model.addAttribute("usuarios", usuarioService.searchAll());
         return "Usuarios/usuarios-tabla";
     }
 
     @GetMapping("/{id}")
-    public String UsuarioPorId(Model model, @PathVariable ("id") Integer id) {
+    public String UsuarioPorId(Model model,
+                               @PathVariable("id") Integer id,
+                               jakarta.servlet.http.HttpSession session) {
+
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login-page";
+        }
+
+        boolean esAdminOOperador = "ADMIN".equalsIgnoreCase(usuarioLogueado.getRol())
+                || "OPERADOR".equalsIgnoreCase(usuarioLogueado.getRol());
+
+        if (!esAdminOOperador && usuarioLogueado.getId() != id) {
+            return "redirect:/perfil";
+        }
 
         Usuario usuario = usuarioService.searchById(id);
         model.addAttribute("usuario", usuario);
         return "Usuarios/usuario-detail";
     }
 
-    // --- new CRUD mappings ---
+    @PostMapping("/delete-account/{id}")
+    public String eliminarCuenta(@PathVariable("id") Integer id,
+                                 jakarta.servlet.http.HttpSession session) {
+
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login-page";
+        }
+
+        if (usuarioLogueado.getId() != id) {
+            return "redirect:/perfil";
+        }
+
+        usuarioService.deleteById(id);
+        session.invalidate();
+
+        return "redirect:/login-page";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String eliminarUsuario(@PathVariable("id") Integer id,
+                                  jakarta.servlet.http.HttpSession session) {
+
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login-page";
+        }
+
+        boolean esAdmin = "ADMIN".equalsIgnoreCase(usuarioLogueado.getRol());
+
+        if (!esAdmin) {
+            return "redirect:/perfil";
+        }
+
+        usuarioService.deleteById(id);
+        return "redirect:/usuarios";
+    }
 
     @GetMapping("/add")
     public String crearFormulario(Model model) {
@@ -56,16 +121,8 @@ public class UsuarioController {
 
     @PostMapping("/edit/{id}")
     public String actualizarUsuario(Usuario usuario, @PathVariable("id") Integer id) {
-        // ensure the id is set in case the form didn't include it
         usuario.setId(id);
         usuarioService.save(usuario);
         return "redirect:/usuarios";
     }
-
-    @PostMapping("/delete/{id}")
-    public String eliminarUsuario(@PathVariable("id") Integer id) {
-        usuarioService.deleteById(id);
-        return "redirect:/usuarios";
-    }
 }
-

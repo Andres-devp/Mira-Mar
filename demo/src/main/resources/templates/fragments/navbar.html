@@ -15,10 +15,11 @@
             <li><a href="/">Inicio</a></li>
             <li><a href="/rooms">Suites</a></li>
             <li><a href="/services/cards">Servicios</a></li>
-            <li><a href="/usuarios" class="active">Usuarios</a></li>
+            <li th:if="${session.usuarioLogueado != null and (session.usuarioLogueado.rol == 'ADMIN' or session.usuarioLogueado.rol == 'OPERADOR')}">
+            <a href="/usuarios" class="active">Usuarios</a></li>
             <li><a href="/#contact">Contacto</a></li>
             <li class="profile-dropdown-item">
-              <a href="/login-page" class="user-login-link">
+              <a th:href="${session.usuarioLogueado != null} ? @{/perfil} : @{/login-page}" class="user-login-link">
                 <img
                     id="nav-user-icon"
                     src="/images/usuarioBlanco.png"

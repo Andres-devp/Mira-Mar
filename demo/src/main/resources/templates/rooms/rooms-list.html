@@ -26,8 +26,8 @@
         <header class="rooms-list__header">
           <h1>Nuestras Suites</h1>
           <p>
-            Descubre un refugio diseñado para tu descanso con vistas inigualables y
-            confort absoluto.
+            Descubre un refugio diseñado para tu descanso con vistas
+            inigualables y confort absoluto.
           </p>
           <div class="rooms-list__actions">
             <a href="#suites" class="btn btn--secondary">Ver todas</a>
@@ -40,15 +40,24 @@
             <h2>Suites Exclusivas</h2>
             <p>Experiencias de lujo curadas para tu estancia.</p>
           </div>
-          <div class="rooms-list__sectionActions">
+          <div
+            class="rooms-list__sectionActions"
+            th:if="${session.usuarioLogueado != null and (session.usuarioLogueado.rol == 'ADMIN' or session.usuarioLogueado.rol == 'OPERADOR')}"
+          >
             <a href="/rooms/add" class="btn btn--ghost">
               <i class="ph ph-plus"></i> Crear habitación
             </a>
             <details class="rooms-list__adminDropdown">
-              <summary class="btn btn--primary rooms-list__adminDropdownToggle">Vista administrativa</summary>
+              <summary class="btn btn--primary rooms-list__adminDropdownToggle">
+                Vista administrativa
+              </summary>
               <div class="rooms-list__adminDropdownMenu" role="menu">
-                <a href="/rooms/table" class="btn btn--ghost" role="menuitem">Habitaciones (tabla)</a>
-                <a href="/roomtypes" class="btn btn--ghost" role="menuitem">Tipos de habitaciones (tabla)</a>
+                <a href="/rooms/table" class="btn btn--ghost" role="menuitem"
+                  >Habitaciones (tabla)</a
+                >
+                <a href="/roomtypes" class="btn btn--ghost" role="menuitem"
+                  >Tipos de habitaciones (tabla)</a
+                >
               </div>
             </details>
           </div>
@@ -111,7 +120,9 @@
               </div>
 
               <div class="card__actions">
-                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--primary">Reservar Suite</a>
+                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--primary"
+                  >Reservar Suite</a
+                >
               </div>
             </div>
           </article>
