@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entities.Usuario;
 import com.example.demo.service.UsuarioService;
- 
-import java.util.Collection;
 
 @Controller
 public class AuthController {
@@ -52,41 +52,62 @@ public class AuthController {
         return "Usuarios/login/create-account";
     }
 
-    @PostMapping("/create-account")
-    public String procesarCrearCuenta(@RequestParam String nombre,
-                                    @RequestParam String usuario,
-                                    @RequestParam String email,
-                                    @RequestParam String contrasena,
-                                    @RequestParam String contrasenaConfirm,
-                                    RedirectAttributes flash) {
-        // Validar que las contraseñas coincidan
-        if (!contrasena.equals(contrasenaConfirm)) {
-            flash.addFlashAttribute("error", "Las contraseñas no coinciden");
-            return "redirect:/create-account";
-        }
+@PostMapping("/create-account")
+public String procesarCrearCuenta(@RequestParam String nombre,
+                                  @RequestParam String usuario,
+                                  @RequestParam String email,
+                                  @RequestParam String contrasena,
+                                  @RequestParam String contrasenaConfirm,
+                                  RedirectAttributes flash) {
 
-        // Validar que el usuario no exista
-        Usuario usuarioExistente = usuarioService.searchByUsername(usuario);
-        if (usuarioExistente != null) {
-            flash.addFlashAttribute("error", "El nombre de usuario ya está en uso");
-            return "redirect:/create-account";
-        }
+    // Limpiar espacios en blanco en los campos de texto
+    nombre = nombre != null ? nombre.trim() : "";
+    usuario = usuario != null ? usuario.trim() : "";
+    email = email != null ? email.trim() : "";
 
-        // Crear nuevo usuario con rol CLIENTE por defecto
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setUsuario(usuario);
-        nuevoUsuario.setEmail(email);
-        nuevoUsuario.setContrasena(contrasena);
-        nuevoUsuario.setRol("CLIENTE");
-        nuevoUsuario.setTelefono(""); // vacío por defecto
-        nuevoUsuario.setFotoPerfil(null); // sin foto de perfil por defecto
+    // Validar que todos los campos obligatorios hayan sido diligenciados
+    if (nombre.isEmpty() || usuario.isEmpty() || email.isEmpty()
+            || contrasena == null || contrasena.isEmpty()
+            || contrasenaConfirm == null || contrasenaConfirm.isEmpty()) {
+        flash.addFlashAttribute("error", "Todos los campos son obligatorios");
+        return "redirect:/create-account";
+    }
 
-        // Guardar el usuario
-        usuarioService.save(nuevoUsuario);
+    // Validar que la contraseña y su confirmación coincidan
+    if (!contrasena.equals(contrasenaConfirm)) {
+        flash.addFlashAttribute("error", "Las contraseñas no coinciden");
+        return "redirect:/create-account";
+    }
 
-        // Redirigir al login con mensaje de éxito
-        flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
-        return "redirect:/login-page";
+    // Verificar que el nombre de usuario no se encuentre registrado
+    Usuario usuarioExistente = usuarioService.searchByUsername(usuario);
+    if (usuarioExistente != null) {
+        flash.addFlashAttribute("error", "El nombre de usuario ya está en uso");
+        return "redirect:/create-account";
+    }
+
+    // Verificar que el correo no se encuentre registrado
+    Usuario emailExistente = usuarioService.searchByEmail(email);
+    if (emailExistente != null) {
+        flash.addFlashAttribute("error", "El correo electrónico ya está registrado");
+        return "redirect:/create-account";
+    }
+
+    // Crear el nuevo usuario con rol CLIENTE por defecto
+    Usuario nuevoUsuario = new Usuario();
+    nuevoUsuario.setNombre(nombre);
+    nuevoUsuario.setUsuario(usuario);
+    nuevoUsuario.setEmail(email);
+    nuevoUsuario.setContrasena(contrasena);
+    nuevoUsuario.setRol("CLIENTE");
+    nuevoUsuario.setTelefono("");
+    nuevoUsuario.setFotoPerfil(null);
+
+    // Guardar el usuario en el repositorio
+    usuarioService.save(nuevoUsuario);
+
+    // Redirigir al login con mensaje de confirmación
+    flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
+    return "redirect:/login-page";
     }
 }

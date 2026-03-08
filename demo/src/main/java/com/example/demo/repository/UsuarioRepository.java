@@ -55,5 +55,12 @@ public class UsuarioRepository {
         usuarios.remove(id);
     }
 
+    public Usuario findByEmail(String email) {
+    return usuarios.values().stream()
+            .filter(u -> u.getEmail() != null && u.getEmail().equalsIgnoreCase(email))
+            .findFirst()
+            .orElse(null);
+    }
+
 
 }

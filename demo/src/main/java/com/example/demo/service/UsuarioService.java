@@ -11,9 +11,14 @@ public interface UsuarioService {
     // obtiene un usuario por nombre de usuario (login)
     public Usuario searchByUsername(String username);
 
+    // obtiene un usuario por el correo
+    public Usuario searchByEmail(String email);
+
     // create or update a user
     public Usuario save(Usuario usuario);
     
     // delete by id
     public void deleteById(int id);
+
+
 }
