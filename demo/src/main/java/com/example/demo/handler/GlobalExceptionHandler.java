@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.ui.Model;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.example.demo.controller")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
