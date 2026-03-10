@@ -60,7 +60,6 @@ h4 {
   font-family: "Inter", sans-serif;
   font-weight: 700;
   line-height: 1.2;
-  
 }
 
 img {
@@ -461,7 +460,6 @@ nav {
   font-size: 1.3rem;
   margin-bottom: 2.5rem;
   font-weight: 300;
-  
 }
 
 /* Booking Bar Widget */
@@ -783,8 +781,7 @@ nav {
 
 .field label {
   font-size: 0.75rem;
-  
-  
+
   color: var(--gold);
   font-weight: 700;
 }
@@ -1051,4 +1048,3 @@ nav {
     text-align: center;
   }
 }
-

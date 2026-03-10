@@ -239,7 +239,9 @@ body.page-rooms-list nav {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1.5rem;
-  margin: 2rem 0 2rem;
+  margin: 3rem 0 2rem;
+  padding-top: 1rem;
+
 }
 
 .rooms-list__sectionHeader h2 {
