@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${servicio.nombre} + ' | Servicios | Mira Mar Caribbean Luxury'">Detalle Servicio</title>
-    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +27,7 @@
         <div class="detail-hero__content">
           <div class="detail-hero__badge">Servicio</div>
           <h1 class="detail-hero__title" th:text="${servicio.nombre}">Servicio</h1>
-          <p class="detail-hero__lead" th:text="${servicio.descripcion}">DescripciÃ³n breve</p>
+          <p class="detail-hero__lead" th:text="${servicio.descripcion}">Descripción breve</p>
         </div>
       </div>
     </header>
@@ -39,25 +39,25 @@
             <section class="service-detail__intro">
               <h2 class="service-detail__title" th:text="${servicio.nombre}">Una Experiencia Inolvidable</h2>
               <p class="service-detail__text" th:text="${servicio.descripcion}">
-                DescripciÃ³n del servicio.
+                Descripción del servicio.
               </p>
               <p class="service-detail__text">
-                Cada plan estÃ¡ diseÃ±ado para brindarte una experiencia excepcional. Confirma horarios, disponibilidad y condiciones antes de reservar.
+                Cada plan está diseñado para brindarte una experiencia excepcional. Confirma horarios, disponibilidad y condiciones antes de reservar.
               </p>
             </section>
 
             <section class="service-detail__includes" aria-label="Incluye">
-              <h3 class="service-detail__includesTitle">Â¿QuÃ© incluye?</h3>
+              <h3 class="service-detail__includesTitle">¿Qué incluye?</h3>
               <div class="service-detail__includesGrid">
                 <div class="service-include-card" th:if="${#strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-fork-knife"></i></div>
-                  <div class="service-include-card__title">MenÃº degustaciÃ³n</div>
-                  <div class="service-include-card__desc">Opciones creadas por chefs para cada estaciÃ³n.</div>
+                  <div class="service-include-card__title">Menú degustación</div>
+                  <div class="service-include-card__desc">Opciones creadas por chefs para cada estación.</div>
                 </div>
                 <div class="service-include-card" th:if="${#strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-wine"></i></div>
                   <div class="service-include-card__title">Maridaje premium</div>
-                  <div class="service-include-card__desc">SelecciÃ³n de vinos recomendada por el sommelier.</div>
+                  <div class="service-include-card__desc">Selección de vinos recomendada por el sommelier.</div>
                 </div>
                 <div class="service-include-card" th:if="${#strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-user"></i></div>
@@ -67,13 +67,13 @@
 
                 <div class="service-include-card" th:if="${not #strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-star"></i></div>
-                  <div class="service-include-card__title">AtenciÃ³n especializada</div>
+                  <div class="service-include-card__title">Atención especializada</div>
                   <div class="service-include-card__desc">Personal calificado para una experiencia segura.</div>
                 </div>
                 <div class="service-include-card" th:if="${not #strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-shield-check"></i></div>
                   <div class="service-include-card__title">Soporte y asistencia</div>
-                  <div class="service-include-card__desc">AcompaÃ±amiento y recomendaciones durante la actividad.</div>
+                  <div class="service-include-card__desc">Acompañamiento y recomendaciones durante la actividad.</div>
                 </div>
                 <div class="service-include-card" th:if="${not #strings.containsIgnoreCase(servicio.nombre, 'restaur')}">
                   <div class="service-include-card__icon"><i class="ph ph-sparkle"></i></div>
@@ -84,7 +84,7 @@
             </section>
 
             <section class="boton-volver">
-              <a href="/services/cards" class="btn btn--ghost">â† Volver</a>
+              <a href="/services/cards" class="btn btn--ghost">← Volver</a>
             </section>
           </div>
 
@@ -124,7 +124,7 @@
               </div>
 
               <button class="btn btn--primary" type="button">Confirmar Reserva</button>
-              <div class="service-booking-card__note">CancelaciÃ³n gratuita hasta 24h antes.</div>
+              <div class="service-booking-card__note">Cancelación gratuita hasta 24h antes.</div>
             </div>
           </aside>
         </div>

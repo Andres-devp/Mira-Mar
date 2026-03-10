@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta - Mira Mar</title>
-    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
@@ -24,18 +24,18 @@
                     <h1 class="text-2xl font-bold">Mira Mar</h1>
                 </div>
                 
-                <h2 class="text-4xl font-bold mb-4">Tu paraÃ­so<br/>costero te espera</h2>
+                <h2 class="text-4xl font-bold mb-4">Tu paraíso<br/>costero te espera</h2>
                 <p class="text-lg mb-8 max-w-md">
                     Descubre la belleza del mar Caribe desde nuestro exclusivo resort. Playas de arena blanca, aguas cristalinas y lujo sin igual.
                 </p>
                 
                 
                 <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 max-w-md">
-                    <p class="text-white font-semibold mb-4">MÃ¡s de 5.000 huÃ©spedes satisfechos</p>
+                    <p class="text-white font-semibold mb-4">Más de 5.000 huéspedes satisfechos</p>
                     <div class="flex -space-x-2">
                         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmVtYWxlJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D" class="w-10 h-10 rounded-full border-2 border-white" alt="Prueba">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="HuÃ©sped 2">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="HuÃ©sped 3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="Huésped 2">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="Huésped 3">
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     </div>
                     <h3 class="text-xl font-bold">Mira Mar</h3>
                 </div>
-                <p class="text-sm mb-4 max-w-xs">Experiencias inolvidables en el paraÃ­so caribeÃ±o</p>
+                <p class="text-sm mb-4 max-w-xs">Experiencias inolvidables en el paraíso caribeño</p>
                 <div class="flex space-x-4">
                     <i class="fab fa-facebook text-xl hover:text-blue-300 cursor-pointer transition-colors"></i>
                     <i class="fab fa-instagram text-xl hover:text-pink-300 cursor-pointer transition-colors"></i>
@@ -69,7 +69,7 @@
                         <p th:text="${error}"></p>
                     </div>
                     
-                    <!-- Mensaje de Ã©xito -->
+                    <!-- Mensaje de éxito -->
                     <div th:if="${mensaje}" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                         <p th:text="${mensaje}"></p>
                     </div>
@@ -86,25 +86,25 @@
                         </div>
                         
                         <div>
-                            <input type="email" name="email" placeholder="Correo ElectrÃ³nico" required
+                            <input type="email" name="email" placeholder="Correo Electrónico" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         
                         <div>
-                            <input type="password" name="contrasena" placeholder="ContraseÃ±a" required
+                            <input type="password" name="contrasena" placeholder="Contraseña" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         
                         <div>
-                            <input type="password" name="contrasenaConfirm" placeholder="Confirmar ContraseÃ±a" required
+                            <input type="password" name="contrasenaConfirm" placeholder="Confirmar Contraseña" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         
                         <div class="flex items-center">
                             <input type="checkbox" id="terms" required class="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                             <label for="terms" class="text-sm text-gray-600">
-                                Acepto los <a href="#" class="text-blue-600 hover:underline">tÃ©rminos y condiciones</a> y 
-                                <a href="#" class="text-blue-600 hover:underline">polÃ­tica de privacidad</a>
+                                Acepto los <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a> y 
+                                <a href="#" class="text-blue-600 hover:underline">política de privacidad</a>
                             </label>
                         </div>
                         
@@ -113,8 +113,8 @@
                         </button>
                         
                         <div class="text-center">
-                            <span class="text-gray-600">Â¿Ya tienes cuenta? </span>
-                            <a href="/login-page" class="text-blue-600 hover:underline font-semibold">Iniciar SesiÃ³n</a>
+                            <span class="text-gray-600">¿Ya tienes cuenta? </span>
+                            <a href="/login-page" class="text-blue-600 hover:underline font-semibold">Iniciar Sesión</a>
                         </div>
                     </form>
                     

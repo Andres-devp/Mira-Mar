@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tipos de habitaciÃ³n (Tabla) | Mira Mar</title>
-    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
+    <title>Tipos de habitación (Tabla) | Mira Mar</title>
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,8 +26,8 @@
       <div class="container">
         <section class="services-page__sectionHeader">
           <div>
-            <h2>Tipos de habitaciÃ³n (Tabla)</h2>
-            <p>Gestiona los distintos tipos que puede tener una habitaciÃ³n.</p>
+            <h2>Tipos de habitación (Tabla)</h2>
+            <p>Gestiona los distintos tipos que puede tener una habitación.</p>
           </div>
           <div class="services-page__sectionActions">
             <a href="/rooms/table" class="btn btn--ghost">Habitaciones (tabla)</a>
@@ -38,9 +38,9 @@
         <table class="services-table" th:if="${not #lists.isEmpty(roomTypes)}">
           <thead>
             <tr>
-              <th>CÃ³digo</th>
+              <th>Código</th>
               <th>Nombre</th>
-              <th>DescripciÃ³n</th>
+              <th>Descripción</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -61,7 +61,7 @@
                       title="Eliminar"
                       onclick="
                         return confirm(
-                          'Â¿Seguro que deseas eliminar este tipo?',
+                          '¿Seguro que deseas eliminar este tipo?',
                         );
                       "
                     >
@@ -80,7 +80,7 @@
           aria-live="polite"
         >
           <h2>No hay tipos definidos</h2>
-          <p>AÃ±ade un tipo para verlo aquÃ­.</p>
+          <p>Añade un tipo para verlo aquí.</p>
         </section>
       </div>
     </main>
