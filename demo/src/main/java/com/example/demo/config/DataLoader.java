@@ -75,7 +75,7 @@ public class DataLoader implements CommandLineRunner {
         List<Cliente> clientes = new ArrayList<>();
         clientes.add(Cliente.builder()
                 .nombre("Administrador")
-                .usuario("admin")
+                .usuario("operador")
                 .contrasena("123")
                 .rol("ADMIN")
                 .email("admin@miramar.com")
