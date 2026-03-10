@@ -33,6 +33,9 @@ public class AuthController {
                 if (u != null && u.getUsuario() != null && u.getContrasena() != null
                         && u.getUsuario().equals(username)
                         && u.getContrasena().equals(password)) {
+                    if (u.getRol() != null && u.getRol().equals("ADMIN")) {
+                        return "redirect:/admin";
+                    }
                     return "redirect:/usuarios/" + u.getId();
                 }
             }
