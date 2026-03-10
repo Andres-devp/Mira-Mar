@@ -1,48 +1,56 @@
 # Mira Mar Caribbean Luxury 🌊
 
-**Mira Mar** es una plataforma web de gestión hotelera y resort boutique de lujo, diseñada para ofrecer una experiencia elegante y fluida tanto para los huéspedes como para los administradores. Ubicado conceptualmente en la Costa del Caribe (Montería), el sistema permite gestionar suites de lujo y servicios exclusivos.
+**Mira Mar** es una plataforma integral de gestión para un resort boutique de lujo. El sistema no solo ofrece una interfaz elegante para los huéspedes, sino que incluye un robusto panel administrativo para la gestión de inventario, servicios y control de usuarios.
 
 ![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-green)
-![Tecnologías](https://img.shields.io/badge/Stack-Spring%20Boot%20%7C%20Thymeleaf%20%7C%20JS-blue)
+![Java](https://img.shields.io/badge/Backend-Java%2017-orange)
+![Spring Boot](https://img.shields.io/badge/Framework-Spring%20Boot-brightgreen)
 
-## ✨ Características Principales
+## 📋 Módulos del Sistema
 
-### 🏨 Gestión de Suites
-- **Catálogo de Lujo:** Visualización de suites con detalles de capacidad, precio por noche y descripción.
-- **Detalle de Habitación:** Vista individualizada con galería y formulario de reserva integrado.
-- **Panel Administrativo:** Tabla de gestión para crear, editar y eliminar habitaciones (CRUD completo).
+### 🔐 Seguridad y Acceso
+- **Autenticación:** Sistema de Login personalizado con validación de credenciales.
+- **Registro:** Creación de cuentas para nuevos clientes con interfaz moderna (Tailwind CSS).
+- **Roles y Permisos:** Diferenciación clara entre **Administradores** (gestión total) y **Clientes** (reservas).
 
-### 🍽️ Servicios del Resort
-- **Experiencias:** Catálogo de servicios (Spa, Restaurante, etc.).
-- **Reservas de Servicios:** Formulario dinámico para elegir fecha, hora y número de personas.
-- **Administración:** Gestión centralizada de la oferta de servicios del hotel.
+### 🏨 Gestión de Suites (CRUD)
+- Visualización de catálogo con precios por noche y capacidad.
+- Administración de habitaciones: creación, edición y eliminación desde tablas dinámicas.
+- Detalle de habitación con galería de imágenes y resumen de costos.
 
-### 🎨 Experiencia de Usuario (UX/UI)
-- **Diseño Premium:** Estética minimalista usando tipografías como *Playfair Display* e *Inter*.
-- **Navbar Dinámica:** Navegación inteligente que cambia de estilo al hacer scroll.
-- **Totalmente Responsive:** Optimizado para móviles, tablets y escritorio.
+### 🍽️ Experiencias y Servicios
+- Catálogo de servicios adicionales (Spa, Tours, Restaurante).
+- Sistema de reserva de servicios con selección de fecha, hora y número de personas.
 
-## 🛠️ Tecnologías Utilizadas
+### 👥 Administración de Usuarios
+- Panel de control para gestionar perfiles de usuarios.
+- Visualización detallada de información de contacto y roles asignados.
 
-- **Backend:** Java con **Spring Boot**.
-- **Frontend:** - **Thymeleaf:** Motor de plantillas para renderizado dinámico.
-  - **CSS3:** Estilos modulares (base, layouts y componentes específicos).
-  - **JavaScript:** Manipulación del DOM y lógica de interacción en el cliente.
-- **Iconografía:** [Phosphor Icons](https://phosphoricons.com/).
-- **Fuentes:** Google Fonts (Playfair Display & Inter).
+## 🛠️ Stack Tecnológico
 
-## 📂 Estructura del Proyecto (Frontend)
+* **Backend:** Java 17 + Spring Boot.
+* **Frontend:** * **Thymeleaf:** Motor de plantillas dinámicas.
+    * **Estilos:** CSS3 nativo, **Tailwind CSS** (Registro) y **Bootstrap 5** (Login).
+    * **JS:** Lógica interactiva y manipulacion del DOM.
+* **Iconografía:** [Phosphor Icons](https://phosphoricons.com/) & FontAwesome.
+* **Base de Datos:** H2 / MySQL (vía Spring Data JPA).
 
-El proyecto utiliza una arquitectura de fragmentos para maximizar la reutilización de código:
+## 📂 Estructura del Proyecto
 
-- `/fragments`: Contiene el `navbar.html` y `footer.html`.
-- `/rooms`: Gestión y visualización de habitaciones.
-- `/HotelServices`: Gestión y visualización de servicios.
-- `/css`: Hojas de estilo organizadas por módulos (habitaciones, servicios, base).
-- `/js`: Lógica interactiva global (`script.js`).
+Basado en la arquitectura MVC (Modelo-Vista-Controlador):
 
-## 🚀 Instalación y Configuración
+```text
+src/main/java/com/miramar/
+├── controller/       # Manejo de rutas (Rooms, Services, Auth, Users)
+├── model/            # Entidades de base de datos
+├── repository/       # Interfaces de JPA para persistencia
+└── service/          # Lógica de negocio
 
-1. **Clonar el repositorio:**
-   ```bash
+src/main/resources/
+├── templates/        # Vistas .html (Thymeleaf)
+│   ├── fragments/    # Navbar y Footer reutilizables
+│   ├── rooms/        # Gestión de suites
+│   ├── HotelServices/# Gestión de experiencias
+│   └── Usuarios/      # Gestión de perfiles
+└── static/           # Recursos (CSS, JS, Imágenes)
    git clone [https://github.com/Andres-devp/Mira-Mar.git](https://github.com/Andres-devp/Mira-Mar.git)
