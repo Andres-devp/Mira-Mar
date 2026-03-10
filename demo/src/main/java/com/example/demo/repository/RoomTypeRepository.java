@@ -1,18 +1,21 @@
 package com.example.demo.repository;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entities.RoomType;
+import com.example.demo.entities.TipoHabitacion;
 
 @Repository
 public class RoomTypeRepository {
-    private final Map<String, RoomType> roomTypes = new LinkedHashMap<>();
+    private final TipoHabitacionRepository tipoHabitacionRepository;
+
+    public RoomTypeRepository(TipoHabitacionRepository tipoHabitacionRepository) {
+        this.tipoHabitacionRepository = tipoHabitacionRepository;
+    }
 
     private String normalizeCode(String code) {
         if (code == null) return null;
@@ -21,37 +24,28 @@ public class RoomTypeRepository {
         return normalized.toUpperCase();
     }
 
-    public RoomTypeRepository() {
-        roomTypes.put("NORMAL", new RoomType(
-                "NORMAL",
-                "Normal",
-                "Habitación estándar con comodidades esenciales para una estadía cómoda."
-        ));
-        roomTypes.put("EXECUTIVE", new RoomType(
-                "EXECUTIVE",
-                "Executive",
-                "Habitación con espacio adicional y comodidades superiores para viajes de negocios o parejas."
-        ));
-        roomTypes.put("VIP", new RoomType(
-                "VIP",
-                "VIP",
-                "Habitación premium con servicios preferenciales y mejores vistas/amenidades."
-        ));
-        roomTypes.put("LUXURY", new RoomType(
-                "LUXURY",
-                "Luxury",
-                "Habitación de lujo con la experiencia más exclusiva del hotel."
-        ));
+    private RoomType toRoomType(TipoHabitacion tipoHabitacion) {
+        return new RoomType(
+                tipoHabitacion.getCodigo(),
+                tipoHabitacion.getNombre(),
+                tipoHabitacion.getDescripcion()
+        );
     }
 
     public List<RoomType> findAll() {
-        return new ArrayList<>(roomTypes.values());
+        List<TipoHabitacion> tipos = tipoHabitacionRepository.findAll();
+        List<RoomType> roomTypes = new ArrayList<>(tipos.size());
+        for (TipoHabitacion tipo : tipos) {
+            roomTypes.add(toRoomType(tipo));
+        }
+        return roomTypes;
     }
 
     public Optional<RoomType> findByCode(String code) {
         String normalizedCode = normalizeCode(code);
         if (normalizedCode == null) return Optional.empty();
-        return Optional.ofNullable(roomTypes.get(normalizedCode));
+        return tipoHabitacionRepository.findByCodigoIgnoreCase(normalizedCode)
+                .map(this::toRoomType);
     }
 
     public void save(RoomType type) {
@@ -59,13 +53,20 @@ public class RoomTypeRepository {
         String normalizedCode = normalizeCode(type.getCode());
         if (normalizedCode == null) return;
 
-        type.setCode(normalizedCode);
-        roomTypes.put(normalizedCode, type);
+        TipoHabitacion entidad = tipoHabitacionRepository.findByCodigoIgnoreCase(normalizedCode)
+                .orElseGet(TipoHabitacion::new);
+
+        entidad.setCodigo(normalizedCode);
+        entidad.setNombre(type.getDisplayName());
+        entidad.setDescripcion(type.getDescription());
+        tipoHabitacionRepository.save(entidad);
     }
 
     public void deleteByCode(String code) {
         String normalizedCode = normalizeCode(code);
         if (normalizedCode == null) return;
-        roomTypes.remove(normalizedCode);
+
+        tipoHabitacionRepository.findByCodigoIgnoreCase(normalizedCode)
+                .ifPresent(tipoHabitacionRepository::delete);
     }
 }
