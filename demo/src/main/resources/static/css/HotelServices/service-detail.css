@@ -246,3 +246,8 @@ body.service-detail-page .detail-hero__lead {
   box-shadow: var(--focus-ring);
   border-color: rgba(100, 141, 229, 0.55);
 }
+
+.boton-volver {
+  margin-top: 1rem;
+}
+

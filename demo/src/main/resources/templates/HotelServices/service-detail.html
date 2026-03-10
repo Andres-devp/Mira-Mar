@@ -82,18 +82,8 @@
               </div>
             </section>
 
-            <section class="detail-hero__actions service-detail__actions">
+            <section class="boton-volver">
               <a href="/services/cards" class="btn btn--ghost">← Volver</a>
-              <a th:href="@{'/services/edit/' + ${servicio.id}}" class="btn btn--ghost">Editar</a>
-              <form th:action="@{'/services/delete/' + ${servicio.id}}" method="post" style="display: inline;">
-                <button
-                  type="submit"
-                  class="btn btn--secondary"
-                  onclick="return confirm('¿Seguro que deseas eliminar este servicio?')"
-                >
-                  Eliminar
-                </button>
-              </form>
             </section>
           </div>
 
