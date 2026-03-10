@@ -62,18 +62,15 @@
           <article class="card card--room" th:each="room : ${rooms}">
             <div class="card__media">
               <img
-                th:src="${room.imageUrl}"
-                th:alt="${room.name}"
+                th:src="${room.urlImagen}"
+                th:alt="${room.nombre}"
                 onerror="
                   this.src =
                     'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'
                 "
               />
-              <div
-                class="room-tag-badge"
-                th:classappend="${room.roomType} == 'PREMIUM' ? ' room-tag-badge--premium' : (${room.roomType} == 'RELAX' ? ' room-tag-badge--relax' : ' room-tag-badge--exclusive')"
-                th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}"
-              >
+              <div class="room-tag-badge"
+                th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'Habitación'}">
                 Tipo
               </div>
             </div>
@@ -81,33 +78,28 @@
             <div class="card__body">
               <div class="room-card__top">
                 <div>
-                  <h2 class="card__title" th:text="${room.name}">
+                  <h2 class="card__title" th:text="${room.nombre}">
                     Nombre de Habitación
                   </h2>
                   <div class="room-card__priceLine">
-                    <span th:text="'$' + ${room.pricePerNight}">$0</span>
+                    <span th:text="'$' + ${room.precioNoche}">$0</span>
                     <small>/noche</small>
                   </div>
                 </div>
               </div>
-              <p class="card__subtitle" th:text="${room.description}">
+              <p class="card__subtitle" th:text="${room.descripcion}">
                 Descripción breve de la habitación.
               </p>
 
               <div class="card__meta">
-                <span
-                  ><i class="ph ph-star"></i>
-                  <span
-                    th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}"
-                    >Tipo</span
-                  ></span
-                >
-                <span
-                  ><i class="ph ph-users"></i>
-                  <span th:text="${room.capacity} + ' huéspedes'"
-                    >0 huéspedes</span
-                  ></span
-                >
+                <span>
+                  <i class="ph ph-star"></i>
+                  <span th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'Habitación'}">Tipo</span>
+                </span>
+                <span>
+                  <i class="ph ph-users"></i>
+                  <span th:text="${room.capacidad} + ' huéspedes'">0 huéspedes</span>
+                </span>
               </div>
 
               <div class="card__actions">

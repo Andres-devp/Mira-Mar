@@ -33,23 +33,13 @@
           </div>
         </section>
 
-        <!-- Mensaje de error de autorización -->
-        <div th:if="${param.error != null and param.error == 'no_autorizado'}" style="padding: 20px; margin-bottom: 20px; background-color: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c33;">
-          <strong>⚠️ Acceso denegado:</strong> Solo los administradores pueden eliminar usuarios.
-        </div>
-
-        <!-- Alerta si no es administrador -->
-        <div th:if="${session.loggedUser != null and session.loggedUser.rol != 'ADMIN'}" style="padding: 20px; margin-bottom: 20px; background-color: #eff; border: 1px solid #cff; border-radius: 8px; color: #066;">
-          <strong>ℹ️ Acceso limitado:</strong> Solo los administradores pueden ver y gestionar usuarios.
-        </div>
-
-        <table class="services-table" th:if="${not #lists.isEmpty(usuarios) and session.loggedUser != null and session.loggedUser.rol == 'ADMIN'}">
+        <table class="services-table" th:if="${not #lists.isEmpty(usuarios)}">
           <thead>
             <tr>
               <th>ID</th>
               <th>Usuario</th>
               <th>Rol</th>
-              <th th:if="${session.loggedUser != null and session.loggedUser.rol == 'ADMIN'}">Acciones</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -57,15 +47,26 @@
               <td th:text="${usuario.id}"></td>
               <td th:text="${usuario.usuario}"></td>
               <td th:text="${usuario.rol}"></td>
-              <td th:if="${session.loggedUser != null and session.loggedUser.rol == 'ADMIN'}">
+              <td>
                 <div class="icon-actions">
-                  <a th:href="@{'/usuarios/' + ${usuario.id}}" class="icon-action" title="Ver">
+                  <a
+                    th:href="@{'/usuarios/' + ${usuario.id}}"
+                    class="icon-action"
+                    title="Ver"
+                  >
                     <i class="ph ph-eye"></i>
                   </a>
-                  <a th:href="@{'/usuarios/edit/' + ${usuario.id}}" class="icon-action" title="Editar">
+                  <a
+                    th:href="@{'/usuarios/edit/' + ${usuario.id}}"
+                    class="icon-action"
+                    title="Editar"
+                  >
                     <i class="ph ph-pencil-simple"></i>
                   </a>
-                  <form th:action="@{'/usuarios/delete/' + ${usuario.id}}" method="post">
+                  <form
+                    th:action="@{'/usuarios/delete/' + ${usuario.id}}"
+                    method="post"
+                  >
                     <button
                       type="submit"
                       class="icon-action icon-action--danger"
@@ -86,14 +87,12 @@
         </table>
 
         <section
-          th:if="${#lists.isEmpty(usuarios) or (session.loggedUser == null or session.loggedUser.rol != 'ADMIN')}"
+          th:if="${#lists.isEmpty(usuarios)}"
           class="services-page__empty"
           aria-live="polite"
         >
-          <h2 th:if="${session.loggedUser == null or session.loggedUser.rol != 'ADMIN'}">Acceso no autorizado</h2>
-          <h2 th:if="${#lists.isEmpty(usuarios) and session.loggedUser != null and session.loggedUser.rol == 'ADMIN'}">No hay usuarios disponibles</h2>
-          <p th:if="${session.loggedUser == null or session.loggedUser.rol != 'ADMIN'}">Solo los administradores pueden ver esta sección.</p>
-          <p th:if="${#lists.isEmpty(usuarios) and session.loggedUser != null and session.loggedUser.rol == 'ADMIN'}">Crea un usuario para verlo aquí.</p>
+          <h2>No hay usuarios disponibles</h2>
+          <p>Crea un usuario para verlo aquí.</p>
         </section>
       </div>
     </main>

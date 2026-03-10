@@ -19,6 +19,8 @@ public class UsuarioRepository {
         usuarios.put(2, new Usuario(2, "Andres Doncel", "andres", "password123456", "ADMIN", "andres@gmail.com", "1234567890", null));
         usuarios.put(3, new Usuario(3, "Ohcar", "ohca", "password1234", "CLIENTE", "ohcar@gmail.com", "9876543210", null));
         usuarios.put(4, new Usuario(4, "Maria", "mari", "password1234", "CLIENTE", "maria@gmail.com", "9876543210", null));   
+        usuarios.put(5, new Usuario(5, "admin", "admin", "123", "ADMIN", "admin@gmail.com", "9876543210", null));   
+        usuarios.put(6, new Usuario(6, "Nicolas", "nico", "123", "CLIENTE", "nico@gmail.com", "9876543210", null));   
     }
 
     public Usuario findById(int id) {

@@ -49,12 +49,10 @@
           <tbody>
             <tr th:each="room : ${rooms}">
               <td th:text="${room.id}"></td>
-              <td th:text="${room.name}"></td>
-              <td
-                th:text="${roomTypeDisplayNames[room.roomType] != null ? roomTypeDisplayNames[room.roomType] : room.roomType}"
-              ></td>
-              <td th:text="${room.capacity}"></td>
-              <td th:text="'$' + ${room.pricePerNight}"></td>
+              <td th:text="${room.nombre}"></td>
+              <td th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'N/A'}"></td>
+              <td th:text="${room.capacidad}"></td>
+              <td th:text="'$' + ${room.precioNoche}"></td>
               <td>
                 <div class="icon-actions">
                   <a th:href="@{'/rooms/' + ${room.id}}" class="icon-action" title="Ver">
