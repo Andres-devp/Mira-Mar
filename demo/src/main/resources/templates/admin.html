@@ -7,7 +7,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -15,43 +18,31 @@
     <link rel="stylesheet" href="/css/admin.css" />
   </head>
   <body class="page-admin">
-    
-    
-    <div th:fragment="navbar">
-      <nav id="navbar">
-        <div class="container nav-container">
-          <a href="/" class="logo">
+    <nav id="navbar">
+      <div class="container nav-container">
+        <a href="/" class="logo">
+          <img
+            id="nav-logo"
+            src="/images/Mira Mar logo.png"
+            alt="Mira Mar logo"
+            width="120"
+          />
+        </a>
+        <ul class="nav-links">
+          <a href="/login-page" class="user-login-link">
             <img
-              id="nav-logo"
-              src="/images/Mira Mar logo Blanco.png"
-              alt="Mira Mar logo"
-              width="120"
-              data-default="/images/Mira Mar logo Blanco.png"
-              data-scrolled="/images/Mira Mar logo.png"
+              id="nav-user-icon"
+              src="/images/usuarioNegro.png"
+              alt="Foto de perfil"
+              class="profile-img"
             />
           </a>
-          <ul class="nav-links">
-              <a href="/login-page" class="user-login-link">
-                <img
-                    id="nav-user-icon"
-                    src="/images/usuarioBlanco.png"
-                    data-default="/images/usuarioBlanco.png"
-                    data-scrolled="/images/usuarioNegro.png"
-                    alt="Foto de perfil"
-                    class="profile-img"/>
-              </a>
-            </li>
-          </ul>
-          <div class="hamburger">
-            <i class="ph ph-list"></i>
-          </div>
+        </ul>
+        <div class="hamburger">
+          <i class="ph ph-list"></i>
         </div>
-      </nav>
-    </div>
-
-
-
-
+      </div>
+    </nav>
 
     <main class="admin-dashboard container">
       <div class="section-header">
@@ -60,7 +51,6 @@
       </div>
 
       <div class="admin-grid">
-        
         <a class="admin-card" href="/admin/usuarios">
           <i class="ph ph-users main-icon"></i>
           <h3>Clientes</h3>
@@ -76,10 +66,12 @@
           <h3>Habitaciones</h3>
         </a>
 
+        <a class="admin-card" href="/admin/tipos-habitacion">
+          <i class="ph ph-tag main-icon"></i>
+          <h3>Tipo de habitación</h3>
+        </a>
       </div>
     </main>
-
-    <div th:replace="fragments/footer :: footer"></div>
 
     <script src="/js/script.js"></script>
   </body>

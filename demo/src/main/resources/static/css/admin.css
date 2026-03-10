@@ -1,69 +1,25 @@
-/* --- VARIABLES & PALETA DE MIRA MAR (HEREDADAS) --- */
-:root {
-  /* Paleta base de la Landing Page */
-  --dry-sage: #cdc392;
-  --soft-linen: #e8e5da;
-  --baby-blue: #9eb7e5;
-  --cornflower: #648de5;
-  --dusk-blue: #304c89;
-  --white: #ffffff;
-
-  /* Nuevo: dorado con buen contraste (para editar, etc.) */
-  --gold: #b08a2e;
-  --gold-soft: #e4d6af;
-
-  /* Asignación Funcional */
-  --bg-body: var(--soft-linen); /* Fondo general suave */
-  --text-main: #4a4a4a; /* Texto principal */
-  --secondary: var(--dusk-blue); /* Encabezados, iconos principales */
-
-  /* Espaciado y Diseño */
-  --container-width: 1200px;
-  --border-radius: 12px;
-
-  /* Transición */
-  --ease: cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* --- REINICIO BÁSICO (CSS RESET) --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  line-height: 1.6;
-}
-
-/* --- ESTILOS DE ENCABEZADO COMUNES --- */
-h2,
-h3 {
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-/* --- UTILIDADES DE CONTENEDOR --- */
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
 /* --- DASHBOARD ADMINISTRATIVO CENTRAL --- */
 .admin-dashboard {
   padding: 10rem 1.5rem 5rem; /* Espacio extra arriba por si el navbar es fixed */
   text-align: center;
+}
+
+.page-admin #navbar {
+  background: var(--white);
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
+}
+
+.page-admin .nav-links a {
+  color: var(--secondary);
+}
+
+.page-admin .hamburger {
+  color: var(--secondary);
+}
+
+.page-admin .profile-img {
+  border-color: var(--secondary);
 }
 
 .admin-dashboard h2 {
@@ -74,8 +30,14 @@ h3 {
 
 .admin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .admin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* --- TARJETAS SIMPLIFICADAS --- */
@@ -85,7 +47,9 @@ h3 {
   border-radius: var(--border-radius);
   box-shadow: 0 15px 35px rgba(48, 76, 137, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,93 +72,4 @@ h3 {
   color: var(--secondary);
   margin-bottom: 2.5rem;
   font-weight: 600;
-}
-
-/* --- BOTONES DE ACCIÓN HORIZONTALES (ICONOS SOLAMENTE) --- */
-.action-buttons {
-  display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  width: 100%;
-}
-
-.action-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: all 0.3s var(--ease);
-  position: relative; /* Para el tooltip */
-}
-
-/* Estilos de botones individuales integrados en la paleta */
-
-/* View (Ojo / Tabla) */
-.view-btn {
-  background-color: var(--soft-linen);
-  color: var(--secondary);
-}
-.view-btn:hover {
-  background-color: var(--secondary);
-  color: var(--white);
-}
-
-/* Add (Plus) */
-.add-btn {
-  background-color: var(--baby-blue);
-  color: var(--white);
-}
-.add-btn:hover {
-  background-color: var(--cornflower);
-}
-
-/* Edit (Pencil) */
-.edit-btn {
-  background-color: var(--gold-soft);
-  color: var(--secondary);
-}
-.edit-btn:hover {
-  background-color: var(--gold);
-  color: var(--white);
-}
-
-/* Delete (Trash) */
-.delete-btn {
-  background-color: #ffebee; /* Rojo muy suave pastel */
-  color: #d32f2f;
-}
-.delete-btn:hover {
-  background-color: #d32f2f;
-  color: var(--white);
-}
-
-/* --- TOOLTIPS (SUTILES EN HOVER) --- */
-.action-btn::after {
-  content: attr(title); /* Muestra el texto del atributo 'title' */
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-5px);
-  background-color: rgba(48, 76, 137, 0.95); /* Color Dusk Blue con transparencia */
-  color: var(--white);
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s var(--ease);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.action-btn:hover::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
 }
