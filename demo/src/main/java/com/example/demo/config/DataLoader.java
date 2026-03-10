@@ -2,9 +2,11 @@ package com.example.demo.config;
 
 import com.example.demo.entities.Cliente;
 import com.example.demo.entities.Habitacion;
+import com.example.demo.entities.Servicio;
 import com.example.demo.entities.TipoHabitacion;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.HabitacionRepository;
+import com.example.demo.repository.ServicioRepository;
 import com.example.demo.repository.TipoHabitacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +25,7 @@ public class DataLoader implements CommandLineRunner {
     private final TipoHabitacionRepository tipoHabitacionRepository;
     private final ClienteRepository clienteRepository;
     private final HabitacionRepository habitacionRepository;
+    private final ServicioRepository servicioRepository;
     
     @Override
     public void run(String... args) throws Exception {
@@ -188,10 +191,25 @@ public class DataLoader implements CommandLineRunner {
         }
         
         habitacionRepository.saveAll(habitaciones);
-        
+
+        // 4. Crear 10 servicios
+        List<Servicio> servicios = new ArrayList<>();
+        servicios.add(Servicio.builder().nombre("Restaurante").descripcion("Restaurante gourmet con menú internacional").imageUrl("https://i.pinimg.com/736x/49/be/79/49be795193f4d6bd20b7a7d1dbc644f3.jpg").price(45.0).build());
+        servicios.add(Servicio.builder().nombre("Clases de surf").descripcion("Clases de surf para todos los niveles").imageUrl("https://mojosurf.es/wp-content/uploads/2024/12/Clases-de-surf-que-tener-en-cuenta.jpg").price(30.0).build());
+        servicios.add(Servicio.builder().nombre("Caminatas guiadas").descripcion("Excursiones y caminatas por la naturaleza").imageUrl("https://i.pinimg.com/736x/17/95/d9/1795d9b9e9734035ea365debecc48267.jpg").price(20.0).build());
+        servicios.add(Servicio.builder().nombre("Spa & Wellness").descripcion("Masajes, sauna y tratamientos de spa").imageUrl("https://i.pinimg.com/736x/91/9a/fc/919afcf0663bf853bf584e8672166dd0.jpg").price(80.0).build());
+        servicios.add(Servicio.builder().nombre("Alquiler de bicicletas").descripcion("Bicicletas para recorrer la zona").imageUrl("https://i.pinimg.com/736x/54/26/0d/54260d946194dd1ac4a500cda97194ad.jpg").price(15.0).build());
+        servicios.add(Servicio.builder().nombre("Piscina").descripcion("Piscina exterior con bar y solárium").imageUrl("https://i.pinimg.com/736x/04/35/9b/04359b99919a8debaaba2173b988927d.jpg").price(0.0).build());
+        servicios.add(Servicio.builder().nombre("Transporte al aeropuerto").descripcion("Servicio de traslado desde/hacia el aeropuerto").imageUrl("https://i.pinimg.com/736x/1d/1c/95/1d1c9548a787dbf89974fc4e957d5a13.jpg").price(25.0).build());
+        servicios.add(Servicio.builder().nombre("Bar en la playa").descripcion("Bar con cócteles y snacks en la playa").imageUrl("https://i.pinimg.com/736x/5c/c3/d4/5cc3d4c5021bdaf8ebdcbfdf33f4757f.jpg").price(10.0).build());
+        servicios.add(Servicio.builder().nombre("Club infantil").descripcion("Actividades y juegos para niños").imageUrl("https://i.pinimg.com/736x/02/46/41/024641a99c2aada4e851b2ebd80e3a13.jpg").price(5.0).build());
+        servicios.add(Servicio.builder().nombre("Eventos y bodas").descripcion("Organización de eventos y bodas en el hotel").imageUrl("https://i.pinimg.com/736x/4e/2a/90/4e2a90524e644f8f95784f3b805d06ae.jpg").price(200.0).build());
+        servicioRepository.saveAll(servicios);
+
         System.out.println("✅ Datos inicializados: " +
                 tiposGuardados.size() + " tipos, " +
                 clientes.size() + " clientes, " +
-                habitaciones.size() + " habitaciones");
+                habitaciones.size() + " habitaciones, " +
+                servicios.size() + " servicios");
     }
 }
