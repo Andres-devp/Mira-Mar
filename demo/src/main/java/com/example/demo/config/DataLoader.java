@@ -76,7 +76,7 @@ public class DataLoader implements CommandLineRunner {
         clientes.add(Cliente.builder()
                 .nombre("Administrador")
                 .usuario("admin")
-                .contrasena("admin123")
+                .contrasena("123")
                 .rol("ADMIN")
                 .email("admin@miramar.com")
                 .telefono("0000000000")
@@ -160,6 +160,15 @@ public class DataLoader implements CommandLineRunner {
                 .contrasena("sofia789")
                 .rol("CLIENTE")
                 .email("sofia.gomez@gmail.com")
+                .telefono("555343434")
+                .build());
+
+        clientes.add(Cliente.builder()
+                .nombre("nico")
+                .usuario("nico")
+                .contrasena("123")
+                .rol("CLIENTE")
+                .email("nico@gmail.com")
                 .telefono("555343434")
                 .build());
         
