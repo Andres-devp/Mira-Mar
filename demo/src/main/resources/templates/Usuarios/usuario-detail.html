@@ -1,9 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle Usuario | Mira Mar</title>
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,10 +28,10 @@
         <div class="detail-hero__grid">
           <div>
             <h1 class="detail-hero__title">Detalle del usuario</h1>
-            <p class="detail-hero__lead">Información del perfil</p>
+            <p class="detail-hero__lead">InformaciÃ³n del perfil</p>
 
             <div class="detail-hero__actions">
-              <a href="/usuarios" class="btn btn--ghost">← Volver</a>
+              <a href="/usuarios" class="btn btn--ghost">â† Volver</a>
               <a
                 th:href="@{'/usuarios/edit/' + ${usuario.id}}"
                 class="btn btn--ghost"
@@ -45,7 +46,7 @@
                   type="submit"
                   class="btn btn--secondary"
                   onclick="
-                    return confirm('¿Seguro que deseas eliminar este usuario?');
+                    return confirm('Â¿Seguro que deseas eliminar este usuario?');
                   "
                 >
                   Eliminar
@@ -67,14 +68,14 @@
             <strong>Usuario:</strong> <span th:text="${usuario.usuario}"></span>
           </p>
           <p>
-            <strong>Contraseña:</strong>
+            <strong>ContraseÃ±a:</strong>
             <span th:text="${usuario.contrasena}"></span>
           </p>
           <p>
             <strong>Email:</strong> <span th:text="${usuario.email}"></span>
           </p>
           <p>
-            <strong>Teléfono:</strong>
+            <strong>TelÃ©fono:</strong>
             <span th:text="${usuario.telefono}"></span>
           </p>
         </section>
@@ -86,3 +87,4 @@
     <script src="/js/script.js"></script>
   </body>
 </html>
+

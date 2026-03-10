@@ -1,11 +1,12 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title
-      th:text="${isNew} ? 'Nueva Habitación | Mira Mar' : 'Editar Habitación | Mira Mar'"
+      th:text="${isNew} ? 'Nueva HabitaciÃ³n | Mira Mar' : 'Editar HabitaciÃ³n | Mira Mar'"
     ></title>
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +29,7 @@
         <div class="form-shell">
           <h1
             class="form-shell__title"
-            th:text="${isNew} ? 'Nueva Habitación' : 'Editar Habitación'"
+            th:text="${isNew} ? 'Nueva HabitaciÃ³n' : 'Editar HabitaciÃ³n'"
           ></h1>
 
           <form
@@ -37,7 +38,7 @@
           >
             <div class="form-grid">
               <div class="form-field">
-                <label for="nombre">Nombre de la habitación *</label>
+                <label for="nombre">Nombre de la habitaciÃ³n *</label>
                 <input
                   type="text"
                   id="nombre"
@@ -49,7 +50,7 @@
               </div>
 
               <div class="form-field">
-                <label for="tipoHabitacion">Tipo de habitación *</label>
+                <label for="tipoHabitacion">Tipo de habitaciÃ³n *</label>
                 <select id="tipoHabitacion" name="tipoHabitacion.id" required>
                   <option value="">-- Seleccionar --</option>
                   <option
@@ -63,7 +64,7 @@
               </div>
 
               <div class="form-field">
-                <label for="capacidad">Capacidad (huéspedes) *</label>
+                <label for="capacidad">Capacidad (huÃ©spedes) *</label>
                 <input
                   type="number"
                   id="capacidad"
@@ -103,7 +104,7 @@
               </div>
 
               <div class="form-field form-field--full">
-                <label for="descripcion">Descripción *</label>
+                <label for="descripcion">DescripciÃ³n *</label>
                 <textarea
                   id="descripcion"
                   name="descripcion"
@@ -117,7 +118,7 @@
             <div class="form-actions">
               <button type="submit" class="btn btn--primary">
                 <span
-                  th:text="${isNew} ? 'Crear habitación' : 'Guardar cambios'"
+                  th:text="${isNew} ? 'Crear habitaciÃ³n' : 'Guardar cambios'"
                 ></span>
               </button>
               <a href="/rooms" class="btn btn--ghost">Cancelar</a>
@@ -132,3 +133,4 @@
     <script src="/js/script.js"></script>
   </body>
 </html>
+

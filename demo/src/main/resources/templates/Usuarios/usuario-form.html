@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
@@ -6,6 +6,7 @@
     <title
       th:text="${usuario.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'"
     ></title>
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,7 +63,7 @@
               </div>
 
               <div class="form-field">
-                <label for="contrasena">Contraseña *</label>
+                <label for="contrasena">ContraseÃ±a *</label>
                 <input
                   type="password"
                   id="contrasena"
@@ -85,7 +86,7 @@
               </div>
 
               <div class="form-field">
-                <label for="telefono">Teléfono</label>
+                <label for="telefono">TelÃ©fono</label>
                 <input
                   type="text"
                   id="telefono"
@@ -124,3 +125,4 @@
     <script src="/js/script.js"></script>
   </body>
 </html>
+

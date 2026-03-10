@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Error | Mira Mar</title>
+    <link rel="icon" type="image/png" href="/images/Mira Mar logo.png" />
 
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/error/error.css">
@@ -20,12 +21,12 @@
 
     <p class="error-text" th:if="${mensaje}" th:text="${mensaje}">
         La solicitud no pudo completarse correctamente.
-        Intenta nuevamente o vuelve a la página principal.
+        Intenta nuevamente o vuelve a la pÃ¡gina principal.
     </p>
 
     <p class="error-text" th:unless="${mensaje}">
         La solicitud no pudo completarse correctamente.
-        Intenta nuevamente o vuelve a la página principal.
+        Intenta nuevamente o vuelve a la pÃ¡gina principal.
     </p>
 
     <div class="error-actions">
