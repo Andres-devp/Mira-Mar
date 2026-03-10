@@ -35,6 +35,13 @@
 * **Iconografía:** [Phosphor Icons](https://phosphoricons.com/) & FontAwesome.
 * **Base de Datos:** H2 / MySQL (vía Spring Data JPA).
 
+## 🗄️ Arquitectura de Datos
+- El siguiente diagrama entidad–relación representa la estructura de la base de datos utilizada en el sistema **Mira Mar Caribbean Luxury**, mostrando las principales entidades como usuarios, reservas, habitaciones, servicios, cuentas y pagos.
+
+### Modelo Entidad–Relación
+![Diagrama ER](MIRAMAR%20DIAGRAMA%20ENTIDAD-RELACI%C3%93N.png)
+
+
 ## 📂 Estructura del Proyecto
 
 Basado en la arquitectura MVC (Modelo-Vista-Controlador):
