@@ -24,7 +24,7 @@
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Backend:** Java con **Spring Boot** (implícito por el uso de Thymeleaf).
+- **Backend:** Java con **Spring Boot**.
 - **Frontend:** - **Thymeleaf:** Motor de plantillas para renderizado dinámico.
   - **CSS3:** Estilos modulares (base, layouts y componentes específicos).
   - **JavaScript:** Manipulación del DOM y lógica de interacción en el cliente.
