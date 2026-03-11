@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="${room.nombre} + ' | Mira Mar Caribbean Luxury'">Detalle de Habitación</title>
+    <title th:text="${room.nombre} + ' | Mira Mar Caribbean Luxury'">
+      Detalle de Habitación
+    </title>
     <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,14 +24,21 @@
   <body class="detail-page">
     <div th:replace="fragments/navbar :: navbar"></div>
 
-    <header class="detail-hero" th:style="'--hero-image: url(' + ${room.urlImagen} + ')'">
+    <header
+      class="detail-hero"
+      th:style="'--hero-image: url(' + ${room.urlImagen} + ')'"
+    >
       <div class="container">
         <div class="detail-hero__content">
-          <div class="detail-hero__badge"
-            th:text="${room.tipoHabitacion != null ? room.tipoHabitacion.nombre : 'Habitación'}">
+          <div
+            class="detail-hero__badge"
+            th:text="${room.tipoHabitacion != null ? room.tipoHabitacion.nombre : 'Habitación'}"
+          >
             Premium Suite
           </div>
-          <h1 class="detail-hero__title" th:text="${room.nombre}">Nombre de Habitación</h1>
+          <h1 class="detail-hero__title" th:text="${room.nombre}">
+            Nombre de Habitación
+          </h1>
           <p class="detail-hero__location">
             <i class="ph ph-map-pin"></i>
             <span>Playa de las Estrellas, Costa Esmeralda</span>
@@ -44,25 +53,46 @@
           <div>
             <section class="detail-gallery" aria-label="Galería">
               <div class="detail-gallery__strip">
-                <button class="detail-gallery__thumb" type="button" aria-label="Foto 1">
+                <button
+                  class="detail-gallery__thumb"
+                  type="button"
+                  aria-label="Foto 1"
+                >
                   <img
                     th:src="${room.urlImagen}"
                     th:alt="${room.nombre}"
-                    onerror="this.src='https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'"
+                    onerror="
+                      this.src =
+                        'https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'
+                    "
                   />
                 </button>
-                <button class="detail-gallery__thumb" type="button" aria-label="Foto 2">
+                <button
+                  class="detail-gallery__thumb"
+                  type="button"
+                  aria-label="Foto 2"
+                >
                   <img
                     th:src="${room.urlImagen}"
                     th:alt="${room.nombre}"
-                    onerror="this.src='https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'"
+                    onerror="
+                      this.src =
+                        'https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'
+                    "
                   />
                 </button>
-                <button class="detail-gallery__thumb" type="button" aria-label="Foto 3">
+                <button
+                  class="detail-gallery__thumb"
+                  type="button"
+                  aria-label="Foto 3"
+                >
                   <img
                     th:src="${room.urlImagen}"
                     th:alt="${room.nombre}"
-                    onerror="this.src='https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'"
+                    onerror="
+                      this.src =
+                        'https://via.placeholder.com/240x160/cdc392/ffffff?text=Foto'
+                    "
                   />
                 </button>
                 <div class="detail-gallery__more">+12 fotos</div>
@@ -71,26 +101,45 @@
 
             <section class="detail-section">
               <h2 class="detail-section__title">Descripción</h2>
-              <p th:text="${room.descripcion}">Descripción completa de la habitación.</p>
+              <p th:text="${room.descripcion}">
+                Descripción completa de la habitación.
+              </p>
             </section>
 
             <section class="detail-section" aria-label="Amenidades">
               <h2 class="detail-section__title">Amenidades</h2>
               <div class="detail-amenities">
-                <span class="detail-chip"><i class="ph ph-wifi-high"></i> Wi-Fi Alta Velocidad</span>
-                <span class="detail-chip"><i class="ph ph-drop"></i> Jacuzzi Privado</span>
-                <span class="detail-chip"><i class="ph ph-sun"></i> Terraza Privada</span>
-                <span class="detail-chip"><i class="ph ph-snowflake"></i> Climatización VIP</span>
-                <span class="detail-chip"><i class="ph ph-wine"></i> Minibar Premium</span>
-                <span class="detail-chip"><i class="ph ph-bell"></i> Room Service 24h</span>
+                <span class="detail-chip"
+                  ><i class="ph ph-wifi-high"></i> Wi-Fi Alta Velocidad</span
+                >
+                <span class="detail-chip"
+                  ><i class="ph ph-drop"></i> Jacuzzi Privado</span
+                >
+                <span class="detail-chip"
+                  ><i class="ph ph-sun"></i> Terraza Privada</span
+                >
+                <span class="detail-chip"
+                  ><i class="ph ph-snowflake"></i> Climatización VIP</span
+                >
+                <span class="detail-chip"
+                  ><i class="ph ph-wine"></i> Minibar Premium</span
+                >
+                <span class="detail-chip"
+                  ><i class="ph ph-bell"></i> Room Service 24h</span
+                >
               </div>
             </section>
 
             <section class="detail-section">
               <h2 class="detail-section__title">Características</h2>
               <div class="card__meta">
-                <span th:text="${room.capacidad} + ' huéspedes'">0 huéspedes</span>
-                <span th:text="${room.tipoHabitacion != null ? room.tipoHabitacion.nombre : 'Habitación'}">Tipo</span>
+                <span th:text="${room.capacidad} + ' huéspedes'"
+                  >0 huéspedes</span
+                >
+                <span
+                  th:text="${room.tipoHabitacion != null ? room.tipoHabitacion.nombre : 'Habitación'}"
+                  >Tipo</span
+                >
               </div>
             </section>
 
@@ -111,7 +160,11 @@
             <div class="detail-aside__panel">
               <div class="detail-booking__top">
                 <div class="detail-booking__price">
-                  <span class="detail-booking__amount" th:text="'$' + ${room.precioNoche}">$0</span>
+                  <span
+                    class="detail-booking__amount"
+                    th:text="'$' + ${room.precioNoche}"
+                    >$0</span
+                  >
                   <span class="detail-booking__suffix">/noche</span>
                 </div>
                 <div class="detail-booking__rating">
@@ -144,16 +197,26 @@
                 </select>
               </div>
 
-              <button class="btn btn--primary detail-booking__cta" type="button">Reservar Ahora</button>
-              <div class="detail-booking__note">No se realizará ningún cargo todavía</div>
+              <button
+                class="btn btn--primary detail-booking__cta"
+                type="button"
+                onclick="window.location.href = '/login-page'"
+              >
+                Reservar Ahora
+              </button>
+              <div class="detail-booking__note">
+                No se realizará ningún cargo todavía
+              </div>
 
               <div class="detail-booking__summary">
                 <div class="detail-booking__line">
-                  <span th:text="'$' + ${room.precioNoche} + ' x 3 noches'">$0 x 3 noches</span>
+                  <span th:text="'$' + ${room.precioNoche} + ' x 3 noches'"
+                    >$0 x 3 noches</span
+                  >
                   <span>$0</span>
                 </div>
                 <div class="detail-booking__line">
-                  <span>Tasas &amp; impuestos</span>
+                  <span>Tasas &amp; impuestos</span> 
                   <span>$45</span>
                 </div>
                 <div class="detail-booking__total">
@@ -172,4 +235,3 @@
     <script src="/js/script.js"></script>
   </body>
 </html>
-
