@@ -27,7 +27,7 @@
   background-position: center;
   color: var(--white);
   padding: 180px 0 80px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 0rem;
 }
 
 .detail-hero__grid {
@@ -74,7 +74,7 @@
 
 /* ---- Main ---- */
 .detail-main {
-  padding: 0 0 5rem;
+  padding: 2.5rem 0 5rem;
   background: #f0f2f7;
 }
 
