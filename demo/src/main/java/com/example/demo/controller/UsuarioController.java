@@ -39,12 +39,12 @@ public class UsuarioController {
 
     @GetMapping("/add")
     public String crearFormulario(Model model) {
-        model.addAttribute("usuario", new Cliente());
+        model.addAttribute("clienteForm", new Cliente());
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/add")
-    public String guardarUsuario(@ModelAttribute("usuario") Cliente cliente) {
+    public String guardarUsuario(@ModelAttribute("clienteForm") Cliente cliente) {
         clienteService.saveCliente(cliente);
         return "redirect:/usuarios";
     }
@@ -52,12 +52,12 @@ public class UsuarioController {
     @GetMapping("/edit/{id}")
     public String editarFormulario(Model model, @PathVariable Long id) {
         Cliente cliente = clienteService.getClienteById(id);
-        model.addAttribute("usuario", cliente);
+        model.addAttribute("clienteForm", cliente);
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String actualizarUsuario(@ModelAttribute("usuario") Cliente cliente, @PathVariable Long id) {
+    public String actualizarUsuario(@ModelAttribute("clienteForm") Cliente cliente, @PathVariable Long id) {
         cliente.setId(id);
         clienteService.saveCliente(cliente);
         return "redirect:/usuarios";

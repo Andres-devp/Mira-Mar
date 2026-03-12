@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title
-      th:text="${usuario.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'"
+      th:text="${clienteForm.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'"
     ></title>
     <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
 
@@ -29,12 +29,12 @@
         <div class="form-shell">
           <h1
             class="form-shell__title"
-            th:text="${usuario.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'"
+            th:text="${clienteForm.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'"
           ></h1>
 
           <form
-            th:action="${usuario.id} != null ? @{'/usuarios/edit/' + ${usuario.id}} : @{/usuarios/add}"
-            th:object="${usuario}"
+            th:action="${clienteForm.id} != null ? @{'/usuarios/edit/' + ${clienteForm.id}} : @{/usuarios/add}"
+            th:object="${clienteForm}"
             method="post"
           >
             <div class="form-grid">
@@ -110,7 +110,7 @@
             <div class="form-actions">
               <button type="submit" class="btn btn--primary">
                 <span
-                  th:text="${usuario.id} != null ? 'Guardar cambios' : 'Crear usuario'"
+                  th:text="${clienteForm.id} != null ? 'Guardar cambios' : 'Crear usuario'"
                 ></span>
               </button>
               <a href="/usuarios" class="btn btn--ghost">Cancelar</a>
