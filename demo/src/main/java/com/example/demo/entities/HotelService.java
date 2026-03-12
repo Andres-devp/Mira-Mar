@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Servicio {
+public class HotelService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

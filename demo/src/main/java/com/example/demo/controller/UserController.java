@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entities.Cliente;
+import com.example.demo.entities.Client;
 import com.example.demo.service.ClienteService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class UserController {
 
     @Autowired
     private ClienteService clienteService;
@@ -24,7 +24,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public String usuarioPorId(Model model, @PathVariable Long id, HttpSession session) {
-        Cliente cliente = clienteService.getClienteById(id);
+        Client cliente = clienteService.getClienteById(id);
         Long usuarioIdSesion = (Long) session.getAttribute("usuarioId");
         String usuarioRolSesion = (String) session.getAttribute("usuarioRol");
 
@@ -39,25 +39,25 @@ public class UsuarioController {
 
     @GetMapping("/add")
     public String crearFormulario(Model model) {
-        model.addAttribute("clienteForm", new Cliente());
+        model.addAttribute("clienteForm", new Client());
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/add")
-    public String guardarUsuario(@ModelAttribute("clienteForm") Cliente cliente) {
+    public String guardarUsuario(@ModelAttribute("clienteForm") Client cliente) {
         clienteService.saveCliente(cliente);
         return "redirect:/usuarios";
     }
 
     @GetMapping("/edit/{id}")
     public String editarFormulario(Model model, @PathVariable Long id) {
-        Cliente cliente = clienteService.getClienteById(id);
+        Client cliente = clienteService.getClienteById(id);
         model.addAttribute("clienteForm", cliente);
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String actualizarUsuario(@ModelAttribute("clienteForm") Cliente cliente, @PathVariable Long id) {
+    public String actualizarUsuario(@ModelAttribute("clienteForm") Client cliente, @PathVariable Long id) {
         cliente.setId(id);
         cliente.setRol("CLIENTE");
         clienteService.saveCliente(cliente);
@@ -87,4 +87,3 @@ public class UsuarioController {
         return "redirect:/";
     }
 }
-

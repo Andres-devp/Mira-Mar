@@ -1,18 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.TipoHabitacion;
+import com.example.demo.entities.RoomType;
 
 import java.util.List;
 
 public interface TipoHabitacionService {
 
-    List<TipoHabitacion> getAllTipos();
+    List<RoomType> getAllTipos();
 
-    List<TipoHabitacion> filtrarTipos(Integer capacidadMin, Double precioMax);
+    List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax);
 
-    TipoHabitacion getTipoById(Long id);
+    RoomType getTipoById(Long id);
 
-    TipoHabitacion saveTipo(TipoHabitacion tipo);
+    RoomType saveTipo(RoomType tipo);
 
     void deleteTipo(Long id);
 }

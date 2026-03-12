@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString(exclude = {})
-public class Cliente {
+public class Client {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

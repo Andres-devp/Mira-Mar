@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.Cliente;
+import com.example.demo.entities.Client;
 
 import java.util.List;
 
 public interface ClienteService {
 
-    List<Cliente> getAllClientes();
+    List<Client> getAllClientes();
 
-    Cliente getClienteById(Long id);
+    Client getClienteById(Long id);
 
-    Cliente saveCliente(Cliente cliente);
+    Client saveCliente(Client cliente);
 
     void deleteCliente(Long id);
 }

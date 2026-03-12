@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.Habitacion;
-import com.example.demo.entities.TipoHabitacion;
+import com.example.demo.entities.Room;
+import com.example.demo.entities.RoomType;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.repository.HabitacionRepository;
-import com.example.demo.repository.TipoHabitacionRepository;
+import com.example.demo.repository.RoomRepository;
+import com.example.demo.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,28 +16,28 @@ import java.util.List;
 public class HabitacionServiceImpl implements HabitacionService {
 
     @Autowired
-    private HabitacionRepository habitacionRepository;
+    private RoomRepository habitacionRepository;
 
     @Autowired
-    private TipoHabitacionRepository tipoHabitacionRepository;
+    private RoomTypeRepository tipoHabitacionRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Habitacion> getAllHabitaciones() {
+    public List<Room> getAllHabitaciones() {
         return habitacionRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Habitacion getHabitacionById(Long id) {
+    public Room getHabitacionById(Long id) {
         return habitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró habitación con ID: " + id, id));
     }
 
     @Override
-    public Habitacion saveHabitacion(Habitacion habitacion) {
+    public Room saveHabitacion(Room habitacion) {
         if (habitacion.getTipoHabitacion() != null && habitacion.getTipoHabitacion().getId() != null) {
-            TipoHabitacion tipo = tipoHabitacionRepository.findById(habitacion.getTipoHabitacion().getId())
+            RoomType tipo = tipoHabitacionRepository.findById(habitacion.getTipoHabitacion().getId())
                 .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + habitacion.getTipoHabitacion().getId()));
             habitacion.setTipoHabitacion(tipo);
         }
@@ -47,11 +47,11 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional
     public void deleteHabitacion(Long id) {
-        Habitacion habitacion = habitacionRepository.findById(id)
+        Room habitacion = habitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró habitación con ID: " + id, id));
 
         if (habitacion.getTipoHabitacion() != null) {
-            TipoHabitacion tipo = habitacion.getTipoHabitacion();
+            RoomType tipo = habitacion.getTipoHabitacion();
             tipo.getHabitaciones().remove(habitacion);
             habitacion.setTipoHabitacion(null);
         }

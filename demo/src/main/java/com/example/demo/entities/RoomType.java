@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString(exclude = {"habitaciones"})
-public class TipoHabitacion {
+public class RoomType {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +40,5 @@ public class TipoHabitacion {
     
     @OneToMany(mappedBy = "tipoHabitacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Habitacion> habitaciones = new ArrayList<>();
+    private List<Room> habitaciones = new ArrayList<>();
 }

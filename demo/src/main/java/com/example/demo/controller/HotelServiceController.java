@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entities.Servicio;
+import com.example.demo.entities.HotelService;
 import com.example.demo.service.ServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/services")
-public class ServicioController {
+public class HotelServiceController {
 
 	@Autowired
 	private ServicioService servicioService;
@@ -33,32 +33,32 @@ public class ServicioController {
 
 	@GetMapping("/{id}")
 	public String servicioDetail(@PathVariable Long id, Model model) {
-		Servicio servicio = servicioService.getServicioById(id);
+		HotelService servicio = servicioService.getServicioById(id);
 		model.addAttribute("servicio", servicio);
 		return "HotelServices/service-detail";
 	}
 
 	@GetMapping("/add")
 	public String showAddForm(Model model) {
-		model.addAttribute("servicio", new Servicio());
+		model.addAttribute("servicio", new HotelService());
 		return "HotelServices/service-form";
 	}
 
 	@PostMapping("/add")
-	public String addServicio(@ModelAttribute Servicio servicio) {
+	public String addServicio(@ModelAttribute HotelService servicio) {
 		servicioService.addServicio(servicio);
 		return "redirect:/services";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String showEditForm(@PathVariable Long id, Model model) {
-		Servicio servicio = servicioService.getServicioById(id);
+		HotelService servicio = servicioService.getServicioById(id);
 		model.addAttribute("servicio", servicio);
 		return "HotelServices/service-form";
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editServicio(@PathVariable Long id, @ModelAttribute Servicio servicio) {
+	public String editServicio(@PathVariable Long id, @ModelAttribute HotelService servicio) {
 		servicioService.updateServicio(id, servicio);
 		return "redirect:/services";
 	}

@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.Habitacion;
+import com.example.demo.entities.Room;
 
 import java.util.List;
 
 public interface HabitacionService {
 
-    List<Habitacion> getAllHabitaciones();
+    List<Room> getAllHabitaciones();
 
-    Habitacion getHabitacionById(Long id);
+    Room getHabitacionById(Long id);
 
-    Habitacion saveHabitacion(Habitacion habitacion);
+    Room saveHabitacion(Room habitacion);
 
     void deleteHabitacion(Long id);
 }

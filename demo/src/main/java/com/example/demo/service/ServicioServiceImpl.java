@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.Servicio;
+import com.example.demo.entities.HotelService;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.repository.ServicioRepository;
+import com.example.demo.repository.HotelServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,28 +14,28 @@ import java.util.List;
 public class ServicioServiceImpl implements ServicioService {
 
 	@Autowired
-	private ServicioRepository servicioRepository;
+	private HotelServiceRepository servicioRepository;
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Servicio> getAllServicios() {
+	public List<HotelService> getAllServicios() {
 		return servicioRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Servicio getServicioById(Long id) {
+	public HotelService getServicioById(Long id) {
 		return servicioRepository.findById(id)
 			.orElseThrow(() -> new NotFoundException("No se encontró servicio con ID: " + id, id));
 	}
 
 	@Override
-	public Servicio addServicio(Servicio servicio) {
+	public HotelService addServicio(HotelService servicio) {
 		return servicioRepository.save(servicio);
 	}
 
 	@Override
-	public Servicio updateServicio(Long id, Servicio servicio) {
+	public HotelService updateServicio(Long id, HotelService servicio) {
 		if (!servicioRepository.existsById(id))
 			throw new NotFoundException("No se encontró servicio con ID: " + id, id);
 		servicio.setId(id);
