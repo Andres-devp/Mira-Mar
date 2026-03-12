@@ -6,125 +6,490 @@
     <title>Crear Cuenta - Mira Mar</title>
     <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        :root {
+            --register-blue: #648de5;
+            --register-blue-dark: #304c89;
+            --register-blue-soft: #eaf1ff;
+            --register-text: #20304f;
+        }
+
+        body.create-account-page {
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(180deg, #edf3fb 0%, #f7f9fc 100%);
+            color: var(--register-text);
+            overflow-x: hidden;
+        }
+
+        .create-account-shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .create-account-main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        }
+
+        .create-account-hero {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            min-height: 44rem;
+            background-image:
+                linear-gradient(180deg, rgba(17, 37, 74, 0.22) 0%, rgba(17, 37, 74, 0.72) 100%),
+                url('/images/FondoLogin.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+        }
+
+        .create-account-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(100, 141, 229, 0.28) 0%, rgba(48, 76, 137, 0.08) 38%, rgba(9, 20, 43, 0.18) 100%);
+        }
+
+        .create-account-hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 3.5rem clamp(1.5rem, 4vw, 4.5rem);
+            gap: 2rem;
+        }
+
+        .create-account-brand img {
+            width: clamp(9.5rem, 20vw, 12rem);
+            height: auto;
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+        }
+
+        .create-account-copy {
+            max-width: 35rem;
+            padding: clamp(1.5rem, 2vw, 2rem);
+            border-radius: 1.75rem;
+            background: linear-gradient(180deg, rgba(12, 28, 57, 0.28) 0%, rgba(12, 28, 57, 0.46) 100%);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 24px 50px rgba(10, 23, 47, 0.2);
+        }
+
+        .create-account-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 1rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.15);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .create-account-copy h1 {
+            margin: 0;
+            font-size: clamp(2.25rem, 4vw, 4.4rem);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            text-wrap: balance;
+            text-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+        }
+
+        .create-account-copy p {
+            margin: 1.4rem 0 0;
+            font-size: clamp(1rem, 1.45vw, 1.25rem);
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.94);
+            max-width: 30rem;
+        }
+
+        .create-account-highlight {
+            display: grid;
+            gap: 1rem;
+            max-width: 32rem;
+            padding: 1.3rem 1.4rem;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .create-account-highlight strong {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .create-account-avatars {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .create-account-avatar-stack {
+            display: flex;
+            margin-left: 0.15rem;
+        }
+
+        .create-account-avatar-stack img {
+            width: 2.9rem;
+            height: 2.9rem;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.88);
+            margin-left: -0.45rem;
+        }
+
+        .create-account-avatar-stack img:first-child {
+            margin-left: 0;
+        }
+
+        .create-account-form-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(2rem, 4vw, 4rem) clamp(1.25rem, 3.5vw, 3.5rem);
+            background:
+                radial-gradient(circle at top left, rgba(100, 141, 229, 0.12), transparent 30%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 248, 255, 0.96) 100%);
+        }
+
+        .create-account-card {
+            width: min(100%, 34rem);
+            padding: clamp(1.65rem, 3vw, 2.75rem);
+            border-radius: 2rem;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(100, 141, 229, 0.16);
+            box-shadow: 0 24px 60px rgba(48, 76, 137, 0.12);
+        }
+
+        .create-account-form-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .create-account-form-brand img {
+            width: 3rem;
+            height: auto;
+        }
+
+        .create-account-form-brand span {
+            color: var(--register-blue-dark);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .create-account-card h2 {
+            margin: 0 0 0.6rem;
+            color: var(--register-blue-dark);
+            font-size: clamp(2rem, 4vw, 2.65rem);
+            line-height: 1.05;
+        }
+
+        .create-account-card > p {
+            margin: 0 0 1.8rem;
+            color: #5e6f91;
+            line-height: 1.65;
+        }
+
+        .create-account-alert {
+            margin-bottom: 1rem;
+            padding: 0.95rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .create-account-alert--error {
+            background: #feeceb;
+            border: 1px solid #f3b4b0;
+            color: #9f2d28;
+        }
+
+        .create-account-alert--success {
+            background: #eef8ef;
+            border: 1px solid #badfbc;
+            color: #24623b;
+        }
+
+        .create-account-form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .create-account-field {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .create-account-field label {
+            color: var(--register-blue-dark);
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .create-account-field input {
+            width: 100%;
+            padding: 0.95rem 1rem;
+            border-radius: 0.95rem;
+            border: 1px solid rgba(100, 141, 229, 0.28);
+            background: #f9fbff;
+            color: var(--register-text);
+            font: inherit;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .create-account-field input::placeholder {
+            color: #8ea0c2;
+        }
+
+        .create-account-field input:focus {
+            outline: none;
+            border-color: var(--register-blue);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(100, 141, 229, 0.16);
+        }
+
+        .create-account-terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0.1rem 0;
+            color: #5e6f91;
+            font-size: 0.94rem;
+            line-height: 1.55;
+        }
+
+        .create-account-terms input {
+            accent-color: var(--register-blue);
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.15rem;
+            flex: 0 0 auto;
+        }
+
+        .create-account-terms a,
+        .create-account-login a {
+            color: var(--register-blue-dark);
+            font-weight: 600;
+        }
+
+        .create-account-submit {
+            width: 100%;
+            margin-top: 0.35rem;
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--register-blue) 0%, var(--register-blue-dark) 100%);
+            color: #ffffff;
+            font: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            box-shadow: 0 18px 28px rgba(100, 141, 229, 0.24);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .create-account-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 22px 34px rgba(48, 76, 137, 0.24);
+            filter: saturate(1.06);
+        }
+
+        .create-account-submit:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(100, 141, 229, 0.18), 0 22px 34px rgba(48, 76, 137, 0.24);
+        }
+
+        .create-account-login {
+            text-align: center;
+            color: #5e6f91;
+            font-size: 0.96rem;
+        }
+
+        .create-account-login a:hover,
+        .create-account-terms a:hover {
+            color: var(--register-blue);
+        }
+
+        @media (max-width: 1080px) {
+            .create-account-main {
+                grid-template-columns: 1fr;
+            }
+
+            .create-account-hero {
+                min-height: auto;
+            }
+
+            .create-account-hero-content {
+                padding-bottom: 2.2rem;
+            }
+
+            .create-account-form-section {
+                padding-top: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .create-account-hero-content {
+                padding: 1.5rem 1rem 1.25rem;
+            }
+
+            .create-account-copy,
+            .create-account-highlight,
+            .create-account-card {
+                border-radius: 1.35rem;
+            }
+
+            .create-account-copy h1 {
+                font-size: 2.2rem;
+            }
+
+            .create-account-copy p {
+                font-size: 0.98rem;
+            }
+
+            .create-account-highlight {
+                padding: 1.05rem 1rem;
+            }
+
+            .create-account-avatars {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .create-account-form-section {
+                padding: 1rem 0.9rem 2rem;
+            }
+
+            .create-account-card {
+                padding: 1.35rem;
+            }
+
+            .create-account-card h2 {
+                font-size: 1.9rem;
+            }
+
+            .create-account-terms {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
-<body class="h-screen overflow-hidden">
-    <div class="flex h-full">
-        <!-- Left Column -->
-        <div class="w-1/2 relative bg-cover bg-center" style="background-image: url('/images/FondoLogin.jpg');">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"></div>
-            
-            <!-- Logo and Title -->
-            <div class="relative z-10 p-12 text-white">
-                <div class="flex items-center mb-8">
-                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
-                        <span class="text-blue-600 font-bold text-xl">MM</span>
+<body class="create-account-page">
+    <div class="create-account-shell">
+        <main class="create-account-main">
+            <section class="create-account-hero" aria-label="Bienvenida Mira Mar">
+                <div class="create-account-hero-content">
+                    <a href="/" class="create-account-brand" aria-label="Ir al inicio de Mira Mar">
+                        <img src="/images/Mira Mar logo Blanco.png" alt="Logo Mira Mar" />
+                    </a>
+
+                    <div class="create-account-copy">
+                        <span class="create-account-eyebrow">
+                            <i class="ph ph-waves"></i>
+                            Resort frente al mar
+                        </span>
+                        <h1>Tu paraíso costero te espera</h1>
+                        <p>
+                            Crea tu cuenta para reservar más rápido, gestionar tus estancias y acceder a experiencias exclusivas en Mira Mar.
+                        </p>
                     </div>
-                    <h1 class="text-2xl font-bold">Mira Mar</h1>
-                </div>
-                
-                <h2 class="text-4xl font-bold mb-4">Tu paraíso<br/>costero te espera</h2>
-                <p class="text-lg mb-8 max-w-md">
-                    Descubre la belleza del mar Caribe desde nuestro exclusivo resort. Playas de arena blanca, aguas cristalinas y lujo sin igual.
-                </p>
-                
-                
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 max-w-md">
-                    <p class="text-white font-semibold mb-4">Más de 5.000 huéspedes satisfechos</p>
-                    <div class="flex -space-x-2">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmVtYWxlJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D" class="w-10 h-10 rounded-full border-2 border-white" alt="Prueba">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="Huésped 2">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face&auto=format" class="w-10 h-10 rounded-full border-2 border-white" alt="Huésped 3">
+
+                    <div class="create-account-highlight">
+                        <strong>Más de 5.000 huéspedes satisfechos</strong>
+                        <div class="create-account-avatars">
+                            <div class="create-account-avatar-stack" aria-hidden="true">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmVtYWxlJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D" alt="">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face&auto=format" alt="">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&auto=format" alt="">
+                            </div>
+                            <span>Atención personalizada, vistas al Caribe y una experiencia pensada para desconectar.</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Footer Left -->
-            <div class="absolute bottom-0 left-0 right-0 p-12 text-white">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
-                        <span class="text-blue-600 font-bold text-sm">MM</span>
+            </section>
+
+            <section class="create-account-form-section">
+                <div class="create-account-card">
+                    <div class="create-account-form-brand">
+                        <img src="/images/Mira Mar logo.png" alt="Logo Mira Mar" />
+                        <span>Mira Mar</span>
                     </div>
-                    <h3 class="text-xl font-bold">Mira Mar</h3>
-                </div>
-                <p class="text-sm mb-4 max-w-xs">Experiencias inolvidables en el paraíso caribeño</p>
-                <div class="flex space-x-4">
-                    <i class="fab fa-facebook text-xl hover:text-blue-300 cursor-pointer transition-colors"></i>
-                    <i class="fab fa-instagram text-xl hover:text-pink-300 cursor-pointer transition-colors"></i>
-                    <i class="fab fa-twitter text-xl hover:text-blue-300 cursor-pointer transition-colors"></i>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Right Column -->
-        <div class="w-1/2 bg-white flex flex-col">
-            <!-- Main Content -->
-            <div class="flex-1 p-12">
-                <div class="max-w-md mx-auto">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-8">Crear Cuenta</h2>
-                    
-                    <!-- Mensaje de error -->
-                    <div th:if="${error}" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+
+                    <h2>Crear cuenta</h2>
+                    <p>Completa tus datos para empezar a planear tu próxima estadía frente al mar.</p>
+
+                    <div th:if="${error}" class="create-account-alert create-account-alert--error">
                         <p th:text="${error}"></p>
                     </div>
-                    
-                    <!-- Mensaje de éxito -->
-                    <div th:if="${mensaje}" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+
+                    <div th:if="${mensaje}" class="create-account-alert create-account-alert--success">
                         <p th:text="${mensaje}"></p>
                     </div>
-                    
-                    <form th:action="@{/create-account}" method="POST" class="space-y-4">
-                        <div>
-                            <input type="text" name="nombre" placeholder="Nombre Completo" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                    <form th:action="@{/create-account}" method="POST" class="create-account-form">
+                        <div class="create-account-field">
+                            <label for="nombre">Nombre completo</label>
+                            <input id="nombre" type="text" name="nombre" placeholder="Ej. Ana Martínez" required>
                         </div>
-                        
-                        <div>
-                            <input type="text" name="usuario" placeholder="Nombre de Usuario" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                        <div class="create-account-field">
+                            <label for="usuario">Nombre de usuario</label>
+                            <input id="usuario" type="text" name="usuario" placeholder="Tu usuario" required>
                         </div>
-                        
-                        <div>
-                            <input type="email" name="email" placeholder="Correo Electrónico" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                        <div class="create-account-field">
+                            <label for="email">Correo electrónico</label>
+                            <input id="email" type="email" name="email" placeholder="correo@ejemplo.com" required>
                         </div>
-                        
-                        <div>
-                            <input type="password" name="contrasena" placeholder="Contraseña" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                        <div class="create-account-field">
+                            <label for="contrasena">Contraseña</label>
+                            <input id="contrasena" type="password" name="contrasena" placeholder="Mínimo 8 caracteres" required>
                         </div>
-                        
-                        <div>
-                            <input type="password" name="contrasenaConfirm" placeholder="Confirmar Contraseña" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                        <div class="create-account-field">
+                            <label for="contrasenaConfirm">Confirmar contraseña</label>
+                            <input id="contrasenaConfirm" type="password" name="contrasenaConfirm" placeholder="Repite tu contraseña" required>
                         </div>
-                        
-                        <div class="flex items-center">
-                            <input type="checkbox" id="terms" required class="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                            <label for="terms" class="text-sm text-gray-600">
-                                Acepto los <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a> y 
-                                <a href="#" class="text-blue-600 hover:underline">política de privacidad</a>
-                            </label>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                            Crear Cuenta
-                        </button>
-                        
-                        <div class="text-center">
-                            <span class="text-gray-600">¿Ya tienes cuenta? </span>
-                            <a href="/login-page" class="text-blue-600 hover:underline font-semibold">Iniciar Sesión</a>
-                        </div>
+
+                        <label class="create-account-terms" for="terms">
+                            <input type="checkbox" id="terms" required>
+                            <span>
+                                Acepto los <a href="#">términos y condiciones</a> y la <a href="#">política de privacidad</a>.
+                            </span>
+                        </label>
+
+                        <button type="submit" class="create-account-submit">Crear cuenta</button>
+
+                        <p class="create-account-login">
+                            ¿Ya tienes cuenta? <a href="/login-page">Iniciar sesión</a>
+                        </p>
                     </form>
-                    
-                    
                 </div>
-            </div>
-            
-            <!-- Footer Right -->
-                <div th:replace="fragments/footer :: footer"></div>
-        </div>
+            </section>
+        </main>
+
+        <div th:replace="fragments/footer :: footer"></div>
     </div>
 </body>
 </html>

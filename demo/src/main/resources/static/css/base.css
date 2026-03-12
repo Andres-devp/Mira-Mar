@@ -17,8 +17,8 @@
   --color-surface: var(--white);
   --color-surface-muted: var(--soft-linen);
 
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Inter', sans-serif;
+  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Montserrat', sans-serif;
 
   --radius-sm: 10px;
   --radius-md: 12px;
