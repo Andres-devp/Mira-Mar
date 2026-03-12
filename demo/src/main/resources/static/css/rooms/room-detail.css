@@ -24,7 +24,15 @@
 .detail-hero {
   background:
     linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15)),
-    var(--hero-image, linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%));
+    var(
+      --hero-image,
+      linear-gradient(
+        135deg,
+        var(--dusk-blue) 0%,
+        #1a2a44 50%,
+        var(--cornflower) 100%
+      )
+    );
   background-size: cover;
   background-position: center;
   color: var(--white);
@@ -41,7 +49,7 @@
   justify-content: flex-end;
   padding: 1.5rem 1.5rem;
   border-radius: var(--radius-lg);
-  background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.10));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1));
 }
 
 .detail-hero__badge {
@@ -113,7 +121,7 @@
   display: grid;
   grid-template-columns: 1.7fr 0.9fr;
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 1000px) {
@@ -146,7 +154,7 @@
 }
 
 .detail-gallery {
-  margin-top: -2.25rem;
+  margin-top: 0;
 }
 
 .detail-gallery__strip {
@@ -235,8 +243,8 @@
 }
 
 .detail-aside {
-  position: sticky;
-  top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-aside__panel {
@@ -245,6 +253,8 @@
   box-shadow: var(--shadow-md);
   padding: 1.75rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-aside__panel h3 {
@@ -310,7 +320,7 @@
 }
 
 .detail-booking__summary {
-  margin-top: 1.15rem;
+  margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid rgba(48, 76, 137, 0.12);
   display: grid;
@@ -342,7 +352,15 @@
 body.service-detail-page .detail-hero {
   background:
     linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.22)),
-    var(--hero-image, linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%));
+    var(
+      --hero-image,
+      linear-gradient(
+        135deg,
+        var(--dusk-blue) 0%,
+        #1a2a44 50%,
+        var(--cornflower) 100%
+      )
+    );
   background-size: cover;
   background-position: center;
   padding: 140px 0 70px;
@@ -394,6 +412,18 @@ body.service-detail-page .service-detail__includesGrid {
   body.service-detail-page .service-detail__includesGrid {
     grid-template-columns: 1fr;
   }
+}
+/* --- Ajuste de altura para alineación --- */
+.detail-layout {
+  min-height: 100%;
+  align-items: stretch;
+}
+
+.detail-aside__panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 body.service-detail-page .service-include-card {
