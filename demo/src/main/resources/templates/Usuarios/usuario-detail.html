@@ -31,20 +31,9 @@
             <p class="detail-hero__lead">
               <i class="ph ph-user-circle"></i>
               <span th:text="${usuario.usuario}">@usuario</span>
-              &nbsp;&bull;&nbsp;
-              <span class="detail-hero__role-badge" th:text="${usuario.rol}">Rol</span>
             </p>
             <div class="detail-hero__actions">
               <a href="/usuarios" class="btn btn--ghost">&larr; Volver</a>
-              <a th:href="@{'/usuarios/edit/' + ${usuario.id}}" class="btn btn--primary">
-                <i class="ph ph-pencil-simple"></i> Editar perfil
-              </a>
-              <form th:action="@{'/usuarios/delete/' + ${usuario.id}}" method="post" style="display:inline">
-                <button type="submit" class="btn btn--secondary"
-                        onclick="return confirm('Seguro que deseas eliminar este usuario?')">
-                  <i class="ph ph-trash"></i> Eliminar
-                </button>
-              </form>
             </div>
           </div>
         </div>
@@ -58,6 +47,27 @@
 
           <!-- Left: Avatar + quick info -->
           <aside class="profile-sidebar">
+            <div class="profile-sidebar__top-actions">
+              <details th:if="${mostrarEditarPerfil} or ${mostrarEliminarCuenta}" class="profile-actions-menu profile-actions-menu--card">
+                <summary class="profile-actions-menu__trigger" aria-label="Acciones de cuenta">
+                  <i class="ph ph-dots-three-outline-vertical"></i>
+                </summary>
+                <div class="profile-actions-menu__panel">
+                  <a th:href="@{'/usuarios/' + ${usuario.id}}" class="profile-actions-menu__item">
+                    <i class="ph ph-eye"></i> Ver perfil
+                  </a>
+                  <a th:if="${mostrarEditarPerfil}" th:href="@{'/usuarios/edit/' + ${usuario.id}}" class="profile-actions-menu__item">
+                    <i class="ph ph-pencil-simple"></i> Editar perfil
+                  </a>
+                  <form th:if="${mostrarEliminarCuenta}" th:action="@{/usuarios/delete-account}" method="post" class="profile-actions-menu__form">
+                    <button type="submit" class="profile-actions-menu__item profile-actions-menu__item--danger"
+                            onclick="return confirm('Seguro que deseas eliminar tu cuenta? Esta accion no se puede deshacer.')">
+                      <i class="ph ph-trash"></i> Eliminar cuenta
+                    </button>
+                  </form>
+                </div>
+              </details>
+            </div>
             <div class="profile-avatar-wrap">
               <div class="profile-avatar">
                 <i class="ph ph-user"></i>
@@ -66,18 +76,6 @@
             <div class="profile-sidebar__info">
               <p class="profile-sidebar__name" th:text="${usuario.nombre}"></p>
               <p class="profile-sidebar__username" th:text="'@' + ${usuario.usuario}"></p>
-              <span class="profile-sidebar__badge" th:text="${usuario.rol}"></span>
-            </div>
-            <div class="profile-sidebar__actions">
-              <a th:href="@{'/usuarios/edit/' + ${usuario.id}}" class="btn btn--primary" style="width:100%">
-                <i class="ph ph-pencil-simple"></i> Editar perfil
-              </a>
-              <form th:action="@{'/usuarios/delete/' + ${usuario.id}}" method="post">
-                <button type="submit" class="btn btn--secondary" style="width:100%"
-                        onclick="return confirm('Seguro que deseas eliminar este usuario?')">
-                  <i class="ph ph-trash"></i> Eliminar cuenta
-                </button>
-              </form>
             </div>
           </aside>
 
@@ -113,26 +111,6 @@
                   <div>
                     <p class="profile-info-item__label">Telofono</p>
                     <p class="profile-info-item__value" th:text="${usuario.telefono}"></p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="detail-section">
-              <h2 class="detail-section__title">Cuenta</h2>
-              <div class="profile-info-grid">
-                <div class="profile-info-item">
-                  <span class="profile-info-item__icon"><i class="ph ph-shield-check"></i></span>
-                  <div>
-                    <p class="profile-info-item__label">Rol</p>
-                    <p class="profile-info-item__value" th:text="${usuario.rol}"></p>
-                  </div>
-                </div>
-                <div class="profile-info-item">
-                  <span class="profile-info-item__icon"><i class="ph ph-hash"></i></span>
-                  <div>
-                    <p class="profile-info-item__label">ID de usuario</p>
-                    <p class="profile-info-item__value" th:text="${usuario.id}"></p>
                   </div>
                 </div>
               </div>
