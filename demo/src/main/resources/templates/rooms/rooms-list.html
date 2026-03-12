@@ -24,7 +24,7 @@
 
     <main class="rooms-list">
       <div class="container">
-        <header class="rooms-list__header">
+        <header class="rooms-list__header reveal">
           <h1>Nuestras Suites</h1>
           <p>
             Descubre un refugio diseñado para tu descanso con vistas
@@ -36,14 +36,14 @@
           </div>
         </header>
 
-        <section class="rooms-list__sectionHeader" id="suites">
+        <section class="rooms-list__sectionHeader reveal" id="suites">
           <div>
             <h2>Suites Exclusivas</h2>
             <p>Experiencias de lujo curadas para tu estancia.</p>
           </div>
         </section>
 
-        <form class="rooms-filter" method="get" action="/rooms#suites">
+        <form class="rooms-filter reveal" method="get" action="/rooms#suites">
           <div class="rooms-filter__group">
             <label for="capacidad">Capacidad mínima</label>
             <select id="capacidad" name="capacidad">
@@ -75,7 +75,7 @@
           th:if="${not #lists.isEmpty(tipos)}"
           aria-label="Listado de habitaciones"
         >
-          <article class="card card--room" th:each="tipo : ${tipos}">
+          <article class="card card--room reveal-wave" th:each="tipo : ${tipos}">
             <div class="card__media">
               <img
                 th:src="${tipo.urlImagen}"

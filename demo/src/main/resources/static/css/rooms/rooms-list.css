@@ -124,6 +124,14 @@ body.page-rooms-list nav {
   box-shadow: 0 20px 40px rgba(48, 76, 137, 0.15);
 }
 
+/* Stagger domino wave for room cards */
+.cards-grid .card--room.reveal-wave:nth-child(1) { animation-delay: 0s; }
+.cards-grid .card--room.reveal-wave:nth-child(2) { animation-delay: 0.12s; }
+.cards-grid .card--room.reveal-wave:nth-child(3) { animation-delay: 0.24s; }
+.cards-grid .card--room.reveal-wave:nth-child(4) { animation-delay: 0.36s; }
+.cards-grid .card--room.reveal-wave:nth-child(5) { animation-delay: 0.48s; }
+.cards-grid .card--room.reveal-wave:nth-child(n+6) { animation-delay: 0.48s; }
+
 .card--room .card__media {
   position: relative;
   overflow: hidden;

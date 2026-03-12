@@ -144,6 +144,11 @@ body.page-services nav {
   border-bottom: 4px solid var(--gold);
 }
 
+/* Stagger domino wave for service cards (3-col grid) */
+.cards-grid .card--service.reveal-wave:nth-child(3n+1) { animation-delay: 0s; }
+.cards-grid .card--service.reveal-wave:nth-child(3n+2) { animation-delay: 0.14s; }
+.cards-grid .card--service.reveal-wave:nth-child(3n+3) { animation-delay: 0.28s; }
+
 .card--service .card__media {
   overflow: hidden;
   height: 220px;

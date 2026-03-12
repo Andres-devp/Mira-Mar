@@ -24,7 +24,7 @@
 
     <main class="services-page">
       <div class="container">
-        <header class="rooms-list__header" id="servicios">
+        <header class="rooms-list__header reveal" id="servicios">
           <h1>Nuestros Servicios</h1>
           <p>
             Comodidades y experiencias diseñadas para elevar tu estadía a un
@@ -36,7 +36,7 @@
           </div>
         </header>
 
-        <section class="rooms-list__sectionHeader" id="experiencias">
+        <section class="rooms-list__sectionHeader reveal" id="experiencias">
           <div>
             <h2>Experiencias Exclusivas</h2>
             <p>Comodidades pensadas para una estadía sin preocupaciones.</p>
@@ -48,7 +48,7 @@
           th:if="${not #lists.isEmpty(servicios)}"
           aria-label="Listado de servicios"
         >
-          <article class="card card--service" th:each="servicio : ${servicios}">
+          <article class="card card--service reveal-wave" th:each="servicio : ${servicios}">
             <div class="card__media">
               <img
                 th:src="${servicio.imageUrl}"
