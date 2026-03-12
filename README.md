@@ -39,7 +39,7 @@
 - El siguiente diagrama entidad–relación representa la estructura de la base de datos utilizada en el sistema **Mira Mar Caribbean Luxury**, mostrando las principales entidades como usuarios, reservas, habitaciones, servicios, cuentas y pagos.
 
 ### Modelo Entidad–Relación
-<img width="1498" height="716" alt="image" src="https://github.com/user-attachments/assets/1d006948-1f3f-4ebc-ab9b-fe9204bc3e7d" />
+![alt text](Documents/DiagramaEntidad-Relación.jpg)
 
 ### Diagrama De Clases
 ![alt text](Documents/DiagramaDeClases.jpg)
