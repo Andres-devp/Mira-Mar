@@ -2,23 +2,20 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.Servicio;
 import com.example.demo.service.ServicioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/services")
 public class ServicioController {
-	private final ServicioService servicioService;
 
-	public ServicioController(ServicioService servicioService) {
-		this.servicioService = servicioService;
-	}
+	@Autowired
+	private ServicioService servicioService;
 
 	@GetMapping
-	public String listServicios(Model model) {
+	public String listServicios() {
 		return "redirect:/services/cards";
 	}
 
@@ -36,12 +33,9 @@ public class ServicioController {
 
 	@GetMapping("/{id}")
 	public String servicioDetail(@PathVariable Long id, Model model) {
-		Optional<Servicio> servicio = servicioService.getServicioById(id);
-		if (servicio.isPresent()) {
-			model.addAttribute("servicio", servicio.get());
-			return "HotelServices/service-detail";
-		}
-		return "redirect:/services";
+		Servicio servicio = servicioService.getServicioById(id);
+		model.addAttribute("servicio", servicio);
+		return "HotelServices/service-detail";
 	}
 
 	@GetMapping("/add")
@@ -58,13 +52,9 @@ public class ServicioController {
 
 	@GetMapping("/edit/{id}")
 	public String showEditForm(@PathVariable Long id, Model model) {
-		Optional<Servicio> servicio = servicioService.getServicioById(id);
-		if (servicio.isPresent()) {
-			model.addAttribute("servicio", servicio.get());
-			return "HotelServices/service-form";
-		} else {
-			return "redirect:/services";
-		}
+		Servicio servicio = servicioService.getServicioById(id);
+		model.addAttribute("servicio", servicio);
+		return "HotelServices/service-form";
 	}
 
 	@PostMapping("/edit/{id}")

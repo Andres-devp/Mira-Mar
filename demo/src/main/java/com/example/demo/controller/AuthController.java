@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.Collection;
-
+import com.example.demo.entities.Cliente;
+import com.example.demo.exception.RegistrationException;
+import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,14 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.entities.Usuario;
-import com.example.demo.service.UsuarioService;
-
 @Controller
 public class AuthController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private AuthService authService;
 
     @GetMapping("/login-page")
     public String login() {
@@ -27,22 +25,15 @@ public class AuthController {
     public String procesarLogin(@RequestParam String username,
                                 @RequestParam String password,
                                 RedirectAttributes flash) {
-        Collection<Usuario> usuarios = usuarioService.searchAll();
-        if (usuarios != null) {
-            for (Usuario u : usuarios) {
-                if (u != null && u.getUsuario() != null && u.getContrasena() != null
-                        && u.getUsuario().equals(username)
-                        && u.getContrasena().equals(password)) {
-                    if (u.getRol() != null && u.getRol().equals("ADMIN")) {
-                        return "redirect:/admin";
-                    }
-                    return "redirect:/usuarios/" + u.getId();
-                }
-            }
+        Cliente cliente = authService.autenticar(username, password);
+        if (cliente == null) {
+            flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
+            return "redirect:/login-page";
         }
-        // falló autenticación
-        flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
-        return "redirect:/login-page";
+        if ("ADMIN".equals(cliente.getRol())) {
+            return "redirect:/admin";
+        }
+        return "redirect:/usuarios/" + cliente.getId();
     }
 
     @GetMapping("/logout")
@@ -55,62 +46,20 @@ public class AuthController {
         return "Usuarios/login/create-account";
     }
 
-@PostMapping("/create-account")
-public String procesarCrearCuenta(@RequestParam String nombre,
-                                  @RequestParam String usuario,
-                                  @RequestParam String email,
-                                  @RequestParam String contrasena,
-                                  @RequestParam String contrasenaConfirm,
-                                  RedirectAttributes flash) {
-
-    // Limpiar espacios en blanco en los campos de texto
-    nombre = nombre != null ? nombre.trim() : "";
-    usuario = usuario != null ? usuario.trim() : "";
-    email = email != null ? email.trim() : "";
-
-    // Validar que todos los campos obligatorios hayan sido diligenciados
-    if (nombre.isEmpty() || usuario.isEmpty() || email.isEmpty()
-            || contrasena == null || contrasena.isEmpty()
-            || contrasenaConfirm == null || contrasenaConfirm.isEmpty()) {
-        flash.addFlashAttribute("error", "Todos los campos son obligatorios");
-        return "redirect:/create-account";
-    }
-
-    // Validar que la contraseña y su confirmación coincidan
-    if (!contrasena.equals(contrasenaConfirm)) {
-        flash.addFlashAttribute("error", "Las contraseñas no coinciden");
-        return "redirect:/create-account";
-    }
-
-    // Verificar que el nombre de usuario no se encuentre registrado
-    Usuario usuarioExistente = usuarioService.searchByUsername(usuario);
-    if (usuarioExistente != null) {
-        flash.addFlashAttribute("error", "El nombre de usuario ya está en uso");
-        return "redirect:/create-account";
-    }
-
-    // Verificar que el correo no se encuentre registrado
-    Usuario emailExistente = usuarioService.searchByEmail(email);
-    if (emailExistente != null) {
-        flash.addFlashAttribute("error", "El correo electrónico ya está registrado");
-        return "redirect:/create-account";
-    }
-
-    // Crear el nuevo usuario con rol CLIENTE por defecto
-    Usuario nuevoUsuario = new Usuario();
-    nuevoUsuario.setNombre(nombre);
-    nuevoUsuario.setUsuario(usuario);
-    nuevoUsuario.setEmail(email);
-    nuevoUsuario.setContrasena(contrasena);
-    nuevoUsuario.setRol("CLIENTE");
-    nuevoUsuario.setTelefono("");
-    nuevoUsuario.setFotoPerfil(null);
-
-    // Guardar el usuario en el repositorio
-    usuarioService.save(nuevoUsuario);
-
-    // Redirigir al login con mensaje de confirmación
-    flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
-    return "redirect:/login-page";
+    @PostMapping("/create-account")
+    public String procesarCrearCuenta(@RequestParam String nombre,
+                                      @RequestParam String usuario,
+                                      @RequestParam String email,
+                                      @RequestParam String contrasena,
+                                      @RequestParam String contrasenaConfirm,
+                                      RedirectAttributes flash) {
+        try {
+            authService.registrar(nombre, usuario, email, contrasena, contrasenaConfirm);
+            flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
+            return "redirect:/login-page";
+        } catch (RegistrationException e) {
+            flash.addFlashAttribute("error", e.getMessage());
+            return "redirect:/create-account";
+        }
     }
 }

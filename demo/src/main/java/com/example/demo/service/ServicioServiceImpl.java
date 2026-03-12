@@ -1,21 +1,20 @@
 package com.example.demo.service;
 
 import com.example.demo.entities.Servicio;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.ServicioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class ServicioServiceImpl implements ServicioService {
-	private final ServicioRepository servicioRepository;
 
-	public ServicioServiceImpl(ServicioRepository servicioRepository) {
-		this.servicioRepository = servicioRepository;
-	}
+	@Autowired
+	private ServicioRepository servicioRepository;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -25,8 +24,9 @@ public class ServicioServiceImpl implements ServicioService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Servicio> getServicioById(Long id) {
-		return servicioRepository.findById(id);
+	public Servicio getServicioById(Long id) {
+		return servicioRepository.findById(id)
+			.orElseThrow(() -> new NotFoundException("No se encontró servicio con ID: " + id, id));
 	}
 
 	@Override
@@ -36,16 +36,17 @@ public class ServicioServiceImpl implements ServicioService {
 
 	@Override
 	public Servicio updateServicio(Long id, Servicio servicio) {
-		if (!servicioRepository.existsById(id)) return null;
+		if (!servicioRepository.existsById(id))
+			throw new NotFoundException("No se encontró servicio con ID: " + id, id);
 		servicio.setId(id);
 		return servicioRepository.save(servicio);
 	}
 
 	@Override
-	public boolean deleteServicio(Long id) {
-		if (!servicioRepository.existsById(id)) return false;
+	public void deleteServicio(Long id) {
+		if (!servicioRepository.existsById(id))
+			throw new NotFoundException("No se encontró servicio con ID: " + id, id);
 		servicioRepository.deleteById(id);
-		return true;
 	}
 }
 

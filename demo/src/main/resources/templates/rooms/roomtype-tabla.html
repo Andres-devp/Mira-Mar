@@ -35,7 +35,7 @@
           </div>
         </section>
 
-        <table class="services-table" th:if="${not #lists.isEmpty(roomTypes)}">
+        <table class="services-table" th:if="${not #lists.isEmpty(tiposHabitacion)}">
           <thead>
             <tr>
               <th>Código</th>
@@ -45,16 +45,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="type : ${roomTypes}">
-              <td th:text="${type.code}"></td>
-              <td th:text="${type.displayName}"></td>
-              <td th:text="${type.description}"></td>
+            <tr th:each="type : ${tiposHabitacion}">
+              <td th:text="${type.codigo}"></td>
+              <td th:text="${type.nombre}"></td>
+              <td th:text="${type.descripcion}"></td>
               <td>
                 <div class="icon-actions">
-                  <a th:href="@{'/roomtypes/edit/' + ${type.code}}" class="icon-action" title="Editar">
+                  <a th:href="@{'/roomtypes/edit/' + ${type.id}}" class="icon-action" title="Editar">
                     <i class="ph ph-pencil-simple"></i>
                   </a>
-                  <form th:action="@{'/roomtypes/delete/' + ${type.code}}" method="post">
+                  <form th:action="@{'/roomtypes/delete/' + ${type.id}}" method="post">
                     <button
                       type="submit"
                       class="icon-action icon-action--danger"
@@ -75,7 +75,7 @@
         </table>
 
         <section
-          th:if="${#lists.isEmpty(roomTypes)}"
+          th:if="${#lists.isEmpty(tiposHabitacion)}"
           class="services-page__empty"
           aria-live="polite"
         >

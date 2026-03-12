@@ -1,15 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.entities.Cliente;
+import com.example.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.example.demo.entities.Usuario;
-import com.example.demo.service.UsuarioService;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -17,54 +13,50 @@ import com.example.demo.service.UsuarioService;
 public class UsuarioController {
 
     @Autowired
-    UsuarioService usuarioService;
+    private ClienteService clienteService;
 
     @GetMapping("")
-    public String Usuarios(Model model) {
-        model.addAttribute("usuarios", usuarioService.searchAll());
+    public String usuarios(Model model) {
+        model.addAttribute("usuarios", clienteService.getAllClientes());
         return "Usuarios/usuarios-tabla";
     }
 
     @GetMapping("/{id}")
-    public String UsuarioPorId(Model model, @PathVariable ("id") Integer id) {
-
-        Usuario usuario = usuarioService.searchById(id);
-        model.addAttribute("usuario", usuario);
+    public String usuarioPorId(Model model, @PathVariable Long id) {
+        Cliente cliente = clienteService.getClienteById(id);
+        model.addAttribute("usuario", cliente);
         return "Usuarios/usuario-detail";
     }
 
-    // --- new CRUD mappings ---
-
     @GetMapping("/add")
     public String crearFormulario(Model model) {
-        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("usuario", new Cliente());
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/add")
-    public String guardarUsuario(Usuario usuario) {
-        usuarioService.save(usuario);
+    public String guardarUsuario(@ModelAttribute("usuario") Cliente cliente) {
+        clienteService.saveCliente(cliente);
         return "redirect:/usuarios";
     }
 
     @GetMapping("/edit/{id}")
-    public String editarFormulario(Model model, @PathVariable("id") Integer id) {
-        Usuario usuario = usuarioService.searchById(id);
-        model.addAttribute("usuario", usuario);
+    public String editarFormulario(Model model, @PathVariable Long id) {
+        Cliente cliente = clienteService.getClienteById(id);
+        model.addAttribute("usuario", cliente);
         return "Usuarios/usuario-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String actualizarUsuario(Usuario usuario, @PathVariable("id") Integer id) {
-        // ensure the id is set in case the form didn't include it
-        usuario.setId(id);
-        usuarioService.save(usuario);
+    public String actualizarUsuario(@ModelAttribute("usuario") Cliente cliente, @PathVariable Long id) {
+        cliente.setId(id);
+        clienteService.saveCliente(cliente);
         return "redirect:/usuarios";
     }
 
     @PostMapping("/delete/{id}")
-    public String eliminarUsuario(@PathVariable("id") Integer id) {
-        usuarioService.deleteById(id);
+    public String eliminarUsuario(@PathVariable Long id) {
+        clienteService.deleteCliente(id);
         return "redirect:/usuarios";
     }
 }

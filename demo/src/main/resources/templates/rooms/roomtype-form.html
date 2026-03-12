@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title
-      th:text="${type.code} != null ? 'Editar Tipo | Mira Mar' : 'Nuevo Tipo | Mira Mar'"
+      th:text="${tipo.id} != null ? 'Editar Tipo | Mira Mar' : 'Nuevo Tipo | Mira Mar'"
     ></title>
     <link rel="icon" type="image/png" href="/images/Mira Mar logo Blanco.png" />
 
@@ -29,46 +29,46 @@
         <div class="form-shell">
           <h1
             class="form-shell__title"
-            th:text="${type.code} != null ? 'Editar Tipo' : 'Nuevo Tipo'"
+            th:text="${tipo.id} != null ? 'Editar Tipo' : 'Nuevo Tipo'"
           ></h1>
 
           <form
-            th:action="${type.code} != null ? @{'/roomtypes/edit/' + ${type.code}} : @{/roomtypes/add}"
-            th:object="${type}"
+            th:action="${tipo.id} != null ? @{'/roomtypes/edit/' + ${tipo.id}} : @{/roomtypes/add}"
+            th:object="${tipo}"
             method="post"
           >
             <div class="form-grid">
               <div class="form-field">
-                <label for="code">Código *</label>
+                <label for="codigo">Código *</label>
                 <input
                   type="text"
-                  id="code"
-                  name="code"
-                  th:field="*{code}"
-                  th:readonly="${type.code} != null"
+                  id="codigo"
+                  name="codigo"
+                  th:field="*{codigo}"
+                  th:readonly="${tipo.id} != null"
                   required
                 />
                 <div class="form-error"></div>
               </div>
 
               <div class="form-field">
-                <label for="displayName">Nombre *</label>
+                <label for="nombre">Nombre *</label>
                 <input
                   type="text"
-                  id="displayName"
-                  name="displayName"
-                  th:field="*{displayName}"
+                  id="nombre"
+                  name="nombre"
+                  th:field="*{nombre}"
                   required
                 />
                 <div class="form-error"></div>
               </div>
 
               <div class="form-field form-field--full">
-                <label for="description">Descripción</label>
+                <label for="descripcion">Descripción</label>
                 <textarea
-                  id="description"
-                  name="description"
-                  th:field="*{description}"
+                  id="descripcion"
+                  name="descripcion"
+                  th:field="*{descripcion}"
                 ></textarea>
                 <div class="form-error"></div>
               </div>
@@ -77,7 +77,7 @@
             <div class="form-actions">
               <button type="submit" class="btn btn--primary">
                 <span
-                  th:text="${type.code} != null ? 'Guardar cambios' : 'Crear tipo'"
+                  th:text="${tipo.id} != null ? 'Guardar cambios' : 'Crear tipo'"
                 ></span>
               </button>
               <a href="/roomtypes" class="btn btn--ghost">Cancelar</a>

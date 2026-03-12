@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.service.ClienteService;
 import com.example.demo.service.HabitacionService;
-import com.example.demo.service.RoomTypeService;
 import com.example.demo.service.ServicioService;
-import com.example.demo.service.UsuarioService;
+import com.example.demo.service.TipoHabitacionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UsuarioService usuarioService;
-    private final ServicioService servicioService;
-    private final HabitacionService habitacionService;
-    private final RoomTypeService roomTypeService;
+    @Autowired
+    private ClienteService clienteService;
 
-    public AdminController(UsuarioService usuarioService, ServicioService servicioService, HabitacionService habitacionService, RoomTypeService roomTypeService) {
-        this.usuarioService = usuarioService;
-        this.servicioService = servicioService;
-        this.habitacionService = habitacionService;
-        this.roomTypeService = roomTypeService;
-    }
+    @Autowired
+    private ServicioService servicioService;
+
+    @Autowired
+    private HabitacionService habitacionService;
+
+    @Autowired
+    private TipoHabitacionService tipoHabitacionService;
 
     @GetMapping({"", "/"})
     public String admin() {
@@ -32,7 +33,7 @@ public class AdminController {
 
     @GetMapping("/usuarios")
     public String usuariosTabla(Model model) {
-        model.addAttribute("usuarios", usuarioService.searchAll());
+        model.addAttribute("usuarios", clienteService.getAllClientes());
         return "Usuarios/usuarios-tabla";
     }
 
@@ -50,7 +51,7 @@ public class AdminController {
 
     @GetMapping("/tipos-habitacion")
     public String tiposHabitacionTabla(Model model) {
-        model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.getAllTipos());
         return "rooms/roomtype-tabla";
     }
 }
