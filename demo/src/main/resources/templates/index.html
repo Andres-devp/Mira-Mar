@@ -48,7 +48,8 @@
       </div>
     </header>
 
-    <section class="amenities container">
+    <section class="amenities-section">
+      <div class="amenities container">
       <div class="section-header">
         <span>Relaxed Luxury</span>
         <h2>Creado para tus Sentidos</h2>
@@ -74,6 +75,7 @@
           <h3>Navegación</h3>
           <p>Charters privados al atardecer en nuestro velero clásico.</p>
         </div>
+      </div>
       </div>
     </section>
 
@@ -107,27 +109,15 @@
           <h2>Alojamientos</h2>
         </div>
         <div class="room-grid">
-          <div class="room-card">
-            <img src="/images/Habitacion1.avif" alt="Oceanfront Villa" />
+          <a th:each="tipo : ${tiposDestacados}"
+             th:href="@{/rooms/{id}(id=${tipo.id})}"
+             class="room-card">
+            <img th:src="${tipo.urlImagen}" th:alt="${tipo.nombre}" />
             <div class="room-overlay">
-              <h3>Villa Oceanfront</h3>
-              <p class="room-price">Desde $450 / noche</p>
+              <h3 th:text="${tipo.nombre}">Nombre</h3>
+              <p class="room-price" th:text="'Desde $' + ${#numbers.formatDecimal(tipo.precioNoche, 0, 'COMMA', 0, 'POINT')} + ' / noche'">Precio</p>
             </div>
-          </div>
-          <div class="room-card">
-            <img src="/images/Habitacion2.avif" alt="Bright Suite" />
-            <div class="room-overlay">
-              <h3>Suite Garden</h3>
-              <p class="room-price">Desde $320 / noche</p>
-            </div>
-          </div>
-          <div class="room-card">
-            <img src="/images/Habitacion3.avif" alt="Pool View" />
-            <div class="room-overlay">
-              <h3>The Penthouse</h3>
-              <p class="room-price">Desde $850 / noche</p>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>

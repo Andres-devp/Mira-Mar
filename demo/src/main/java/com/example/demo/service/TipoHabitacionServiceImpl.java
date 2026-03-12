@@ -24,6 +24,20 @@ public class TipoHabitacionServiceImpl implements TipoHabitacionService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TipoHabitacion> filtrarTipos(Integer capacidadMin, Double precioMax) {
+        if (capacidadMin != null && precioMax != null) {
+            return tipoHabitacionRepository.findByCapacidadGreaterThanEqualAndPrecioNocheLessThanEqual(capacidadMin, precioMax);
+        } else if (capacidadMin != null) {
+            return tipoHabitacionRepository.findByCapacidadGreaterThanEqual(capacidadMin);
+        } else if (precioMax != null) {
+            return tipoHabitacionRepository.findByPrecioNocheLessThanEqual(precioMax);
+        } else {
+            return tipoHabitacionRepository.findAll();
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public TipoHabitacion getTipoById(Long id) {
         return tipoHabitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + id, id));

@@ -23,7 +23,7 @@
 
 .detail-hero {
   background:
-    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.1) 100%),
     var(
       --hero-image,
       linear-gradient(
@@ -48,8 +48,6 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.5rem 1.5rem;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1));
 }
 
 .detail-hero__badge {

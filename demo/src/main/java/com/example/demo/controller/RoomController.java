@@ -21,8 +21,12 @@ public class RoomController {
     private TipoHabitacionService tipoHabitacionService;
 
     @GetMapping
-    public String listRooms(Model model) {
-        model.addAttribute("tipos", tipoHabitacionService.getAllTipos());
+    public String listRooms(@RequestParam(required = false) Integer capacidad,
+                            @RequestParam(required = false) Double precioMax,
+                            Model model) {
+        model.addAttribute("tipos", tipoHabitacionService.filtrarTipos(capacidad, precioMax));
+        model.addAttribute("capacidadFiltro", capacidad);
+        model.addAttribute("precioMaxFiltro", precioMax);
         return "rooms/rooms-list";
     }
 

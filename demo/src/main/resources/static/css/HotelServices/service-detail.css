@@ -21,7 +21,7 @@ body.service-detail-page nav.scrolled {
 
 body.service-detail-page .detail-hero {
   background:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.22)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.1) 100%),
     var(--hero-image, linear-gradient(135deg, var(--dusk-blue) 0%, #1a2a44 50%, var(--cornflower) 100%));
   background-size: cover;
   background-position: center;
@@ -38,8 +38,6 @@ body.service-detail-page .detail-hero__content {
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.5rem 1.5rem;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.10));
 }
 
 body.service-detail-page .detail-hero__badge {

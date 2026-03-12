@@ -43,6 +43,33 @@
           </div>
         </section>
 
+        <form class="rooms-filter" method="get" action="/rooms#suites">
+          <div class="rooms-filter__group">
+            <label for="capacidad">Capacidad mínima</label>
+            <select id="capacidad" name="capacidad">
+              <option value="" th:selected="${capacidadFiltro == null}">Todos</option>
+              <option value="1" th:selected="${capacidadFiltro == 1}">1+ huésped</option>
+              <option value="2" th:selected="${capacidadFiltro == 2}">2+ huéspedes</option>
+              <option value="3" th:selected="${capacidadFiltro == 3}">3+ huéspedes</option>
+              <option value="4" th:selected="${capacidadFiltro == 4}">4+ huéspedes</option>
+            </select>
+          </div>
+          <div class="rooms-filter__group">
+            <label for="precioMax">Precio máximo / noche</label>
+            <select id="precioMax" name="precioMax">
+              <option value="" th:selected="${precioMaxFiltro == null}">Todos</option>
+              <option value="100" th:selected="${precioMaxFiltro == 100}">Hasta $100</option>
+              <option value="200" th:selected="${precioMaxFiltro == 200}">Hasta $200</option>
+              <option value="300" th:selected="${precioMaxFiltro == 300}">Hasta $300</option>
+              <option value="500" th:selected="${precioMaxFiltro == 500}">Hasta $500</option>
+            </select>
+          </div>
+          <div class="rooms-filter__actions">
+            <button type="submit" class="btn btn--primary">Filtrar</button>
+            <a href="/rooms#suites" class="btn btn--ghost">Limpiar</a>
+          </div>
+        </form>
+
         <section
           class="cards-grid"
           th:if="${not #lists.isEmpty(tipos)}"
@@ -96,7 +123,7 @@
               </div>
 
               <div class="card__actions">
-                <a th:href="@{'/rooms/' + ${tipo.id}}" class="btn btn--primary"
+                <a th:href="@{'/rooms/' + ${tipo.id}}" class="btn btn--primary stretched-link"
                   >Reservar Suite</a
                 >
               </div>

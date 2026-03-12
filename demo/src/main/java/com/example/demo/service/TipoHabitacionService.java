@@ -8,6 +8,8 @@ public interface TipoHabitacionService {
 
     List<TipoHabitacion> getAllTipos();
 
+    List<TipoHabitacion> filtrarTipos(Integer capacidadMin, Double precioMax);
+
     TipoHabitacion getTipoById(Long id);
 
     TipoHabitacion saveTipo(TipoHabitacion tipo);

@@ -93,6 +93,7 @@ body.page-rooms-list nav {
 }
 
 .card--room {
+  position: relative;
   border: none;
   box-shadow: 0 10px 30px rgba(48, 76, 137, 0.08);
   transition:
@@ -102,6 +103,14 @@ body.page-rooms-list nav {
   display: grid;
   grid-template-columns: 360px 1fr;
   gap: 0;
+  cursor: pointer;
+}
+
+.card--room .btn--primary.stretched-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 @media (max-width: 860px) {
@@ -233,6 +242,71 @@ body.page-rooms-list nav {
 }
 
 .card--room .btn { width: auto; margin-top: 0; }
+
+/* --- Filtro de habitaciones --- */
+.rooms-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--white);
+  border: 1px solid rgba(48, 76, 137, 0.1);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 16px rgba(48, 76, 137, 0.06);
+}
+
+.rooms-filter__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 160px;
+}
+
+.rooms-filter__group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--dusk-blue);
+  opacity: 0.8;
+}
+
+.rooms-filter__group select {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba(48, 76, 137, 0.25);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-body);
+  color: var(--dusk-blue);
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.rooms-filter__group select:focus {
+  outline: none;
+  border-color: var(--cornflower);
+}
+
+.rooms-filter__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  padding-bottom: 0.05rem;
+}
+
+@media (max-width: 640px) {
+  .rooms-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rooms-filter__actions {
+    justify-content: flex-start;
+  }
+}
 
 .rooms-list__sectionHeader {
   display: flex;
