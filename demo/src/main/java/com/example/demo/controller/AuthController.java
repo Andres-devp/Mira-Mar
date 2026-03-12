@@ -5,6 +5,7 @@ import com.example.demo.exception.RegistrationException;
 import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,12 +25,17 @@ public class AuthController {
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String username,
                                 @RequestParam String password,
+                                HttpSession session,
                                 RedirectAttributes flash) {
         Cliente cliente = authService.autenticar(username, password);
         if (cliente == null) {
             flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
             return "redirect:/login-page";
         }
+
+        session.setAttribute("usuarioId", cliente.getId());
+        session.setAttribute("usuarioRol", cliente.getRol());
+
         if ("ADMIN".equals(cliente.getRol())) {
             return "redirect:/admin";
         }
@@ -37,7 +43,8 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
 
