@@ -29,6 +29,15 @@ public class TipoHabitacion {
     @Column(length = 500)
     private String descripcion;
     
+    @Column(length = 255)
+    private String urlImagen;
+    
+    @Column(nullable = false)
+    private Double precioNoche;
+    
+    @Column(nullable = false)
+    private Integer capacidad;
+    
     @OneToMany(mappedBy = "tipoHabitacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Habitacion> habitaciones = new ArrayList<>();

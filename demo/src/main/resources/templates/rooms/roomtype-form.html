@@ -72,6 +72,46 @@
                 ></textarea>
                 <div class="form-error"></div>
               </div>
+
+              <div class="form-field">
+                <label for="precioNoche">Precio por noche ($) *</label>
+                <input
+                  type="number"
+                  id="precioNoche"
+                  name="precioNoche"
+                  th:field="*{precioNoche}"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+                <div class="form-error"></div>
+              </div>
+
+              <div class="form-field">
+                <label for="capacidad">Capacidad (huéspedes) *</label>
+                <input
+                  type="number"
+                  id="capacidad"
+                  name="capacidad"
+                  th:field="*{capacidad}"
+                  min="1"
+                  max="10"
+                  required
+                />
+                <div class="form-error"></div>
+              </div>
+
+              <div class="form-field form-field--full">
+                <label for="urlImagen">URL de imagen</label>
+                <input
+                  type="url"
+                  id="urlImagen"
+                  name="urlImagen"
+                  th:field="*{urlImagen}"
+                  placeholder="/images/Habitacion1.avif"
+                />
+                <div class="form-error"></div>
+              </div>
             </div>
 
             <div class="form-actions">

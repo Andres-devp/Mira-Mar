@@ -43,30 +43,45 @@ public class DataLoader implements CommandLineRunner {
                 .codigo("ESTANDAR")
                 .nombre("Habitación Estándar")
                 .descripcion("Habitación básica confortable para una o dos personas")
+                .urlImagen("/images/Habitacion1.avif")
+                .precioNoche(80.0)
+                .capacidad(2)
                 .build());
         
         tipos.add(TipoHabitacion.builder()
                 .codigo("DOBLE")
                 .nombre("Habitación Doble")
                 .descripcion("Amplia habitación con cama doble y amenidades")
+                .urlImagen("/images/Habitacion2.avif")
+                .precioNoche(120.0)
+                .capacidad(2)
                 .build());
         
         tipos.add(TipoHabitacion.builder()
                 .codigo("SUITE")
                 .nombre("Suite Ejecutiva")
                 .descripcion("Suite de lujo con sala de estar y vistas al mar")
+                .urlImagen("/images/Habitacion3.avif")
+                .precioNoche(200.0)
+                .capacidad(3)
                 .build());
         
         tipos.add(TipoHabitacion.builder()
                 .codigo("FAMILIAR")
                 .nombre("Habitación Familiar")
                 .descripcion("Espaciosa habitación para familias con múltiples camas")
+                .urlImagen("/images/habitacionFamiliar.jpg")
+                .precioNoche(180.0)
+                .capacidad(4)
                 .build());
         
         tipos.add(TipoHabitacion.builder()
                 .codigo("PRESIDENCIAL")
                 .nombre("Suite Presidencial")
                 .descripcion("La mejor suite del hotel con lujos y servicios premium")
+                .urlImagen("/images/Hero.avif")
+                .precioNoche(350.0)
+                .capacidad(4)
                 .build());
         
         List<TipoHabitacion> tiposGuardados = tipoHabitacionRepository.saveAll(tipos);
@@ -176,25 +191,12 @@ public class DataLoader implements CommandLineRunner {
         
         // 3. Crear 50 habitaciones con tipos asignados aleatoriamente
         List<Habitacion> habitaciones = new ArrayList<>();
-        String[] imagenes = {
-            "Habitacion1.avif",
-            "Habitacion2.avif",
-            "Habitacion3.avif",
-            "Ocean View Interior.avif",
-            "Hero.avif"
-        };
         
         for (int i = 1; i <= 50; i++) {
             TipoHabitacion tipoAleatorio = tiposGuardados.get(random.nextInt(tiposGuardados.size()));
-            int capacidad = random.nextInt(3) + 1; // 1 a 3 personas
-            double precio = 50.0 + (random.nextDouble() * 200.0); // 50 a 250 por noche
             
             habitaciones.add(Habitacion.builder()
                     .nombre("Habitación " + i)
-                    .descripcion("Habitación confortable " + i + " con excelentes servicios")
-                    .urlImagen("/images/" + imagenes[random.nextInt(imagenes.length)])
-                    .precioNoche(Math.round(precio * 100.0) / 100.0)
-                    .capacidad(capacidad)
                     .tipoHabitacion(tipoAleatorio)
                     .build());
         }

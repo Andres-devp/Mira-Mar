@@ -52,13 +52,10 @@
               <td th:text="${room.id}"></td>
               <td th:text="${room.nombre}"></td>
               <td th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'N/A'}"></td>
-              <td th:text="${room.capacidad}"></td>
-              <td th:text="'$' + ${room.precioNoche}"></td>
+              <td th:text="${room.tipoHabitacion.capacidad}"></td>
+              <td th:text="'$' + ${room.tipoHabitacion.precioNoche}"></td>
               <td>
                 <div class="icon-actions">
-                  <a th:href="@{'/rooms/' + ${room.id}}" class="icon-action" title="Ver">
-                    <i class="ph ph-eye"></i>
-                  </a>
                   <a th:href="@{'/rooms/' + ${room.id} + '/edit'}" class="icon-action" title="Editar">
                     <i class="ph ph-pencil-simple"></i>
                   </a>

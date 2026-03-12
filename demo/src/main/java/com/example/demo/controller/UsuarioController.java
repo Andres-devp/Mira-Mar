@@ -59,6 +59,7 @@ public class UsuarioController {
     @PostMapping("/edit/{id}")
     public String actualizarUsuario(@ModelAttribute("clienteForm") Cliente cliente, @PathVariable Long id) {
         cliente.setId(id);
+        cliente.setRol("CLIENTE");
         clienteService.saveCliente(cliente);
         return "redirect:/usuarios";
     }

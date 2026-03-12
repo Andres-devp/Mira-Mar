@@ -20,18 +20,6 @@ public class Habitacion {
     @Column(nullable = false, length = 100)
     private String nombre;
     
-    @Column(length = 500)
-    private String descripcion;
-    
-    @Column(length = 255)
-    private String urlImagen;
-    
-    @Column(nullable = false)
-    private Double precioNoche;
-    
-    @Column(nullable = false)
-    private Integer capacidad;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipo_habitacion_id", nullable = false)
     private TipoHabitacion tipoHabitacion;

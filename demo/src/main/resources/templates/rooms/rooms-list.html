@@ -45,14 +45,14 @@
 
         <section
           class="cards-grid"
-          th:if="${not #lists.isEmpty(rooms)}"
+          th:if="${not #lists.isEmpty(tipos)}"
           aria-label="Listado de habitaciones"
         >
-          <article class="card card--room" th:each="room : ${rooms}">
+          <article class="card card--room" th:each="tipo : ${tipos}">
             <div class="card__media">
               <img
-                th:src="${room.urlImagen}"
-                th:alt="${room.nombre}"
+                th:src="${tipo.urlImagen}"
+                th:alt="${tipo.nombre}"
                 onerror="
                   this.src =
                     'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'
@@ -60,7 +60,7 @@
               />
               <div
                 class="room-tag-badge"
-                th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'Habitación'}"
+                th:text="${tipo.codigo}"
               >
                 Tipo
               </div>
@@ -69,37 +69,34 @@
             <div class="card__body">
               <div class="room-card__top">
                 <div>
-                  <h2 class="card__title" th:text="${room.nombre}">
+                  <h2 class="card__title" th:text="${tipo.nombre}">
                     Nombre de Habitación
                   </h2>
                   <div class="room-card__priceLine">
-                    <span th:text="'$' + ${room.precioNoche}">$0</span>
+                    <span th:text="'$' + ${tipo.precioNoche}">$0</span>
                     <small>/noche</small>
                   </div>
                 </div>
               </div>
-              <p class="card__subtitle" th:text="${room.descripcion}">
+              <p class="card__subtitle" th:text="${tipo.descripcion}">
                 Descripción breve de la habitación.
               </p>
 
               <div class="card__meta">
                 <span>
                   <i class="ph ph-star"></i>
-                  <span
-                    th:text="${room.tipoHabitacion.nombre != null ? room.tipoHabitacion.nombre : 'Habitación'}"
-                    >Tipo</span
-                  >
+                  <span th:text="${tipo.codigo}">Tipo</span>
                 </span>
                 <span>
                   <i class="ph ph-users"></i>
-                  <span th:text="${room.capacidad} + ' huéspedes'"
+                  <span th:text="${tipo.capacidad} + ' huéspedes'"
                     >0 huéspedes</span
                   >
                 </span>
               </div>
 
               <div class="card__actions">
-                <a th:href="@{'/rooms/' + ${room.id}}" class="btn btn--primary"
+                <a th:href="@{'/rooms/' + ${tipo.id}}" class="btn btn--primary"
                   >Reservar Suite</a
                 >
               </div>
@@ -108,7 +105,7 @@
         </section>
 
         <section
-          th:if="${#lists.isEmpty(rooms)}"
+          th:if="${#lists.isEmpty(tipos)}"
           class="rooms-list__empty"
           aria-live="polite"
         >

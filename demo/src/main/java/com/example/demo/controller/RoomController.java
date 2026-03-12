@@ -22,8 +22,7 @@ public class RoomController {
 
     @GetMapping
     public String listRooms(Model model) {
-        List<Habitacion> habitaciones = habitacionService.getAllHabitaciones();
-        model.addAttribute("rooms", habitaciones);
+        model.addAttribute("tipos", tipoHabitacionService.getAllTipos());
         return "rooms/rooms-list";
     }
 
@@ -36,8 +35,7 @@ public class RoomController {
 
     @GetMapping("/{id}")
     public String roomDetail(@PathVariable Long id, Model model) {
-        Habitacion habitacion = habitacionService.getHabitacionById(id);
-        model.addAttribute("room", habitacion);
+        model.addAttribute("tipo", tipoHabitacionService.getTipoById(id));
         return "rooms/room-detail";
     }
 

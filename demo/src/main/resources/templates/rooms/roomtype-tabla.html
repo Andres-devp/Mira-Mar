@@ -41,6 +41,8 @@
               <th>Código</th>
               <th>Nombre</th>
               <th>Descripción</th>
+              <th>Precio/noche</th>
+              <th>Capacidad</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -49,6 +51,8 @@
               <td th:text="${type.codigo}"></td>
               <td th:text="${type.nombre}"></td>
               <td th:text="${type.descripcion}"></td>
+              <td th:text="'$' + ${type.precioNoche}"></td>
+              <td th:text="${type.capacidad}"></td>
               <td>
                 <div class="icon-actions">
                   <a th:href="@{'/roomtypes/edit/' + ${type.id}}" class="icon-action" title="Editar">
