@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ServicioServiceImpl implements ServicioService {
+public class HotelServiceServiceImpl implements HotelServiceService {
 
 	@Autowired
 	private HotelServiceRepository servicioRepository;

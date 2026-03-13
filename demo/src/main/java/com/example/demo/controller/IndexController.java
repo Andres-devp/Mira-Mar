@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.TipoHabitacionService;
+import com.example.demo.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private TipoHabitacionService tipoHabitacionService;
+    private RoomTypeService tipoHabitacionService;
 
     @GetMapping("/")
     public String root(Model model) {

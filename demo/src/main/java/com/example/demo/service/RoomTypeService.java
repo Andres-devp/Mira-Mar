@@ -4,7 +4,7 @@ import com.example.demo.entities.RoomType;
 
 import java.util.List;
 
-public interface TipoHabitacionService {
+public interface RoomTypeService {
 
     List<RoomType> getAllTipos();
 

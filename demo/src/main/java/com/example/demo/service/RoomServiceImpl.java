@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class HabitacionServiceImpl implements HabitacionService {
+public class RoomServiceImpl implements RoomService {
 
     @Autowired
     private RoomRepository habitacionRepository;

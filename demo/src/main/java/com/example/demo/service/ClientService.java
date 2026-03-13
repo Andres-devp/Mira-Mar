@@ -4,7 +4,7 @@ import com.example.demo.entities.Client;
 
 import java.util.List;
 
-public interface ClienteService {
+public interface ClientService {
 
     List<Client> getAllClientes();
 

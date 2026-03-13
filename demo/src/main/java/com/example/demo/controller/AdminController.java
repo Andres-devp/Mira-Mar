@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.ClienteService;
-import com.example.demo.service.HabitacionService;
-import com.example.demo.service.ServicioService;
-import com.example.demo.service.TipoHabitacionService;
+import com.example.demo.service.ClientService;
+import com.example.demo.service.RoomService;
+import com.example.demo.service.HotelServiceService;
+import com.example.demo.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ClientService clienteService;
 
     @Autowired
-    private ServicioService servicioService;
+    private HotelServiceService servicioService;
 
     @Autowired
-    private HabitacionService habitacionService;
+    private RoomService habitacionService;
 
     @Autowired
-    private TipoHabitacionService tipoHabitacionService;
+    private RoomTypeService tipoHabitacionService;
 
     @GetMapping({"", "/"})
     public String admin() {
