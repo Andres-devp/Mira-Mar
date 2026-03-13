@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString(exclude = {"tipoHabitacion"})
-public class Habitacion {
+public class Room {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,5 @@ public class Habitacion {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipo_habitacion_id", nullable = false)
-    private TipoHabitacion tipoHabitacion;
+    private RoomType tipoHabitacion;
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entities.Cliente;
+import com.example.demo.entities.Client;
 import com.example.demo.exception.RegistrationException;
 import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthController {
                                 @RequestParam String password,
                                 HttpSession session,
                                 RedirectAttributes flash) {
-        Cliente cliente = authService.autenticar(username, password);
+        Client cliente = authService.autenticar(username, password);
         if (cliente == null) {
             flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
             return "redirect:/login-page";

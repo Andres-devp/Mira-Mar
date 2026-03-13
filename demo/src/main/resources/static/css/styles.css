@@ -1079,3 +1079,107 @@ nav {
     text-align: center;
   }
 }
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+
+/* --- Keyframes --- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Hero entrance --- */
+.hero-content h1 {
+  animation: fadeUp 1s var(--ease) both;
+  animation-delay: 0.1s;
+}
+
+.hero-content p {
+  animation: fadeUp 1s var(--ease) both;
+  animation-delay: 0.4s;
+}
+
+.hero-content .btn-hero {
+  animation: fadeUp 1s var(--ease) both;
+  animation-delay: 0.7s;
+}
+
+/* --- Scroll reveal — base hidden state --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(45px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.from-left {
+  transform: translateX(-55px);
+}
+
+.reveal.from-right {
+  transform: translateX(55px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Skips animation for elements already in viewport on load */
+.reveal.no-anim {
+  transition: none !important;
+}
+
+/* Stagger delays via data-delay */
+.reveal[data-delay="1"] { transition-delay: 0.05s; }
+.reveal[data-delay="2"] { transition-delay: 0.18s; }
+.reveal[data-delay="3"] { transition-delay: 0.30s; }
+.reveal[data-delay="4"] { transition-delay: 0.42s; }
+
+/* Room card nth-child stagger */
+.room-grid .room-card:nth-child(2).reveal { transition-delay: 0.15s; }
+.room-grid .room-card:nth-child(3).reveal { transition-delay: 0.30s; }
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.from-left,
+  .reveal.from-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-content h1,
+  .hero-content p,
+  .hero-content .btn-hero {
+    animation: none;
+  }
+}
+
+/* --- Domino wave — cards always visible, only movement on scroll --- */
+@keyframes dominoWave {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-18px); }
+  70%  { transform: translateY(6px); }
+  100% { transform: translateY(0); }
+}
+
+/* .reveal-wave: no opacity change, just a bounce when entering viewport */
+.reveal-wave.visible {
+  animation: dominoWave 0.6s var(--ease) both;
+}
+
+.reveal-wave.no-anim {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-wave.visible { animation: none; }
+}

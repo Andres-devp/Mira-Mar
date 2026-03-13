@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.TipoHabitacion;
+import com.example.demo.entities.RoomType;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.repository.TipoHabitacionRepository;
+import com.example.demo.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,17 +14,17 @@ import java.util.List;
 public class TipoHabitacionServiceImpl implements TipoHabitacionService {
 
     @Autowired
-    private TipoHabitacionRepository tipoHabitacionRepository;
+    private RoomTypeRepository tipoHabitacionRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<TipoHabitacion> getAllTipos() {
+    public List<RoomType> getAllTipos() {
         return tipoHabitacionRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<TipoHabitacion> filtrarTipos(Integer capacidadMin, Double precioMax) {
+    public List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax) {
         if (capacidadMin != null && precioMax != null) {
             return tipoHabitacionRepository.findByCapacidadGreaterThanEqualAndPrecioNocheLessThanEqual(capacidadMin, precioMax);
         } else if (capacidadMin != null) {
@@ -38,20 +38,20 @@ public class TipoHabitacionServiceImpl implements TipoHabitacionService {
 
     @Override
     @Transactional(readOnly = true)
-    public TipoHabitacion getTipoById(Long id) {
+    public RoomType getTipoById(Long id) {
         return tipoHabitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + id, id));
     }
 
     @Override
-    public TipoHabitacion saveTipo(TipoHabitacion tipo) {
+    public RoomType saveTipo(RoomType tipo) {
         return tipoHabitacionRepository.save(tipo);
     }
 
     @Override
     @Transactional
     public void deleteTipo(Long id) {
-        TipoHabitacion tipo = tipoHabitacionRepository.findById(id)
+        RoomType tipo = tipoHabitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + id, id));
 
         tipo.getHabitaciones().clear();

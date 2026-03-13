@@ -44,4 +44,33 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) closeMenu();
   });
+
+  // --- Scroll reveal ---
+  const revealEls = document.querySelectorAll(".reveal, .reveal-wave");
+  if (revealEls.length) {
+    if (!("IntersectionObserver" in window)) {
+      revealEls.forEach((el) => el.classList.add("visible"));
+    } else {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      revealEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          // Already visible on load — show instantly without flash
+          el.classList.add("no-anim", "visible");
+        } else {
+          revealObserver.observe(el);
+        }
+      });
+    }
+  }
 });

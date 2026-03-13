@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entities.Cliente;
+import com.example.demo.entities.Client;
 import com.example.demo.exception.RegistrationException;
-import com.example.demo.repository.ClienteRepository;
+import com.example.demo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,18 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl implements AuthService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClientRepository clienteRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente autenticar(String username, String password) {
+    public Client autenticar(String username, String password) {
         return clienteRepository.findByUsuario(username)
             .filter(c -> c.getContrasena().equals(password))
             .orElse(null);
     }
 
     @Override
-    public Cliente registrar(String nombre, String usuario, String email,
+    public Client registrar(String nombre, String usuario, String email,
                              String contrasena, String contrasenaConfirm) {
         nombre = nombre != null ? nombre.trim() : "";
         usuario = usuario != null ? usuario.trim() : "";
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
             throw new RegistrationException("El correo electrónico ya está registrado");
         }
 
-        Cliente nuevo = new Cliente();
+        Client nuevo = new Client();
         nuevo.setNombre(nombre);
         nuevo.setUsuario(usuario);
         nuevo.setEmail(email);

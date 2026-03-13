@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entities.Habitacion;
+import com.example.demo.entities.Room;
 import com.example.demo.service.HabitacionService;
 import com.example.demo.service.TipoHabitacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class RoomController {
 
     @GetMapping("/table")
     public String listRoomsTable(Model model) {
-        List<Habitacion> habitaciones = habitacionService.getAllHabitaciones();
+        List<Room> habitaciones = habitacionService.getAllHabitaciones();
         model.addAttribute("rooms", habitaciones);
         return "rooms/rooms-table";
     }
@@ -45,21 +45,21 @@ public class RoomController {
 
     @GetMapping("/add")
     public String showCreateForm(Model model) {
-        model.addAttribute("room", new Habitacion());
+        model.addAttribute("room", new Room());
         model.addAttribute("isNew", true);
         model.addAttribute("roomTypes", tipoHabitacionService.getAllTipos());
         return "rooms/room-form";
     }
 
     @PostMapping
-    public String createRoom(@ModelAttribute Habitacion room) {
+    public String createRoom(@ModelAttribute Room room) {
         habitacionService.saveHabitacion(room);
         return "redirect:/rooms";
     }
 
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Habitacion habitacion = habitacionService.getHabitacionById(id);
+        Room habitacion = habitacionService.getHabitacionById(id);
         model.addAttribute("room", habitacion);
         model.addAttribute("isNew", false);
         model.addAttribute("roomTypes", tipoHabitacionService.getAllTipos());
@@ -67,7 +67,7 @@ public class RoomController {
     }
 
     @PostMapping("/{id}")
-    public String updateRoom(@PathVariable Long id, @ModelAttribute Habitacion room) {
+    public String updateRoom(@PathVariable Long id, @ModelAttribute Room room) {
         room.setId(id);
         habitacionService.saveHabitacion(room);
         return "redirect:/rooms/" + id;
