@@ -4,7 +4,7 @@ import com.example.demo.entities.Room;
 
 import java.util.List;
 
-public interface HabitacionService {
+public interface RoomService {
 
     List<Room> getAllHabitaciones();
 

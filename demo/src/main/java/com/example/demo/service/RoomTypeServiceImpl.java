@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TipoHabitacionServiceImpl implements TipoHabitacionService {
+public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Autowired
     private RoomTypeRepository tipoHabitacionRepository;

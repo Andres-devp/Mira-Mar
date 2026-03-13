@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.HotelService;
-import com.example.demo.service.ServicioService;
+import com.example.demo.service.HotelServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class HotelServiceController {
 
 	@Autowired
-	private ServicioService servicioService;
+	private HotelServiceService servicioService;
 
 	@GetMapping
 	public String listServicios() {

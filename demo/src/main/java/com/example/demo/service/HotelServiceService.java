@@ -4,7 +4,7 @@ import com.example.demo.entities.HotelService;
 
 import java.util.List;
 
-public interface ServicioService {
+public interface HotelServiceService {
 	List<HotelService> getAllServicios();
 
 	HotelService getServicioById(Long id);
