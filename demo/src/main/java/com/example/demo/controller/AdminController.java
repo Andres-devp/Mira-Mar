@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.ReservationRepository;
 import com.example.demo.service.ClientService;
 import com.example.demo.service.RoomService;
 import com.example.demo.service.HotelServiceService;
@@ -25,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private RoomTypeService tipoHabitacionService;
+
+    @Autowired
+    private ReservationRepository reservaRepository;
 
     @GetMapping({"", "/"})
     public String admin() {
@@ -53,5 +57,11 @@ public class AdminController {
     public String tiposHabitacionTabla(Model model) {
         model.addAttribute("tiposHabitacion", tipoHabitacionService.getAllTipos());
         return "rooms/roomtype-tabla";
+    }
+
+    @GetMapping("/reservas")
+    public String reservasTabla(Model model) {
+        model.addAttribute("reservas", reservaRepository.findAll());
+        return "reservations/reservations-table";
     }
 }

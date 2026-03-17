@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entities.RoomType;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Autowired
     private RoomTypeRepository tipoHabitacionRepository;
+
+    @Autowired
+    private RoomRepository habitacionRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -51,11 +55,13 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Override
     @Transactional
     public void deleteTipo(Long id) {
-        RoomType tipo = tipoHabitacionRepository.findById(id)
+        tipoHabitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + id, id));
 
-        tipo.getHabitaciones().clear();
+        if (habitacionRepository.existsByTipoHabitacionId(id)) {
+            throw new IllegalStateException("No se puede eliminar el tipo porque tiene habitaciones asociadas.");
+        }
 
-        tipoHabitacionRepository.delete(tipo);
+        tipoHabitacionRepository.deleteById(id);
     }
 }

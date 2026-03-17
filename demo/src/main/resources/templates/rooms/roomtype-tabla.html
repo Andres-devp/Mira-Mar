@@ -30,10 +30,13 @@
             <p>Gestiona los distintos tipos que puede tener una habitación.</p>
           </div>
           <div class="services-page__sectionActions">
+            <a href="/admin" class="btn btn--ghost">Volver</a>
             <a href="/rooms/table" class="btn btn--ghost">Habitaciones (tabla)</a>
             <a href="/roomtypes/add" class="btn btn--primary">Crear tipo</a>
           </div>
         </section>
+
+        <p th:if="${warning}" th:text="${warning}"></p>
 
         <table class="services-table" th:if="${not #lists.isEmpty(tiposHabitacion)}">
           <thead>

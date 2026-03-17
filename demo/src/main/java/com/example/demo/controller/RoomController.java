@@ -54,7 +54,7 @@ public class RoomController {
     @PostMapping
     public String createRoom(@ModelAttribute Room room) {
         habitacionService.saveHabitacion(room);
-        return "redirect:/rooms";
+        return "redirect:/rooms/table";
     }
 
     @GetMapping("/{id}/edit")
@@ -70,12 +70,12 @@ public class RoomController {
     public String updateRoom(@PathVariable Long id, @ModelAttribute Room room) {
         room.setId(id);
         habitacionService.saveHabitacion(room);
-        return "redirect:/rooms/" + id;
+        return "redirect:/rooms/table";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteRoom(@PathVariable Long id) {
         habitacionService.deleteHabitacion(id);
-        return "redirect:/rooms";
+        return "redirect:/rooms/table";
     }
 }

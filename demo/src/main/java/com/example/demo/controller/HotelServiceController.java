@@ -47,7 +47,7 @@ public class HotelServiceController {
 	@PostMapping("/add")
 	public String addServicio(@ModelAttribute HotelService servicio) {
 		servicioService.addServicio(servicio);
-		return "redirect:/services";
+		return "redirect:/services/table";
 	}
 
 	@GetMapping("/edit/{id}")
@@ -60,12 +60,12 @@ public class HotelServiceController {
 	@PostMapping("/edit/{id}")
 	public String editServicio(@PathVariable Long id, @ModelAttribute HotelService servicio) {
 		servicioService.updateServicio(id, servicio);
-		return "redirect:/services";
+		return "redirect:/services/table";
 	}
 
 	@PostMapping("/delete/{id}")
 	public String deleteServicio(@PathVariable Long id) {
 		servicioService.deleteServicio(id);
-		return "redirect:/services";
+		return "redirect:/services/table";
 	}
 }
