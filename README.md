@@ -62,7 +62,8 @@
 ![alt text](Documents/DiagramaEntidad-Relación.jpg)
 
 ### Diagrama De Clases
-![alt text](Documents/DiagramaDeClases.jpg)
+<img width="1242" height="707" alt="image" src="https://github.com/user-attachments/assets/519537ea-ea41-45d6-87a7-9d00b7aa9c2c" />
+
 
 
 ## 📂 Estructura del Proyecto
