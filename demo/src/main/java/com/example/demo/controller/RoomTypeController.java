@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -50,8 +51,12 @@ public class RoomTypeController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteType(@PathVariable Long id) {
-        tipoHabitacionService.deleteTipo(id);
+    public String deleteType(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            tipoHabitacionService.deleteTipo(id);
+        } catch (IllegalStateException ex) {
+            redirectAttributes.addFlashAttribute("warning", ex.getMessage());
+        }
         return "redirect:/roomtypes";
     }
 }

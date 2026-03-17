@@ -38,7 +38,7 @@ public class RoomType {
     @Column(nullable = false)
     private Integer capacidad;
     
-    @OneToMany(mappedBy = "tipoHabitacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tipoHabitacion")
     @Builder.Default
     private List<Room> habitaciones = new ArrayList<>();
 }

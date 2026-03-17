@@ -61,7 +61,7 @@ public class UserController {
         cliente.setId(id);
         cliente.setRol("CLIENTE");
         clienteService.saveCliente(cliente);
-        return "redirect:/usuarios";
+        return "redirect:/usuarios/" + id;
     }
 
     @PostMapping("/delete/{id}")
