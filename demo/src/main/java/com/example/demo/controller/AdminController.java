@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.repository.ReservationRepository;
 import com.example.demo.service.ClientService;
 import com.example.demo.service.RoomService;
 import com.example.demo.service.HotelServiceService;
 import com.example.demo.service.RoomTypeService;
+import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +28,7 @@ public class AdminController {
     private RoomTypeService tipoHabitacionService;
 
     @Autowired
-    private ReservationRepository reservaRepository;
+    private ReservationService reservaService;
 
     @GetMapping({"", "/"})
     public String admin() {
@@ -61,7 +61,7 @@ public class AdminController {
 
     @GetMapping("/reservas")
     public String reservasTabla(Model model) {
-        model.addAttribute("reservas", reservaRepository.findAll());
+        model.addAttribute("reservas", reservaService.getAllReservas());
         return "reservations/reservations-table";
     }
 }

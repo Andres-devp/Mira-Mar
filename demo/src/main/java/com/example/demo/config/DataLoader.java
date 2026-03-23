@@ -285,7 +285,7 @@ public class DataLoader implements CommandLineRunner {
 
         List<Operator> operadoresGuardados = operadorRepository.saveAll(operadores);
 
-        // 6. Crear 5 reservas (cliente + habitación + operario)
+        // 6. Crear 5 reservas (cliente + habitación)
         List<Reservation> reservas = new ArrayList<>();
         reservas.add(Reservation.builder()
                 .fechaInicio(LocalDate.of(2026, 4, 1))
@@ -294,8 +294,7 @@ public class DataLoader implements CommandLineRunner {
                 .estado("CONFIRMED")
                 .createdAt(LocalDateTime.now().minusDays(12))
                 .canceledAt(null)
-                .client(clientesGuardados.get(0))
-                .operator(operadoresGuardados.get(0))
+                .client(clientesGuardados.get(10))
                 .room(habitacionesGuardadas.get(0))
                 .build());
 
@@ -307,7 +306,6 @@ public class DataLoader implements CommandLineRunner {
                 .createdAt(LocalDateTime.now().minusDays(10))
                 .canceledAt(null)
                 .client(clientesGuardados.get(1))
-                .operator(operadoresGuardados.get(1))
                 .room(habitacionesGuardadas.get(1))
                 .build());
 
@@ -319,7 +317,6 @@ public class DataLoader implements CommandLineRunner {
                 .createdAt(LocalDateTime.now().minusDays(8))
                 .canceledAt(null)
                 .client(clientesGuardados.get(2))
-                .operator(null)
                 .room(habitacionesGuardadas.get(2))
                 .build());
 
@@ -331,7 +328,6 @@ public class DataLoader implements CommandLineRunner {
                 .createdAt(LocalDateTime.now().minusDays(7))
                 .canceledAt(LocalDateTime.now().minusDays(5))
                 .client(clientesGuardados.get(3))
-                .operator(operadoresGuardados.get(2))
                 .room(habitacionesGuardadas.get(3))
                 .build());
 
@@ -343,7 +339,6 @@ public class DataLoader implements CommandLineRunner {
                 .createdAt(LocalDateTime.now().minusDays(6))
                 .canceledAt(null)
                 .client(clientesGuardados.get(4))
-                .operator(operadoresGuardados.get(3))
                 .room(habitacionesGuardadas.get(4))
                 .build());
 
@@ -413,7 +408,7 @@ public class DataLoader implements CommandLineRunner {
 
         List<AccountItem> itemsCuentaGuardados = itemCuentaRepository.saveAll(itemsCuenta);
 
-        System.out.println("✅ Datos inicializados: " +
+        System.out.println(" Datos inicializados: " +
                 tiposGuardados.size() + " tipos, " +
                 clientes.size() + " clientes, " +
                 habitaciones.size() + " habitaciones, " +

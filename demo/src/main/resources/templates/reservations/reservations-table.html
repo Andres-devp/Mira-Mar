@@ -39,7 +39,6 @@
             <tr>
               <th>ID</th>
               <th>Cliente</th>
-              <th>Operario</th>
               <th>Habitación</th>
               <th>Fecha inicio</th>
               <th>Fecha fin</th>
@@ -51,7 +50,6 @@
             <tr th:each="reserva : ${reservas}">
               <td th:text="${reserva.id}"></td>
               <td th:text="${reserva.client != null ? reserva.client.nombre : 'N/A'}"></td>
-              <td th:text="${reserva.operator != null ? reserva.operator.nombre + ' ' + reserva.operator.apellido : 'Sin asignar'}"></td>
               <td th:text="${reserva.room != null ? reserva.room.nombre : 'N/A'}"></td>
               <td th:text="${reserva.fechaInicio}"></td>
               <td th:text="${reserva.fechaFin}"></td>
