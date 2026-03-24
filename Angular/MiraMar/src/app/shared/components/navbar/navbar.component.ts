@@ -1,22 +1,20 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   isScrolled = false;
   isNavOpen = false;
   isLandingRoute = true;
   isRoomTypeDetailRoute = false;
   isRoomTypeCrudRoute = false;
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private readonly router: Router) {}
+  constructor(private router: Router) {}
 
   get usesTransparentTheme(): boolean {
     return this.isLandingRoute || this.isRoomTypeDetailRoute;
@@ -47,8 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.router.events
       .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        takeUntil(this.destroy$)
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd)
       )
       .subscribe((event) => {
         this.updateRouteState(event.urlAfterRedirects);
@@ -74,11 +71,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   closeMenu(): void {
     this.isNavOpen = false;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private updateRouteState(url: string): void {

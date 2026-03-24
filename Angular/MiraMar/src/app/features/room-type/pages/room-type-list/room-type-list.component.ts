@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { RoomType } from '../../../../core/models/entities';
 import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
 
@@ -8,21 +7,14 @@ import { RoomTypeMockService } from '../../../../core/services/room-type-mock.se
   templateUrl: './room-type-list.component.html',
   styleUrls: ['./room-type-list.component.css']
 })
-export class RoomTypeListComponent implements OnInit, OnDestroy {
+export class RoomTypeListComponent implements OnInit {
   tiposHabitacion: RoomType[] = [];
   warningMessage = '';
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private readonly roomTypeService: RoomTypeMockService) {}
+  constructor(private roomTypeService: RoomTypeMockService) {}
 
   ngOnInit(): void {
-    this.roomTypeService
-      .getAll()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((tipos) => {
-        this.tiposHabitacion = tipos;
-      });
+    this.tiposHabitacion = this.roomTypeService.listar();
   }
 
   deleteTipo(type: RoomType): void {
@@ -32,12 +24,7 @@ export class RoomTypeListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const result = this.roomTypeService.delete(type.id);
+    const result = this.roomTypeService.eliminar(type.id);
     this.warningMessage = result.success ? '' : result.message || '';
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

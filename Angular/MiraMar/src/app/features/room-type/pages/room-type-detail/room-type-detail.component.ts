@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 import { RoomType } from '../../../../core/models/entities';
 import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
 
@@ -9,28 +8,20 @@ import { RoomTypeMockService } from '../../../../core/services/room-type-mock.se
   templateUrl: './room-type-detail.component.html',
   styleUrls: ['./room-type-detail.component.css']
 })
-export class RoomTypeDetailComponent implements OnInit, OnDestroy {
+export class RoomTypeDetailComponent implements OnInit {
   tipo?: RoomType;
-  readonly nochesDemo = 3;
-
-  private readonly destroy$ = new Subject<void>();
+  nochesDemo = 3;
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly roomTypeService: RoomTypeMockService
+    private route: ActivatedRoute,
+    private router: Router,
+    private roomTypeService: RoomTypeMockService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+    this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
-
-      this.roomTypeService
-        .getById(id)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((tipo) => {
-          this.tipo = tipo;
-        });
+      this.tipo = this.roomTypeService.buscarPorId(id);
     });
   }
 
@@ -52,10 +43,5 @@ export class RoomTypeDetailComponent implements OnInit, OnDestroy {
 
   formatPrice(value: number): string {
     return `$${value.toFixed(1)}`;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -7,7 +7,7 @@
         <div class="form-grid">
           <div class="form-field" [class.form-field--error]="tipoForm.controls.codigo.invalid && tipoForm.controls.codigo.touched">
             <label for="codigo">Código *</label>
-            <input type="text" id="codigo" formControlName="codigo" [readonly]="isEditMode" required />
+            <input type="text" id="codigo" formControlName="codigo" required />
             <div class="form-error">{{ tipoForm.controls.codigo.invalid && tipoForm.controls.codigo.touched ? 'Código obligatorio' : '' }}</div>
           </div>
 

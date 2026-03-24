@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { RoomType } from '../../../../core/models/entities';
 import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
 
@@ -8,24 +7,12 @@ import { RoomTypeMockService } from '../../../../core/services/room-type-mock.se
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent implements OnInit, OnDestroy {
+export class LandingPageComponent implements OnInit {
   tiposDestacados: RoomType[] = [];
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private readonly roomTypeService: RoomTypeMockService) {}
+  constructor(private roomTypeService: RoomTypeMockService) {}
 
   ngOnInit(): void {
-    this.roomTypeService
-      .getFeatured(3)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((tipos) => {
-        this.tiposDestacados = tipos;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.tiposDestacados = this.roomTypeService.listarDestacados(3);
   }
 }

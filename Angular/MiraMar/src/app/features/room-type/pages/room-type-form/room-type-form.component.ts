@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 import { RoomTypeFormValue } from '../../../../core/models/entities';
 import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
 
@@ -10,12 +9,12 @@ import { RoomTypeMockService } from '../../../../core/services/room-type-mock.se
   templateUrl: './room-type-form.component.html',
   styleUrls: ['./room-type-form.component.css']
 })
-export class RoomTypeFormComponent implements OnInit, OnDestroy {
+export class RoomTypeFormComponent implements OnInit {
   isEditMode = false;
   currentId: number | null = null;
   notFound = false;
 
-  readonly tipoForm = this.fb.nonNullable.group({
+  tipoForm = this.fb.nonNullable.group({
     codigo: ['', [Validators.required, Validators.maxLength(50)]],
     nombre: ['', [Validators.required, Validators.maxLength(100)]],
     descripcion: ['', [Validators.maxLength(500)]],
@@ -24,17 +23,15 @@ export class RoomTypeFormComponent implements OnInit, OnDestroy {
     urlImagen: ['', [Validators.maxLength(255)]]
   });
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly roomTypeService: RoomTypeMockService
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private roomTypeService: RoomTypeMockService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.isEditMode = !!id;
       this.currentId = id ? Number(id) : null;
@@ -44,26 +41,23 @@ export class RoomTypeFormComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.roomTypeService
-        .getById(this.currentId)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((tipo) => {
-          if (!tipo) {
-            this.notFound = true;
-            return;
-          }
+      const tipo = this.roomTypeService.buscarPorId(this.currentId);
 
-          this.notFound = false;
-          this.tipoForm.patchValue({
-            codigo: tipo.codigo,
-            nombre: tipo.nombre,
-            descripcion: tipo.descripcion || '',
-            precioNoche: tipo.precioNoche,
-            capacidad: tipo.capacidad,
-            urlImagen: tipo.urlImagen || ''
-          });
-          this.tipoForm.controls.codigo.disable();
-        });
+      if (!tipo) {
+        this.notFound = true;
+        return;
+      }
+
+      this.notFound = false;
+      this.tipoForm.patchValue({
+        codigo: tipo.codigo,
+        nombre: tipo.nombre,
+        descripcion: tipo.descripcion || '',
+        precioNoche: tipo.precioNoche,
+        capacidad: tipo.capacidad,
+        urlImagen: tipo.urlImagen || ''
+      });
+      this.tipoForm.controls.codigo.disable();
     });
   }
 
@@ -92,16 +86,11 @@ export class RoomTypeFormComponent implements OnInit, OnDestroy {
     };
 
     if (this.isEditMode && this.currentId !== null) {
-      this.roomTypeService.update(this.currentId, payload);
+      this.roomTypeService.editar(this.currentId, payload);
     } else {
-      this.roomTypeService.create(payload);
+      this.roomTypeService.agregar(payload);
     }
 
     this.router.navigate(['/roomtypes']);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
 import { RoomType, RoomTypeDeleteResult, RoomTypeFormValue } from '../models/entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomTypeMockService {
-  private readonly roomTypesSubject = new BehaviorSubject<RoomType[]>([
+  private roomTypes: RoomType[] = [
     {
       id: 1,
       codigo: 'ESTANDAR',
@@ -52,29 +51,25 @@ export class RoomTypeMockService {
       precioNoche: 350,
       capacidad: 4
     }
-  ]);
+  ];
 
-  private readonly protectedTypeIds = new Set<number>([1]);
+  private protectedTypeIds = new Set<number>([1]);
 
-  private get currentValue(): RoomType[] {
-    return this.roomTypesSubject.value;
+  listar(): RoomType[] {
+    return this.roomTypes;
   }
 
-  getAll(): Observable<RoomType[]> {
-    return this.roomTypesSubject.asObservable();
+  listarDestacados(limit = 3): RoomType[] {
+    return this.roomTypes.slice(0, limit);
   }
 
-  getFeatured(limit = 3): Observable<RoomType[]> {
-    return this.getAll().pipe(map((types) => types.slice(0, limit)));
+  buscarPorId(id: number): RoomType | undefined {
+    return this.roomTypes.find((type) => type.id === id);
   }
 
-  getById(id: number): Observable<RoomType | undefined> {
-    return this.getAll().pipe(map((types) => types.find((type) => type.id === id)));
-  }
-
-  create(payload: RoomTypeFormValue): void {
-    const nextId = this.currentValue.length
-      ? Math.max(...this.currentValue.map((type) => type.id)) + 1
+  agregar(payload: RoomTypeFormValue): void {
+    const nextId = this.roomTypes.length
+      ? Math.max(...this.roomTypes.map((type) => type.id)) + 1
       : 1;
 
     const created: RoomType = {
@@ -82,11 +77,11 @@ export class RoomTypeMockService {
       ...payload
     };
 
-    this.roomTypesSubject.next([...this.currentValue, created]);
+    this.roomTypes.push(created);
   }
 
-  update(id: number, payload: RoomTypeFormValue): boolean {
-    const index = this.currentValue.findIndex((type) => type.id === id);
+  editar(id: number, payload: RoomTypeFormValue): boolean {
+    const index = this.roomTypes.findIndex((type) => type.id === id);
 
     if (index < 0) {
       return false;
@@ -97,14 +92,12 @@ export class RoomTypeMockService {
       ...payload
     };
 
-    const copy = [...this.currentValue];
-    copy[index] = updated;
-    this.roomTypesSubject.next(copy);
+    this.roomTypes[index] = updated;
 
     return true;
   }
 
-  delete(id: number): RoomTypeDeleteResult {
+  eliminar(id: number): RoomTypeDeleteResult {
     if (this.protectedTypeIds.has(id)) {
       return {
         success: false,
@@ -112,7 +105,7 @@ export class RoomTypeMockService {
       };
     }
 
-    const exists = this.currentValue.some((type) => type.id === id);
+    const exists = this.roomTypes.some((type) => type.id === id);
 
     if (!exists) {
       return {
@@ -121,7 +114,7 @@ export class RoomTypeMockService {
       };
     }
 
-    this.roomTypesSubject.next(this.currentValue.filter((type) => type.id !== id));
+    this.roomTypes = this.roomTypes.filter((type) => type.id !== id);
 
     return {
       success: true
