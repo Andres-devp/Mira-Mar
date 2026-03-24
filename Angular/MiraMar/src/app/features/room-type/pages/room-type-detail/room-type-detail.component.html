@@ -1,0 +1,120 @@
+<ng-container *ngIf="tipo; else notFound">
+  <main class="detail-page">
+    <header class="detail-hero" [style.--hero-image]="'url(' + (tipo.urlImagen || '/images/Habitacion1.avif') + ')'">
+      <div class="container">
+        <div class="detail-hero__content">
+          <div class="detail-hero__badge">{{ tipo.codigo }}</div>
+          <h1 class="detail-hero__title">{{ tipo.nombre }}</h1>
+          <p class="detail-hero__location">
+            <i class="ph ph-map-pin"></i>
+            <span>Playa de las Estrellas, Costa Esmeralda</span>
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="detail-main">
+      <div class="container">
+        <div class="detail-layout">
+          <div>
+            <section class="detail-section">
+              <h2 class="detail-section__title">Descripción</h2>
+              <p>{{ tipo.descripcion || 'Tipo de habitación sin descripción registrada.' }}</p>
+            </section>
+
+            <section class="detail-section" aria-label="Amenidades">
+              <h2 class="detail-section__title">Amenidades</h2>
+              <div class="detail-amenities">
+                <span class="detail-chip"><i class="ph ph-wifi-high"></i> Wi-Fi Alta Velocidad</span>
+                <span class="detail-chip"><i class="ph ph-drop"></i> Jacuzzi Privado</span>
+                <span class="detail-chip"><i class="ph ph-sun"></i> Terraza Privada</span>
+                <span class="detail-chip"><i class="ph ph-snowflake"></i> Climatización VIP</span>
+              </div>
+            </section>
+
+            <section class="detail-section">
+              <h2 class="detail-section__title">Características</h2>
+              <div class="card__meta">
+                <span>{{ tipo.capacidad }} huéspedes</span>
+                <span>{{ tipo.nombre }}</span>
+              </div>
+            </section>
+          </div>
+
+          <aside class="detail-aside">
+            <div class="detail-aside__panel">
+              <div class="detail-booking__top">
+                <div class="detail-booking__price">
+                  <span class="detail-booking__amount">{{ formatPrice(tipo.precioNoche) }}</span>
+                  <span class="detail-booking__suffix">/noche</span>
+                </div>
+                <div class="detail-booking__rating">
+                  <span>★ 4.9</span>
+                  <span>(20 reseñas)</span>
+                </div>
+              </div>
+
+              <div class="detail-booking__dates">
+                <div class="form-field">
+                  <label for="checkin">LLEGADA</label>
+                  <input type="date" id="checkin" />
+                </div>
+                <div class="form-field">
+                  <label for="checkout">SALIDA</label>
+                  <input type="date" id="checkout" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="guests">HUÉSPEDES</label>
+                <select id="guests">
+                  <option *ngFor="let guest of guestOptions" [value]="guest">
+                    {{ guest }} huésped{{ guest > 1 ? 'es' : '' }}
+                  </option>
+                </select>
+              </div>
+
+              <button class="btn btn--primary detail-booking__cta" type="button">
+                Reservar Ahora
+              </button>
+
+              <div class="detail-booking__note">No se realizará ningún cargo todavía</div>
+
+              <div class="detail-booking__summary">
+                <div class="detail-booking__line">
+                  <span>{{ formatPrice(tipo.precioNoche) }} x {{ nochesDemo }} noches</span>
+                  <span>$0</span>
+                </div>
+                <div class="detail-booking__line">
+                  <span>Tasas &amp; impuestos</span>
+                  <span>$45</span>
+                </div>
+                <div class="detail-booking__total">
+                  <span>Total</span>
+                  <span>$0</span>
+                </div>
+              </div>
+
+              <div class="form-actions" style="margin-top: 1rem">
+                <button class="btn btn--ghost" type="button" (click)="editTipo()">Editar tipo</button>
+                <a routerLink="/roomtypes" class="btn btn--ghost">Volver a tabla</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+</ng-container>
+
+<ng-template #notFound>
+  <main class="services-page page-services">
+    <div class="container">
+      <section class="services-page__empty" aria-live="polite">
+        <h2>No se encontró el tipo de habitación</h2>
+        <p>Este registro no existe o fue eliminado.</p>
+        <a routerLink="/roomtypes" class="btn btn--primary">Volver a la tabla</a>
+      </section>
+    </div>
+  </main>
+</ng-template>

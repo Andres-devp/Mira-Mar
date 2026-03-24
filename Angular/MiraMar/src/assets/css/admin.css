@@ -1,0 +1,79 @@
+/* --- DASHBOARD ADMINISTRATIVO CENTRAL --- */
+.admin-dashboard {
+  min-height: calc(100vh - 88px);
+  padding: 6.5rem 1rem 2rem;
+  text-align: center;
+}
+
+.page-admin #navbar {
+  background: var(--white);
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
+}
+
+.page-admin .nav-links a {
+  color: var(--secondary);
+}
+
+.page-admin .hamburger {
+  color: var(--secondary);
+}
+
+.page-admin .profile-img {
+  border-color: var(--secondary);
+}
+
+.admin-dashboard h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    min-height: auto;
+    padding: 5.5rem 0.75rem 1.5rem;
+  }
+}
+
+/* --- TARJETAS SIMPLIFICADAS --- */
+.admin-card {
+  background: var(--white);
+  padding: 1.25rem 0.85rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 15px 35px rgba(48, 76, 137, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(100, 141, 229, 0.15);
+}
+
+/* Icono grande principal de la categoría */
+.admin-card .main-icon {
+  font-size: 2.2rem;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+
+.admin-card h3 {
+  font-size: clamp(0.95rem, 2.1vw, 1.15rem);
+  color: var(--secondary);
+  margin-bottom: 0;
+  font-weight: 600;
+}

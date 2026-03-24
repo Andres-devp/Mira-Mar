@@ -1,0 +1,33 @@
+<nav
+  id="navbar"
+  [class.scrolled]="applyScrolledStyle"
+  [class.nav-open]="isNavOpen"
+  [class.roomtypes-nav]="isRoomTypeCrudRoute"
+>
+  <div class="container nav-container">
+    <a routerLink="/" class="logo" (click)="closeMenu()">
+      <img id="nav-logo" [src]="logoPath" alt="Mira Mar logo" width="120" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a routerLink="/" (click)="closeMenu()">Inicio</a></li>
+      <li><a routerLink="/roomtypes" (click)="closeMenu()">Suites</a></li>
+      <li><a routerLink="/" fragment="dining" (click)="closeMenu()">Gastronomía</a></li>
+      <li><a routerLink="/" fragment="contact" (click)="closeMenu()">Contacto</a></li>
+      <li class="profile-dropdown-item">
+        <a href="#" class="user-login-link" (click)="$event.preventDefault()">
+          <img
+            id="nav-user-icon"
+            [src]="userIconPath"
+            alt="Icono de usuario"
+            class="profile-img"
+          />
+        </a>
+      </li>
+    </ul>
+
+    <div class="hamburger" (click)="toggleMenu()">
+      <i class="ph ph-list"></i>
+    </div>
+  </div>
+</nav>
