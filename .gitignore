@@ -32,9 +32,6 @@ HELP.md
 ### VS Code ###
 .vscode/
 
-application.properties
-**/application.properties
-
 ### Local Database ###
 *.mv.db
 *.trace.db
