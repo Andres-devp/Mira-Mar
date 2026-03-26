@@ -10,6 +10,9 @@ import { LandingPageComponent } from './features/landing/pages/landing-page/land
 import { RoomTypeListComponent } from './features/room-type/pages/room-type-list/room-type-list.component';
 import { RoomTypeFormComponent } from './features/room-type/pages/room-type-form/room-type-form.component';
 import { RoomTypeDetailComponent } from './features/room-type/pages/room-type-detail/room-type-detail.component';
+import { AmenityCardComponent } from './shared/components/amenity-card/amenity-card.component';
+import { RoomCardComponent } from './shared/components/room-card/room-card.component';
+import { DiningCardComponent } from './shared/components/dining-card/dining-card.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { RoomTypeDetailComponent } from './features/room-type/pages/room-type-de
     LandingPageComponent,
     RoomTypeListComponent,
     RoomTypeFormComponent,
-    RoomTypeDetailComponent
+    RoomTypeDetailComponent,
+    AmenityCardComponent,
+    RoomCardComponent,
+    DiningCardComponent
   ],
   imports: [
     BrowserModule,

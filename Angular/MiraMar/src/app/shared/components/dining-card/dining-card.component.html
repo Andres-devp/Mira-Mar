@@ -1,0 +1,12 @@
+<article class="dining-strip reveal" [attr.data-delay]="delay">
+  <div class="strip-left">
+    <h3>{{ titulo }}</h3>
+    <p>{{ descripcion }}</p>
+    <div class="strip-meta">
+      <span *ngFor="let meta of metas">
+        <i [ngClass]="'ph ' + meta.icon"></i> {{ meta.text }}
+      </span>
+    </div>
+  </div>
+  <a [href]="botonHref" class="btn btn-outline is-gold">{{ botonTexto }}</a>
+</article>

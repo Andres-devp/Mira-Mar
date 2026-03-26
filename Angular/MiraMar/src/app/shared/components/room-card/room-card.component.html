@@ -1,0 +1,9 @@
+<a [routerLink]="['/roomtypes', id]" class="room-card reveal">
+  <img [src]="urlImagen" [alt]="nombre" />
+  <div class="room-overlay">
+    <h3>{{ nombre }}</h3>
+    <p class="room-price">
+      Desde {{ precioNoche | currency: "COP" : "symbol" : "1.0-0" }} / noche
+    </p>
+  </div>
+</a>
