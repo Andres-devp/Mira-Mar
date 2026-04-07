@@ -29,7 +29,7 @@ private hotelServices: HotelService[] = [
     }
 ];
 
-private protectedServiceIds = new Set<number>([1]);
+private protectedServiceIds = new Set<number>([]);
 
 listar(): HotelService[] {
     return this.hotelServices;

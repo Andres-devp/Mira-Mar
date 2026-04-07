@@ -26,5 +26,9 @@ deleteServicio(service: HotelService): void {
 
     const result = this.hotelServiceService.eliminar(service.id);
     this.warningMessage = result.success ? '' : result.message || '';
+    
+    if (result.success) {
+      this.servicios = this.hotelServiceService.listar();
+    }
 }
 }
