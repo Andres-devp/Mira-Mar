@@ -1,33 +1,35 @@
 package com.example.demo.config;
 
-import com.example.demo.entities.Administrator;
-import com.example.demo.entities.Client;
-import com.example.demo.entities.Operator;
-import com.example.demo.entities.Room;
-import com.example.demo.entities.HotelService;
-import com.example.demo.entities.Reservation;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.entities.Account;
 import com.example.demo.entities.AccountItem;
+import com.example.demo.entities.Administrator;
+import com.example.demo.entities.Client;
+import com.example.demo.entities.HotelService;
+import com.example.demo.entities.Operator;
+import com.example.demo.entities.Reservation;
+import com.example.demo.entities.Room;
 import com.example.demo.entities.RoomType;
 import com.example.demo.repository.AccountItemRepository;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.AdministratorRepository;
 import com.example.demo.repository.ClientRepository;
+import com.example.demo.repository.HotelServiceRepository;
 import com.example.demo.repository.OperatorRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
-import com.example.demo.repository.HotelServiceRepository;
 import com.example.demo.repository.RoomTypeRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
@@ -299,72 +301,53 @@ public class DataLoader implements CommandLineRunner {
 
         List<Operator> operadoresGuardados = operadorRepository.saveAll(operadores);
 
-        // 7. Crear 5 reservas (cliente + habitación)
+        // 7. Crear 20 reservas (cliente + habitación)
         List<Reservation> reservas = new ArrayList<>();
-        reservas.add(Reservation.builder()
-                .fechaInicio(LocalDate.of(2026, 4, 1))
-                .fechaFin(LocalDate.of(2026, 4, 4))
-                .cantidadPersonas(2)
-                .estado("CONFIRMED")
-                .createdAt(LocalDateTime.now().minusDays(12))
-                .canceledAt(null)
-                .client(clientesGuardados.get(0))
-                .room(habitacionesGuardadas.get(0))
-                .build());
-
-        reservas.add(Reservation.builder()
-                .fechaInicio(LocalDate.of(2026, 4, 3))
-                .fechaFin(LocalDate.of(2026, 4, 6))
-                .cantidadPersonas(2)
-                .estado("CONFIRMED")
-                .createdAt(LocalDateTime.now().minusDays(10))
-                .canceledAt(null)
-                .client(clientesGuardados.get(1))
-                .room(habitacionesGuardadas.get(1))
-                .build());
-
-        reservas.add(Reservation.builder()
-                .fechaInicio(LocalDate.of(2026, 4, 8))
-                .fechaFin(LocalDate.of(2026, 4, 11))
-                .cantidadPersonas(3)
-                .estado("PENDING")
-                .createdAt(LocalDateTime.now().minusDays(8))
-                .canceledAt(null)
-                .client(clientesGuardados.get(2))
-                .room(habitacionesGuardadas.get(2))
-                .build());
-
-        reservas.add(Reservation.builder()
-                .fechaInicio(LocalDate.of(2026, 4, 12))
-                .fechaFin(LocalDate.of(2026, 4, 14))
-                .cantidadPersonas(1)
-                .estado("CANCELED")
-                .createdAt(LocalDateTime.now().minusDays(7))
-                .canceledAt(LocalDateTime.now().minusDays(5))
-                .client(clientesGuardados.get(3))
-                .room(habitacionesGuardadas.get(3))
-                .build());
-
-        reservas.add(Reservation.builder()
-                .fechaInicio(LocalDate.of(2026, 4, 15))
-                .fechaFin(LocalDate.of(2026, 4, 20))
-                .cantidadPersonas(4)
-                .estado("CONFIRMED")
-                .createdAt(LocalDateTime.now().minusDays(6))
-                .canceledAt(null)
-                .client(clientesGuardados.get(4))
-                .room(habitacionesGuardadas.get(4))
-                .build());
+        String[] estados = {"CONFIRMED", "PENDING", "CANCELED"};
+        
+        for (int i = 0; i < 20; i++) {
+            int clienteIndex = i % clientesGuardados.size();
+            int habitacionIndex = i % habitacionesGuardadas.size();
+            int estadoIndex = i % estados.length;
+            
+            LocalDate fechaInicio = LocalDate.of(2026, 4, (i % 25) + 1);
+            LocalDate fechaFin = fechaInicio.plusDays((i % 5) + 2);
+            int personas = (i % 4) + 1;
+            String estado = estados[estadoIndex];
+            
+            LocalDateTime createdAt = LocalDateTime.now().minusDays(15 - (i % 15));
+            LocalDateTime canceledAt = estado.equals("CANCELED") ? createdAt.plusDays(2) : null;
+            
+            reservas.add(Reservation.builder()
+                    .fechaInicio(fechaInicio)
+                    .fechaFin(fechaFin)
+                    .cantidadPersonas(personas)
+                    .estado(estado)
+                    .createdAt(createdAt)
+                    .canceledAt(canceledAt)
+                    .client(clientesGuardados.get(clienteIndex))
+                    .room(habitacionesGuardadas.get(habitacionIndex))
+                    .build());
+        }
 
         List<Reservation> reservasGuardadas = reservaRepository.saveAll(reservas);
 
-        // 8. Crear 5 cuentas (1 a 1 con reserva)
+        // 8. Crear 20 cuentas (una por cada reserva)
         List<Account> cuentas = new ArrayList<>();
-        cuentas.add(Account.builder().saldo(360.0).estado("OPEN").reservation(reservasGuardadas.get(0)).build());
-        cuentas.add(Account.builder().saldo(430.0).estado("OPEN").reservation(reservasGuardadas.get(1)).build());
-        cuentas.add(Account.builder().saldo(0.0).estado("OPEN").reservation(reservasGuardadas.get(2)).build());
-        cuentas.add(Account.builder().saldo(0.0).estado("CLOSED").reservation(reservasGuardadas.get(3)).build());
-        cuentas.add(Account.builder().saldo(780.0).estado("OPEN").reservation(reservasGuardadas.get(4)).build());
+        for (int i = 0; i < reservasGuardadas.size(); i++) {
+            double saldo = reservasGuardadas.get(i).getEstado().equals("CANCELED") 
+                ? 0.0 
+                : (random.nextDouble() * 1000);
+            String estado = reservasGuardadas.get(i).getEstado().equals("CANCELED") 
+                ? "CLOSED" 
+                : "OPEN";
+            
+            cuentas.add(Account.builder()
+                    .saldo(saldo)
+                    .estado(estado)
+                    .reservation(reservasGuardadas.get(i))
+                    .build());
+        }
 
         List<Account> cuentasGuardadas = cuentaRepository.saveAll(cuentas);
 
