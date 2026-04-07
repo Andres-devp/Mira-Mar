@@ -5,3 +5,10 @@ export interface HotelService {
   imageUrl?: string;
   price?: number;
 }
+
+export type HotelServiceFormValue = Omit<HotelService, 'id'>;
+
+export interface HotelServiceDeleteResult {
+  success: boolean;
+  message?: string;
+}

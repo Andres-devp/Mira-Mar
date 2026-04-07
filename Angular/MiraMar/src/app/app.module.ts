@@ -10,6 +10,9 @@ import { LandingPageComponent } from './features/landing/pages/landing-page/land
 import { RoomTypeListComponent } from './features/room-type/pages/room-type-list/room-type-list.component';
 import { RoomTypeFormComponent } from './features/room-type/pages/room-type-form/room-type-form.component';
 import { RoomTypeDetailComponent } from './features/room-type/pages/room-type-detail/room-type-detail.component';
+import { HotelServiceListComponent } from './features/hotel-service/pages/hotel-service-list/hotel-service-list.component';
+import { HotelServiceFormComponent } from './features/hotel-service/pages/hotel-service-form/hotel-service-form.component';
+import { HotelServiceDetailComponent } from './features/hotel-service/pages/hotel-service-detail/hotel-service-detail.component';
 import { AmenityCardComponent } from './shared/components/amenity-card/amenity-card.component';
 import { RoomCardComponent } from './shared/components/room-card/room-card.component';
 import { DiningCardComponent } from './shared/components/dining-card/dining-card.component';
@@ -23,6 +26,9 @@ import { DiningCardComponent } from './shared/components/dining-card/dining-card
     RoomTypeListComponent,
     RoomTypeFormComponent,
     RoomTypeDetailComponent,
+    HotelServiceListComponent,
+    HotelServiceFormComponent,
+    HotelServiceDetailComponent,
     AmenityCardComponent,
     RoomCardComponent,
     DiningCardComponent

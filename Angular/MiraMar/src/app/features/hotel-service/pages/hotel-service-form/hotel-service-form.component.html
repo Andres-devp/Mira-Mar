@@ -1,0 +1,48 @@
+<main class="form-page page-services">
+<div class="container">
+    <div class="form-shell" *ngIf="!notFound; else notFoundTemplate">
+    <h1 class="form-shell__title">{{ pageTitle }}</h1>
+
+    <form [formGroup]="servicioForm" (ngSubmit)="save()">
+        <div class="form-grid">
+        <div class="form-field form-field--full" [class.form-field--error]="servicioForm.controls.nombre.invalid && servicioForm.controls.nombre.touched">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" formControlName="nombre" required />
+            <div class="form-error">{{ servicioForm.controls.nombre.invalid && servicioForm.controls.nombre.touched ? 'Nombre obligatorio' : '' }}</div>
+        </div>
+
+        <div class="form-field form-field--full" [class.form-field--error]="servicioForm.controls.descripcion.invalid && servicioForm.controls.descripcion.touched">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" formControlName="descripcion"></textarea>
+            <div class="form-error"></div>
+        </div>
+
+        <div class="form-field" [class.form-field--error]="servicioForm.controls.price.invalid && servicioForm.controls.price.touched">
+            <label for="price">Precio ($)</label>
+            <input type="number" id="price" formControlName="price" min="0" step="0.01" />
+            <div class="form-error">{{ servicioForm.controls.price.invalid && servicioForm.controls.price.touched ? 'Precio válido requerido' : '' }}</div>
+        </div>
+
+        <div class="form-field form-field--full" [class.form-field--error]="servicioForm.controls.imageUrl.invalid && servicioForm.controls.imageUrl.touched">
+            <label for="imageUrl">URL de imagen</label>
+            <input type="text" id="imageUrl" formControlName="imageUrl" placeholder="/images/servicio.jpg" />
+            <div class="form-error"></div>
+        </div>
+        </div>
+
+        <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ submitLabel }}</button>
+        <a routerLink="/services" class="btn btn--ghost">Cancelar</a>
+        </div>
+    </form>
+    </div>
+
+    <ng-template #notFoundTemplate>
+    <section class="services-page__empty" aria-live="polite">
+        <h2>No se encontró el servicio</h2>
+        <p>El registro que intentas editar no existe.</p>
+        <a routerLink="/services" class="btn btn--primary">Volver a la tabla</a>
+    </section>
+    </ng-template>
+</div>
+</main>

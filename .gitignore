@@ -37,3 +37,4 @@ HELP.md
 *.trace.db
 *.h2.db
 *.lock.db
+node_modules
