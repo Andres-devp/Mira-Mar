@@ -4,6 +4,7 @@ export interface Operator {
   apellido: string;
   usuario: string;
   email: string;
+  contrasena?: string;
   cedula: string;
   telefono?: string;
   fotoPerfil?: string;

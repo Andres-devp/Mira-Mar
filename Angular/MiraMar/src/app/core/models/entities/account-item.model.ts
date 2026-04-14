@@ -5,6 +5,6 @@ export interface AccountItem {
   subtotal: number;
   createdAt: string;
   eliminado: boolean;
-  accountId: number;
-  hotelServiceId: number;
+  accountId?: number;
+  hotelServiceId?: number;
 }

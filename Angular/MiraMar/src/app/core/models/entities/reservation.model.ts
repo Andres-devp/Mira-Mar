@@ -1,3 +1,6 @@
+import type { Client } from './client.model';
+import type { Room } from './room.model';
+
 export interface Reservation {
   id: number;
   fechaInicio: string;
@@ -6,6 +9,8 @@ export interface Reservation {
   estado: string;
   createdAt: string;
   canceledAt?: string;
-  clientId: number;
-  roomId: number;
+  client?: Client;
+  room?: Room;
+  clientId?: number;
+  roomId?: number;
 }
