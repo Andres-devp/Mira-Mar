@@ -1,77 +1,51 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.demo.entities.Reservation;
 import com.example.demo.service.ReservationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/reservations")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Reservaciones", description = "Gestión de reservaciones")
 public class ReservationController {
 
 	@Autowired
 	private ReservationService reservationService;
 
-	@GetMapping
-	public String listReservations() {
-		return "redirect:/reservations/table";
+	@GetMapping({"/all", ""})
+	@Operation(summary = "Listar todas las reservaciones")
+	public List<Reservation> listReservations() {
+		return reservationService.getAllReservas();
 	}
 
-	@GetMapping("/table")
-	public String listReservationsTable(Model model) {
-		model.addAttribute("reservations", reservationService.getAllReservas());
-		return "reservations/reservations-table";
-	}
-
-	@GetMapping("/cards")
-	public String listReservationsCards(Model model) {
-		model.addAttribute("reservations", reservationService.getAllReservas());
-		return "reservations/reservations-list";
-	}
-
-	@GetMapping("/{id}")
-	public String reservationDetail(@PathVariable Long id, Model model) {
-		Reservation reservation = reservationService.getReservaById(id);
-		model.addAttribute("reservation", reservation);
-		return "reservations/reservation-detail";
-	}
-
-	@GetMapping("/add")
-	public String showAddForm(Model model) {
-		model.addAttribute("reservation", new Reservation());
-		return "reservations/reservation-form";
+	@GetMapping("/find/{id}")
+	@Operation(summary = "Buscar reservación por ID")
+	public Reservation findById(@PathVariable Long id) {
+		return reservationService.getReservaById(id);
 	}
 
 	@PostMapping("/add")
-	public String addReservation(@ModelAttribute Reservation reservation) {
-		reservationService.saveReserva(reservation);
-		return "redirect:/reservations/table";
+	@Operation(summary = "Crear nueva reservación")
+	public Reservation addReservation(@RequestBody Reservation reservation) {
+		return reservationService.saveReserva(reservation);
 	}
 
-	@GetMapping("/edit/{id}")
-	public String showEditForm(@PathVariable Long id, Model model) {
-		Reservation reservation = reservationService.getReservaById(id);
-		model.addAttribute("reservation", reservation);
-		return "reservations/reservation-form";
-	}
-
-	@PostMapping("/edit/{id}")
-	public String editReservation(@PathVariable Long id, @ModelAttribute Reservation reservation) {
+	@PutMapping("/update/{id}")
+	@Operation(summary = "Actualizar reservación existente")
+	public Reservation updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
 		reservation.setId(id);
-		reservationService.saveReserva(reservation);
-		return "redirect:/reservations/table";
+		return reservationService.saveReserva(reservation);
 	}
 
-	@PostMapping("/delete/{id}")
-	public String deleteReservation(@PathVariable Long id) {
+	@DeleteMapping("/delete/{id}")
+	@Operation(summary = "Eliminar reservación por ID")
+	public void deleteReservation(@PathVariable Long id) {
 		reservationService.deleteReserva(id);
-		return "redirect:/reservations/table";
 	}
 }

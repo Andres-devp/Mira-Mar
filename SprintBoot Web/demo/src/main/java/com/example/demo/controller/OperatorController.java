@@ -1,40 +1,51 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.ClientService;
-import com.example.demo.service.ReservationService;
+import com.example.demo.entities.Operator;
+import com.example.demo.service.OperatorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/operator")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Operadores", description = "Gestión de operadores")
 public class OperatorController {
 
     @Autowired
-    private ReservationService reservaService;
+    private OperatorService operadorService;
 
-    @Autowired
-    private ClientService clienteService;
-
-    @GetMapping({"", "/"})
-    public String operator() {
-        return "operator";
+    @GetMapping({"/all", ""})
+    @Operation(summary = "Listar todos los operadores")
+    public List<Operator> listOperators() {
+        return operadorService.getAllOperadores();
     }
 
-    @GetMapping("/reservas")
-    public String reservasTabla(Model model) {
-        model.addAttribute("reservas", reservaService.getAllReservas());
-        model.addAttribute("panelHome", "/operator");
-        return "reservations/reservations-table";
+    @GetMapping("/find/{id}")
+    @Operation(summary = "Buscar operador por ID")
+    public Operator findById(@PathVariable Long id) {
+        return operadorService.getOperadorById(id);
     }
 
-    @GetMapping("/clientes")
-    public String clientesTabla(Model model) {
-        model.addAttribute("usuarios", clienteService.getAllClientes());
-        model.addAttribute("panelHome", "/operator");
-        model.addAttribute("mostrarCrearUsuario", false);
-        return "Usuarios/usuarios-tabla";
+    @PostMapping("/add")
+    @Operation(summary = "Crear nuevo operador")
+    public Operator createOperator(@RequestBody Operator operador) {
+        return operadorService.saveOperador(operador);
+    }
+
+    @PutMapping("/update/{id}")
+    @Operation(summary = "Actualizar operador existente")
+    public Operator updateOperator(@PathVariable Long id, @RequestBody Operator operador) {
+        operador.setId(id);
+        return operadorService.saveOperador(operador);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Eliminar operador por ID")
+    public void deleteOperator(@PathVariable Long id) {
+        operadorService.deleteOperador(id);
     }
 }

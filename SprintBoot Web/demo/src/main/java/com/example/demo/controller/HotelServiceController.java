@@ -2,70 +2,49 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.HotelService;
 import com.example.demo.service.HotelServiceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/services")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Servicios del Hotel", description = "Gestión de servicios del hotel")
 public class HotelServiceController {
 
 	@Autowired
 	private HotelServiceService servicioService;
 
-	@GetMapping
-	public String listServicios() {
-		return "redirect:/services/cards";
+	@GetMapping({"/all", ""})
+	@Operation(summary = "Listar todos los servicios del hotel")
+	public List<HotelService> listServicios() {
+		return servicioService.getAllServicios();
 	}
 
-	@GetMapping("/table")
-	public String listServiciosTable(Model model) {
-		model.addAttribute("servicios", servicioService.getAllServicios());
-		return "HotelServices/services-table";
-	}
-
-	@GetMapping("/cards")
-	public String listServiciosCards(Model model) {
-		model.addAttribute("servicios", servicioService.getAllServicios());
-		return "HotelServices/services-list";
-	}
-
-	@GetMapping("/{id}")
-	public String servicioDetail(@PathVariable Long id, Model model) {
-		HotelService servicio = servicioService.getServicioById(id);
-		model.addAttribute("servicio", servicio);
-		return "HotelServices/service-detail";
-	}
-
-	@GetMapping("/add")
-	public String showAddForm(Model model) {
-		model.addAttribute("servicio", new HotelService());
-		return "HotelServices/service-form";
+	@GetMapping("/find/{id}")
+	@Operation(summary = "Buscar servicio por ID")
+	public HotelService findById(@PathVariable Long id) {
+		return servicioService.getServicioById(id);
 	}
 
 	@PostMapping("/add")
-	public String addServicio(@ModelAttribute HotelService servicio) {
-		servicioService.addServicio(servicio);
-		return "redirect:/services/table";
+	@Operation(summary = "Agregar nuevo servicio")
+	public HotelService addServicio(@RequestBody HotelService servicio) {
+		return servicioService.addServicio(servicio);
 	}
 
-	@GetMapping("/edit/{id}")
-	public String showEditForm(@PathVariable Long id, Model model) {
-		HotelService servicio = servicioService.getServicioById(id);
-		model.addAttribute("servicio", servicio);
-		return "HotelServices/service-form";
+	@PutMapping("/update/{id}")
+	@Operation(summary = "Actualizar servicio existente")
+	public HotelService updateServicio(@PathVariable Long id, @RequestBody HotelService servicio) {
+		return servicioService.updateServicio(id, servicio);
 	}
 
-	@PostMapping("/edit/{id}")
-	public String editServicio(@PathVariable Long id, @ModelAttribute HotelService servicio) {
-		servicioService.updateServicio(id, servicio);
-		return "redirect:/services/table";
-	}
-
-	@PostMapping("/delete/{id}")
-	public String deleteServicio(@PathVariable Long id) {
+	@DeleteMapping("/delete/{id}")
+	@Operation(summary = "Eliminar servicio por ID")
+	public void deleteServicio(@PathVariable Long id) {
 		servicioService.deleteServicio(id);
-		return "redirect:/services/table";
 	}
 }

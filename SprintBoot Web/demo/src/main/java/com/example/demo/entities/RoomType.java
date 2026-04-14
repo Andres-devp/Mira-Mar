@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +39,7 @@ public class RoomType {
     @Column(nullable = false)
     private Integer capacidad;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoHabitacion")
     @Builder.Default
     private List<Room> habitaciones = new ArrayList<>();

@@ -2,61 +2,58 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.RoomType;
 import com.example.demo.service.RoomTypeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/roomtypes")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Tipos de Habitación", description = "Gestión de tipos de habitación")
 public class RoomTypeController {
 
     @Autowired
     private RoomTypeService tipoHabitacionService;
 
-    @GetMapping({"", "/table"})
-    public String listTypes(Model model) {
-        List<RoomType> tipos = tipoHabitacionService.getAllTipos();
-        model.addAttribute("tiposHabitacion", tipos);
-        return "rooms/roomtype-tabla";
+    @GetMapping({"/all", ""})
+    @Operation(summary = "Listar todos los tipos de habitación")
+    public List<RoomType> listTypes() {
+        return tipoHabitacionService.getAllTipos();
     }
 
-    @GetMapping("/add")
-    public String createForm(Model model) {
-        model.addAttribute("tipo", new RoomType());
-        return "rooms/roomtype-form";
+    @GetMapping("/filter")
+    @Operation(summary = "Filtrar tipos por capacidad y/o precio máximo")
+    public List<RoomType> filterTypes(
+            @RequestParam(required = false) Integer capacidad,
+            @RequestParam(required = false) Double precioMax) {
+        return tipoHabitacionService.filtrarTipos(capacidad, precioMax);
+    }
+
+    @GetMapping("/find/{id}")
+    @Operation(summary = "Buscar tipo de habitación por ID")
+    public RoomType findById(@PathVariable Long id) {
+        return tipoHabitacionService.getTipoById(id);
     }
 
     @PostMapping("/add")
-    public String saveType(@ModelAttribute("tipo") RoomType tipo) {
-        tipoHabitacionService.saveTipo(tipo);
-        return "redirect:/roomtypes";
+    @Operation(summary = "Crear nuevo tipo de habitación")
+    public RoomType createType(@RequestBody RoomType tipo) {
+        return tipoHabitacionService.saveTipo(tipo);
     }
 
-    @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        RoomType tipo = tipoHabitacionService.getTipoById(id);
-        model.addAttribute("tipo", tipo);
-        return "rooms/roomtype-form";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String updateType(@PathVariable Long id, @ModelAttribute("tipo") RoomType tipo) {
+    @PutMapping("/update/{id}")
+    @Operation(summary = "Actualizar tipo de habitación existente")
+    public RoomType updateType(@PathVariable Long id, @RequestBody RoomType tipo) {
         tipo.setId(id);
-        tipoHabitacionService.saveTipo(tipo);
-        return "redirect:/roomtypes";
+        return tipoHabitacionService.saveTipo(tipo);
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteType(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            tipoHabitacionService.deleteTipo(id);
-        } catch (IllegalStateException ex) {
-            redirectAttributes.addFlashAttribute("warning", ex.getMessage());
-        }
-        return "redirect:/roomtypes";
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Eliminar tipo de habitación por ID")
+    public void deleteType(@PathVariable Long id) {
+        tipoHabitacionService.deleteTipo(id);
     }
 }

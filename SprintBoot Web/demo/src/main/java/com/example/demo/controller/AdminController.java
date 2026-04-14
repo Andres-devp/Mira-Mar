@@ -1,19 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.ClientService;
-import com.example.demo.service.RoomService;
-import com.example.demo.service.HotelServiceService;
-import com.example.demo.service.RoomTypeService;
-import com.example.demo.service.ReservationService;
-import com.example.demo.service.OperatorService;
+import com.example.demo.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Administración", description = "Panel de administración")
 public class AdminController {
 
     @Autowired
@@ -34,44 +33,16 @@ public class AdminController {
     @Autowired
     private OperatorService operadorService;
 
-    @GetMapping({"", "/"})
-    public String admin() {
-        return "admin";
-    }
-
-    @GetMapping("/usuarios")
-    public String usuariosTabla(Model model) {
-        model.addAttribute("usuarios", clienteService.getAllClientes());
-        return "Usuarios/usuarios-tabla";
-    }
-
-    @GetMapping("/servicios")
-    public String serviciosTabla(Model model) {
-        model.addAttribute("servicios", servicioService.getAllServicios());
-        return "HotelServices/services-table";
-    }
-
-    @GetMapping("/habitaciones")
-    public String habitacionesTabla(Model model) {
-        model.addAttribute("rooms", habitacionService.getAllHabitaciones());
-        return "rooms/rooms-table";
-    }
-
-    @GetMapping("/tipos-habitacion")
-    public String tiposHabitacionTabla(Model model) {
-        model.addAttribute("tiposHabitacion", tipoHabitacionService.getAllTipos());
-        return "rooms/roomtype-tabla";
-    }
-
-    @GetMapping("/reservas")
-    public String reservasTabla(Model model) {
-        model.addAttribute("reservas", reservaService.getAllReservas());
-        return "reservations/reservations-table";
-    }
-
-    @GetMapping("/operadores")
-    public String operadoresTabla(Model model) {
-        model.addAttribute("operadores", operadorService.getAllOperadores());
-        return "Usuarios/operadores-tabla";
+    @GetMapping({"/stats", ""})
+    @Operation(summary = "Obtener estadísticas del dashboard de administración")
+    public Map<String, Object> adminStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalClientes", clienteService.getAllClientes().size());
+        stats.put("totalServicios", servicioService.getAllServicios().size());
+        stats.put("totalHabitaciones", habitacionService.getAllHabitaciones().size());
+        stats.put("totalTiposHabitacion", tipoHabitacionService.getAllTipos().size());
+        stats.put("totalReservas", reservaService.getAllReservas().size());
+        stats.put("totalOperadores", operadorService.getAllOperadores().size());
+        return stats;
     }
 }

@@ -2,80 +2,50 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.Room;
 import com.example.demo.service.RoomService;
-import com.example.demo.service.RoomTypeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/rooms")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Habitaciones", description = "Gestión de habitaciones")
 public class RoomController {
 
     @Autowired
     private RoomService habitacionService;
 
-    @Autowired
-    private RoomTypeService tipoHabitacionService;
-
-    @GetMapping
-    public String listRooms(@RequestParam(required = false) Integer capacidad,
-                            @RequestParam(required = false) Double precioMax,
-                            Model model) {
-        model.addAttribute("tipos", tipoHabitacionService.filtrarTipos(capacidad, precioMax));
-        model.addAttribute("capacidadFiltro", capacidad);
-        model.addAttribute("precioMaxFiltro", precioMax);
-        return "rooms/rooms-list";
+    @GetMapping({"/all", ""})
+    @Operation(summary = "Listar todas las habitaciones")
+    public List<Room> listRooms() {
+        return habitacionService.getAllHabitaciones();
     }
 
-    @GetMapping("/table")
-    public String listRoomsTable(Model model) {
-        List<Room> habitaciones = habitacionService.getAllHabitaciones();
-        model.addAttribute("rooms", habitaciones);
-        return "rooms/rooms-table";
+    @GetMapping("/find/{id}")
+    @Operation(summary = "Buscar habitación por ID")
+    public Room findById(@PathVariable Long id) {
+        return habitacionService.getHabitacionById(id);
     }
 
-    @GetMapping("/{id}")
-    public String roomDetail(@PathVariable Long id, Model model) {
-        model.addAttribute("tipo", tipoHabitacionService.getTipoById(id));
-        return "rooms/room-detail";
+    @PostMapping("/add")
+    @Operation(summary = "Crear nueva habitación")
+    public Room createRoom(@RequestBody Room room) {
+        return habitacionService.saveHabitacion(room);
     }
 
-    @GetMapping("/add")
-    public String showCreateForm(Model model) {
-        model.addAttribute("room", new Room());
-        model.addAttribute("isNew", true);
-        model.addAttribute("roomTypes", tipoHabitacionService.getAllTipos());
-        return "rooms/room-form";
-    }
-
-    @PostMapping
-    public String createRoom(@ModelAttribute Room room) {
-        habitacionService.saveHabitacion(room);
-        return "redirect:/rooms/table";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Room habitacion = habitacionService.getHabitacionById(id);
-        model.addAttribute("room", habitacion);
-        model.addAttribute("isNew", false);
-        model.addAttribute("roomTypes", tipoHabitacionService.getAllTipos());
-        return "rooms/room-form";
-    }
-
-    @PostMapping("/{id}")
-    public String updateRoom(@PathVariable Long id, @ModelAttribute Room room) {
+    @PutMapping("/update/{id}")
+    @Operation(summary = "Actualizar habitación existente")
+    public Room updateRoom(@PathVariable Long id, @RequestBody Room room) {
         room.setId(id);
-        habitacionService.saveHabitacion(room);
-        return "redirect:/rooms/table";
+        return habitacionService.saveHabitacion(room);
     }
 
-    @PostMapping("/{id}/delete")
-    public String deleteRoom(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Eliminar habitación por ID")
+    public void deleteRoom(@PathVariable Long id) {
         habitacionService.deleteHabitacion(id);
-        return "redirect:/rooms/table";
     }
 }

@@ -3,73 +3,63 @@ package com.example.demo.controller;
 import com.example.demo.exception.RegistrationException;
 import com.example.demo.service.AuthenticatedUser;
 import com.example.demo.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:4200")
+@Tag(name = "Autenticación", description = "Login y registro de usuarios")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/login-page")
-    public String login() {
-        return "Usuarios/login/login";
-    }
-
     @PostMapping("/login")
-    public String procesarLogin(@RequestParam String username,
-                                @RequestParam String password,
-                                HttpSession session,
-                                RedirectAttributes flash) {
-        AuthenticatedUser usuarioAutenticado = authService.autenticar(username, password);
-        if (usuarioAutenticado == null) {
-            flash.addFlashAttribute("error", "Usuario o contraseña incorrectos");
-            return "redirect:/login-page";
+    @Operation(summary = "Iniciar sesión con usuario y contraseña")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        String username = credentials.get("username");
+        String password = credentials.get("password");
+
+        AuthenticatedUser usuario = authService.autenticar(username, password);
+
+        if (usuario == null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Usuario o contraseña incorrectos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
 
-        session.setAttribute("usuarioId", usuarioAutenticado.getId());
-        session.setAttribute("usuarioRol", usuarioAutenticado.getRol());
-
-        if ("ADMIN".equals(usuarioAutenticado.getRol())) {
-            return "redirect:/admin";
-        }
-        if ("OPERATOR".equals(usuarioAutenticado.getRol())) {
-            return "redirect:/operator";
-        }
-        return "redirect:/usuarios/" + usuarioAutenticado.getId();
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", usuario.getId());
+        response.put("rol", usuario.getRol());
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
-
-    @GetMapping("/create-account")
-    public String createAccount() {
-        return "Usuarios/login/create-account";
-    }
-
-    @PostMapping("/create-account")
-    public String procesarCrearCuenta(@RequestParam String nombre,
-                                      @RequestParam String usuario,
-                                      @RequestParam String email,
-                                      @RequestParam String contrasena,
-                                      @RequestParam String contrasenaConfirm,
-                                      RedirectAttributes flash) {
+    @PostMapping("/register")
+    @Operation(summary = "Registrar nueva cuenta de cliente")
+    public ResponseEntity<?> register(@RequestBody Map<String, String> data) {
         try {
-            authService.registrar(nombre, usuario, email, contrasena, contrasenaConfirm);
-            flash.addFlashAttribute("mensaje", "Cuenta creada exitosamente. Por favor inicia sesión.");
-            return "redirect:/login-page";
+            authService.registrar(
+                data.get("nombre"),
+                data.get("usuario"),
+                data.get("email"),
+                data.get("contrasena"),
+                data.get("contrasenaConfirm")
+            );
+            Map<String, String> response = new HashMap<>();
+            response.put("mensaje", "Cuenta creada exitosamente");
+            return ResponseEntity.ok(response);
         } catch (RegistrationException e) {
-            flash.addFlashAttribute("error", e.getMessage());
-            return "redirect:/create-account";
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
     }
 }
