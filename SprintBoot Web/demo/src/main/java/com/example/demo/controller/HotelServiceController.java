@@ -1,13 +1,23 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.entities.HotelService;
 import com.example.demo.service.HotelServiceService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/services")
@@ -24,7 +34,7 @@ public class HotelServiceController {
 		return servicioService.getAllServicios();
 	}
 
-	@GetMapping("/find/{id}")
+	@GetMapping("/{id}")
 	@Operation(summary = "Buscar servicio por ID")
 	public HotelService findById(@PathVariable Long id) {
 		return servicioService.getServicioById(id);
@@ -36,13 +46,13 @@ public class HotelServiceController {
 		return servicioService.addServicio(servicio);
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar servicio existente")
 	public HotelService updateServicio(@PathVariable Long id, @RequestBody HotelService servicio) {
 		return servicioService.updateServicio(id, servicio);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@Operation(summary = "Eliminar servicio por ID")
 	public void deleteServicio(@PathVariable Long id) {
 		servicioService.deleteServicio(id);

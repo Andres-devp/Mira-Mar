@@ -1,13 +1,23 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.entities.Client;
 import com.example.demo.service.ClientService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -24,7 +34,7 @@ public class UserController {
         return clienteService.getAllClientes();
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     @Operation(summary = "Buscar cliente por ID")
     public Client findById(@PathVariable Long id) {
         return clienteService.getClienteById(id);
@@ -36,14 +46,14 @@ public class UserController {
         return clienteService.saveCliente(cliente);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Actualizar cliente existente")
     public Client updateUser(@PathVariable Long id, @RequestBody Client cliente) {
         cliente.setId(id);
         return clienteService.saveCliente(cliente);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar cliente por ID")
     public void deleteUser(@PathVariable Long id) {
         clienteService.deleteCliente(id);
