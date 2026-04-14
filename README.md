@@ -64,7 +64,8 @@
 ### Diagrama De Clases
 <img width="1242" height="707" alt="image" src="https://github.com/user-attachments/assets/519537ea-ea41-45d6-87a7-9d00b7aa9c2c" />
 
-
+### SWAGGER
+http://localhost:8090/swagger-ui/index.html#/ 
 
 ## 📂 Estructura del Proyecto
 
@@ -85,3 +86,4 @@ src/main/resources/
 │   └── Usuarios/      # Gestión de perfiles
 └── static/           # Recursos (CSS, JS, Imágenes)
    git clone [https://github.com/Andres-devp/Mira-Mar.git](https://github.com/Andres-devp/Mira-Mar.git)
+
