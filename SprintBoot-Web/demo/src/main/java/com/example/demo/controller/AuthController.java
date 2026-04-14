@@ -1,17 +1,23 @@
 package com.example.demo.controller;
 
-import com.example.demo.exception.RegistrationException;
-import com.example.demo.service.AuthenticatedUser;
-import com.example.demo.service.AuthService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.demo.exception.RegistrationException;
+import com.example.demo.service.AuthService;
+import com.example.demo.service.AuthenticatedUser;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,7 +29,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    @Operation(summary = "Iniciar sesión con usuario y contraseña")
+    @Operation(summary = "Iniciar sesión con usuario y contraseña") // Swagger
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         String username = credentials.get("username");
         String password = credentials.get("password");
