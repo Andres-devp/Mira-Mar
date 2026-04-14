@@ -1,0 +1,46 @@
+package com.example.demo.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "tipos_habitacion")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString(exclude = {"habitaciones"})
+public class RoomType {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, unique = true, length = 50)
+    private String codigo;
+    
+    @Column(nullable = false, length = 100)
+    private String nombre;
+    
+    @Column(length = 500)
+    private String descripcion;
+    
+    @Column(length = 255)
+    private String urlImagen;
+    
+    @Column(nullable = false)
+    private Double precioNoche;
+    
+    @Column(nullable = false)
+    private Integer capacidad;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "tipoHabitacion")
+    @Builder.Default
+    private List<Room> habitaciones = new ArrayList<>();
+}

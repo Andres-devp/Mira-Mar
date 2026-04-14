@@ -2,7 +2,6 @@
   id="navbar"
   [class.scrolled]="applyScrolledStyle"
   [class.nav-open]="isNavOpen"
-  [class.roomtypes-nav]="isRoomTypeCrudRoute"
 >
   <div class="container nav-container">
     <a routerLink="/" class="logo" (click)="closeMenu()">
@@ -12,14 +11,31 @@
     <ul class="nav-links">
       <li><a routerLink="/" (click)="closeMenu()">Inicio</a></li>
       <li><a routerLink="/roomtypes" (click)="closeMenu()">Suites</a></li>
-      <li><a routerLink="/" fragment="dining" (click)="closeMenu()">Gastronomía</a></li>
+      <li><a routerLink="/services" (click)="closeMenu()">Servicios</a></li>
       <li><a routerLink="/" fragment="contact" (click)="closeMenu()">Contacto</a></li>
-      <li class="profile-dropdown-item">
-        <a href="#" class="user-login-link" (click)="$event.preventDefault()">
+
+      <!-- Admin link (solo si es admin) -->
+      <li *ngIf="authService.isAdmin()">
+        <a routerLink="/admin" (click)="closeMenu()">Admin</a>
+      </li>
+
+      <!-- Login/Logout -->
+      <li class="profile-dropdown-item" *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login" class="user-login-link" (click)="closeMenu()">
           <img
             id="nav-user-icon"
             [src]="userIconPath"
-            alt="Icono de usuario"
+            alt="Iniciar sesión"
+            class="profile-img"
+          />
+        </a>
+      </li>
+      <li class="profile-dropdown-item" *ngIf="authService.isLoggedIn()">
+        <a href="#" class="user-login-link" (click)="$event.preventDefault(); logout()">
+          <img
+            id="nav-user-icon"
+            [src]="userIconPath"
+            alt="Cerrar sesión"
             class="profile-img"
           />
         </a>

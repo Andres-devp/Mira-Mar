@@ -1,0 +1,55 @@
+<main class="auth-page page-services">
+  <div class="container">
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <h1>Crear Cuenta</h1>
+        <p>Únete a la experiencia Mira Mar</p>
+      </div>
+
+      <div class="auth-card__error" *ngIf="errorMessage">
+        <i class="ph ph-warning-circle"></i>
+        {{ errorMessage }}
+      </div>
+
+      <div class="auth-card__success" *ngIf="successMessage">
+        <i class="ph ph-check-circle"></i>
+        {{ successMessage }}
+      </div>
+
+      <form (ngSubmit)="register()" class="auth-form">
+        <div class="form-field">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" [(ngModel)]="data.nombre" placeholder="Tu nombre" required />
+        </div>
+
+        <div class="form-field">
+          <label for="usuario">Usuario *</label>
+          <input type="text" id="usuario" name="usuario" [(ngModel)]="data.usuario" placeholder="Nombre de usuario" required />
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" [(ngModel)]="data.email" placeholder="tu@email.com" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contrasena">Contraseña *</label>
+          <input type="password" id="contrasena" name="contrasena" [(ngModel)]="data.contrasena" placeholder="Tu contraseña" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contrasenaConfirm">Confirmar contraseña *</label>
+          <input type="password" id="contrasenaConfirm" name="contrasenaConfirm" [(ngModel)]="data.contrasenaConfirm" placeholder="Repite la contraseña" required />
+        </div>
+
+        <button type="submit" class="btn btn--primary auth-btn" [disabled]="loading">
+          {{ loading ? 'Registrando...' : 'Crear cuenta' }}
+        </button>
+      </form>
+
+      <div class="auth-card__footer">
+        <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+      </div>
+    </div>
+  </div>
+</main>

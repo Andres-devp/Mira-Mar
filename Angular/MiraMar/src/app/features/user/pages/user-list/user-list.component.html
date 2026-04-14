@@ -1,0 +1,54 @@
+<main class="services-page page-services">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Clientes</h2>
+        <p>Gestión de clientes registrados en el hotel.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/admin" class="btn btn--ghost">Volver al panel</a>
+      </div>
+    </section>
+
+    <p *ngIf="warningMessage" class="warning-text">{{ warningMessage }}</p>
+
+    <table class="services-table" *ngIf="clientes.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clientes">
+          <td>{{ client.id }}</td>
+          <td>{{ client.nombre }}</td>
+          <td>{{ client.usuario }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.telefono || '—' }}</td>
+          <td>
+            <div class="icon-actions">
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteCliente(client)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="clientes.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay clientes registrados</h2>
+      <p>Los clientes se registran desde la página de registro.</p>
+    </section>
+  </div>
+</main>

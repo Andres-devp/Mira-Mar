@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from '../../../../core/models/entities';
-import { HotelServiceMockService } from '../../../../core/services/hotel-service-mock.service';
+import { HotelServiceService } from '../../../../core/services/hotel-service.service';
 
 @Component({
     selector: 'app-hotel-service-list',
@@ -11,24 +11,33 @@ export class HotelServiceListComponent implements OnInit {
     servicios: HotelService[] = [];
     warningMessage = '';
 
-constructor(private hotelServiceService: HotelServiceMockService) {}
+    constructor(private hotelServiceService: HotelServiceService) {}
 
-ngOnInit(): void {
-    this.servicios = this.hotelServiceService.listar();
-}
-
-deleteServicio(service: HotelService): void {
-    const confirmed = window.confirm('¿Seguro que deseas eliminar este servicio?');
-
-    if (!confirmed) {
-    return;
+    ngOnInit(): void {
+        this.loadServicios();
     }
 
-    const result = this.hotelServiceService.eliminar(service.id);
-    this.warningMessage = result.success ? '' : result.message || '';
-    
-    if (result.success) {
-      this.servicios = this.hotelServiceService.listar();
+    loadServicios(): void {
+        this.hotelServiceService.findAll().subscribe((servicios) => {
+            this.servicios = servicios;
+        });
     }
-}
+
+    deleteServicio(service: HotelService): void {
+        const confirmed = window.confirm('¿Seguro que deseas eliminar este servicio?');
+
+        if (!confirmed) {
+            return;
+        }
+
+        this.hotelServiceService.delete(service.id).subscribe({
+            next: () => {
+                this.warningMessage = '';
+                this.loadServicios();
+            },
+            error: (err) => {
+                this.warningMessage = err.error?.error || 'Error al eliminar el servicio';
+            }
+        });
+    }
 }

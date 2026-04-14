@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,15 @@ import { AmenityCardComponent } from './shared/components/amenity-card/amenity-c
 import { RoomCardComponent } from './shared/components/room-card/room-card.component';
 import { DiningCardComponent } from './shared/components/dining-card/dining-card.component';
 
+// Nuevas páginas migradas de Thymeleaf
+import { LoginPageComponent } from './features/auth/pages/login-page/login-page.component';
+import { RegisterPageComponent } from './features/auth/pages/register-page/register-page.component';
+import { AdminDashboardComponent } from './features/admin/pages/admin-dashboard/admin-dashboard.component';
+import { UserListComponent } from './features/user/pages/user-list/user-list.component';
+import { ReservationListComponent } from './features/reservation/pages/reservation-list/reservation-list.component';
+import { RoomListComponent } from './features/room/pages/room-list/room-list.component';
+import { OperatorListComponent } from './features/operator/pages/operator-list/operator-list.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,12 +41,22 @@ import { DiningCardComponent } from './shared/components/dining-card/dining-card
     HotelServiceDetailComponent,
     AmenityCardComponent,
     RoomCardComponent,
-    DiningCardComponent
+    DiningCardComponent,
+    // Nuevas páginas
+    LoginPageComponent,
+    RegisterPageComponent,
+    AdminDashboardComponent,
+    UserListComponent,
+    ReservationListComponent,
+    RoomListComponent,
+    OperatorListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

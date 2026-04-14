@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { RoomType } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 interface Amenity {
   icon: string;
@@ -28,7 +28,7 @@ interface Dining {
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, AfterViewInit {
   tiposDestacados: RoomType[] = [];
   amenities: Amenity[] = [
     {
@@ -96,9 +96,50 @@ export class LandingPageComponent implements OnInit {
     },
   ];
 
-  constructor(private roomTypeService: RoomTypeMockService) {}
+  constructor(
+    private roomTypeService: RoomTypeService,
+    private el: ElementRef
+  ) {}
 
   ngOnInit(): void {
-    this.tiposDestacados = this.roomTypeService.listarDestacados(3);
+    this.roomTypeService.findAll().subscribe((tipos) => {
+      this.tiposDestacados = tipos.slice(0, 3);
+    });
+  }
+
+  /**
+   * Scroll reveal logic — exact port of the Thymeleaf script.js IntersectionObserver.
+   */
+  ngAfterViewInit(): void {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    const revealEls = nativeEl.querySelectorAll('.reveal, .reveal-wave');
+
+    if (!revealEls.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      revealEls.forEach((el) => el.classList.add('visible'));
+      return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    revealEls.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('no-anim', 'visible');
+      } else {
+        revealObserver.observe(el);
+      }
+    });
   }
 }

@@ -1,0 +1,65 @@
+<main class="services-page page-services">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Reservaciones</h2>
+        <p>Gestión de reservaciones del hotel.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/admin" class="btn btn--ghost">Volver al panel</a>
+      </div>
+    </section>
+
+    <p *ngIf="warningMessage" class="warning-text">{{ warningMessage }}</p>
+
+    <table class="services-table" *ngIf="reservations.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Habitación</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Personas</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let res of reservations">
+          <td>{{ res.id }}</td>
+          <td>{{ res.client?.nombre || '—' }}</td>
+          <td>{{ res.room?.nombre || '—' }}</td>
+          <td>{{ res.fechaInicio }}</td>
+          <td>{{ res.fechaFin }}</td>
+          <td>{{ res.cantidadPersonas }}</td>
+          <td>
+            <span class="status-badge"
+              [class.status-badge--active]="res.estado === 'ACTIVA'"
+              [class.status-badge--cancelled]="res.estado === 'CANCELADA'"
+            >
+              {{ res.estado }}
+            </span>
+          </td>
+          <td>
+            <div class="icon-actions">
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteReservation(res)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="reservations.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay reservaciones</h2>
+      <p>Las reservaciones aparecerán aquí cuando se creen.</p>
+    </section>
+  </div>
+</main>

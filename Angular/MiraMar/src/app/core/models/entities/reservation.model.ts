@@ -6,6 +6,14 @@ export interface Reservation {
   estado: string;
   createdAt: string;
   canceledAt?: string;
-  clientId: number;
-  roomId: number;
+  client?: {
+    id: number;
+    nombre: string;
+    usuario: string;
+    email: string;
+  };
+  room?: {
+    id: number;
+    nombre: string;
+  };
 }

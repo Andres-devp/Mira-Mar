@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomTypeFormValue } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 @Component({
   selector: 'app-room-type-form',
@@ -27,7 +27,7 @@ export class RoomTypeFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private roomTypeService: RoomTypeMockService
+    private roomTypeService: RoomTypeService
   ) {}
 
   ngOnInit(): void {
@@ -41,23 +41,23 @@ export class RoomTypeFormComponent implements OnInit {
         return;
       }
 
-      const tipo = this.roomTypeService.buscarPorId(this.currentId);
-
-      if (!tipo) {
-        this.notFound = true;
-        return;
-      }
-
-      this.notFound = false;
-      this.tipoForm.patchValue({
-        codigo: tipo.codigo,
-        nombre: tipo.nombre,
-        descripcion: tipo.descripcion || '',
-        precioNoche: tipo.precioNoche,
-        capacidad: tipo.capacidad,
-        urlImagen: tipo.urlImagen || ''
+      this.roomTypeService.findById(this.currentId).subscribe({
+        next: (tipo) => {
+          this.notFound = false;
+          this.tipoForm.patchValue({
+            codigo: tipo.codigo,
+            nombre: tipo.nombre,
+            descripcion: tipo.descripcion || '',
+            precioNoche: tipo.precioNoche,
+            capacidad: tipo.capacidad,
+            urlImagen: tipo.urlImagen || ''
+          });
+          this.tipoForm.controls.codigo.disable();
+        },
+        error: () => {
+          this.notFound = true;
+        }
       });
-      this.tipoForm.controls.codigo.disable();
     });
   }
 
@@ -86,11 +86,13 @@ export class RoomTypeFormComponent implements OnInit {
     };
 
     if (this.isEditMode && this.currentId !== null) {
-      this.roomTypeService.editar(this.currentId, payload);
+      this.roomTypeService.update(this.currentId, payload).subscribe(() => {
+        this.router.navigate(['/roomtypes']);
+      });
     } else {
-      this.roomTypeService.agregar(payload);
+      this.roomTypeService.create(payload).subscribe(() => {
+        this.router.navigate(['/roomtypes']);
+      });
     }
-
-    this.router.navigate(['/roomtypes']);
   }
 }

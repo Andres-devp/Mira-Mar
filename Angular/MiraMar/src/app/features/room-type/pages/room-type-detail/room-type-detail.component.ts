@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomType } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 @Component({
   selector: 'app-room-type-detail',
@@ -15,13 +15,16 @@ export class RoomTypeDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private roomTypeService: RoomTypeMockService
+    private roomTypeService: RoomTypeService
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
-      this.tipo = this.roomTypeService.buscarPorId(id);
+      this.roomTypeService.findById(id).subscribe({
+        next: (tipo) => this.tipo = tipo,
+        error: () => this.tipo = undefined
+      });
     });
   }
 
