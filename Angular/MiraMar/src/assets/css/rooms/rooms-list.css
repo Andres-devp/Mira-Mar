@@ -75,7 +75,7 @@ body.page-rooms-list nav {
 }
 
 /* --- Grid y Tarjetas --- */
-.cards-grid {
+.rooms-list .cards-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.6rem;
@@ -83,11 +83,11 @@ body.page-rooms-list nav {
 }
 
 @media (max-width: 980px) {
-  .cards-grid { grid-template-columns: 1fr; }
+  .rooms-list .cards-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
-  .cards-grid {
+  .rooms-list .cards-grid {
     grid-template-columns: 1fr;
   }
 }
