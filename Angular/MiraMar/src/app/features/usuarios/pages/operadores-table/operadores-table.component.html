@@ -1,0 +1,43 @@
+<main class="services-page">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Operadores (Tabla)</h2>
+        <p>Vista administrativa de operadores.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/admin" class="btn btn--ghost">Volver</a>
+      </div>
+    </section>
+
+    <table class="services-table" *ngIf="operadores.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Cédula</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operador of operadores">
+          <td>{{ operador.id }}</td>
+          <td>{{ operador.nombre }}</td>
+          <td>{{ operador.apellido }}</td>
+          <td>{{ operador.usuario }}</td>
+          <td>{{ operador.email }}</td>
+          <td>{{ operador.cedula }}</td>
+          <td>{{ operador.telefono }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="operadores.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay operadores registrados</h2>
+      <p>Cuando existan operadores, se mostrarán aquí.</p>
+    </section>
+  </div>
+</main>

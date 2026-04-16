@@ -1,0 +1,57 @@
+<main class="form-page page-rooms">
+  <div class="container">
+    <div class="form-shell">
+      <h1 class="form-shell__title">{{ pageTitle }}</h1>
+
+      <form [formGroup]="roomForm" (ngSubmit)="save()">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="nombre">Nombre de la habitación *</label>
+            <input type="text" id="nombre" formControlName="nombre" required />
+            <div class="form-error">{{ roomForm.controls['nombre'].invalid && roomForm.controls['nombre'].touched ? 'Nombre obligatorio' : '' }}</div>
+          </div>
+
+          <div class="form-field">
+            <label for="tipoHabitacion">Tipo de habitación *</label>
+            <select id="tipoHabitacion" formControlName="tipoHabitacionId" required (change)="onTipoChange()">
+              <option value="">-- Seleccionar --</option>
+              <option *ngFor="let rt of roomTypes" [value]="rt.id">
+                {{ rt.nombre }}
+              </option>
+            </select>
+            <div class="form-error">{{ roomForm.controls['tipoHabitacionId'].invalid && roomForm.controls['tipoHabitacionId'].touched ? 'Selecciona un tipo' : '' }}</div>
+          </div>
+        </div>
+
+        <!-- Info del tipo seleccionado -->
+        <div *ngIf="selectedType" class="type-info-card">
+          <h3 class="type-info-card__title">
+            <i class="ph ph-info"></i>
+            Información del tipo: {{ selectedType.nombre }}
+          </h3>
+          <div class="type-info-card__grid">
+            <div class="type-info-card__item">
+              <span class="type-info-card__label">Capacidad</span>
+              <span class="type-info-card__value">{{ selectedType.capacidad }} huéspedes</span>
+            </div>
+            <div class="type-info-card__item">
+              <span class="type-info-card__label">Precio / noche</span>
+              <span class="type-info-card__value">${{ selectedType.precioNoche }}</span>
+            </div>
+            <div *ngIf="selectedType.descripcion" class="type-info-card__item type-info-card__item--full">
+              <span class="type-info-card__label">Descripción</span>
+              <span class="type-info-card__value">{{ selectedType.descripcion }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary">
+            <span>{{ submitLabel }}</span>
+          </button>
+          <a routerLink="/rooms/table" class="btn btn--ghost">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

@@ -1,6 +1,7 @@
 package com.example.demo.handler;
 
 import com.example.demo.exception.NotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +27,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleIllegalState(IllegalStateException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "No se puede completar la operación porque existen registros relacionados. Revisa las dependencias e inténtalo de nuevo.");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 

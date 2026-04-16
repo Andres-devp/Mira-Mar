@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomType } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 @Component({
   selector: 'app-room-type-list',
@@ -11,10 +11,17 @@ export class RoomTypeListComponent implements OnInit {
   tiposHabitacion: RoomType[] = [];
   warningMessage = '';
 
-  constructor(private roomTypeService: RoomTypeMockService) {}
+  constructor(private roomTypeService: RoomTypeService) {}
 
   ngOnInit(): void {
-    this.tiposHabitacion = this.roomTypeService.listar();
+    this.loadTipos();
+  }
+
+  loadTipos(): void {
+    this.roomTypeService.getAll().subscribe({
+      next: (data) => this.tiposHabitacion = data,
+      error: (err) => console.error('Error loading room types:', err)
+    });
   }
 
   deleteTipo(type: RoomType): void {
@@ -24,7 +31,14 @@ export class RoomTypeListComponent implements OnInit {
       return;
     }
 
-    const result = this.roomTypeService.eliminar(type.id);
-    this.warningMessage = result.success ? '' : result.message || '';
+    this.roomTypeService.delete(type.id).subscribe({
+      next: () => {
+        this.warningMessage = '';
+        this.loadTipos();
+      },
+      error: (err) => {
+        this.warningMessage = err.error?.error || 'Error al eliminar el tipo de habitación.';
+      }
+    });
   }
 }

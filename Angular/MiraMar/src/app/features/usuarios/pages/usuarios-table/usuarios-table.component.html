@@ -1,0 +1,63 @@
+<main class="services-page">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Usuarios (Tabla)</h2>
+        <p>Vista administrativa/rápida.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/operator" class="btn btn--ghost">Volver</a>
+        <a routerLink="/usuarios/add" class="btn btn--primary">Crear usuario</a>
+      </div>
+    </section>
+
+    <div *ngIf="warningMessage" class="alert alert--danger">
+      <i class="ph ph-warning-circle"></i>
+      <span>{{ warningMessage }}</span>
+      <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+    </div>
+
+    <table class="services-table" *ngIf="usuarios.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.usuario }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>
+            <div class="icon-actions">
+              <a [routerLink]="['/usuarios', usuario.id]" class="icon-action" title="Ver">
+                <i class="ph ph-eye"></i>
+              </a>
+              <a [routerLink]="['/usuarios/edit', usuario.id]" class="icon-action" title="Editar">
+                <i class="ph ph-pencil-simple"></i>
+              </a>
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteUsuario(usuario)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="usuarios.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay usuarios disponibles</h2>
+      <p>Crea un usuario para verlo aquí.</p>
+    </section>
+  </div>
+</main>

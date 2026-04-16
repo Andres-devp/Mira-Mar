@@ -58,8 +58,20 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         tipoHabitacionRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + id, id));
 
-        if (habitacionRepository.existsByTipoHabitacionId(id)) {
-            throw new IllegalStateException("No se puede eliminar el tipo porque tiene habitaciones asociadas.");
+        List<com.example.demo.entities.Room> habitacionesAsociadas = habitacionRepository.findByTipoHabitacionId(id);
+        if (!habitacionesAsociadas.isEmpty()) {
+            String nombres = habitacionesAsociadas.stream()
+                .limit(3)
+                .map(com.example.demo.entities.Room::getNombre)
+                .collect(java.util.stream.Collectors.joining(", "));
+            String sufijo = habitacionesAsociadas.size() > 3
+                ? " y " + (habitacionesAsociadas.size() - 3) + " más"
+                : "";
+            throw new IllegalStateException(
+                "No se puede eliminar el tipo porque tiene " + habitacionesAsociadas.size()
+                + " habitaciones asociadas: " + nombres + sufijo
+                + ". Elimina o reasigna las habitaciones primero."
+            );
         }
 
         tipoHabitacionRepository.deleteById(id);

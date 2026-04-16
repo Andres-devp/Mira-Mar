@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomType } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 interface Amenity {
   icon: string;
@@ -96,9 +96,12 @@ export class LandingPageComponent implements OnInit {
     },
   ];
 
-  constructor(private roomTypeService: RoomTypeMockService) {}
+  constructor(private roomTypeService: RoomTypeService) {}
 
   ngOnInit(): void {
-    this.tiposDestacados = this.roomTypeService.listarDestacados(3);
+    this.roomTypeService.getAll().subscribe({
+      next: (tipos) => this.tiposDestacados = tipos.slice(0, 3),
+      error: (err) => console.error('Error loading room types:', err)
+    });
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RoomTypeFormValue } from '../../../../core/models/entities';
-import { RoomTypeMockService } from '../../../../core/services/room-type-mock.service';
+import { RoomType } from '../../../../core/models/entities';
+import { RoomTypeService } from '../../../../core/services/room-type.service';
 
 @Component({
   selector: 'app-room-type-form',
@@ -27,7 +27,7 @@ export class RoomTypeFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private roomTypeService: RoomTypeMockService
+    private roomTypeService: RoomTypeService
   ) {}
 
   ngOnInit(): void {
@@ -41,23 +41,23 @@ export class RoomTypeFormComponent implements OnInit {
         return;
       }
 
-      const tipo = this.roomTypeService.buscarPorId(this.currentId);
-
-      if (!tipo) {
-        this.notFound = true;
-        return;
-      }
-
-      this.notFound = false;
-      this.tipoForm.patchValue({
-        codigo: tipo.codigo,
-        nombre: tipo.nombre,
-        descripcion: tipo.descripcion || '',
-        precioNoche: tipo.precioNoche,
-        capacidad: tipo.capacidad,
-        urlImagen: tipo.urlImagen || ''
+      this.roomTypeService.getById(this.currentId).subscribe({
+        next: (tipo) => {
+          this.notFound = false;
+          this.tipoForm.patchValue({
+            codigo: tipo.codigo,
+            nombre: tipo.nombre,
+            descripcion: tipo.descripcion || '',
+            precioNoche: tipo.precioNoche,
+            capacidad: tipo.capacidad,
+            urlImagen: tipo.urlImagen || ''
+          });
+          this.tipoForm.controls.codigo.disable();
+        },
+        error: () => {
+          this.notFound = true;
+        }
       });
-      this.tipoForm.controls.codigo.disable();
     });
   }
 
@@ -76,7 +76,7 @@ export class RoomTypeFormComponent implements OnInit {
     }
 
     const raw = this.tipoForm.getRawValue();
-    const payload: RoomTypeFormValue = {
+    const payload: any = {
       codigo: raw.codigo.trim(),
       nombre: raw.nombre.trim(),
       descripcion: raw.descripcion.trim(),
@@ -86,11 +86,15 @@ export class RoomTypeFormComponent implements OnInit {
     };
 
     if (this.isEditMode && this.currentId !== null) {
-      this.roomTypeService.editar(this.currentId, payload);
+      this.roomTypeService.update(this.currentId, payload).subscribe({
+        next: () => this.router.navigate(['/roomtypes']),
+        error: (err) => console.error('Error updating room type:', err)
+      });
     } else {
-      this.roomTypeService.agregar(payload);
+      this.roomTypeService.create(payload).subscribe({
+        next: () => this.router.navigate(['/roomtypes']),
+        error: (err) => console.error('Error creating room type:', err)
+      });
     }
-
-    this.router.navigate(['/roomtypes']);
   }
 }

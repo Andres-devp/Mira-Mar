@@ -1,0 +1,64 @@
+<main class="rooms-list">
+  <div class="container">
+    <section class="rooms-list__sectionHeader">
+      <div>
+        <h2>Suites (Tabla)</h2>
+        <p>Vista administrativa/rápida.</p>
+      </div>
+      <div class="rooms-list__sectionActions">
+        <a routerLink="/admin" class="btn btn--ghost">Volver</a>
+        <a routerLink="/rooms" class="btn btn--ghost">Ver tarjetas</a>
+        <a routerLink="/roomtypes" class="btn btn--ghost">Tipos de habitaciones</a>
+        <a routerLink="/rooms/add" class="btn btn--primary">Crear habitación</a>
+      </div>
+    </section>
+
+    <div *ngIf="warningMessage" class="alert alert--danger">
+      <i class="ph ph-warning-circle"></i>
+      <span>{{ warningMessage }}</span>
+      <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+    </div>
+
+    <table class="rooms-table" *ngIf="rooms.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Capacidad</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of rooms">
+          <td>{{ room.id }}</td>
+          <td>{{ room.nombre }}</td>
+          <td>{{ room.tipoHabitacion?.nombre || 'N/A' }}</td>
+          <td>{{ room.tipoHabitacion?.capacidad }}</td>
+          <td>${{ room.tipoHabitacion?.precioNoche }}</td>
+          <td>
+            <div class="icon-actions">
+              <a [routerLink]="['/rooms', room.id, 'edit']" class="icon-action" title="Editar">
+                <i class="ph ph-pencil-simple"></i>
+              </a>
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteRoom(room)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="rooms.length === 0" class="rooms-list__empty" aria-live="polite">
+      <h2>No hay habitaciones disponibles</h2>
+      <p>En este momento no contamos con habitaciones disponibles.</p>
+    </section>
+  </div>
+</main>

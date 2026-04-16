@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+.admin-nav {
+  position: static !important;
+  background: var(--white) !important;
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(48, 76, 137, 0.1);
+}
+
+.admin-nav .nav-links a {
+  color: var(--secondary);
+}
+
+.admin-nav .hamburger {
+  color: var(--secondary);
+}
+
+.admin-nav .profile-img {
+  border-color: var(--secondary);
+}

@@ -17,3 +17,7 @@
 #navbar.roomtypes-nav .hamburger {
   color: var(--white) !important;
 }
+
+#navbar.roomtypes-nav .profile-img {
+  border-color: var(--white) !important;
+}

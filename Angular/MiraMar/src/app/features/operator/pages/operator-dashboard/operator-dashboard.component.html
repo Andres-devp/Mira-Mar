@@ -1,0 +1,39 @@
+<nav id="navbar" class="admin-nav">
+  <div class="container nav-container">
+    <a routerLink="/" class="logo">
+      <img id="nav-logo" src="/images/Mira Mar logo.png" alt="Mira Mar logo" width="120" />
+    </a>
+    <ul class="nav-links">
+      <a routerLink="/login" class="user-login-link">
+        <img id="nav-user-icon" src="/images/usuarioNegro.png" alt="Foto de perfil" class="profile-img" />
+      </a>
+    </ul>
+    <div class="hamburger">
+      <i class="ph ph-list"></i>
+    </div>
+  </div>
+</nav>
+
+<main class="admin-dashboard container">
+  <div class="section-header">
+    <span>Panel de Control</span>
+    <h2>Gestión Operativa</h2>
+  </div>
+
+  <div class="admin-grid">
+    <a class="admin-card" routerLink="/reservations">
+      <i class="ph ph-calendar-check main-icon"></i>
+      <h3>Reservas</h3>
+    </a>
+
+    <a class="admin-card" routerLink="/usuarios">
+      <i class="ph ph-users main-icon"></i>
+      <h3>Clientes</h3>
+    </a>
+
+    <a class="admin-card" href="javascript:void(0)">
+      <i class="ph ph-receipt main-icon"></i>
+      <h3>Cuentas/Check-out</h3>
+    </a>
+  </div>
+</main>

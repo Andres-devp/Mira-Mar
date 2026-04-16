@@ -1,0 +1,62 @@
+<main class="services-page page-services">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Servicios (Tabla)</h2>
+        <p>Vista administrativa/rapida.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/admin" class="btn btn--ghost">Volver</a>
+        <a routerLink="/services" class="btn btn--ghost">Ver tarjetas</a>
+        <a routerLink="/services/new" class="btn btn--primary">Agregar servicio</a>
+      </div>
+    </section>
+
+    <div *ngIf="warningMessage" class="alert alert--danger">
+      <i class="ph ph-warning-circle"></i>
+      <span>{{ warningMessage }}</span>
+      <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+    </div>
+
+    <table class="services-table" *ngIf="servicios.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of servicios">
+          <td>{{ service.nombre }}</td>
+          <td>{{ service.descripcion }}</td>
+          <td>{{ service.price | currency: 'COP' : 'symbol' : '1.0-0' }}</td>
+          <td>
+            <div class="icon-actions">
+              <a [routerLink]="['/services', service.id]" class="icon-action" title="Ver">
+                <i class="ph ph-eye"></i>
+              </a>
+              <a [routerLink]="['/services', service.id, 'edit']" class="icon-action" title="Editar">
+                <i class="ph ph-pencil-simple"></i>
+              </a>
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteServicio(service)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="servicios.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay servicios disponibles</h2>
+      <p>Agrega un servicio para verlo aqui.</p>
+    </section>
+  </div>
+</main>

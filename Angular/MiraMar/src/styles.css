@@ -3,9 +3,20 @@
 
 @import 'assets/css/base.css';
 @import 'assets/css/styles.css';
+@import 'assets/css/admin.css';
+@import 'assets/css/rooms/rooms-list.css';
+@import 'assets/css/rooms/rooms-table.css';
+@import 'assets/css/rooms/room-form.css';
 @import 'assets/css/rooms/roomtype-tabla.css';
 @import 'assets/css/rooms/roomtype-form.css';
 @import 'assets/css/rooms/room-detail.css';
+@import 'assets/css/HotelServices/services-list.css';
+@import 'assets/css/HotelServices/services-table.css';
+@import 'assets/css/HotelServices/service-detail.css';
+@import 'assets/css/HotelServices/service-form.css';
+@import 'assets/css/Usuarios/usuarios-tabla.css';
+@import 'assets/css/Usuarios/usuario-form.css';
+@import 'assets/css/Usuarios/usuario-detail.css';
 
 body {
 	margin: 0;
@@ -17,4 +28,100 @@ app-root {
 
 .page-services {
 	padding-top: 1px;
+}
+
+/* --- Alert / Warning banner --- */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm, 10px);
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.alert--danger {
+  background: rgba(178, 58, 72, 0.08);
+  border: 1px solid rgba(178, 58, 72, 0.25);
+  color: #8b2131;
+}
+
+.alert--danger i {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  color: #b23a48;
+}
+
+.alert__close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.alert__close:hover {
+  opacity: 1;
+}
+
+/* --- Type Info Card (room form) --- */
+.type-info-card {
+  background: rgba(100, 141, 229, 0.06);
+  border: 1px solid rgba(100, 141, 229, 0.18);
+  border-radius: var(--radius-md, 12px);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.type-info-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dusk-blue);
+  margin: 0 0 1rem;
+}
+
+.type-info-card__title i {
+  font-size: 1.15rem;
+}
+
+.type-info-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.type-info-card__item {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-sm, 10px);
+  padding: 0.65rem 0.85rem;
+}
+
+.type-info-card__item--full {
+  grid-column: 1 / -1;
+}
+
+.type-info-card__label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8892b0;
+  margin-bottom: 0.2rem;
+}
+
+.type-info-card__value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dusk-blue);
 }

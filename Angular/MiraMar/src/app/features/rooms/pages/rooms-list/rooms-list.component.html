@@ -1,0 +1,104 @@
+<main class="rooms-list">
+  <div class="container">
+    <header class="rooms-list__header reveal">
+      <h1>Nuestras Suites</h1>
+      <p>
+        Descubre un refugio diseñado para tu descanso con vistas
+        inigualables y confort absoluto.
+      </p>
+      <div class="rooms-list__actions">
+        <a href="#suites" class="btn btn--secondary">Ver todas</a>
+        <a routerLink="/services" class="btn btn--ghost">Explorar Servicios</a>
+      </div>
+    </header>
+
+    <section class="rooms-list__sectionHeader reveal" id="suites">
+      <div>
+        <h2>Suites Exclusivas</h2>
+        <p>Experiencias de lujo curadas para tu estancia.</p>
+      </div>
+    </section>
+
+    <form class="rooms-filter reveal">
+      <div class="rooms-filter__group">
+        <label for="capacidad">Capacidad mínima</label>
+        <select id="capacidad">
+          <option value="">Todos</option>
+          <option value="1">1+ huésped</option>
+          <option value="2">2+ huéspedes</option>
+          <option value="3">3+ huéspedes</option>
+          <option value="4">4+ huéspedes</option>
+        </select>
+      </div>
+      <div class="rooms-filter__group">
+        <label for="precioMax">Precio máximo / noche</label>
+        <select id="precioMax">
+          <option value="">Todos</option>
+          <option value="100">Hasta $100</option>
+          <option value="200">Hasta $200</option>
+          <option value="300">Hasta $300</option>
+          <option value="500">Hasta $500</option>
+        </select>
+      </div>
+      <div class="rooms-filter__actions">
+        <button type="button" class="btn btn--primary">Filtrar</button>
+        <a routerLink="/rooms" fragment="suites" class="btn btn--ghost">Limpiar</a>
+      </div>
+    </form>
+
+    <section
+      class="cards-grid"
+      *ngIf="tipos.length > 0"
+      aria-label="Listado de habitaciones"
+    >
+      <article class="card card--room reveal-wave" *ngFor="let tipo of tipos">
+        <div class="card__media">
+          <img
+            [src]="tipo.urlImagen || 'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'"
+            [alt]="tipo.nombre"
+          />
+          <div class="room-tag-badge">{{ tipo.codigo }}</div>
+        </div>
+
+        <div class="card__body">
+          <div class="room-card__top">
+            <div>
+              <h2 class="card__title">{{ tipo.nombre }}</h2>
+              <div class="room-card__priceLine">
+                <span>${{ tipo.precioNoche }}</span>
+                <small>/noche</small>
+              </div>
+            </div>
+          </div>
+          <p class="card__subtitle">{{ tipo.descripcion }}</p>
+
+          <div class="card__meta">
+            <span>
+              <i class="ph ph-star"></i>
+              <span>{{ tipo.codigo }}</span>
+            </span>
+            <span>
+              <i class="ph ph-users"></i>
+              <span>{{ tipo.capacidad }} huéspedes</span>
+            </span>
+          </div>
+
+          <div class="card__actions">
+            <a [routerLink]="['/rooms', tipo.id]" class="btn btn--primary stretched-link">
+              Reservar Suite
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section
+      *ngIf="tipos.length === 0"
+      class="rooms-list__empty"
+      aria-live="polite"
+    >
+      <h2>No hay habitaciones disponibles</h2>
+      <p>En este momento no contamos con habitaciones publicadas.</p>
+    </section>
+  </div>
+</main>

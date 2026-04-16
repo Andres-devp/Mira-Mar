@@ -1,0 +1,43 @@
+<main class="services-page">
+  <div class="container">
+    <section class="services-page__sectionHeader">
+      <div>
+        <h2>Reservas (Tabla)</h2>
+        <p>Vista administrativa de reservas del hotel.</p>
+      </div>
+      <div class="services-page__sectionActions">
+        <a routerLink="/operator" class="btn btn--ghost">Volver</a>
+      </div>
+    </section>
+
+    <table class="services-table" *ngIf="reservas.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Habitación</th>
+          <th>Fecha inicio</th>
+          <th>Fecha fin</th>
+          <th>Personas</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reserva of reservas">
+          <td>{{ reserva.id }}</td>
+          <td>{{ reserva.client?.nombre || 'N/A' }}</td>
+          <td>{{ reserva.room?.nombre || 'N/A' }}</td>
+          <td>{{ reserva.fechaInicio }}</td>
+          <td>{{ reserva.fechaFin }}</td>
+          <td>{{ reserva.cantidadPersonas }}</td>
+          <td>{{ reserva.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section *ngIf="reservas.length === 0" class="services-page__empty" aria-live="polite">
+      <h2>No hay reservas registradas</h2>
+      <p>Cuando existan reservas, se mostrarán aquí.</p>
+    </section>
+  </div>
+</main>

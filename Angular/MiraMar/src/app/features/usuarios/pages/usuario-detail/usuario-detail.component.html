@@ -1,0 +1,99 @@
+<ng-container *ngIf="usuario">
+<header class="detail-hero">
+  <div class="container">
+    <div class="detail-hero__grid">
+      <div>
+        <h1 class="detail-hero__title">{{ usuario.nombre }}</h1>
+        <p class="detail-hero__lead">
+          <i class="ph ph-user-circle"></i>
+          <span>{{ usuario.usuario }}</span>
+        </p>
+        <div class="detail-hero__actions">
+          <a routerLink="/usuarios" class="btn btn--ghost">&larr; Volver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="detail-main">
+  <div class="container">
+    <div class="profile-layout">
+
+      <!-- Left: Avatar + quick info -->
+      <aside class="profile-sidebar">
+        <div class="profile-sidebar__top-actions">
+          <details class="profile-actions-menu profile-actions-menu--card">
+            <summary class="profile-actions-menu__trigger" aria-label="Acciones de cuenta">
+              <i class="ph ph-dots-three-outline-vertical"></i>
+            </summary>
+            <div class="profile-actions-menu__panel">
+              <a [routerLink]="['/usuarios', usuario.id]" class="profile-actions-menu__item">
+                <i class="ph ph-eye"></i> Ver perfil
+              </a>
+              <a [routerLink]="['/usuarios/edit', usuario.id]" class="profile-actions-menu__item">
+                <i class="ph ph-pencil-simple"></i> Editar perfil
+              </a>
+              <button type="button"
+                      class="profile-actions-menu__item profile-actions-menu__item--danger"
+                      (click)="deleteAccount()">
+                <i class="ph ph-trash"></i> Eliminar cuenta
+              </button>
+            </div>
+          </details>
+        </div>
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar">
+            <i class="ph ph-user"></i>
+          </div>
+        </div>
+        <div class="profile-sidebar__info">
+          <p class="profile-sidebar__name">{{ usuario.nombre }}</p>
+          <p class="profile-sidebar__username">@{{ usuario.usuario }}</p>
+        </div>
+      </aside>
+
+      <!-- Right: Detail sections -->
+      <div class="profile-content">
+        <section class="detail-section">
+          <h2 class="detail-section__title">Informacion personal</h2>
+          <div class="profile-info-grid">
+            <div class="profile-info-item">
+              <span class="profile-info-item__icon"><i class="ph ph-identification-card"></i></span>
+              <div>
+                <p class="profile-info-item__label">Nombre completo</p>
+                <p class="profile-info-item__value">{{ usuario.nombre }}</p>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <span class="profile-info-item__icon"><i class="ph ph-at"></i></span>
+              <div>
+                <p class="profile-info-item__label">Nombre de usuario</p>
+                <p class="profile-info-item__value">{{ usuario.usuario }}</p>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <span class="profile-info-item__icon"><i class="ph ph-envelope"></i></span>
+              <div>
+                <p class="profile-info-item__label">Correo electronico</p>
+                <p class="profile-info-item__value">{{ usuario.email }}</p>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <span class="profile-info-item__icon"><i class="ph ph-phone"></i></span>
+              <div>
+                <p class="profile-info-item__label">Telefono</p>
+                <p class="profile-info-item__value">{{ usuario.telefono }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+</ng-container>
+
+<div *ngIf="!usuario" class="loading-container" style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+  <p>Cargando información del usuario...</p>
+</div>

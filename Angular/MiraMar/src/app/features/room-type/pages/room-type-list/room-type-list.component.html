@@ -6,12 +6,16 @@
         <p>Gestiona los distintos tipos que puede tener una habitación.</p>
       </div>
       <div class="services-page__sectionActions">
-        <a routerLink="/" class="btn btn--ghost">Volver</a>
+        <a routerLink="/admin" class="btn btn--ghost">Volver</a>
         <a routerLink="/roomtypes/new" class="btn btn--primary">Crear tipo</a>
       </div>
     </section>
 
-    <p *ngIf="warningMessage">{{ warningMessage }}</p>
+    <div *ngIf="warningMessage" class="alert alert--danger">
+      <i class="ph ph-warning-circle"></i>
+      <span>{{ warningMessage }}</span>
+      <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+    </div>
 
     <table class="services-table" *ngIf="tiposHabitacion.length > 0">
       <thead>

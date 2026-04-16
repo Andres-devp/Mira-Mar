@@ -1,57 +1,60 @@
 <main class="services-page page-services">
-<div class="container">
-    <section class="services-page__sectionHeader">
-    <div>
-        <h2>Servicios del Hotel (Tabla)</h2>
-        <p>Gestiona los distintos servicios que ofrece el hotel.</p>
-    </div>
-    <div class="services-page__sectionActions">
-        <a routerLink="/" class="btn btn--ghost">Volver</a>
-        <a routerLink="/services/new" class="btn btn--primary">Crear servicio</a>
-    </div>
-    </section>
-
-    <p *ngIf="warningMessage">{{ warningMessage }}</p>
-
-    <table class="services-table" *ngIf="servicios.length > 0">
-    <thead>
-        <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let service of servicios">
-        <td>{{ service.nombre }}</td>
-        <td>{{ service.descripcion }}</td>
-        <td>{{ service.price | currency: 'COP' : 'symbol' : '1.0-0' }}</td>
-        <td>
-            <div class="icon-actions">
-            <a [routerLink]="['/services', service.id]" class="icon-action" title="Detalle">
-                <i class="ph ph-eye"></i>
-            </a>
-            <a [routerLink]="['/services', service.id, 'edit']" class="icon-action" title="Editar">
-                <i class="ph ph-pencil-simple"></i>
-            </a>
-            <button
-                type="button"
-                class="icon-action icon-action--danger"
-                title="Eliminar"
-                (click)="deleteServicio(service)"
-            >
-                <i class="ph ph-trash"></i>
-            </button>
+    <div class="container">
+        <header class="rooms-list__header reveal" id="servicios">
+            <h1>Nuestros Servicios</h1>
+            <p>
+                Comodidades y experiencias disenadas para elevar tu estadia a un
+                nivel de lujo incomparable.
+            </p>
+            <div class="rooms-list__actions">
+                <a href="#experiencias" class="btn btn--secondary">Ver todos</a>
+                <a routerLink="/rooms" class="btn btn--ghost">Explorar Suites</a>
             </div>
-        </td>
-        </tr>
-    </tbody>
-    </table>
+        </header>
 
-    <section *ngIf="servicios.length === 0" class="services-page__empty" aria-live="polite">
-    <h2>No hay servicios definidos</h2>
-    <p>Añade un servicio para verlo aquí.</p>
-    </section>
-</div>
+        <section class="rooms-list__sectionHeader reveal" id="experiencias">
+            <div>
+                <h2>Experiencias Exclusivas</h2>
+                <p>Comodidades pensadas para una estadia sin preocupaciones.</p>
+            </div>
+        </section>
+
+        <section class="cards-grid" *ngIf="servicios.length > 0" aria-label="Listado de servicios">
+            <article class="card card--service reveal-wave" *ngFor="let servicio of servicios">
+                <div class="card__media">
+                    <img
+                        [src]="servicio.imageUrl"
+                        [alt]="servicio.nombre"
+                        (error)="onImageError($event)"
+                    />
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="ph ph-sparkle"></i>
+                    </div>
+                </div>
+
+                <div class="card__body">
+                    <div class="service-titleRow">
+                        <h2 class="card__title">{{ servicio.nombre }}</h2>
+                        <div class="service-price" *ngIf="servicio.price !== null && servicio.price !== undefined">
+                            {{ servicio.price | currency: 'USD' : 'symbol' : '1.0-0' }}
+                        </div>
+                    </div>
+                    <p class="card__subtitle">{{ servicio.descripcion }}</p>
+
+                    <div class="card__meta">
+                        <span><i class="ph ph-clock"></i> <span>Todo el dia</span></span>
+                    </div>
+
+                    <div class="card__actions">
+                        <a [routerLink]="['/services', servicio.id]" class="btn btn--primary">Descubrir</a>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section *ngIf="servicios.length === 0" class="services-page__empty" aria-live="polite">
+            <h2>No hay servicios disponibles</h2>
+            <p>Agrega un servicio para que aparezca en esta seccion.</p>
+        </section>
+    </div>
 </main>

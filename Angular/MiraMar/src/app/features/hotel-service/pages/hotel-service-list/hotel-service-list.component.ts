@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from '../../../../core/models/entities';
-import { HotelServiceMockService } from '../../../../core/services/hotel-service-mock.service';
+import { HotelServiceService } from '../../../../core/services/hotel-service.service';
 
 @Component({
     selector: 'app-hotel-service-list',
@@ -9,26 +9,23 @@ import { HotelServiceMockService } from '../../../../core/services/hotel-service
 })
 export class HotelServiceListComponent implements OnInit {
     servicios: HotelService[] = [];
-    warningMessage = '';
 
-constructor(private hotelServiceService: HotelServiceMockService) {}
+    constructor(private hotelServiceService: HotelServiceService) {}
 
-ngOnInit(): void {
-    this.servicios = this.hotelServiceService.listar();
-}
-
-deleteServicio(service: HotelService): void {
-    const confirmed = window.confirm('¿Seguro que deseas eliminar este servicio?');
-
-    if (!confirmed) {
-    return;
+    ngOnInit(): void {
+      this.hotelServiceService.getAll().subscribe({
+        next: (data) => this.servicios = data,
+        error: (err) => console.error('Error loading services:', err)
+      });
     }
 
-    const result = this.hotelServiceService.eliminar(service.id);
-    this.warningMessage = result.success ? '' : result.message || '';
-    
-    if (result.success) {
-      this.servicios = this.hotelServiceService.listar();
+    onImageError(event: Event): void {
+        const element = event.target as HTMLImageElement | null;
+
+        if (!element) {
+            return;
+        }
+
+        element.src = 'https://via.placeholder.com/600x400/cdc392/ffffff?text=Servicio';
     }
-}
 }

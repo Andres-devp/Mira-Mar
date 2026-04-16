@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelService } from '../../../../core/models/entities';
-import { HotelServiceMockService } from '../../../../core/services/hotel-service-mock.service';
+import { HotelServiceService } from '../../../../core/services/hotel-service.service';
 
 @Component({
     selector: 'app-hotel-service-detail',
@@ -11,28 +11,31 @@ import { HotelServiceMockService } from '../../../../core/services/hotel-service
 export class HotelServiceDetailComponent implements OnInit {
     servicio?: HotelService;
 
-constructor(
+  constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private hotelServiceService: HotelServiceMockService
-) {}
+    private hotelServiceService: HotelServiceService
+  ) {}
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-    const id = Number(params.get('id'));
-    this.servicio = this.hotelServiceService.buscarPorId(id);
+      const id = Number(params.get('id'));
+      this.hotelServiceService.getById(id).subscribe({
+        next: (data) => this.servicio = data,
+        error: (err) => console.error('Error loading service:', err)
+      });
     });
-}
+  }
 
-editServicio(): void {
+  editServicio(): void {
     if (!this.servicio) {
-    return;
+      return;
     }
 
     this.router.navigate(['/services', this.servicio.id, 'edit']);
-}
+  }
 
-formatPrice(value: number): string {
+  formatPrice(value: number): string {
     return `$${value.toFixed(1)}`;
-}
+  }
 }
