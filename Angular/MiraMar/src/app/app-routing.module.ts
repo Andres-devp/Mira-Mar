@@ -20,6 +20,7 @@ import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
 import { UsuarioDetailComponent } from './features/usuarios/pages/usuario-detail/usuario-detail.component';
+import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self-form/usuario-self-form.component';
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { CreateAccountComponent } from './features/auth/pages/create-account/create-account.component';
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   // --- Rooms (admin) — static paths BEFORE parameterized ---
   { path: 'rooms/table', component: RoomsTableComponent },
   { path: 'rooms/add', component: RoomFormComponent },
+  { path: 'rooms/:id/edit', component: RoomFormComponent },
   { path: 'rooms/:id', component: RoomTypeDetailComponent },
 
   // --- Room Types (admin) ---
@@ -53,6 +55,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosTableComponent },
   { path: 'usuarios/add', component: UsuarioFormComponent },
   { path: 'usuarios/edit/:id', component: UsuarioFormComponent },
+  { path: 'usuarios/self/edit/:id', component: UsuarioSelfFormComponent },
   { path: 'usuarios/:id', component: UsuarioDetailComponent },
 
   // --- Operadores ---

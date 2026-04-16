@@ -46,6 +46,7 @@ import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
 import { UsuarioDetailComponent } from './features/usuarios/pages/usuario-detail/usuario-detail.component';
+import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self-form/usuario-self-form.component';
 
 // Auth
 import { LoginComponent } from './features/auth/pages/login/login.component';
@@ -77,6 +78,7 @@ import { CreateAccountComponent } from './features/auth/pages/create-account/cre
     UsuariosTableComponent,
     OperadoresTableComponent,
     UsuarioFormComponent,
+    UsuarioSelfFormComponent,
     UsuarioDetailComponent,
     LoginComponent,
     CreateAccountComponent

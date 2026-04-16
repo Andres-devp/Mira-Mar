@@ -9,7 +9,7 @@
           <span>{{ usuario.usuario }}</span>
         </p>
         <div class="detail-hero__actions">
-          <a routerLink="/usuarios" class="btn btn--ghost">&larr; Volver</a>
+          <a routerLink="/" class="btn btn--ghost">Cerrar sesión</a>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
               <a [routerLink]="['/usuarios', usuario.id]" class="profile-actions-menu__item">
                 <i class="ph ph-eye"></i> Ver perfil
               </a>
-              <a [routerLink]="['/usuarios/edit', usuario.id]" class="profile-actions-menu__item">
+              <a [routerLink]="['/usuarios/self/edit', usuario.id]" class="profile-actions-menu__item">
                 <i class="ph ph-pencil-simple"></i> Editar perfil
               </a>
               <button type="button"
