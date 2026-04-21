@@ -46,6 +46,5 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id", nullable = false)
-    @JsonIgnoreProperties({"tipoHabitacion"})
     private Room room;
 }

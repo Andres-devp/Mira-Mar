@@ -9,6 +9,7 @@ import { ReservationService } from '../../../../core/services/reservation.servic
 })
 export class ReservationsTableComponent implements OnInit {
   reservas: Reservation[] = [];
+  warningMessage = '';
 
   constructor(private reservationService: ReservationService) {}
 
@@ -18,8 +19,14 @@ export class ReservationsTableComponent implements OnInit {
 
   loadReservas(): void {
     this.reservationService.getAll().subscribe({
-      next: (data) => this.reservas = data,
-      error: (err) => console.error('Error loading reservations:', err)
+      next: (data) => {
+        this.warningMessage = '';
+        this.reservas = data;
+      },
+      error: (err) => {
+        console.error('Error loading reservations:', err);
+        this.warningMessage = 'No se pudieron cargar las reservas.';
+      }
     });
   }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controller.dto.CreateReservationRequest;
 import com.example.demo.entities.Reservation;
 import com.example.demo.service.ReservationService;
 
@@ -41,9 +42,9 @@ public class ReservationController {
 	}
 
 	@PostMapping("/add")
-	@Operation(summary = "Crear nueva reservación")
-	public Reservation addReservation(@RequestBody Reservation reservation) {
-		return reservationService.saveReserva(reservation);
+	@Operation(summary = "Crear nueva reservación y asignar habitación disponible")
+	public Reservation addReservation(@RequestBody CreateReservationRequest request) {
+		return reservationService.createReserva(request);
 	}
 
 	@PutMapping("/{id}")

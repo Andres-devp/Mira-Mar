@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Reservation } from '../models/entities';
+import { Reservation, ReservationCreateRequest } from '../models/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,8 @@ export class ReservationService {
     );
   }
 
-  create(reservation: Reservation): Observable<Reservation> {
-    return this.http.post<Reservation>(`${this.apiUrl}/add`, reservation).pipe(
+  create(request: ReservationCreateRequest): Observable<Reservation> {
+    return this.http.post<Reservation>(`${this.apiUrl}/add`, request).pipe(
       catchError(this.handleError)
     );
   }

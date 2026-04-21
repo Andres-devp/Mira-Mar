@@ -40,6 +40,8 @@ import { RoomFormComponent } from './features/rooms/pages/room-form/room-form.co
 
 // Reservations
 import { ReservationsTableComponent } from './features/reservations/pages/reservations-table/reservations-table.component';
+import { ReservationFormComponent } from './features/reservations/pages/reservation-form/reservation-form.component';
+import { ReservationDetailComponent } from './features/reservations/pages/reservation-detail/reservation-detail.component';
 
 // Usuarios
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
@@ -75,6 +77,8 @@ import { CreateAccountComponent } from './features/auth/pages/create-account/cre
     RoomsTableComponent,
     RoomFormComponent,
     ReservationsTableComponent,
+    ReservationFormComponent,
+    ReservationDetailComponent,
     UsuariosTableComponent,
     OperadoresTableComponent,
     UsuarioFormComponent,

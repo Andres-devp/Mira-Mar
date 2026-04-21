@@ -7,8 +7,15 @@
       </div>
       <div class="services-page__sectionActions">
         <a routerLink="/operator" class="btn btn--ghost">Volver</a>
+        <a routerLink="/reservations/add" class="btn btn--primary">Crear reserva</a>
       </div>
     </section>
+
+    <div *ngIf="warningMessage" class="alert alert--danger">
+      <i class="ph ph-warning-circle"></i>
+      <span>{{ warningMessage }}</span>
+      <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+    </div>
 
     <table class="services-table" *ngIf="reservas.length > 0">
       <thead>
@@ -20,6 +27,7 @@
           <th>Fecha fin</th>
           <th>Personas</th>
           <th>Estado</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +39,13 @@
           <td>{{ reserva.fechaFin }}</td>
           <td>{{ reserva.cantidadPersonas }}</td>
           <td>{{ reserva.estado }}</td>
+          <td>
+            <div class="icon-actions">
+              <a [routerLink]="['/reservations', reserva.id]" class="icon-action" title="Ver detalle">
+                <i class="ph ph-eye"></i>
+              </a>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

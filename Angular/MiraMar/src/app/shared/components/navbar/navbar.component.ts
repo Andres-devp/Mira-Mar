@@ -111,6 +111,8 @@ export class NavbarComponent implements OnInit {
       cleanUrl === '/services/new' ||
       /^\/services\/\d+\/edit$/.test(cleanUrl) ||
       cleanUrl === '/reservations' ||
+      cleanUrl === '/reservations/add' ||
+      /^\/reservations\/\d+$/.test(cleanUrl) ||
       cleanUrl === '/usuarios' ||
       cleanUrl === '/usuarios/add' ||
       /^\/usuarios\/edit\/\d+$/.test(cleanUrl) ||

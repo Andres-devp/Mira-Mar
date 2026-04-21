@@ -14,3 +14,11 @@ export interface Reservation {
   clientId?: number;
   roomId?: number;
 }
+
+export interface ReservationCreateRequest {
+  clientId: number;
+  roomTypeId: number;
+  fechaInicio: string;
+  fechaFin: string;
+  cantidadPersonas: number;
+}

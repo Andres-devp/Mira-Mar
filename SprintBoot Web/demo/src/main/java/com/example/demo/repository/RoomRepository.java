@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface RoomRepository extends JpaRepository<Room, Long> {
 	boolean existsByTipoHabitacionId(Long tipoHabitacionId);
 	java.util.List<Room> findByTipoHabitacionId(Long tipoHabitacionId);
+	java.util.List<Room> findByTipoHabitacionIdOrderByIdAsc(Long tipoHabitacionId);
 }

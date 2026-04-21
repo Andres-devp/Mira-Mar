@@ -1,0 +1,67 @@
+<ng-container *ngIf="reservation; else notFoundTemplate">
+  <main class="detail-page">
+    <header class="detail-hero" [style.--hero-image]="'url(/images/Habitacion1.avif)'">
+      <div class="container">
+        <div class="detail-hero__content">
+          <div class="detail-hero__badge">Reserva #{{ reservation.id }}</div>
+          <h1 class="detail-hero__title">Detalle de Reserva</h1>
+          <p class="detail-hero__location">
+            <i class="ph ph-calendar-check"></i>
+            <span>{{ reservation.estado }}</span>
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="detail-main">
+      <div class="container">
+        <div class="detail-layout">
+          <div>
+            <section class="detail-section">
+              <h2 class="detail-section__title">Cliente</h2>
+              <p><strong>Nombre:</strong> {{ reservation.client?.nombre || 'N/A' }}</p>
+              <p><strong>Usuario:</strong> {{ reservation.client?.usuario || 'N/A' }}</p>
+              <p><strong>Email:</strong> {{ reservation.client?.email || 'N/A' }}</p>
+            </section>
+
+            <section class="detail-section">
+              <h2 class="detail-section__title">Habitación asignada</h2>
+              <p><strong>Habitación:</strong> {{ reservation.room?.nombre || 'N/A' }}</p>
+              <p><strong>Tipo:</strong> {{ reservation.room?.tipoHabitacion?.nombre || 'N/A' }}</p>
+              <p><strong>Capacidad:</strong> {{ reservation.room?.tipoHabitacion?.capacidad || 'N/A' }} huéspedes</p>
+            </section>
+
+            <section class="detail-section">
+              <h2 class="detail-section__title">Fechas y estado</h2>
+              <p><strong>Inicio:</strong> {{ reservation.fechaInicio }}</p>
+              <p><strong>Fin:</strong> {{ reservation.fechaFin }}</p>
+              <p><strong>Personas:</strong> {{ reservation.cantidadPersonas }}</p>
+              <p><strong>Estado:</strong> {{ reservation.estado }}</p>
+              <p><strong>Creada:</strong> {{ reservation.createdAt | date: 'medium' }}</p>
+            </section>
+          </div>
+
+          <aside class="detail-aside">
+            <div class="detail-aside__panel">
+              <div class="form-actions">
+                <a routerLink="/reservations" class="btn btn--ghost">Volver a reservas</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+</ng-container>
+
+<ng-template #notFoundTemplate>
+  <main class="services-page page-services">
+    <div class="container">
+      <section class="services-page__empty" aria-live="polite">
+        <h2>No se encontró la reserva</h2>
+        <p>El registro que intentas consultar no existe.</p>
+        <a routerLink="/reservations" class="btn btn--primary">Volver a reservas</a>
+      </section>
+    </div>
+  </main>
+</ng-template>

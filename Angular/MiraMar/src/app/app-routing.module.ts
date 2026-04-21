@@ -16,6 +16,8 @@ import { RoomsListComponent } from './features/rooms/pages/rooms-list/rooms-list
 import { RoomsTableComponent } from './features/rooms/pages/rooms-table/rooms-table.component';
 import { RoomFormComponent } from './features/rooms/pages/room-form/room-form.component';
 import { ReservationsTableComponent } from './features/reservations/pages/reservations-table/reservations-table.component';
+import { ReservationFormComponent } from './features/reservations/pages/reservation-form/reservation-form.component';
+import { ReservationDetailComponent } from './features/reservations/pages/reservation-detail/reservation-detail.component';
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
@@ -50,6 +52,8 @@ const routes: Routes = [
 
   // --- Reservaciones ---
   { path: 'reservations', component: ReservationsTableComponent },
+  { path: 'reservations/add', component: ReservationFormComponent },
+  { path: 'reservations/:id', component: ReservationDetailComponent },
 
   // --- Usuarios ---
   { path: 'usuarios', component: UsuariosTableComponent },
