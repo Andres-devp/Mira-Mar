@@ -1,97 +1,114 @@
-<div class="create-account-shell">
-  <main class="create-account-main">
-    <section class="create-account-hero" aria-label="Bienvenida Mira Mar">
-      <div class="create-account-hero-content">
-        <a routerLink="/" class="create-account-brand" aria-label="Ir al inicio de Mira Mar">
+<div class="auth-shell">
+  <main class="auth-main">
+    <!-- Visual Side -->
+    <section class="auth-hero" aria-label="Bienvenida Mira Mar">
+      <div class="auth-hero-content">
+        <a routerLink="/" class="auth-brand" aria-label="Ir al inicio de Mira Mar">
           <img src="/images/Mira Mar logo Blanco.png" alt="Logo Mira Mar" />
         </a>
 
-        <div class="create-account-copy">
-          <span class="create-account-eyebrow">
+        <div class="auth-copy">
+          <span class="auth-eyebrow">
             <i class="ph ph-waves"></i>
             Resort frente al mar
           </span>
-          <h1>Tu paraíso costero te espera</h1>
+          <h1>Empieza tu viaje inolvidable</h1>
           <p>
-            Crea tu cuenta para reservar más rápido, gestionar tus estancias y acceder a experiencias exclusivas en Mira Mar.
+            Crea tu cuenta para gestionar tus estancias, acceder a servicios VIP y disfrutar de la mejor experiencia en el Caribe.
           </p>
         </div>
 
-        <div class="create-account-highlight">
-          <strong>Más de 5.000 huéspedes satisfechos</strong>
-          <div class="create-account-avatars">
-            <div class="create-account-avatar-stack" aria-hidden="true">
+        <div class="auth-highlight">
+          <div class="auth-avatars">
+            <div class="auth-avatar-stack" aria-hidden="true">
               <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmVtYWxlJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D" alt="">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face&auto=format" alt="">
               <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&auto=format" alt="">
             </div>
-            <span>Atención personalizada, vistas al Caribe y una experiencia pensada para desconectar.</span>
+            <span>Atención personalizada y vistas exclusivas al Caribe te esperan.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="create-account-form-section">
-      <div class="create-account-card">
-        <div class="create-account-form-brand">
+    <!-- Form Side -->
+    <section class="auth-form-section">
+      <div class="auth-card">
+        <div class="auth-form-brand">
           <img src="/images/Mira Mar logo.png" alt="Logo Mira Mar" />
           <span>Mira Mar</span>
         </div>
 
         <h2>Crear cuenta</h2>
-        <p>Completa tus datos para empezar a planear tu próxima estadía frente al mar.</p>
+        <p>Completa tus datos para unirte a nuestra comunidad exclusiva.</p>
 
-        <div *ngIf="errorMessage" class="create-account-error">
-          {{ errorMessage }}
+        <div *ngIf="errorMessage" class="auth-error">
+          <i class="ph ph-warning-circle"></i> {{ errorMessage }}
         </div>
 
-        <div *ngIf="successMessage" class="create-account-success">
-          {{ successMessage }}
+        <div *ngIf="successMessage" class="auth-success">
+          <i class="ph ph-check-circle"></i> {{ successMessage }}
         </div>
 
-        <form class="create-account-form" (submit)="$event.preventDefault(); onRegister()">
-          <div class="create-account-field">
+        <form class="auth-form" (submit)="$event.preventDefault(); onRegister()">
+          <div class="auth-field">
             <label for="nombre">Nombre completo</label>
-            <input id="nombre" type="text" name="nombre" placeholder="Ej. Ana Martínez" required
-                   [(ngModel)]="nombre">
+            <div class="input-wrapper">
+              <i class="ph ph-identification-card"></i>
+              <input id="nombre" type="text" name="nombre" placeholder="Ej. Ana Martínez" required
+                     [(ngModel)]="nombre">
+            </div>
           </div>
 
-          <div class="create-account-field">
+          <div class="auth-field">
             <label for="usuario">Nombre de usuario</label>
-            <input id="usuario" type="text" name="usuario" placeholder="Tu usuario" required
-                   [(ngModel)]="usuario">
+            <div class="input-wrapper">
+              <i class="ph ph-user"></i>
+              <input id="usuario" type="text" name="usuario" placeholder="Tu usuario" required
+                     [(ngModel)]="usuario">
+            </div>
           </div>
 
-          <div class="create-account-field">
+          <div class="auth-field">
             <label for="email">Correo electrónico</label>
-            <input id="email" type="email" name="email" placeholder="correo@ejemplo.com" required
-                   [(ngModel)]="email">
+            <div class="input-wrapper">
+              <i class="ph ph-envelope"></i>
+              <input id="email" type="email" name="email" placeholder="correo@ejemplo.com" required
+                     [(ngModel)]="email">
+            </div>
           </div>
 
-          <div class="create-account-field">
+          <div class="auth-field">
             <label for="contrasena">Contraseña</label>
-            <input id="contrasena" type="password" name="contrasena" placeholder="Mínimo 8 caracteres" required
-                   [(ngModel)]="contrasena">
+            <div class="input-wrapper">
+              <i class="ph ph-lock"></i>
+              <input id="contrasena" type="password" name="contrasena" placeholder="Mínimo 8 caracteres" required
+                     [(ngModel)]="contrasena">
+            </div>
           </div>
 
-          <div class="create-account-field">
+          <div class="auth-field">
             <label for="contrasenaConfirm">Confirmar contraseña</label>
-            <input id="contrasenaConfirm" type="password" name="contrasenaConfirm" placeholder="Repite tu contraseña" required
-                   [(ngModel)]="contrasenaConfirm">
+            <div class="input-wrapper">
+              <i class="ph ph-lock-key"></i>
+              <input id="contrasenaConfirm" type="password" name="contrasenaConfirm" placeholder="Repite tu contraseña" required
+                     [(ngModel)]="contrasenaConfirm">
+            </div>
           </div>
 
-          <label class="create-account-terms" for="terms">
+          <label class="auth-terms" for="terms">
             <input type="checkbox" id="terms" required [(ngModel)]="termsAccepted" [ngModelOptions]="{standalone: true}">
             <span>
-              Acepto los <a href="#">términos y condiciones</a> y la <a href="#">política de privacidad</a>.
+              Acepto los <a href="#">términos</a> y la <a href="#">política de privacidad</a>.
             </span>
           </label>
 
-          <button type="submit" class="create-account-submit" [disabled]="loading">
-            {{ loading ? 'Creando...' : 'Crear cuenta' }}
+          <button type="submit" class="auth-submit" [disabled]="loading">
+            <span *ngIf="!loading">Crear cuenta</span>
+            <span *ngIf="loading" class="loader">Creando...</span>
           </button>
 
-          <p class="create-account-login">
+          <p class="auth-switch">
             ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>
           </p>
         </form>
