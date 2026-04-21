@@ -87,3 +87,4 @@ src/main/resources/
 └── static/           # Recursos (CSS, JS, Imágenes)
    git clone [https://github.com/Andres-devp/Mira-Mar.git](https://github.com/Andres-devp/Mira-Mar.git)
 
+hola
