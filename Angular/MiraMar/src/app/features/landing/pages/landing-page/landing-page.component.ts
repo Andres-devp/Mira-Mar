@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomType } from '../../../../core/models/entities';
+import { RoomType, HotelService } from '../../../../core/models/entities';
 import { RoomTypeService } from '../../../../core/services/room-type.service';
+import { HotelServiceService } from '../../../../core/services/hotel-service.service';
 
 interface Amenity {
   icon: string;
@@ -9,15 +10,15 @@ interface Amenity {
   delay: number;
 }
 
-interface DiningMeta {
+interface ServicioMeta {
   icon: string;
   text: string;
 }
 
-interface Dining {
+interface ServicioCard {
   titulo: string;
   descripcion: string;
-  metas: DiningMeta[];
+  metas: ServicioMeta[];
   botonTexto: string;
   botonHref: string;
   delay: number;
@@ -29,6 +30,7 @@ interface Dining {
   styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent implements OnInit {
+  showMap = false;
   tiposDestacados: RoomType[] = [];
   amenities: Amenity[] = [
     {
@@ -58,50 +60,36 @@ export class LandingPageComponent implements OnInit {
       delay: 4,
     },
   ];
-  dinings: Dining[] = [
-    {
-      titulo: 'Ocean Table',
-      descripcion:
-        'Cocina fresca con ingredientes locales, mariscos y opciones saludables.',
-      metas: [
-        { icon: 'ph-clock', text: '7:00 - 22:00' },
-        { icon: 'ph-leaf', text: 'Opciones healthy' },
-      ],
-      botonTexto: 'Ver menú',
-      botonHref: '#dining',
-      delay: 1,
-    },
-    {
-      titulo: 'Pool Bar',
-      descripcion:
-        'Cocteles tropicales, jugos naturales y snacks para tardes de sol.',
-      metas: [
-        { icon: 'ph-sun', text: 'Todo el día' },
-        { icon: 'ph-cocktail', text: 'Signature drinks' },
-      ],
-      botonTexto: 'Especiales',
-      botonHref: '#dining',
-      delay: 2,
-    },
-    {
-      titulo: 'Sunset Lounge',
-      descripcion: 'Tapas caribeñas y música suave mientras cae el atardecer.',
-      metas: [
-        { icon: 'ph-music-notes', text: 'Live sessions' },
-        { icon: 'ph-sun-horizon', text: 'Atardecer' },
-      ],
-      botonTexto: 'Reservar',
-      botonHref: '#dining',
-      delay: 3,
-    },
-  ];
+  
+  serviciosDestacados: ServicioCard[] = [];
 
-  constructor(private roomTypeService: RoomTypeService) {}
+  constructor(
+    private roomTypeService: RoomTypeService,
+    private hotelServiceService: HotelServiceService
+  ) {}
 
   ngOnInit(): void {
+    // Cargar tipos de habitación
     this.roomTypeService.getAll().subscribe({
       next: (tipos) => this.tiposDestacados = tipos.slice(0, 3),
       error: (err) => console.error('Error loading room types:', err)
+    });
+
+    // Cargar servicios desde Spring Boot
+    this.hotelServiceService.getAll().subscribe({
+      next: (servicios) => {
+        this.serviciosDestacados = servicios.slice(0, 3).map((servicio, index) => ({
+          titulo: servicio.nombre,
+          descripcion: servicio.descripcion || 'Descubre esta experiencia exclusiva en Mira Mar.',
+          metas: servicio.price 
+            ? [{ icon: 'ph-currency-dollar', text: `Desde $${servicio.price}` }]
+            : [{ icon: 'ph-star', text: 'Servicio exclusivo' }],
+          botonTexto: 'Ver detalle',
+          botonHref: '/services',
+          delay: index + 1
+        }));
+      },
+      error: (err) => console.error('Error loading hotel services:', err)
     });
   }
 }
