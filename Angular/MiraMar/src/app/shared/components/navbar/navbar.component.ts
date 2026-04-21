@@ -32,20 +32,31 @@ export class NavbarComponent implements OnInit {
   }
 
   get applyScrolledStyle(): boolean {
-    if (this.usesSolidTheme) return true;
-    return this.usesTransparentTheme && this.isScrolled;
+    if (this.usesSolidTheme) {
+      return true;
+    }
+
+    if (!this.usesTransparentTheme) {
+      return true;
+    }
+
+    return this.isScrolled;
   }
 
   get logoPath(): string {
-    if (this.usesSolidTheme) return '/images/Mira Mar logo Blanco.png';
-    if (!this.usesTransparentTheme) return '/images/Mira Mar logo Blanco.png';
-    return this.isScrolled ? '/images/Mira Mar logo.png' : '/images/Mira Mar logo Blanco.png';
+    if (this.usesTransparentTheme && !this.isScrolled) {
+      return '/images/Mira Mar logo Blanco.png';
+    }
+
+    return '/images/Mira Mar logo.png';
   }
 
   get userIconPath(): string {
-    if (this.usesSolidTheme) return '/images/usuarioBlanco.png';
-    if (!this.usesTransparentTheme) return '/images/usuarioBlanco.png';
-    return this.isScrolled ? '/images/usuarioNegro.png' : '/images/usuarioBlanco.png';
+    if (this.usesTransparentTheme && !this.isScrolled) {
+      return '/images/usuarioBlanco.png';
+    }
+
+    return '/images/usuarioNegro.png';
   }
 
   ngOnInit(): void {

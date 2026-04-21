@@ -68,10 +68,19 @@ body.page-rooms-list nav {
 .rooms-list__header .btn--ghost {
   color: var(--white);
   border-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(8, 27, 46, 0.62), rgba(13, 42, 67, 0.5));
+  box-shadow: 0 10px 24px rgba(6, 20, 34, 0.3);
+  backdrop-filter: blur(4px);
 }
 .rooms-list__header .btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(8, 27, 46, 0.76), rgba(13, 42, 67, 0.64));
   border-color: var(--white);
+}
+
+.rooms-list__header .btn--ghost:focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.34),
+    0 10px 24px rgba(6, 20, 34, 0.3);
 }
 
 /* --- Grid y Tarjetas --- */
@@ -107,10 +116,7 @@ body.page-rooms-list nav {
 }
 
 .card--room .btn--primary.stretched-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  content: none;
 }
 
 @media (max-width: 860px) {

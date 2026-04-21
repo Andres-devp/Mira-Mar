@@ -1,1 +1,13 @@
-:host { display: block; }
+:host {
+  display: block;
+}
+
+.loading-container {
+  min-height: 56vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: var(--ink-500);
+  font-weight: 600;
+}
