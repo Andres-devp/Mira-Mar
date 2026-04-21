@@ -1,5 +1,6 @@
 <ng-container *ngIf="tipo; else notFound">
-  <main class="detail-page">
+  <main class="detail-page luxury-room-detail">
+    <!-- Hero Original Restaurado -->
     <header class="detail-hero" [style.--hero-image]="'url(' + (tipo.urlImagen || '/images/Habitacion1.avif') + ')'">
       <div class="container">
         <div class="detail-hero__content">
@@ -13,94 +14,150 @@
       </div>
     </header>
 
+    <!-- Contenido Principal y Panel de Reserva -->
     <section class="detail-main">
       <div class="container">
         <div class="detail-layout">
-          <div>
-            <section class="detail-section">
-              <h2 class="detail-section__title">Descripción</h2>
-              <p>{{ tipo.descripcion || 'Tipo de habitación sin descripción registrada.' }}</p>
+          
+          <!-- Lado Izquierdo: Información de la Habitación -->
+          <div class="room-info-column">
+            
+            <!-- Descripción -->
+            <section class="detail-section room-description">
+              <h2 class="editorial-subtitle">Sobre esta suite</h2>
+              <p class="lead-text">{{ tipo.descripcion || 'Sumérjase en el lujo absoluto. Esta suite ha sido diseñada meticulosamente para ofrecer un refugio de paz con vistas panorámicas al mar, decoración de diseñador y comodidades de primer nivel que garantizan una estancia inolvidable en Mira Mar.' }}</p>
+              <p class="secondary-text">El espacio fluye armónicamente desde la sala de estar hasta el balcón privado, creando un ambiente perfecto para relajarse escuchando el sonido de las olas. Equipada con tecnología de última generación integrada discretamente en su diseño caribeño contemporáneo.</p>
             </section>
 
-            <section class="detail-section" aria-label="Amenidades">
-              <h2 class="detail-section__title">Amenidades</h2>
-              <div class="detail-amenities">
-                <span class="detail-chip"><i class="ph ph-wifi-high"></i> Wi-Fi Alta Velocidad</span>
-                <span class="detail-chip"><i class="ph ph-drop"></i> Jacuzzi Privado</span>
-                <span class="detail-chip"><i class="ph ph-sun"></i> Terraza Privada</span>
-                <span class="detail-chip"><i class="ph ph-snowflake"></i> Climatización VIP</span>
+            <!-- Amenidades -->
+            <section class="detail-section room-amenities" aria-label="Amenidades">
+              <h2 class="editorial-subtitle">¿Qué ofrece este lugar?</h2>
+              <div class="amenities-grid">
+                <div class="amenity-row"><i class="ph ph-wifi-high"></i> Wi-Fi Premium de Alta Velocidad</div>
+                <div class="amenity-row"><i class="ph ph-television"></i> Smart TV 65" con Streaming</div>
+                <div class="amenity-row"><i class="ph ph-wind"></i> Aire Acondicionado Silencioso</div>
+                <div class="amenity-row"><i class="ph ph-coffee"></i> Máquina Nespresso y Minibar</div>
+                <div class="amenity-row"><i class="ph ph-safe"></i> Caja Fuerte Digital</div>
+                <div class="amenity-row"><i class="ph ph-towel"></i> Batas de Baño y Pantuflas</div>
+                <div class="amenity-row"><i class="ph ph-bottle"></i> Amenidades de Baño de Lujo</div>
+                <div class="amenity-row"><i class="ph ph-bell-ringing"></i> Servicio a la Habitación 24/7</div>
               </div>
             </section>
 
-            <section class="detail-section">
-              <h2 class="detail-section__title">Características</h2>
-              <div class="card__meta">
-                <span>{{ tipo.capacidad }} huéspedes</span>
-                <span>{{ tipo.nombre }}</span>
+            <!-- Políticas -->
+            <section class="detail-section room-policies">
+              <h2 class="editorial-subtitle">Políticas a tener en cuenta</h2>
+              <ul class="policy-list">
+                <li><strong>Check-in:</strong> A partir de las 3:00 PM</li>
+                <li><strong>Check-out:</strong> Hasta las 12:00 PM</li>
+                <li><strong>Mascotas:</strong> No se admiten mascotas en esta suite.</li>
+                <li><strong>Cancelación:</strong> Gratuita hasta 48 horas antes de la llegada.</li>
+              </ul>
+            </section>
+
+            <!-- Galería de Imágenes (Movida a la primera columna, abajo de la información) -->
+            <section class="room-gallery-section" style="margin-top: 3rem; margin-bottom: 0;">
+              <h2 class="editorial-subtitle">Galería de la suite</h2>
+              <div class="room-gallery-grid" style="height: 350px;">
+                <div class="gallery-main">
+                  <img [src]="tipo.urlImagen || '/images/Habitacion1.avif'" [alt]="tipo.nombre" class="gallery-img">
+                </div>
+                <div class="gallery-side">
+                  <img src="/images/Habitacion2.avif" alt="Detalle Habitación" class="gallery-img">
+                  <img src="/images/Ocean View Interior.avif" alt="Vista al Mar" class="gallery-img">
+                </div>
               </div>
             </section>
+
           </div>
 
-          <aside class="detail-aside">
-            <div class="detail-aside__panel">
-              <div class="detail-booking__top">
-                <div class="detail-booking__price">
-                  <span class="detail-booking__amount">{{ formatPrice(tipo.precioNoche) }}</span>
-                  <span class="detail-booking__suffix">/noche</span>
+          <!-- Lado Derecho: Panel de Reserva Flotante -->
+          <aside class="detail-aside sticky-aside">
+            <div class="booking-glass-panel">
+              <div class="booking-price-header">
+                <div class="price-wrap">
+                  <span class="amount">{{ formatPrice(tipo.precioNoche) }}</span>
+                  <span class="suffix">/ noche</span>
                 </div>
-                <div class="detail-booking__rating">
-                  <span>★ 4.9</span>
-                  <span>(20 reseñas)</span>
-                </div>
-              </div>
-
-              <div class="detail-booking__dates">
-                <div class="form-field">
-                  <label for="checkin">LLEGADA</label>
-                  <input type="date" id="checkin" />
-                </div>
-                <div class="form-field">
-                  <label for="checkout">SALIDA</label>
-                  <input type="date" id="checkout" />
+                <div class="rating-wrap">
+                  <i class="ph-fill ph-star"></i>
+                  <span>4.98</span>
+                  <a href="#" class="reviews-link">(124 reseñas)</a>
                 </div>
               </div>
 
-              <div class="form-field">
-                <label for="guests">HUÉSPEDES</label>
-                <select id="guests">
-                  <option *ngFor="let guest of guestOptions" [value]="guest">
-                    {{ guest }} huésped{{ guest > 1 ? 'es' : '' }}
-                  </option>
-                </select>
+              <form class="booking-form-interactive">
+                <!-- Usando las clases form-field globales -->
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1rem;">
+                  <div class="field">
+                    <label for="checkin">LLEGADA</label>
+                    <input type="date" id="checkin" />
+                  </div>
+                  <div class="field">
+                    <label for="checkout">SALIDA</label>
+                    <input type="date" id="checkout" />
+                  </div>
+                </div>
+
+                <div class="field" style="margin-bottom: 1.5rem;">
+                  <label for="guests">HUÉSPEDES</label>
+                  <select id="guests">
+                    <option *ngFor="let guest of guestOptions" [value]="guest">
+                      {{ guest }} huésped{{ guest > 1 ? 'es' : '' }}
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Usando botón primario global -->
+                <button class="btn btn--primary detail-booking__cta" type="button" style="width: 100%;">
+                  Reservar Suite
+                </button>
+                <div class="booking-note">No se realizará ningún cargo todavía</div>
+
+                <div class="price-breakdown">
+                  <div class="breakdown-line">
+                    <span>{{ formatPrice(tipo.precioNoche) }} x 3 noches</span>
+                    <span>{{ formatPrice(tipo.precioNoche * 3) }}</span>
+                  </div>
+                  <div class="breakdown-line">
+                    <span>Impuestos (19%)</span>
+                    <span>{{ formatPrice((tipo.precioNoche * 3) * 0.19) }}</span>
+                  </div>
+                  <div class="breakdown-line total-line">
+                    <span>Total estimado</span>
+                    <span>{{ formatPrice((tipo.precioNoche * 3) * 1.19) }}</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Highlights (Movido debajo de la segunda columna) -->
+            <div class="room-highlights" style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: var(--radius-lg); border: 1px solid rgba(16, 39, 63, 0.05); box-shadow: var(--shadow-sm);">
+              <h3 style="font-family: var(--font-serif); color: var(--ocean-950); margin-bottom: 1.5rem; font-size: 1.2rem;">Destacados de la suite</h3>
+              <div class="highlight-item" style="margin-bottom: 1rem;">
+                <i class="ph ph-bed"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Cama King Size</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Sábanas de lino egipcio</span>
+                </div>
               </div>
-
-              <button class="btn btn--primary detail-booking__cta" type="button">
-                Reservar Ahora
-              </button>
-
-              <div class="detail-booking__note">No se realizará ningún cargo todavía</div>
-
-              <div class="detail-booking__summary">
-                <div class="detail-booking__line">
-                  <span>{{ formatPrice(tipo.precioNoche) }} x {{ nochesDemo }} noches</span>
-                  <span>$0</span>
-                </div>
-                <div class="detail-booking__line">
-                  <span>Tasas &amp; impuestos</span>
-                  <span>$45</span>
-                </div>
-                <div class="detail-booking__total">
-                  <span>Total</span>
-                  <span>$0</span>
+              <div class="highlight-item" style="margin-bottom: 1rem;">
+                <i class="ph ph-waves"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Balcón Privado</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Vista frontal al océano</span>
                 </div>
               </div>
-
-              <div class="form-actions form-actions--detail">
-                <button class="btn btn--ghost" type="button" (click)="editTipo()">Editar tipo</button>
-                <a routerLink="/roomtypes" class="btn btn--ghost">Volver a tabla</a>
+              <div class="highlight-item">
+                <i class="ph ph-bathtub"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Baño Spa</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Bañera profunda y ducha</span>
+                </div>
               </div>
             </div>
           </aside>
+
         </div>
       </div>
     </section>
@@ -108,12 +165,13 @@
 </ng-container>
 
 <ng-template #notFound>
-  <main class="services-page page-services">
+  <main class="services-page page-services" style="min-height: 60vh; display: flex; align-items: center;">
     <div class="container">
-      <section class="services-page__empty" aria-live="polite">
-        <h2>No se encontró el tipo de habitación</h2>
-        <p>Este registro no existe o fue eliminado.</p>
-        <a routerLink="/roomtypes" class="btn btn--primary">Volver a la tabla</a>
+      <section class="services-page__empty" aria-live="polite" style="max-width: 500px; margin: 0 auto; border: none; background: transparent;">
+        <i class="ph ph-door-open" style="font-size: 4rem; color: var(--ink-400); margin-bottom: 1rem;"></i>
+        <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--ocean-950);">Suite no encontrada</h2>
+        <p style="color: var(--ink-500); margin-bottom: 2rem;">Lo sentimos, esta suite ya no está disponible o la URL es incorrecta.</p>
+        <a routerLink="/rooms" class="btn btn--primary">Explorar otras Suites</a>
       </section>
     </div>
   </main>

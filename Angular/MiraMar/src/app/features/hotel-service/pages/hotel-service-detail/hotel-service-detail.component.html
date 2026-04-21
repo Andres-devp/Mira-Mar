@@ -1,57 +1,174 @@
 <ng-container *ngIf="servicio; else notFound">
-<main class="detail-page">
-    <header class="detail-hero" [style.--hero-image]="'url(' + (servicio.imageUrl || '/images/servicio.jpg') + ')'">
-    <div class="container">
+  <main class="detail-page luxury-room-detail">
+    <!-- Hero Original Restaurado -->
+    <header class="detail-hero" [style.--hero-image]="'url(' + (servicio.imageUrl || '/images/Ocean View Interior.avif') + ')'">
+      <div class="container">
         <div class="detail-hero__content">
-        <h1 class="detail-hero__title">{{ servicio.nombre }}</h1>
-        <p class="detail-hero__location">
-            <i class="ph ph-star"></i>
-            <span>Servicio del Hotel Mira Mar</span>
-        </p>
+          <div class="detail-hero__badge">Experiencia</div>
+          <h1 class="detail-hero__title">{{ servicio.nombre }}</h1>
+          <p class="detail-hero__location">
+            <i class="ph ph-sparkle"></i>
+            <span>Servicio Exclusivo, Mira Mar Resort</span>
+          </p>
         </div>
-    </div>
+      </div>
     </header>
 
+    <!-- Contenido Principal y Panel de Reserva -->
     <section class="detail-main">
-    <div class="container">
+      <div class="container">
         <div class="detail-layout">
-        <div>
-            <section class="detail-section">
-            <h2 class="detail-section__title">Descripción</h2>
-            <p>{{ servicio.descripcion || 'Servicio sin descripción registrada.' }}</p>
+          
+          <!-- Lado Izquierdo: Información del Servicio -->
+          <div class="room-info-column">
+            
+            <!-- Descripción -->
+            <section class="detail-section room-description">
+              <h2 class="editorial-subtitle">Sobre esta experiencia</h2>
+              <p class="lead-text">{{ servicio.descripcion || 'Disfrute de un servicio diseñado a la medida para enriquecer su estadía. Cada detalle ha sido pensado para brindarle momentos inolvidables de relajación y placer en nuestras instalaciones de clase mundial.' }}</p>
+              <p class="secondary-text">Nuestro equipo de profesionales altamente capacitados se encargará de satisfacer cada una de sus necesidades, utilizando los mejores productos y técnicas para garantizar su total satisfacción durante su visita a Mira Mar.</p>
             </section>
 
-            <section class="detail-section">
-            <h2 class="detail-section__title">Precio</h2>
-            <div class="detail-booking__price">
-                <span class="detail-booking__amount">{{ formatPrice(servicio.price || 0) }}</span>
-                <span class="detail-booking__suffix">/servicio</span>
-            </div>
+            <!-- Amenidades/Incluye -->
+            <section class="detail-section room-amenities" aria-label="Qué incluye">
+              <h2 class="editorial-subtitle">¿Qué incluye este servicio?</h2>
+              <div class="amenities-grid">
+                <div class="amenity-row"><i class="ph ph-check-circle"></i> Atención Personalizada</div>
+                <div class="amenity-row"><i class="ph ph-clock"></i> Disponibilidad Flexible</div>
+                <div class="amenity-row"><i class="ph ph-drop"></i> Productos Premium</div>
+                <div class="amenity-row"><i class="ph ph-plant"></i> Enfoque en el Bienestar</div>
+                <div class="amenity-row"><i class="ph ph-coffee"></i> Bebidas de Cortesía</div>
+                <div class="amenity-row"><i class="ph ph-towel"></i> Preparación del Espacio</div>
+              </div>
             </section>
-        </div>
 
-        <aside class="detail-aside">
-            <div class="detail-aside__panel">
-            <div class="form-actions">
-                <button class="btn btn--primary" type="button" (click)="editServicio()">Editar servicio</button>
-                <a routerLink="/services" class="btn btn--ghost">Volver a servicios</a>
+            <!-- Políticas -->
+            <section class="detail-section room-policies">
+              <h2 class="editorial-subtitle">Políticas del servicio</h2>
+              <ul class="policy-list">
+                <li><strong>Reserva:</strong> Se recomienda reservar con al menos 24h de anticipación.</li>
+                <li><strong>Cancelación:</strong> Modificaciones gratuitas hasta 12 horas antes.</li>
+                <li><strong>Vestimenta:</strong> Casual o traje de baño según la locación.</li>
+                <li><strong>Puntualidad:</strong> Le pedimos llegar 10 minutos antes de su cita.</li>
+              </ul>
+            </section>
+
+            <!-- Galería de Imágenes -->
+            <section class="room-gallery-section" style="margin-top: 3rem; margin-bottom: 0;">
+              <h2 class="editorial-subtitle">Galería de la experiencia</h2>
+              <div class="room-gallery-grid" style="height: 350px;">
+                <div class="gallery-main">
+                  <img [src]="servicio.imageUrl || '/images/Ocean View Interior.avif'" [alt]="servicio.nombre" class="gallery-img">
+                </div>
+                <div class="gallery-side">
+                  <img src="/images/habitacionFamiliar.jpg" alt="Instalaciones" class="gallery-img">
+                  <img src="/images/Habitacion3.avif" alt="Detalles" class="gallery-img">
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Lado Derecho: Panel de Reserva Flotante -->
+          <aside class="detail-aside sticky-aside">
+            <div class="booking-glass-panel">
+              <div class="booking-price-header">
+                <div class="price-wrap">
+                  <span class="amount" *ngIf="servicio.price">{{ formatPrice(servicio.price) }}</span>
+                  <span class="amount" *ngIf="!servicio.price">Consultar</span>
+                  <span class="suffix" *ngIf="servicio.price">/ sesión</span>
+                </div>
+                <div class="rating-wrap">
+                  <i class="ph-fill ph-star"></i>
+                  <span>5.0</span>
+                  <a href="#" class="reviews-link">(89 reseñas)</a>
+                </div>
+              </div>
+
+              <form class="booking-form-interactive">
+                <!-- Usando las clases form-field globales -->
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1rem;">
+                  <div class="field">
+                    <label for="fecha">FECHA</label>
+                    <input type="date" id="fecha" />
+                  </div>
+                  <div class="field">
+                    <label for="hora">HORA</label>
+                    <input type="time" id="hora" />
+                  </div>
+                </div>
+
+                <div class="field" style="margin-bottom: 1.5rem;">
+                  <label for="personas">PERSONAS</label>
+                  <select id="personas">
+                    <option value="1">1 Persona</option>
+                    <option value="2">2 Personas</option>
+                    <option value="3">3 Personas</option>
+                    <option value="4">Grupo (4+)</option>
+                  </select>
+                </div>
+
+                <!-- Usando botón primario global -->
+                <button class="btn btn--primary detail-booking__cta" type="button" style="width: 100%;">
+                  Agendar Servicio
+                </button>
+                <div class="booking-note">Paga directamente en el hotel</div>
+
+                <div class="price-breakdown" *ngIf="servicio.price">
+                  <div class="breakdown-line">
+                    <span>{{ formatPrice(servicio.price) }} x 1 sesión</span>
+                    <span>{{ formatPrice(servicio.price) }}</span>
+                  </div>
+                  <div class="breakdown-line total-line">
+                    <span>Total estimado</span>
+                    <span>{{ formatPrice(servicio.price) }}</span>
+                  </div>
+                </div>
+              </form>
             </div>
+
+            <!-- Highlights (Destacados) -->
+            <div class="room-highlights" style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: var(--radius-lg); border: 1px solid rgba(16, 39, 63, 0.05); box-shadow: var(--shadow-sm);">
+              <h3 style="font-family: var(--font-serif); color: var(--ocean-950); margin-bottom: 1.5rem; font-size: 1.2rem;">Por qué elegirlo</h3>
+              <div class="highlight-item" style="margin-bottom: 1rem;">
+                <i class="ph ph-star"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Experiencia Top</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Calificado con 5 estrellas</span>
+                </div>
+              </div>
+              <div class="highlight-item" style="margin-bottom: 1rem;">
+                <i class="ph ph-leaf"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Holístico</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Conecta cuerpo y mente</span>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <i class="ph ph-heart"></i>
+                <div>
+                  <strong style="display: block; color: var(--ocean-950);">Profesionales</strong>
+                  <span style="color: var(--ink-500); font-size: 0.9rem;">Atención de expertos</span>
+                </div>
+              </div>
             </div>
-        </aside>
+          </aside>
+
         </div>
-    </div>
+      </div>
     </section>
-</main>
+  </main>
 </ng-container>
 
 <ng-template #notFound>
-<main class="services-page page-services">
+  <main class="services-page page-services" style="min-height: 60vh; display: flex; align-items: center;">
     <div class="container">
-    <section class="services-page__empty" aria-live="polite">
-        <h2>No se encontró el servicio</h2>
-        <p>Este registro no existe o fue eliminado.</p>
-        <a routerLink="/services" class="btn btn--primary">Volver a servicios</a>
-    </section>
+      <section class="services-page__empty" aria-live="polite" style="max-width: 500px; margin: 0 auto; border: none; background: transparent;">
+        <i class="ph ph-sparkle" style="font-size: 4rem; color: var(--ink-400); margin-bottom: 1rem;"></i>
+        <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--ocean-950);">Servicio no encontrado</h2>
+        <p style="color: var(--ink-500); margin-bottom: 2rem;">Lo sentimos, esta experiencia ya no está disponible o la URL es incorrecta.</p>
+        <a routerLink="/services" class="btn btn--primary">Explorar Servicios</a>
+      </section>
     </div>
-</main>
+  </main>
 </ng-template>
