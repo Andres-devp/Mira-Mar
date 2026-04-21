@@ -1,15 +1,3 @@
 :host {
   display: block;
 }
-
-/* Override the global rooms-list padding/margin for Angular's non-fixed navbar.
-   In Thymeleaf the navbar was fixed (position:fixed), so the page needed
-   large top padding to push content below it. In Angular the navbar is in
-   normal flow, so we reduce the top spacing. */
-:host .rooms-list {
-  padding-top: 2rem;
-}
-
-:host .rooms-list__header {
-  margin-top: 1.5rem;
-}

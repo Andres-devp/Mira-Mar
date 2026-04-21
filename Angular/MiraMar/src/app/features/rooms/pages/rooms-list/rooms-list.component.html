@@ -51,7 +51,7 @@
       *ngIf="tipos.length > 0"
       aria-label="Listado de habitaciones"
     >
-      <article class="card card--room reveal-wave" *ngFor="let tipo of tipos">
+      <article class="card card--room card--room-compact reveal-wave" *ngFor="let tipo of tipos">
         <div class="card__media">
           <img
             [src]="tipo.urlImagen || 'https://via.placeholder.com/600x400/cdc392/ffffff?text=Habitacion'"
@@ -84,7 +84,7 @@
           </div>
 
           <div class="card__actions">
-            <a [routerLink]="['/rooms', tipo.id]" class="btn btn--primary stretched-link">
+            <a [routerLink]="['/rooms', tipo.id]" class="btn btn--primary">
               Reservar Suite
             </a>
           </div>
