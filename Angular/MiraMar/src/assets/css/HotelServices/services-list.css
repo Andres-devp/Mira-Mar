@@ -4,13 +4,13 @@ body.page-services nav {
 
 .services-page {
   background: var(--bg-body);
-  padding: 6.5rem 0 4.5rem;
+  padding: 10.5rem 0 4.5rem;
   min-height: 80vh;
 }
 
 .rooms-list__header {
   text-align: center;
-  margin-top: 6rem;
+  margin-top: 0;
   margin-bottom: 3.5rem;
   background: linear-gradient(135deg, rgba(48, 76, 137, 0.65), rgba(100, 141, 229, 0.35));
   color: var(--white);

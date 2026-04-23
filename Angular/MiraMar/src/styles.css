@@ -358,9 +358,9 @@ a {
   background: transparent;
   backdrop-filter: none;
   transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    background-color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
 }
 
 #navbar,
@@ -390,22 +390,13 @@ a {
 }
 
 .logo img {
-  width: 112px;
-  height: 60px;
+  width: 120px;
+  height: 64px;
   display: block;
   object-fit: contain;
   object-position: center;
-  transition:
-    width 1 ease,
-    1 ease;
+  transition: all 0.6s cubic-bezier(0.34, 1.36, 0.64, 1);
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
-}
-
-#navbar:not(.scrolled):not(.roomtypes-nav):not(.admin-nav) .logo img {
-  width: 120px;
-  height: 74px;
-  padding-top: 5px;
-  padding-right: 5px;
 }
 
 .nav-links {
@@ -1852,7 +1843,7 @@ a {
 /* ---------- Dashboards ---------- */
 .admin-dashboard {
   min-height: calc(100vh - 190px);
-  padding: 2.7rem 0 4.2rem;
+  padding: 8.5rem 0 4.2rem;
 }
 
 .admin-grid {
@@ -2188,7 +2179,7 @@ a {
   .rooms-list,
   .services-page,
   .form-page {
-    padding: calc(var(--navbar-height) + 0.1rem) 0 3.2rem;
+    padding: calc(var(--navbar-height) + 1.5rem) 0 3.2rem;
   }
 
   .rooms-list__header,

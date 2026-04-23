@@ -4,9 +4,19 @@
       <img id="nav-logo" src="/images/Mira Mar logo.png" alt="Mira Mar logo" width="120" />
     </a>
     <ul class="nav-links">
-      <a routerLink="/login" class="user-login-link">
-        <img id="nav-user-icon" src="/images/usuarioNegro.png" alt="Foto de perfil" class="profile-img" />
-      </a>
+      <li class="profile-dropdown-item profile-dropdown-item--menu">
+        <details class="profile-actions-menu navbar-user-menu" style="list-style: none;">
+          <summary class="profile-actions-menu__trigger user-login-link" aria-label="Opciones de sesión">
+            <img id="nav-user-icon" src="/images/usuarioNegro.png" alt="Foto de perfil" class="profile-img" />
+          </summary>
+          <div class="profile-actions-menu__panel">
+            <button type="button" class="profile-actions-menu__item profile-actions-menu__item--danger" (click)="logout()">
+              <i class="ph ph-sign-out"></i>
+              Cerrar sesión
+            </button>
+          </div>
+        </details>
+      </li>
     </ul>
     <div class="hamburger">
       <i class="ph ph-list"></i>
@@ -20,12 +30,7 @@
     <h2>Gestión del Hotel</h2>
   </div>
 
-  <div class="admin-grid">
-    <a class="admin-card" routerLink="/services/table">
-      <i class="ph ph-briefcase main-icon"></i>
-      <h3>Servicios</h3>
-    </a>
-
+  <div class="admin-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
     <a class="admin-card" routerLink="/rooms/table">
       <i class="ph ph-bed main-icon"></i>
       <h3>Habitaciones</h3>
@@ -39,6 +44,11 @@
     <a class="admin-card" routerLink="/operadores">
       <i class="ph ph-user-gear main-icon"></i>
       <h3>Operadores</h3>
+    </a>
+
+    <a class="admin-card" routerLink="/services/table">
+      <i class="ph ph-briefcase main-icon"></i>
+      <h3>Servicios</h3>
     </a>
   </div>
 </main>

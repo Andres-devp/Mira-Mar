@@ -66,7 +66,12 @@ export class NavbarComponent implements OnInit {
     return '/images/Mira Mar logo.png';
   }
 
+  isUserMenuOpen = false;
+
   get userIconPath(): string {
+    if (this.isUserMenuOpen) {
+      return '/images/usuarioNegro.png';
+    }
     if (this.usesTransparentTheme && !this.isScrolled) {
       return '/images/usuarioBlanco.png';
     }

@@ -36,7 +36,10 @@
         class="profile-dropdown-item profile-dropdown-item--menu"
         *ngIf="isAuthenticated"
       >
-        <details class="profile-actions-menu navbar-user-menu">
+        <details 
+          class="profile-actions-menu navbar-user-menu"
+          (toggle)="isUserMenuOpen = $any($event.target).open"
+        >
           <summary
             class="profile-actions-menu__trigger user-login-link"
             aria-label="Opciones de sesión"
