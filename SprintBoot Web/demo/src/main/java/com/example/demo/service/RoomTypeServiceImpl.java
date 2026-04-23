@@ -26,18 +26,45 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         return tipoHabitacionRepository.findAll();
     }
 
+    @Autowired
+    private com.example.demo.repository.ReservationRepository reservaRepository;
+
     @Override
     @Transactional(readOnly = true)
-    public List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax) {
+    public List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax, java.time.LocalDate fechaInicio, java.time.LocalDate fechaFin) {
+        List<RoomType> result;
         if (capacidadMin != null && precioMax != null) {
-            return tipoHabitacionRepository.findByCapacidadGreaterThanEqualAndPrecioNocheLessThanEqual(capacidadMin, precioMax);
+            result = tipoHabitacionRepository.findByCapacidadGreaterThanEqualAndPrecioNocheLessThanEqual(capacidadMin, precioMax);
         } else if (capacidadMin != null) {
-            return tipoHabitacionRepository.findByCapacidadGreaterThanEqual(capacidadMin);
+            result = tipoHabitacionRepository.findByCapacidadGreaterThanEqual(capacidadMin);
         } else if (precioMax != null) {
-            return tipoHabitacionRepository.findByPrecioNocheLessThanEqual(precioMax);
+            result = tipoHabitacionRepository.findByPrecioNocheLessThanEqual(precioMax);
         } else {
-            return tipoHabitacionRepository.findAll();
+            result = tipoHabitacionRepository.findAll();
         }
+
+        if (fechaInicio != null && fechaFin != null && fechaInicio.isBefore(fechaFin)) {
+            result = result.stream().filter(tipo -> {
+                List<com.example.demo.entities.Room> rooms = habitacionRepository.findByTipoHabitacionIdOrderByIdAsc(tipo.getId());
+                if (rooms.isEmpty()) return false;
+                for (com.example.demo.entities.Room room : rooms) {
+                    boolean tieneCruces = !reservaRepository
+                        .findByRoomIdAndFechaInicioLessThanAndFechaFinGreaterThanAndEstadoNot(
+                            room.getId(),
+                            fechaFin,
+                            fechaInicio,
+                            "CANCELED"
+                        )
+                        .isEmpty();
+                    if (!tieneCruces) {
+                        return true;
+                    }
+                }
+                return false;
+            }).collect(java.util.stream.Collectors.toList());
+        }
+
+        return result;
     }
 
     @Override

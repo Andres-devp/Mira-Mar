@@ -16,7 +16,7 @@ export interface Reservation {
 }
 
 export interface ReservationCreateRequest {
-  clientId: number;
+  clientId?: number;
   roomTypeId: number;
   fechaInicio: string;
   fechaFin: string;

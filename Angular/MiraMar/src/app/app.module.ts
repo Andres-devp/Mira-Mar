@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 // Shared
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -42,6 +43,7 @@ import { RoomFormComponent } from './features/rooms/pages/room-form/room-form.co
 import { ReservationsTableComponent } from './features/reservations/pages/reservations-table/reservations-table.component';
 import { ReservationFormComponent } from './features/reservations/pages/reservation-form/reservation-form.component';
 import { ReservationDetailComponent } from './features/reservations/pages/reservation-detail/reservation-detail.component';
+import { ReservationUserDetailComponent } from './features/reservations/pages/reservation-user-detail/reservation-user-detail.component';
 
 // Usuarios
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
@@ -79,22 +81,25 @@ import { CreateAccountComponent } from './features/auth/pages/create-account/cre
     ReservationsTableComponent,
     ReservationFormComponent,
     ReservationDetailComponent,
+    ReservationUserDetailComponent,
     UsuariosTableComponent,
     OperadoresTableComponent,
     UsuarioFormComponent,
     UsuarioSelfFormComponent,
     UsuarioDetailComponent,
     LoginComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

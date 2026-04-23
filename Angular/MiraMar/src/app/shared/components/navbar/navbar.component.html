@@ -22,7 +22,7 @@
           >Reservar</a
         >
       </li>
-      <li class="profile-dropdown-item">
+      <li class="profile-dropdown-item" *ngIf="!isAuthenticated">
         <a routerLink="/login" class="user-login-link" (click)="closeMenu()">
           <img
             id="nav-user-icon"
@@ -31,6 +31,41 @@
             class="profile-img"
           />
         </a>
+      </li>
+      <li
+        class="profile-dropdown-item profile-dropdown-item--menu"
+        *ngIf="isAuthenticated"
+      >
+        <details class="profile-actions-menu navbar-user-menu">
+          <summary
+            class="profile-actions-menu__trigger user-login-link"
+            aria-label="Opciones de sesión"
+          >
+            <img
+              [src]="userIconPath"
+              alt="Icono de usuario"
+              class="profile-img"
+            />
+          </summary>
+          <div class="profile-actions-menu__panel">
+            <a
+              [routerLink]="profileRoute"
+              class="profile-actions-menu__item"
+              (click)="closeMenu()"
+            >
+              <i class="ph ph-user-circle"></i>
+              Perfil
+            </a>
+            <button
+              type="button"
+              class="profile-actions-menu__item profile-actions-menu__item--danger"
+              (click)="logout()"
+            >
+              <i class="ph ph-sign-out"></i>
+              Cerrar sesión
+            </button>
+          </div>
+        </details>
       </li>
     </ul>
 

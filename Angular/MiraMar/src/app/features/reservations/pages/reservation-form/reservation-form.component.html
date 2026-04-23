@@ -6,21 +6,17 @@
       <div *ngIf="warningMessage" class="alert alert--danger">
         <i class="ph ph-warning-circle"></i>
         <span>{{ warningMessage }}</span>
-        <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
+        <button
+          type="button"
+          class="alert__close"
+          (click)="warningMessage = ''"
+        >
+          &times;
+        </button>
       </div>
 
       <form [formGroup]="reservationForm" (ngSubmit)="save()">
         <div class="form-grid">
-          <div class="form-field">
-            <label for="clientId">Cliente *</label>
-            <select id="clientId" formControlName="clientId">
-              <option *ngFor="let client of clients" [value]="client.id">
-                {{ client.nombre }} ({{ client.usuario }})
-              </option>
-            </select>
-            <div class="form-error"></div>
-          </div>
-
           <div class="form-field">
             <label for="roomTypeId">Tipo de habitación *</label>
             <select id="roomTypeId" formControlName="roomTypeId">
@@ -31,23 +27,61 @@
             <div class="form-error"></div>
           </div>
 
-          <div class="form-field" [class.form-field--error]="reservationForm.controls.fechaInicio.invalid && reservationForm.controls.fechaInicio.touched">
+          <div
+            class="form-field"
+            [class.form-field--error]="
+              reservationForm.controls.fechaInicio.invalid &&
+              reservationForm.controls.fechaInicio.touched
+            "
+          >
             <label for="fechaInicio">Fecha de inicio *</label>
-            <input type="date" id="fechaInicio" formControlName="fechaInicio" required />
+            <input
+              type="date"
+              id="fechaInicio"
+              formControlName="fechaInicio"
+              required
+            />
             <div class="form-error">
-              {{ reservationForm.controls.fechaInicio.invalid && reservationForm.controls.fechaInicio.touched ? 'La fecha de inicio es obligatoria' : '' }}
+              {{
+                reservationForm.controls.fechaInicio.invalid &&
+                reservationForm.controls.fechaInicio.touched
+                  ? "La fecha de inicio es obligatoria"
+                  : ""
+              }}
             </div>
           </div>
 
-          <div class="form-field" [class.form-field--error]="reservationForm.controls.fechaFin.invalid && reservationForm.controls.fechaFin.touched">
+          <div
+            class="form-field"
+            [class.form-field--error]="
+              reservationForm.controls.fechaFin.invalid &&
+              reservationForm.controls.fechaFin.touched
+            "
+          >
             <label for="fechaFin">Fecha de fin *</label>
-            <input type="date" id="fechaFin" formControlName="fechaFin" required />
+            <input
+              type="date"
+              id="fechaFin"
+              formControlName="fechaFin"
+              required
+            />
             <div class="form-error">
-              {{ reservationForm.controls.fechaFin.invalid && reservationForm.controls.fechaFin.touched ? 'La fecha de fin es obligatoria' : '' }}
+              {{
+                reservationForm.controls.fechaFin.invalid &&
+                reservationForm.controls.fechaFin.touched
+                  ? "La fecha de fin es obligatoria"
+                  : ""
+              }}
             </div>
           </div>
 
-          <div class="form-field" [class.form-field--error]="reservationForm.controls.cantidadPersonas.invalid && reservationForm.controls.cantidadPersonas.touched">
+          <div
+            class="form-field"
+            [class.form-field--error]="
+              reservationForm.controls.cantidadPersonas.invalid &&
+              reservationForm.controls.cantidadPersonas.touched
+            "
+          >
             <label for="cantidadPersonas">Cantidad de personas *</label>
             <input
               type="number"
@@ -58,7 +92,12 @@
               required
             />
             <div class="form-error">
-              {{ reservationForm.controls.cantidadPersonas.invalid && reservationForm.controls.cantidadPersonas.touched ? 'Ingresa una cantidad válida' : '' }}
+              {{
+                reservationForm.controls.cantidadPersonas.invalid &&
+                reservationForm.controls.cantidadPersonas.touched
+                  ? "Ingresa una cantidad válida"
+                  : ""
+              }}
             </div>
           </div>
         </div>
@@ -71,22 +110,29 @@
           <div class="type-info-card__grid">
             <div class="type-info-card__item">
               <span class="type-info-card__label">Nombre</span>
-              <span class="type-info-card__value">{{ selectedRoomType.nombre }}</span>
+              <span class="type-info-card__value">{{
+                selectedRoomType.nombre
+              }}</span>
             </div>
             <div class="type-info-card__item">
               <span class="type-info-card__label">Capacidad</span>
-              <span class="type-info-card__value">{{ selectedRoomType.capacidad }} huéspedes</span>
+              <span class="type-info-card__value"
+                >{{ selectedRoomType.capacidad }} huéspedes</span
+              >
             </div>
             <div class="type-info-card__item type-info-card__item--full">
               <span class="type-info-card__label">Precio por noche</span>
-              <span class="type-info-card__value">{{ selectedRoomType.precioNoche | currency: 'COP' : 'symbol' : '1.0-0' }}</span>
+              <span class="type-info-card__value">{{
+                selectedRoomType.precioNoche
+                  | currency: "COP" : "symbol" : "1.0-0"
+              }}</span>
             </div>
           </div>
         </div>
 
         <div class="form-actions">
           <button type="submit" class="btn btn--primary" [disabled]="loading">
-            {{ loading ? 'Creando...' : 'Crear reserva' }}
+            {{ loading ? "Creando..." : "Crear reserva" }}
           </button>
           <a routerLink="/reservations" class="btn btn--ghost">Cancelar</a>
         </div>

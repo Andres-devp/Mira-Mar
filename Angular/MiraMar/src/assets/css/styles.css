@@ -192,20 +192,7 @@ nav {
   position: relative;
 }
 
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: var(--baby-blue);
-  transition: width 0.3s var(--ease);
-}
-
-.nav-links a:not(.book-btn-nav):hover::after {
-  width: 100%;
-}
+/* Hover underline effects are handled in global styles.css */
 
 .nav-links a.user-login-link::after {
   display: none;

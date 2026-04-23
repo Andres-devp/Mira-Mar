@@ -8,7 +8,7 @@ public interface RoomTypeService {
 
     List<RoomType> getAllTipos();
 
-    List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax);
+    List<RoomType> filtrarTipos(Integer capacidadMin, Double precioMax, java.time.LocalDate fechaInicio, java.time.LocalDate fechaFin);
 
     RoomType getTipoById(Long id);
 

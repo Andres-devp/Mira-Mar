@@ -19,13 +19,19 @@ export class RoomTypeService {
     );
   }
 
-  filter(capacidad?: number, precioMax?: number): Observable<RoomType[]> {
+  filter(capacidad?: number, precioMax?: number, fechaInicio?: string, fechaFin?: string): Observable<RoomType[]> {
     let params = new HttpParams();
     if (capacidad !== undefined && capacidad !== null) {
       params = params.set('capacidad', capacidad.toString());
     }
     if (precioMax !== undefined && precioMax !== null) {
       params = params.set('precioMax', precioMax.toString());
+    }
+    if (fechaInicio) {
+      params = params.set('fechaInicio', fechaInicio);
+    }
+    if (fechaFin) {
+      params = params.set('fechaFin', fechaFin);
     }
     return this.http.get<RoomType[]>(`${this.apiUrl}/filter`, { params }).pipe(
       catchError(this.handleError)

@@ -19,30 +19,38 @@
       </div>
     </section>
 
-    <form class="rooms-filter reveal">
+    <form class="rooms-filter reveal" (ngSubmit)="filterRooms()">
+      <div class="rooms-filter__group">
+        <label for="fechaInicio">Llegada</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" [(ngModel)]="fechaInicio" />
+      </div>
+      <div class="rooms-filter__group">
+        <label for="fechaFin">Salida</label>
+        <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="fechaFin" />
+      </div>
       <div class="rooms-filter__group">
         <label for="capacidad">Capacidad mínima</label>
-        <select id="capacidad">
+        <select id="capacidad" name="capacidad" [(ngModel)]="capacidad">
           <option value="">Todos</option>
-          <option value="1">1+ huésped</option>
-          <option value="2">2+ huéspedes</option>
-          <option value="3">3+ huéspedes</option>
-          <option value="4">4+ huéspedes</option>
+          <option [ngValue]="1">1+ huésped</option>
+          <option [ngValue]="2">2+ huéspedes</option>
+          <option [ngValue]="3">3+ huéspedes</option>
+          <option [ngValue]="4">4+ huéspedes</option>
         </select>
       </div>
       <div class="rooms-filter__group">
         <label for="precioMax">Precio máximo / noche</label>
-        <select id="precioMax">
+        <select id="precioMax" name="precioMax" [(ngModel)]="precioMax">
           <option value="">Todos</option>
-          <option value="100">Hasta $100</option>
-          <option value="200">Hasta $200</option>
-          <option value="300">Hasta $300</option>
-          <option value="500">Hasta $500</option>
+          <option [ngValue]="100">Hasta $100</option>
+          <option [ngValue]="200">Hasta $200</option>
+          <option [ngValue]="300">Hasta $300</option>
+          <option [ngValue]="500">Hasta $500</option>
         </select>
       </div>
       <div class="rooms-filter__actions">
-        <button type="button" class="btn btn--primary">Filtrar</button>
-        <a routerLink="/rooms" fragment="suites" class="btn btn--ghost">Limpiar</a>
+        <button type="submit" class="btn btn--primary">Filtrar</button>
+        <button type="button" class="btn btn--ghost" (click)="clearFilters()">Limpiar</button>
       </div>
     </form>
 

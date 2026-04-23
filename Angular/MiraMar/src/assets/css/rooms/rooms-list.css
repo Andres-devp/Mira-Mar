@@ -288,7 +288,8 @@ body.page-rooms-list nav {
   opacity: 0.8;
 }
 
-.rooms-filter__group select {
+.rooms-filter__group select,
+.rooms-filter__group input[type="date"] {
   padding: 0.6rem 0.85rem;
   border: 1px solid rgba(48, 76, 137, 0.25);
   border-radius: var(--radius-sm, 6px);
@@ -300,7 +301,8 @@ body.page-rooms-list nav {
   transition: border-color 0.2s;
 }
 
-.rooms-filter__group select:focus {
+.rooms-filter__group select:focus,
+.rooms-filter__group input[type="date"]:focus {
   outline: none;
   border-color: var(--cornflower);
 }

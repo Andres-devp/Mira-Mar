@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomType, HotelService } from '../../../../core/models/entities';
 import { RoomTypeService } from '../../../../core/services/room-type.service';
 import { HotelServiceService } from '../../../../core/services/hotel-service.service';
@@ -32,6 +33,11 @@ interface ServicioCard {
 export class LandingPageComponent implements OnInit {
   showMap = false;
   tiposDestacados: RoomType[] = [];
+  
+  fechaInicio: string = '';
+  fechaFin: string = '';
+  capacidad: string = '';
+
   amenities: Amenity[] = [
     {
       icon: 'ph-waves',
@@ -65,7 +71,8 @@ export class LandingPageComponent implements OnInit {
 
   constructor(
     private roomTypeService: RoomTypeService,
-    private hotelServiceService: HotelServiceService
+    private hotelServiceService: HotelServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +97,18 @@ export class LandingPageComponent implements OnInit {
         }));
       },
       error: (err) => console.error('Error loading hotel services:', err)
+    });
+  }
+
+  searchSuites(): void {
+    const queryParams: any = {};
+    if (this.fechaInicio) queryParams.fechaInicio = this.fechaInicio;
+    if (this.fechaFin) queryParams.fechaFin = this.fechaFin;
+    if (this.capacidad) queryParams.capacidad = this.capacidad;
+
+    this.router.navigate(['/rooms'], {
+      fragment: 'suites',
+      queryParams: queryParams
     });
   }
 }

@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.detail-aside__status h3 {
+  margin-top: 0;
+}
+
+.detail-aside__status p {
+  margin-bottom: 0;
+}

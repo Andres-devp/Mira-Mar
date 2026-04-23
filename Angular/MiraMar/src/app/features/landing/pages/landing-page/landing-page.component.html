@@ -10,21 +10,23 @@
   <div class="booking-widget">
     <div class="input-group">
       <label>Llegada</label>
-      <input type="date" />
+      <input type="date" [(ngModel)]="fechaInicio" />
     </div>
     <div class="input-group">
       <label>Salida</label>
-      <input type="date" />
+      <input type="date" [(ngModel)]="fechaFin" />
     </div>
     <div class="input-group">
       <label>Huéspedes</label>
-      <select>
-        <option>2 Adultos</option>
-        <option>1 Adulto</option>
-        <option>Familia (2A + 2N)</option>
+      <select [(ngModel)]="capacidad">
+        <option value="">Seleccione</option>
+        <option value="1">1 Adulto</option>
+        <option value="2">2 Adultos</option>
+        <option value="3">3 Personas</option>
+        <option value="4">Familia (2A + 2N)</option>
       </select>
     </div>
-    <button class="btn" type="button">Consultar</button>
+    <button class="btn" type="button" (click)="searchSuites()">Consultar</button>
   </div>
 </header>
 

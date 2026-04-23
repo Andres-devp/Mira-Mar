@@ -1,11 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
   isScrolled = false;
@@ -17,18 +18,32 @@ export class NavbarComponent implements OnInit {
   isRoomsPublicRoute = false;
   isServicesPublicRoute = false;
   isServiceDetailRoute = false;
+  isAuthenticated = false;
+  sessionUserId: number | null = null;
+  sessionUserRole = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   /** Pages that start transparent navbar and become solid on scroll */
   get usesTransparentTheme(): boolean {
-    return this.isLandingRoute || this.isRoomTypeDetailRoute || this.isServiceDetailRoute;
+    return (
+      this.isLandingRoute ||
+      this.isRoomTypeDetailRoute ||
+      this.isServiceDetailRoute
+    );
   }
 
   /** Pages that always use a solid dusk-blue navbar */
   get usesSolidTheme(): boolean {
-    return this.isRoomTypeCrudRoute || this.isServicesCrudRoute
-      || this.isRoomsPublicRoute || this.isServicesPublicRoute;
+    return (
+      this.isRoomTypeCrudRoute ||
+      this.isServicesCrudRoute ||
+      this.isRoomsPublicRoute ||
+      this.isServicesPublicRoute
+    );
   }
 
   get applyScrolledStyle(): boolean {
@@ -59,15 +74,39 @@ export class NavbarComponent implements OnInit {
     return '/images/usuarioNegro.png';
   }
 
+  get profileRoute(): string[] {
+    if (!this.isAuthenticated) {
+      return ['/login'];
+    }
+
+    if (this.sessionUserRole === 'CLIENT' && this.sessionUserId) {
+      return ['/usuarios', String(this.sessionUserId)];
+    }
+
+    if (this.sessionUserRole === 'ADMIN') {
+      return ['/admin'];
+    }
+
+    if (this.sessionUserRole === 'OPERATOR') {
+      return ['/operator'];
+    }
+
+    return ['/'];
+  }
+
   ngOnInit(): void {
     this.updateRouteState(this.router.url);
+    this.updateAuthState();
 
     this.router.events
       .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
       )
       .subscribe((event) => {
         this.updateRouteState(event.urlAfterRedirects);
+        this.updateAuthState();
         this.isNavOpen = false;
       });
   }
@@ -90,6 +129,20 @@ export class NavbarComponent implements OnInit {
 
   closeMenu(): void {
     this.isNavOpen = false;
+    const openedMenus = document.querySelectorAll<HTMLDetailsElement>(
+      '.navbar-user-menu[open]',
+    );
+    openedMenus.forEach((menu) => {
+      menu.open = false;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.updateAuthState();
+      this.closeMenu();
+      this.router.navigate(['/']);
+    });
   }
 
   private updateRouteState(url: string): void {
@@ -98,8 +151,7 @@ export class NavbarComponent implements OnInit {
     this.isLandingRoute = cleanUrl === '/';
 
     this.isRoomTypeDetailRoute =
-      /^\/roomtypes\/\d+$/.test(cleanUrl) ||
-      /^\/rooms\/\d+$/.test(cleanUrl);
+      /^\/roomtypes\/\d+$/.test(cleanUrl) || /^\/rooms\/\d+$/.test(cleanUrl);
 
     this.isRoomTypeCrudRoute =
       cleanUrl === '/roomtypes' ||
@@ -126,5 +178,12 @@ export class NavbarComponent implements OnInit {
     this.isServiceDetailRoute = /^\/services\/\d+$/.test(cleanUrl);
 
     this.isScrolled = window.scrollY > 25;
+  }
+
+  private updateAuthState(): void {
+    const session = this.authService.getSession();
+    this.isAuthenticated = session !== null;
+    this.sessionUserId = session?.id ?? null;
+    this.sessionUserRole = session?.rol ?? '';
   }
 }

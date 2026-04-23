@@ -186,6 +186,14 @@ public class DataLoader implements CommandLineRunner {
                 .email("nico@gmail.com")
                 .telefono("555343434")
                 .build());
+
+        clientes.add(Client.builder()
+                .nombre("andres")
+                .usuario("andres")
+                .contrasena("123")
+                .email("andres@gmail.com")
+                .telefono("555343434")
+                .build());
         
         List<Client> clientesGuardados = clienteRepository.saveAll(clientes);
 

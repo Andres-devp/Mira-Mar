@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.controller.dto.CreateReservationRequest;
 import com.example.demo.entities.Reservation;
-
-import java.util.List;
 
 public interface ReservationService {
 
@@ -11,7 +11,7 @@ public interface ReservationService {
 
     Reservation getReservaById(Long id);
 
-    Reservation createReserva(CreateReservationRequest request);
+    Reservation createReserva(Long sessionUserId, CreateReservationRequest request);
 
     Reservation saveReserva(Reservation reserva);
 

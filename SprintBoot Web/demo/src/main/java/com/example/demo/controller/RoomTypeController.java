@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.demo.entities.RoomType;
 import com.example.demo.service.RoomTypeService;
@@ -36,11 +38,17 @@ public class RoomTypeController {
     }
 
     @GetMapping("/filter")
-    @Operation(summary = "Filtrar tipos por capacidad y/o precio máximo")
+    @Operation(summary = "Filtrar tipos por capacidad, precio máximo y disponibilidad por fechas")
     public List<RoomType> filterTypes(
             @RequestParam(required = false) Integer capacidad,
-            @RequestParam(required = false) Double precioMax) {
-        return tipoHabitacionService.filtrarTipos(capacidad, precioMax);
+            @RequestParam(required = false) Double precioMax,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fechaInicio,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fechaFin) {
+        return tipoHabitacionService.filtrarTipos(capacidad, precioMax, fechaInicio, fechaFin);
     }
 
     @GetMapping("/{id}")

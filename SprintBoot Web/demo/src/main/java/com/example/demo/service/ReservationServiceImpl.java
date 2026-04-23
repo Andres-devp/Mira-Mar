@@ -1,5 +1,12 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.controller.dto.CreateReservationRequest;
 import com.example.demo.entities.Client;
 import com.example.demo.entities.Reservation;
@@ -10,12 +17,6 @@ import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.RoomTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @Transactional
@@ -49,13 +50,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation createReserva(CreateReservationRequest request) {
+    public Reservation createReserva(Long sessionUserId, CreateReservationRequest request) {
         if (request == null) {
             throw new IllegalStateException("La solicitud de reserva es obligatoria");
         }
 
-        if (request.getClientId() == null) {
-            throw new IllegalStateException("El clientId es obligatorio");
+        Long clientId = resolveClientId(sessionUserId, request.getClientId());
+        if (clientId == null) {
+            throw new IllegalStateException("No se pudo identificar el cliente de la sesión");
         }
         if (request.getRoomTypeId() == null) {
             throw new IllegalStateException("El roomTypeId es obligatorio");
@@ -70,8 +72,8 @@ public class ReservationServiceImpl implements ReservationService {
             throw new IllegalStateException("La cantidad de personas debe ser mayor que cero");
         }
 
-        Client client = clientRepository.findById(request.getClientId())
-            .orElseThrow(() -> new NotFoundException("No se encontró cliente con ID: " + request.getClientId(), request.getClientId()));
+        Client client = clientRepository.findById(clientId)
+            .orElseThrow(() -> new NotFoundException("No se encontró cliente con ID: " + clientId, clientId));
 
         RoomType roomType = roomTypeRepository.findById(request.getRoomTypeId())
             .orElseThrow(() -> new NotFoundException("No se encontró tipo de habitación con ID: " + request.getRoomTypeId(), request.getRoomTypeId()));
@@ -118,6 +120,13 @@ public class ReservationServiceImpl implements ReservationService {
             .build();
 
         return reservaRepository.save(reserva);
+    }
+
+    private Long resolveClientId(Long sessionUserId, Long requestClientId) {
+        if (sessionUserId != null) {
+            return sessionUserId;
+        }
+        return requestClientId;
     }
 
     @Override

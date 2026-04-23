@@ -18,6 +18,7 @@ import { RoomFormComponent } from './features/rooms/pages/room-form/room-form.co
 import { ReservationsTableComponent } from './features/reservations/pages/reservations-table/reservations-table.component';
 import { ReservationFormComponent } from './features/reservations/pages/reservation-form/reservation-form.component';
 import { ReservationDetailComponent } from './features/reservations/pages/reservation-detail/reservation-detail.component';
+import { ReservationUserDetailComponent } from './features/reservations/pages/reservation-user-detail/reservation-user-detail.component';
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
@@ -53,6 +54,7 @@ const routes: Routes = [
   // --- Reservaciones ---
   { path: 'reservations', component: ReservationsTableComponent },
   { path: 'reservations/add', component: ReservationFormComponent },
+  { path: 'reservations/user/:id', component: ReservationUserDetailComponent },
   { path: 'reservations/:id', component: ReservationDetailComponent },
 
   // --- Usuarios ---
@@ -66,22 +68,47 @@ const routes: Routes = [
   { path: 'operadores', component: OperadoresTableComponent },
 
   // --- Dashboards (sin navbar ni footer) ---
-  { path: 'admin', component: AdminDashboardComponent, data: { showNavbar: false, showFooter: false } },
-  { path: 'operator', component: OperatorDashboardComponent, data: { showNavbar: false, showFooter: false } },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    data: { showNavbar: false, showFooter: false },
+  },
+  {
+    path: 'operator',
+    component: OperatorDashboardComponent,
+    data: { showNavbar: false, showFooter: false },
+  },
 
   // --- Auth (sin navbar ni footer) ---
-  { path: 'login', component: LoginComponent, data: { showNavbar: false, showFooter: false } },
-  { path: 'create-account', component: CreateAccountComponent, data: { showNavbar: false, showFooter: false } },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { showNavbar: false, showFooter: false },
+  },
+  {
+    path: 'create-account',
+    component: CreateAccountComponent,
+    data: { showNavbar: false, showFooter: false },
+  },
 
   // --- Error (sin navbar ni footer) ---
-  { path: 'error', component: ErrorPageComponent, data: { showNavbar: false, showFooter: false } },
+  {
+    path: 'error',
+    component: ErrorPageComponent,
+    data: { showNavbar: false, showFooter: false },
+  },
 
   // --- Fallback ---
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

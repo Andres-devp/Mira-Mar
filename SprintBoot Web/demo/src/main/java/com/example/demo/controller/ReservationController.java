@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +47,27 @@ public class ReservationController {
 
 	@PostMapping("/add")
 	@Operation(summary = "Crear nueva reservación y asignar habitación disponible")
-	public Reservation addReservation(@RequestBody CreateReservationRequest request) {
-		return reservationService.createReserva(request);
+	public ResponseEntity<?> addReservation(
+		@CookieValue(value = "user_session", required = false) String userSession,
+		@RequestBody CreateReservationRequest request
+	) {
+		if (userSession == null || userSession.isBlank()) {
+			return ResponseEntity.status(HttpStatus.FOUND)
+				.header(HttpHeaders.LOCATION, "http://localhost:4200/login")
+				.build();
+		}
+
+		Long sessionUserId;
+		try {
+			sessionUserId = Long.valueOf(userSession);
+		} catch (NumberFormatException ex) {
+			return ResponseEntity.status(HttpStatus.FOUND)
+				.header(HttpHeaders.LOCATION, "http://localhost:4200/login")
+				.build();
+		}
+
+		Reservation reservation = reservationService.createReserva(sessionUserId, request);
+		return ResponseEntity.ok(reservation);
 	}
 
 	@PutMapping("/{id}")
