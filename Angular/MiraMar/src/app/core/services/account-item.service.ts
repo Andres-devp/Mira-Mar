@@ -19,6 +19,12 @@ export class AccountItemService {
     );
   }
 
+  getPaidByReservation(reservationId: number): Observable<AccountItem[]> {
+    return this.http.get<AccountItem[]>(`${this.baseUrl}/${reservationId}/items/paid`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   add(reservationId: number, hotelServiceId: number, cantidad: number): Observable<AccountItem> {
     return this.http.post<AccountItem>(`${this.baseUrl}/${reservationId}/items`, {
       hotelServiceId,

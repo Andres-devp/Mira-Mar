@@ -25,6 +25,8 @@ public interface ReservationService {
 
     List<AccountItem> getItemsByReservacion(Long reservationId);
 
+    List<AccountItem> getPaidItemsByReservacion(Long reservationId);
+
     AccountItem addItemToReservacion(Long reservationId, Long hotelServiceId, Integer cantidad);
 
     AccountItem updateItemCantidad(Long itemId, Integer nuevaCantidad);

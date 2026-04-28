@@ -39,6 +39,37 @@
               <p><strong>Estado:</strong> {{ reservation.estado }}</p>
               <p><strong>Creada:</strong> {{ reservation.createdAt | date: 'medium' }}</p>
             </section>
+
+            <section class="detail-section">
+              <h2 class="detail-section__title">Servicios adquiridos</h2>
+
+              <div *ngIf="paidItemsError" class="alert alert--danger">
+                <i class="ph ph-warning-circle"></i>
+                <span>{{ paidItemsError }}</span>
+                <button type="button" class="alert__close" (click)="paidItemsError = ''">&times;</button>
+              </div>
+
+              <div class="items-table-wrapper" *ngIf="paidItems.length > 0">
+                <table class="items-table">
+                  <thead>
+                    <tr>
+                      <th>Servicio</th>
+                      <th>Cant.</th>
+                      <th>P. Unit.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of paidItems">
+                      <td>{{ item.hotelService?.nombre || 'N/A' }}</td>
+                      <td>{{ item.cantidad }}</td>
+                      <td>{{ item.precioUnitario | currency:'COP':'symbol':'1.0-0' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p *ngIf="paidItems.length === 0" class="items-empty">No hay servicios pagados.</p>
+            </section>
           </div>
 
           <aside class="detail-aside">

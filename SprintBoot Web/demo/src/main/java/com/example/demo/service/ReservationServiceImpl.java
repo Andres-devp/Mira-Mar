@@ -204,10 +204,23 @@ public class ReservationServiceImpl implements ReservationService {
             .orElse(List.of());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<AccountItem> getPaidItemsByReservacion(Long reservationId) {
+        return accountRepository.findByReservationId(reservationId)
+            .map(account -> accountItemRepository.findByAccountIdAndEliminadoTrue(account.getId()))
+            .orElse(List.of());
+    }
+
     private void validateEdicionPermitida(Reservation reserva) {
         String estado = reserva.getEstado();
         if (!"PENDING".equals(estado) && !"ACTIVE".equals(estado)) {
             throw new IllegalStateException("Solo se pueden modificar servicios cuando la reserva está en estado PENDING o ACTIVE");
+        }
+
+        Account cuenta = accountRepository.findByReservationId(reserva.getId()).orElse(null);
+        if (cuenta != null && "CLOSED".equals(cuenta.getEstado())) {
+            throw new IllegalStateException("No se pueden modificar servicios cuando la cuenta está CLOSED");
         }
     }
 
@@ -357,6 +370,12 @@ public class ReservationServiceImpl implements ReservationService {
 
         if (!"OPEN".equals(cuenta.getEstado())) {
             throw new IllegalStateException("La cuenta ya está CLOSED");
+        }
+
+        List<AccountItem> items = accountItemRepository.findByAccountId(cuenta.getId());
+        if (!items.isEmpty()) {
+            items.forEach(item -> item.setEliminado(true));
+            accountItemRepository.saveAll(items);
         }
 
         cuenta.setEstado("CLOSED");

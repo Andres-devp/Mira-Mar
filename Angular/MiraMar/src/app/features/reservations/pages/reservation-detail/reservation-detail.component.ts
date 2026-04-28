@@ -22,6 +22,9 @@ export class ReservationDetailComponent implements OnInit {
   items: AccountItem[] = [];
   itemsError = '';
 
+  paidItems: AccountItem[] = [];
+  paidItemsError = '';
+
   showModal = false;
   availableServices: HotelService[] = [];
   serviceQuantities: Record<number, number> = {};
@@ -29,7 +32,8 @@ export class ReservationDetailComponent implements OnInit {
   modalError = '';
 
   get canEditServices(): boolean {
-    return this.reservation?.estado === 'PENDING' || this.reservation?.estado === 'ACTIVE';
+    return (this.reservation?.estado === 'PENDING' || this.reservation?.estado === 'ACTIVE')
+      && this.account?.estado !== 'CLOSED';
   }
 
   get canInactivar(): boolean {
@@ -51,6 +55,7 @@ export class ReservationDetailComponent implements OnInit {
         next: (data) => {
           this.reservation = data;
           this.loadItems(id);
+          this.loadPaidItems(id);
           this.loadAccount(id);
         },
         error: (err) => console.error('Error loading reservation detail:', err)
@@ -62,6 +67,13 @@ export class ReservationDetailComponent implements OnInit {
     this.accountItemService.getByReservation(reservationId).subscribe({
       next: (data) => { this.items = data; },
       error: () => { this.itemsError = 'No se pudieron cargar los servicios adicionales.'; }
+    });
+  }
+
+  loadPaidItems(reservationId: number): void {
+    this.accountItemService.getPaidByReservation(reservationId).subscribe({
+      next: (data) => { this.paidItems = data; },
+      error: () => { this.paidItemsError = 'No se pudieron cargar los servicios pagados.'; }
     });
   }
 
@@ -104,6 +116,7 @@ export class ReservationDetailComponent implements OnInit {
       next: (updated) => {
         const idx = this.items.findIndex(i => i.id === updated.id);
         if (idx !== -1) this.items[idx] = updated;
+        this.loadPaidItems(this.reservation!.id);
       },
       error: () => { this.itemsError = 'No se pudo actualizar la cantidad.'; }
     });
@@ -112,7 +125,10 @@ export class ReservationDetailComponent implements OnInit {
   removeItem(itemId: number): void {
     if (!this.reservation) return;
     this.accountItemService.remove(this.reservation.id, itemId).subscribe({
-      next: () => { this.items = this.items.filter(i => i.id !== itemId); },
+      next: () => {
+        this.items = this.items.filter(i => i.id !== itemId);
+        this.loadPaidItems(this.reservation!.id);
+      },
       error: () => { this.itemsError = 'No se pudo eliminar el servicio.'; }
     });
   }
@@ -154,6 +170,7 @@ export class ReservationDetailComponent implements OnInit {
         this.items.push(newItem);
         this.modalLoading = false;
         this.loadAccount(this.reservation!.id);
+        this.loadPaidItems(this.reservation!.id);
         this.closeModal();
       },
       error: (err) => {
@@ -171,6 +188,8 @@ export class ReservationDetailComponent implements OnInit {
       next: (updated) => {
         this.payLoading = false;
         this.account = updated;
+        this.loadItems(this.reservation!.id);
+        this.loadPaidItems(this.reservation!.id);
       },
       error: (err) => {
         this.payLoading = false;

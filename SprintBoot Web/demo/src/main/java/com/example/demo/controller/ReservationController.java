@@ -109,6 +109,12 @@ public class ReservationController {
 		return reservationService.getItemsByReservacion(id);
 	}
 
+	@GetMapping("/{id}/items/paid")
+	@Operation(summary = "Listar servicios pagados de una reserva")
+	public List<AccountItem> listPaidItems(@PathVariable Long id) {
+		return reservationService.getPaidItemsByReservacion(id);
+	}
+
 	@PostMapping("/{id}/items")
 	@Operation(summary = "Agregar servicio adicional a una reserva")
 	public ResponseEntity<?> addItem(@PathVariable Long id, @RequestBody Map<String, Object> body) {
