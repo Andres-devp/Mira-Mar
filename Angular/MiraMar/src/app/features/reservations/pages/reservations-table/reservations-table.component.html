@@ -17,6 +17,33 @@
       <button type="button" class="alert__close" (click)="warningMessage = ''">&times;</button>
     </div>
 
+    <div class="services-page__search">
+      <form class="search-bar" (ngSubmit)="searchById()">
+        <div class="form-field search-bar__field">
+          <label for="searchId">Buscar por ID de reserva</label>
+          <div class="search-bar__input-group">
+            <input
+              type="number"
+              id="searchId"
+              [(ngModel)]="searchId"
+              name="searchId"
+              placeholder="Ej: 3"
+              min="1"
+            />
+            <button type="submit" class="btn btn--primary">
+              <i class="ph ph-magnifying-glass"></i>
+              Buscar
+            </button>
+          </div>
+        </div>
+        <div *ngIf="searchError" class="alert alert--danger search-bar__error">
+          <i class="ph ph-warning-circle"></i>
+          <span>{{ searchError }}</span>
+          <button type="button" class="alert__close" (click)="searchError = ''">&times;</button>
+        </div>
+      </form>
+    </div>
+
     <table class="services-table" *ngIf="reservas.length > 0">
       <thead>
         <tr>

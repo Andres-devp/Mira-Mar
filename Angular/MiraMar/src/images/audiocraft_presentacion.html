@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AudioCraft — Guía de Presentación</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c6af7;
+    --accent2: #f7c26a;
+    --accent3: #6af7c2;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --slide-bg: #0f0f1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a0f2e 50%, #0f1a1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 80px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 200px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(106,247,194,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  header p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 560px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .meta-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 80px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    padding: 16px 20px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  nav a:hover {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  /* LAYOUT */
+  main { max-width: 1200px; margin: 0 auto; padding: 60px 80px; }
+
+  /* PART HEADER */
+  .part-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .part-header:first-of-type { border-top: none; margin-top: 0; }
+  .part-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--border);
+    flex-shrink: 0;
+    width: 80px;
+  }
+  .part-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .part-info .part-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+  }
+
+  /* CONTENT SECTIONS */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 200px;
+  }
+  .section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .section p {
+    color: #b0b0cc;
+    margin-bottom: 14px;
+    max-width: 720px;
+  }
+  .section ul {
+    list-style: none;
+    max-width: 720px;
+  }
+  .section ul li {
+    color: #b0b0cc;
+    padding: 6px 0 6px 20px;
+    position: relative;
+  }
+  .section ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .highlight-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    max-width: 720px;
+  }
+  .highlight-box p { margin: 0; font-style: italic; color: #c0c0dd; }
+  .highlight-box strong { color: var(--accent2); font-style: normal; }
+
+  /* SLIDE CARDS */
+  .slides-section {
+    margin-top: 40px;
+  }
+  .slides-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slides-label::before { content: '⬛'; font-size: 8px; }
+  .slides-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .slides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .slide-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .slide-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+
+  .slide-preview {
+    background: linear-gradient(135deg, #141428 0%, #1e1e38 100%);
+    padding: 28px 28px 24px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-preview::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
+  }
+  .slide-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .slide-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .slide-bullets {
+    list-style: none;
+  }
+  .slide-bullets li {
+    font-size: 12px;
+    color: #8888aa;
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .slide-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent3);
+    font-size: 16px;
+    line-height: 1;
+    top: 2px;
+  }
+  .slide-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    margin-top: 12px;
+  }
+
+  .slide-meta {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .slide-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .slide-visual-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--accent2);
+    margin-right: 6px;
+    margin-bottom: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .slide-tip {
+    font-size: 12px;
+    color: #7a7a99;
+    margin-top: 10px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* TABLES */
+  .info-table {
+    width: 100%;
+    max-width: 720px;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+  .info-table th {
+    background: var(--surface2);
+    color: var(--accent2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(42,42,64,0.5);
+    color: #b0b0cc;
+  }
+  .info-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+  }
+
+  /* COST BOX */
+  .cost-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 720px;
+    margin: 20px 0;
+  }
+  .cost-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .cost-card .cost-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cost-card .cost-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 4px;
+  }
+  .cost-card .cost-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 60px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 80px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Slide accent colors per part */
+  .part-1 .slide-preview { background: linear-gradient(135deg, #141428 0%, #1e1428 100%); }
+  .part-2 .slide-preview { background: linear-gradient(135deg, #141428 0%, #14281e 100%); }
+  .part-3 .slide-preview { background: linear-gradient(135deg, #141428 0%, #28201a 100%); }
+  .part-4 .slide-preview { background: linear-gradient(135deg, #141428 0%, #1a1428 100%); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Guía de Presentación · 15–18 minutos</div>
+  <h1>AudioCraft<br>de Meta AI</h1>
+  <p>Contenido completo para exponer, diseño de slides y material de apoyo — Partes 1 a 4.</p>
+  <div class="header-meta">
+    <div class="meta-pill">4 partes teóricas</div>
+    <div class="meta-pill">~13 slides</div>
+    <div class="meta-pill">Lanzado ago. 2023</div>
+    <div class="meta-pill">Open Source · MIT</div>
+  </div>
+</header>
+
+<nav>
+  <a href="#p1">01 · Contexto</a>
+  <a href="#p2">02 · Los modelos</a>
+  <a href="#p3">03 · Arquitectura</a>
+  <a href="#p4">04 · Usos y ética</a>
+  <a href="#costos">💰 Costos</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════ PARTE 1 -->
+<div id="p1">
+<div class="part-header">
+  <div class="part-number">01</div>
+  <div class="part-info">
+    <h2>Contexto y motivación</h2>
+    <div class="part-meta">⏱ ~3 min · 3 slides</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que debes saber para exponer</div>
+  <h3>El problema: el audio como el gran rezagado de la IA generativa</h3>
+  <p>Mientras que la IA generativa explotó en texto (GPT, 2020) e imágenes (DALL·E, Stable Diffusion, 2022), el audio quedó muy atrás. Generar música o sonido de alta calidad con IA era extremadamente difícil porque el audio es una señal de altísima dimensionalidad: una canción de pocos minutos a 44.1 kHz tiene millones de muestras, mucho más que los tokens de texto que procesan los LLMs.</p>
+  <p>Antes de AudioCraft, los modelos de audio como Jukebox (OpenAI, 2020) o Riffusion tenían serias limitaciones: eran lentos, requerían arquitecturas muy complejas o producían audio de baja fidelidad. No existía un framework unificado y simple para investigar y desplegar modelos de audio generativo.</p>
+  <p>Producir música o efectos de sonido profesionales tiene un costo muy alto: contratar músicos, licenciar pistas de stock, usar DAWs requiere tiempo y dinero. Un indie developer o un creador de contenido sin presupuesto simplemente no puede competir.</p>
+
+  <div class="highlight-box">
+    <p><strong>Dato clave para mencionar:</strong> Una pista musical de 3 minutos a 44.1 kHz tiene ~8 millones de muestras de audio. Modelos de texto como LLaMA procesan apenas unos pocos miles de tokens por muestra. Este gap de escala es el reto fundamental que resuelve AudioCraft.</p>
+  </div>
+
+  <h3>¿Qué es AudioCraft?</h3>
+  <p>AudioCraft es un framework open-source de Meta AI (equipo FAIR) anunciado el 2 de agosto de 2023. No es un solo modelo: es una suite de herramientas y modelos de generación y compresión de audio, construida sobre PyTorch. La clave de su diseño es la simplicidad: un solo codebase para múltiples tareas de audio generativo.</p>
+  <ul>
+    <li>Publicado en GitHub bajo licencia MIT (código) y CC-BY-NC 4.0 (pesos del modelo)</li>
+    <li>Incluye tres modelos principales: MusicGen, AudioGen y EnCodec</li>
+    <li>Requiere Python 3.9+ y PyTorch 2.1.0</li>
+    <li>Los pesos están disponibles en Hugging Face para descarga directa</li>
+  </ul>
+</div>
+
+<div class="slides-section">
+  <div class="slides-label">Diseño de slides</div>
+  <div class="slides-grid">
+
+    <div class="slide-card part-1">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 01</div>
+          <div class="slide-title">¿Por qué el audio se quedó atrás?</div>
+          <ul class="slide-bullets">
+            <li>Texto → GPT (2020) · Imagen → DALL·E (2022)</li>
+            <li>Audio = millones de muestras por segundo</li>
+            <li>Los modelos anteriores eran lentos o de baja calidad</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📊 Timeline IA generativa</span>
+        <span class="slide-visual-tag">🔢 "8M muestras vs 4K tokens"</span>
+        <div class="slide-tip">💡 Tip: Abre con una pregunta al público: "¿Cuántos han usado DALL·E o ChatGPT? ¿Y alguno ha generado música con IA?" — crea contraste inmediato.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-1">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 02</div>
+          <div class="slide-title">El costo real de producir audio</div>
+          <ul class="slide-bullets">
+            <li>Músico profesional: $500–$5,000 por pista</li>
+            <li>Licencias de stock: $30–$500 por tema</li>
+            <li>Indie dev / creador pequeño sin opciones</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~0.5 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">💰 Tabla de costos comparativos</span>
+        <div class="slide-tip">💡 Tip: Este slide genera empatía. Habla de casos concretos: el youtuber que paga royalties, el dev indie haciendo un videojuego solo.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-1">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 03</div>
+          <div class="slide-title">AudioCraft: la propuesta de Meta</div>
+          <ul class="slide-bullets">
+            <li>Framework open-source · Meta FAIR · Agosto 2023</li>
+            <li>Suite unificada: un codebase, múltiples modelos</li>
+            <li>Genera audio de alta calidad desde texto</li>
+            <li>Disponible en GitHub + Hugging Face</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">🖼 Logo Meta AI / AudioCraft</span>
+        <span class="slide-visual-tag">📅 Timeline: jun → ago 2023</span>
+        <div class="slide-tip">💡 Tip: Menciona que MusicGen salió primero en junio 2023 como modelo solo, y AudioCraft como suite completa en agosto. Muestra el repositorio de GitHub brevemente.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PARTE 2 -->
+<div id="p2">
+<div class="part-header">
+  <div class="part-number">02</div>
+  <div class="part-info">
+    <h2>Los tres modelos de AudioCraft</h2>
+    <div class="part-meta">⏱ ~5 min · 4 slides</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que debes saber para exponer</div>
+  <h3>EnCodec — El codec neuronal que lo hace posible</h3>
+  <p>EnCodec es el componente más técnico y el más importante de entender porque es la base sobre la que funcionan MusicGen y AudioGen. Un codec de audio tradicional (como MP3) comprime audio sacrificando algo de calidad. EnCodec hace algo mucho más sofisticado: usa redes neuronales para <em>aprender</em> cómo representar el audio de forma extremadamente eficiente en vectores discretos llamados tokens.</p>
+  <p>El proceso funciona así: EnCodec toma la señal de audio cruda (waveform) y la convierte en streams de tokens discretos mediante un proceso llamado cuantización vectorial (VQ). Estos tokens son como "palabras" del audio. Luego, un modelo de lenguaje autoregresivo (el Transformer) puede operar sobre esos tokens, igual que GPT opera sobre tokens de texto. Finalmente, el decoder de EnCodec convierte esos tokens generados de vuelta a audio.</p>
+
+  <div class="highlight-box">
+    <p><strong>Analogía para explicar:</strong> Imagina que en lugar de grabar un video frame a frame, lo conviertes en una secuencia de emojis que captura la esencia de cada escena. El modelo aprende el idioma de los emojis del audio. EnCodec es el "diccionario" de ese idioma.</p>
+  </div>
+
+  <h3>MusicGen — Texto a Música</h3>
+  <p>MusicGen es un Transformer autoregresivo de etapa única entrenado sobre tokens EnCodec de 32kHz con 4 codebooks. Fue entrenado en aproximadamente <strong>20,000 horas de música licenciada</strong>: 10,000 pistas del Meta Music Initiative Sound Collection y música de Shutterstock y Pond5. Importante: Meta removió las voces del dataset de entrenamiento para no replicar la voz de artistas.</p>
+
+  <table class="info-table">
+    <tr>
+      <th>Variante</th>
+      <th>Parámetros</th>
+      <th>Capacidad</th>
+      <th>GPU mín.</th>
+    </tr>
+    <tr>
+      <td><span class="badge">small</span></td>
+      <td>300M</td>
+      <td>Solo texto → música</td>
+      <td>~8 GB VRAM</td>
+    </tr>
+    <tr>
+      <td><span class="badge">medium</span></td>
+      <td>1.5B</td>
+      <td>Solo texto → música</td>
+      <td>~16 GB VRAM</td>
+    </tr>
+    <tr>
+      <td><span class="badge">melody</span></td>
+      <td>1.5B</td>
+      <td>Texto + melodía → música</td>
+      <td>~16 GB VRAM</td>
+    </tr>
+    <tr>
+      <td><span class="badge">large</span></td>
+      <td>3.3B</td>
+      <td>Solo texto → música (máxima calidad)</td>
+      <td>~32 GB VRAM</td>
+    </tr>
+  </table>
+
+  <p>Una característica única es la generación guiada por melodía (melody conditioning): dado un audio de referencia, extrae el "chromagram" (estructura armónica y melódica) y lo usa para guiar la generación, respetando esa melodía pero con los instrumentos o el estilo indicado en el prompt.</p>
+
+  <h3>AudioGen — Texto a Efectos de Sonido</h3>
+  <p>AudioGen tiene la misma arquitectura base que MusicGen pero está especializado en sonidos ambientales y efectos de audio, no música. Fue entrenado en un dataset de efectos de sonido públicos. Genera segmentos de 5 segundos por defecto.</p>
+  <p>Ejemplos de lo que puede generar: lluvia cayendo sobre un techo, sirenas de ambulancia acercándose y pasando, patos cuajando en un lago con pájaros de fondo, cruce ferroviario con tren pasando. Este tipo de audio es invaluable para videojuegos, películas, o experiencias de realidad virtual.</p>
+</div>
+
+<div class="slides-section">
+  <div class="slides-label">Diseño de slides</div>
+  <div class="slides-grid">
+
+    <div class="slide-card part-2">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 04</div>
+          <div class="slide-title">La suite AudioCraft: 3 modelos</div>
+          <ul class="slide-bullets">
+            <li>EnCodec → compresión neuronal de audio</li>
+            <li>MusicGen → texto a música</li>
+            <li>AudioGen → texto a sonidos ambientales</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~0.5 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">🗺 Diagrama de 3 cajas</span>
+        <div class="slide-tip">💡 Tip: Haz un diagrama simple: tres cajas con flechas. EnCodec en la base, MusicGen y AudioGen encima usándolo. Muéstralo como una pirámide o stack.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-2">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 05</div>
+          <div class="slide-title">EnCodec: convirtiendo audio en tokens</div>
+          <ul class="slide-bullets">
+            <li>Audio crudo → tokens discretos (VQ)</li>
+            <li>4 codebooks en paralelo a 50 Hz</li>
+            <li>El "idioma" que habla el Transformer</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📊 Diagrama encoder/decoder</span>
+        <span class="slide-visual-tag">🎵 Waveform → tokens → waveform</span>
+        <div class="slide-tip">💡 Tip: Dibuja la ola de audio → caja EnCodec → secuencia de números → caja Decoder → ola de audio. Simple y efectivo. Usa la analogía del "idioma emoji del audio".</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-2">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 06</div>
+          <div class="slide-title">MusicGen: de prompt a canción</div>
+          <ul class="slide-bullets">
+            <li>4 tamaños: 300M → 3.3B parámetros</li>
+            <li>20,000h de música licenciada</li>
+            <li>Condicionamiento por texto o melodía</li>
+            <li>Sin voces, sin letras — 100% instrumental</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~2 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📋 Tabla de variantes del modelo</span>
+        <span class="slide-visual-tag">🎵 Ej. de prompts en pantalla</span>
+        <div class="slide-tip">💡 Tip: Incluye 2–3 prompts de ejemplo en texto grande. Ej: "lofi hip hop, rainy, piano and drums, 90bpm". Que la audiencia los lea y se imagine el resultado.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-2">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 07</div>
+          <div class="slide-title">AudioGen: el mundo sonoro en texto</div>
+          <ul class="slide-bullets">
+            <li>Efectos y ambientes, no música</li>
+            <li>Entrenado en efectos de sonido públicos</li>
+            <li>Genera clips de ~5 segundos</li>
+            <li>Ideal para juegos, cine, VR</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">🎮 Iconos: juego, film, VR</span>
+        <span class="slide-visual-tag">📝 Ejemplos de prompts de sonido</span>
+        <div class="slide-tip">💡 Tip: Muestra contraste con MusicGen: "Música = estructura larga y compleja. Sonidos = escenas cortas e inmediatas." Ejemplos: sirenas, lluvia, multitudes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PARTE 3 -->
+<div id="p3">
+<div class="part-header">
+  <div class="part-number">03</div>
+  <div class="part-info">
+    <h2>¿Cómo funciona por dentro?</h2>
+    <div class="part-meta">⏱ ~3 min · 3 slides</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que debes saber para exponer</div>
+  <h3>Arquitectura general: el flujo completo</h3>
+  <p>El proceso de generación de AudioCraft sigue un pipeline claro de 4 pasos:</p>
+  <ul>
+    <li><strong>1. Encoding del texto:</strong> El prompt de texto ("upbeat jazz piano, 120bpm") pasa por un encoder de texto preentrenado de Google llamado T5. T5 convierte las palabras en embeddings que capturan el significado semántico del prompt.</li>
+    <li><strong>2. Conditioning:</strong> Los embeddings de T5 se usan como señal de condicionamiento para el Transformer, a través de bloques de cross-attention. El modelo "sabe" a qué debe sonar gracias a esto.</li>
+    <li><strong>3. Generación autoregresiva de tokens:</strong> El Transformer genera los tokens de audio de EnCodec uno a uno (autoregresivamente), 50 pasos por segundo de audio. Los 4 codebooks se generan en paralelo con un pequeño delay entre ellos, lo que es la innovación clave de MusicGen.</li>
+    <li><strong>4. Decoding:</strong> Los tokens generados pasan por el decoder de EnCodec que reconstruye la señal de audio en formato waveform (.wav).</li>
+  </ul>
+
+  <h3>La innovación: generación de codebooks en paralelo</h3>
+  <p>Los modelos anteriores como MusicLM de Google requerían múltiples modelos separados en cascada para manejar los diferentes niveles de representación del audio. MusicGen lo hace en un solo modelo, gracias a un patrón de interleaving (intercalado) de los 4 codebooks con un pequeño delay entre ellos. Esto lo hace más eficiente y más simple.</p>
+
+  <div class="highlight-box">
+    <p>Con solo <strong>50 pasos autoregresivos por segundo de audio</strong>, MusicGen genera audio mucho más rápido que sus predecesores. En comparación, modelos de difusión para audio requieren cientos o miles de pasos de denoising.</p>
+  </div>
+
+  <h3>¿Qué lo diferencia de Suno y Udio?</h3>
+  <p>Esta es una comparación que tu audiencia probablemente querrá escuchar:</p>
+
+  <table class="info-table">
+    <tr>
+      <th>Característica</th>
+      <th>AudioCraft</th>
+      <th>Suno / Udio</th>
+    </tr>
+    <tr><td>Código fuente</td><td>Open source (MIT)</td><td>Cerrado / propietario</td></tr>
+    <tr><td>Pesos del modelo</td><td>Disponibles (CC-BY-NC 4.0)</td><td>No disponibles</td></tr>
+    <tr><td>Voces / letras</td><td>No (solo instrumental)</td><td>Sí</td></tr>
+    <tr><td>Interfaz de usuario</td><td>Solo API / código</td><td>Web app amigable</td></tr>
+    <tr><td>Fine-tuning propio</td><td>Sí, con código</td><td>No</td></tr>
+    <tr><td>Uso comercial</td><td>Restringido (NC)</td><td>Según suscripción</td></tr>
+    <tr><td>Costo</td><td>Gratis (requiere GPU)</td><td>Freemium / suscripción</td></tr>
+  </table>
+</div>
+
+<div class="slides-section">
+  <div class="slides-label">Diseño de slides</div>
+  <div class="slides-grid">
+
+    <div class="slide-card part-3">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 08</div>
+          <div class="slide-title">El pipeline: de texto a audio</div>
+          <ul class="slide-bullets">
+            <li>Prompt → T5 encoder → embeddings</li>
+            <li>Cross-attention → Transformer genera tokens</li>
+            <li>Tokens → EnCodec decoder → .wav</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1.5 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📊 Diagrama de flujo horizontal</span>
+        <div class="slide-tip">💡 Tip: Dibuja el flujo como cajas en línea: [Texto] → [T5] → [Transformer] → [EnCodec Decoder] → [🎵 Audio]. Es el corazón técnico de la presentación. Anímalo step by step si puedes.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-3">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 09</div>
+          <div class="slide-title">La innovación: 1 modelo, 4 codebooks</div>
+          <ul class="slide-bullets">
+            <li>Antes: múltiples modelos en cascada</li>
+            <li>Ahora: un solo Transformer con delay pattern</li>
+            <li>50 pasos autoregresivos por segundo</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📊 Diagrama codebook interleaving</span>
+        <div class="slide-tip">💡 Tip: Muestra una grid de 4 filas (codebooks) con tokens desplazados diagonalmente. No te extiendas demasiado en la técnica — lo importante es el "por qué es más eficiente".</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-3">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 10</div>
+          <div class="slide-title">AudioCraft vs Suno / Udio</div>
+          <ul class="slide-bullets">
+            <li>Open source vs propietario</li>
+            <li>Sin voces vs con voces y letras</li>
+            <li>Control total vs facilidad de uso</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~0.5 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📋 Tabla comparativa</span>
+        <div class="slide-tip">💡 Tip: Usa checkmarks (✓ y ✗) en la tabla para hacer la comparación visual. No es que AudioCraft sea "mejor" — es diferente. Enfatiza el control vs facilidad.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PARTE 4 -->
+<div id="p4">
+<div class="part-header">
+  <div class="part-number">04</div>
+  <div class="part-info">
+    <h2>Casos de uso, limitaciones y ética</h2>
+    <div class="part-meta">⏱ ~2 min · 2 slides</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que debes saber para exponer</div>
+  <h3>Aplicaciones reales</h3>
+  <p>AudioCraft tiene aplicaciones concretas en varias industrias. Para cada una, ten un ejemplo específico preparado para mencionar:</p>
+  <ul>
+    <li><strong>Videojuegos:</strong> Un desarrollador indie puede generar música adaptativa y efectos de sonido sin pagar licencias de stock. Imagina un mapa del juego que genera su propia música basada en el bioma.</li>
+    <li><strong>Cine y YouTube:</strong> Bandas sonoras sin royalties para films de bajo presupuesto. Los YouTubers evitan copyright strikes usando música generada.</li>
+    <li><strong>Podcasts y radio:</strong> Jingles de intro, música de fondo contextual, transiciones entre segmentos.</li>
+    <li><strong>Publicidad digital:</strong> Generación rápida de múltiples variaciones de un jingle para A/B testing.</li>
+    <li><strong>Realidad virtual / metaverso:</strong> Entornos sonoros procedurales y adaptativos en tiempo real.</li>
+    <li><strong>Educación musical:</strong> Crear ejemplos didácticos de distintos géneros o instrumentos al instante.</li>
+  </ul>
+
+  <h3>Limitaciones honestas</h3>
+  <ul>
+    <li>La duración fluida está limitada a ~30 segundos por generación antes de que la coherencia musical baje</li>
+    <li>No genera voces ni letras (MusicGen fue diseñado explícitamente sin esto)</li>
+    <li>La calidad varía mucho según el tamaño del modelo usado</li>
+    <li>Requiere GPU para correr en tiempo razonable (CPU es muy lento)</li>
+    <li>El dataset tiene sesgo occidental: genera mejor música de géneros anglosajones y electrónica que música latinoamericana, africana o asiática</li>
+  </ul>
+
+  <h3>Consideraciones éticas</h3>
+  <p>Meta reconoce abiertamente en el paper de AudioCraft que el modelo podría usarse para deepfake de voz (aunque lo ha intentado limitar) y que los derechos de autor del audio generado están en un área gris legal. La pregunta de si estos modelos compiten con o liberan a los músicos es legítima y aún no tiene respuesta definitiva.</p>
+  <p>También existe el riesgo de bias: al estar entrenado principalmente en música occidental y metadatos en inglés, el modelo tiene limitaciones significativas para otros géneros y culturas musicales.</p>
+</div>
+
+<div class="slides-section">
+  <div class="slides-label">Diseño de slides</div>
+  <div class="slides-grid">
+
+    <div class="slide-card part-4">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 11</div>
+          <div class="slide-title">¿Dónde se usa AudioCraft?</div>
+          <ul class="slide-bullets">
+            <li>🎮 Videojuegos — música adaptativa sin royalties</li>
+            <li>🎬 Cine / YouTube — bandas sonoras indie</li>
+            <li>🛍 Publicidad — jingles en minutos</li>
+            <li>🥽 VR / Metaverso — ambientes sonoros</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">🎯 Grid de íconos por industria</span>
+        <div class="slide-tip">💡 Tip: Usa íconos grandes por caso de uso en una grid 2×2. Sin texto largo — solo la industria y 1 frase corta de beneficio. Que la slide hable por sí sola.</div>
+      </div>
+    </div>
+
+    <div class="slide-card part-4">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 12</div>
+          <div class="slide-title">Limitaciones y ética</div>
+          <ul class="slide-bullets">
+            <li>⏱ Max ~30s de coherencia musical</li>
+            <li>🌍 Sesgo hacia música occidental</li>
+            <li>⚖️ Derechos de autor en zona gris</li>
+            <li>🎤 Sin voces — limitación deliberada</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">⚠️ Iconos de advertencia</span>
+        <div class="slide-tip">💡 Tip: Sé honesto aquí — las limitaciones bien explicadas generan credibilidad. Termina con la pregunta abierta: "¿Reemplaza o libera a los músicos?" para generar debate antes de la demo.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ COSTOS -->
+<div id="costos">
+<div class="part-header">
+  <div class="part-number">💰</div>
+  <div class="part-info">
+    <h2>Costos: ¿cuánto cuesta usar AudioCraft?</h2>
+    <div class="part-meta">Puedes incluir esto en Parte 1 o como slide extra en Parte 4</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que debes saber para exponer</div>
+  <h3>AudioCraft es gratis — pero la GPU no</h3>
+  <p>El framework en sí es completamente gratuito y open source (MIT). Lo que tiene costo es la infraestructura de cómputo necesaria para correrlo, ya que requiere GPU con al menos 8–16 GB de VRAM según el modelo.</p>
+
+  <div class="cost-grid">
+    <div class="cost-card">
+      <div class="cost-label">Código / Framework</div>
+      <div class="cost-value">$0</div>
+      <div class="cost-desc">100% open source, GitHub, MIT License</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">Google Colab (T4 GPU)</div>
+      <div class="cost-value">$0</div>
+      <div class="cost-desc">Gratuito con límites de uso. Perfecto para experimentar.</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">Google Colab Pro</div>
+      <div class="cost-value">~$10/mes</div>
+      <div class="cost-desc">GPU más potente (A100), más tiempo de sesión.</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">RunPod (RTX 4090)</div>
+      <div class="cost-value">~$0.74/hr</div>
+      <div class="cost-desc">GPU cloud flexible. Paga solo lo que uses.</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">RunPod (H100)</div>
+      <div class="cost-value">~$3.49/hr</div>
+      <div class="cost-desc">Para modelos large (3.3B) o generación en lote.</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">Replicate API</div>
+      <div class="cost-value">~$0.0046/seg</div>
+      <div class="cost-desc">API de terceros. Sin gestionar infraestructura.</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Para la demo de hoy:</strong> Google Colab gratuito con GPU T4 es suficiente para correr <code>musicgen-small</code> (300M parámetros) y generar clips de 8–15 segundos. El modelo small no requiere los 16 GB del medium — funciona con menos de 8 GB de VRAM.</p>
+  </div>
+
+  <h3>Costo real de generar música con AudioCraft</h3>
+  <p>Para poner los costos en contexto: generar un clip de 15 segundos con el modelo small en Colab tarda aproximadamente 30–60 segundos y es completamente gratuito. En RunPod, eso equivale a menos de $0.01. Comparado con una licencia de música de stock (~$30–500 por pista), el costo es prácticamente despreciable.</p>
+
+  <table class="info-table">
+    <tr>
+      <th>Escenario</th>
+      <th>Plataforma</th>
+      <th>Costo aprox.</th>
+      <th>Mejor para</th>
+    </tr>
+    <tr>
+      <td>Experimentar / aprender</td>
+      <td>Google Colab gratuito</td>
+      <td>$0</td>
+      <td>Estudiantes, demos</td>
+    </tr>
+    <tr>
+      <td>Proyectos personales</td>
+      <td>Colab Pro / RunPod spot</td>
+      <td>$10–$30/mes</td>
+      <td>Indie devs, youtubers</td>
+    </tr>
+    <tr>
+      <td>Producción semi-profesional</td>
+      <td>RunPod on-demand</td>
+      <td>$50–$200/mes</td>
+      <td>Estudios pequeños</td>
+    </tr>
+    <tr>
+      <td>Integración en app / API</td>
+      <td>Replicate / Modal</td>
+      <td>Por uso</td>
+      <td>Startups, productos</td>
+    </tr>
+  </table>
+</div>
+
+<div class="slides-section">
+  <div class="slides-label">Diseño de slide (adicional)</div>
+  <div class="slides-grid">
+
+    <div class="slide-card part-1">
+      <div class="slide-preview">
+        <div>
+          <div class="slide-num">SLIDE 13 (opcional)</div>
+          <div class="slide-title">¿Cuánto cuesta realmente?</div>
+          <ul class="slide-bullets">
+            <li>Framework: gratis (MIT)</li>
+            <li>Colab T4: gratis para experimentar</li>
+            <li>RunPod 4090: ~$0.74/hr</li>
+            <li>vs licencia stock: $30–$500/pista</li>
+          </ul>
+        </div>
+        <div class="slide-duration">⏱ ~1 min</div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-meta-label">Material visual sugerido</div>
+        <span class="slide-visual-tag">📊 Comparativa de costos visual</span>
+        <span class="slide-visual-tag">💰 Barra: "lo que pagarías vs AI"</span>
+        <div class="slide-tip">💡 Tip: Haz una comparación visual dramática: barra alta ($300 licencia) vs barra casi invisible ($0.01 con AudioCraft). El contraste habla solo. Menciona que para la demo de hoy, costo = $0.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+</main>
+
+<footer>
+  <p>AudioCraft · Meta AI FAIR Team · Agosto 2023 · github.com/facebookresearch/audiocraft</p>
+  <p style="margin-top: 8px; font-size: 11px; color: #555">Guía preparada para presentación de 15–18 min con demo práctica en Google Colab</p>
+</footer>
+
+</body>
+</html>

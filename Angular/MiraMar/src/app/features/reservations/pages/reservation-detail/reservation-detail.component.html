@@ -43,6 +43,146 @@
 
           <aside class="detail-aside">
             <div class="detail-aside__panel">
+              <h3 class="detail-aside__panel-title">Estado de la reserva</h3>
+
+              <div class="detail-aside__status-badge">
+                <i class="ph ph-calendar-check"></i>
+                <span>{{ reservation.estado }}</span>
+              </div>
+
+              <div *ngIf="actionError" class="alert alert--danger">
+                <i class="ph ph-warning-circle"></i>
+                <span>{{ actionError }}</span>
+                <button type="button" class="alert__close" (click)="actionError = ''">&times;</button>
+              </div>
+
+              <div class="form-actions" *ngIf="reservation.estado === 'PENDING'">
+                <button
+                  type="button"
+                  class="btn btn--primary"
+                  [disabled]="actionLoading"
+                  (click)="activar()"
+                >
+                  {{ actionLoading ? 'Procesando...' : 'Activar' }}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn--ghost"
+                  [disabled]="actionLoading"
+                  (click)="cancelar()"
+                >
+                  Cancelar reserva
+                </button>
+              </div>
+
+              <div class="form-actions" *ngIf="reservation.estado === 'ACTIVE'">
+                <button
+                  type="button"
+                  class="btn btn--ghost"
+                  [disabled]="actionLoading || !canInactivar"
+                  (click)="inactivar()"
+                >
+                  {{ actionLoading ? 'Procesando...' : 'Inactivar' }}
+                </button>
+                <p *ngIf="!canInactivar" class="state-warning">
+                  <i class="ph ph-warning"></i> Paga la cuenta antes de inactivar
+                </p>
+              </div>
+            </div>
+
+            <div class="detail-aside__panel">
+              <div class="detail-aside__panel-header">
+                <h3 class="detail-aside__panel-title">Servicios adicionales</h3>
+                <button
+                  type="button"
+                  class="btn btn--primary"
+                  [disabled]="!canEditServices"
+                  (click)="openModal()"
+                >
+                  <i class="ph ph-plus"></i> Agregar servicio
+                </button>
+              </div>
+
+              <div *ngIf="itemsError" class="alert alert--danger">
+                <i class="ph ph-warning-circle"></i>
+                <span>{{ itemsError }}</span>
+                <button type="button" class="alert__close" (click)="itemsError = ''">&times;</button>
+              </div>
+
+              <div class="items-table-wrapper" *ngIf="items.length > 0">
+                <table class="items-table">
+                  <thead>
+                    <tr>
+                      <th>Servicio</th>
+                      <th>Cant.</th>
+                      <th>P. Unit.</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items">
+                      <td>{{ item.hotelService?.nombre || 'N/A' }}</td>
+                      <td>
+                        <div class="quantity-ctrl">
+                          <button type="button" (click)="updateCantidad(item, -1)" [disabled]="item.cantidad <= 1 || !canEditServices">−</button>
+                          <span>{{ item.cantidad }}</span>
+                          <button type="button" (click)="updateCantidad(item, 1)" [disabled]="!canEditServices">+</button>
+                        </div>
+                      </td>
+                      <td>{{ item.precioUnitario | currency:'COP':'symbol':'1.0-0' }}</td>
+                      <td>
+                        <button type="button" class="icon-action" title="Eliminar" (click)="removeItem(item.id)" [disabled]="!canEditServices">
+                          <i class="ph ph-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr class="items-table__total">
+                      <td colspan="2"><strong>Total</strong></td>
+                      <td><strong>{{ totalSubtotal | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <p *ngIf="items.length === 0" class="items-empty">No hay servicios adicionales agregados.</p>
+            </div>
+
+            <div class="detail-aside__panel">
+              <h3 class="detail-aside__panel-title">Cuenta</h3>
+
+              <div class="detail-aside__status-badge" *ngIf="account; else sinCuenta">
+                <i class="ph ph-receipt"></i>
+                <span class="cuenta-estado" [class.cuenta-estado--closed]="account.estado === 'CLOSED'">
+                  {{ account.estado }}
+                </span>
+              </div>
+
+              <ng-template #sinCuenta>
+                <p class="items-empty">Sin cuenta generada aún.</p>
+              </ng-template>
+
+              <div *ngIf="payError" class="alert alert--danger">
+                <i class="ph ph-warning-circle"></i>
+                <span>{{ payError }}</span>
+                <button type="button" class="alert__close" (click)="payError = ''">&times;</button>
+              </div>
+
+              <div class="form-actions" *ngIf="account">
+                <button
+                  type="button"
+                  class="btn btn--primary"
+                  [disabled]="account.estado !== 'OPEN' || payLoading"
+                  (click)="pay()"
+                >
+                  {{ payLoading ? 'Procesando...' : 'Pagar' }}
+                </button>
+              </div>
+            </div>
+
+            <div class="detail-aside__panel">
               <div class="form-actions">
                 <a routerLink="/reservations" class="btn btn--ghost">Volver a reservas</a>
               </div>
@@ -52,6 +192,48 @@
       </div>
     </section>
   </main>
+
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">Seleccionar servicio</h2>
+        <button type="button" class="modal__close" (click)="closeModal()">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div *ngIf="modalError" class="alert alert--danger">
+          <i class="ph ph-warning-circle"></i>
+          <span>{{ modalError }}</span>
+          <button type="button" class="alert__close" (click)="modalError = ''">&times;</button>
+        </div>
+        <div class="modal__services">
+          <div *ngFor="let service of availableServices" class="modal-service-card">
+            <div class="modal-service-card__body">
+              <h3 class="modal-service-card__name">{{ service.nombre }}</h3>
+              <p class="modal-service-card__desc" *ngIf="service.descripcion">{{ service.descripcion }}</p>
+              <p class="modal-service-card__price">{{ service.price | currency:'COP':'symbol':'1.0-0' }}</p>
+            </div>
+            <div class="modal-service-card__actions">
+              <div class="quantity-ctrl">
+                <button type="button" (click)="decrementQty(service.id)">−</button>
+                <span>{{ serviceQuantities[service.id] || 1 }}</span>
+                <button type="button" (click)="incrementQty(service.id)">+</button>
+              </div>
+              <button
+                type="button"
+                class="btn btn--primary"
+                (click)="addService(service)"
+                [disabled]="modalLoading"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #notFoundTemplate>

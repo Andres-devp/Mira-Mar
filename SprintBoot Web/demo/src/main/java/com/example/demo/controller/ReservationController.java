@@ -1,6 +1,11 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
+import com.example.demo.entities.Account;
+import com.example.demo.entities.AccountItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -77,9 +82,104 @@ public class ReservationController {
 		return reservationService.saveReserva(reservation);
 	}
 
+	@PutMapping("/{id}/status")
+	@Operation(summary = "Actualizar el estado de una reservación")
+	public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
+		String nuevoEstado = body.get("estado");
+		if (nuevoEstado == null || nuevoEstado.isBlank()) {
+			return ResponseEntity.badRequest().body(Map.of("error", "El estado es obligatorio"));
+		}
+		try {
+			Reservation updated = reservationService.updateEstado(id, nuevoEstado);
+			return ResponseEntity.ok(updated);
+		} catch (IllegalStateException | IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Eliminar reservación por ID")
 	public void deleteReservation(@PathVariable Long id) {
 		reservationService.deleteReserva(id);
+	}
+
+	@GetMapping("/{id}/items")
+	@Operation(summary = "Listar servicios adicionales de una reserva")
+	public List<AccountItem> listItems(@PathVariable Long id) {
+		return reservationService.getItemsByReservacion(id);
+	}
+
+	@PostMapping("/{id}/items")
+	@Operation(summary = "Agregar servicio adicional a una reserva")
+	public ResponseEntity<?> addItem(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+		Long hotelServiceId = Long.valueOf(body.get("hotelServiceId").toString());
+		Integer cantidad = Integer.valueOf(body.get("cantidad").toString());
+		try {
+			AccountItem item = reservationService.addItemToReservacion(id, hotelServiceId, cantidad);
+			return ResponseEntity.ok(item);
+		} catch (IllegalArgumentException | IllegalStateException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	@PutMapping("/{id}/items/{itemId}")
+	@Operation(summary = "Actualizar cantidad de un servicio en la cuenta")
+	public ResponseEntity<?> updateItem(
+		@PathVariable Long id,
+		@PathVariable Long itemId,
+		@RequestBody Map<String, Object> body
+	) {
+		Integer cantidad = Integer.valueOf(body.get("cantidad").toString());
+		try {
+			AccountItem item = reservationService.updateItemCantidad(itemId, cantidad);
+			return ResponseEntity.ok(item);
+		} catch (IllegalArgumentException | IllegalStateException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	@DeleteMapping("/{id}/items/{itemId}")
+	@Operation(summary = "Eliminar servicio adicional de la cuenta")
+	public ResponseEntity<?> removeItem(@PathVariable Long id, @PathVariable Long itemId) {
+		try {
+			reservationService.removeItem(itemId);
+			return ResponseEntity.noContent().build();
+		} catch (IllegalStateException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	@PutMapping("/{id}/update")
+	@Operation(summary = "Actualizar reservación existente con validación de disponibilidad")
+	public ResponseEntity<?> updateReservacion(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+		try {
+			Long roomTypeId = Long.valueOf(body.get("roomTypeId").toString());
+			LocalDate fechaInicio = LocalDate.parse(body.get("fechaInicio").toString());
+			LocalDate fechaFin = LocalDate.parse(body.get("fechaFin").toString());
+			Integer cantidadPersonas = Integer.valueOf(body.get("cantidadPersonas").toString());
+			Reservation updated = reservationService.updateReservacion(id, roomTypeId, fechaInicio, fechaFin, cantidadPersonas);
+			return ResponseEntity.ok(updated);
+		} catch (IllegalArgumentException | IllegalStateException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	@GetMapping("/{id}/account")
+	@Operation(summary = "Obtener la cuenta asociada a una reserva")
+	public ResponseEntity<Account> getAccount(@PathVariable Long id) {
+		return reservationService.getAccountByReservacion(id)
+			.map(ResponseEntity::ok)
+			.orElse(ResponseEntity.notFound().build());
+	}
+
+	@PostMapping("/{id}/pay")
+	@Operation(summary = "Pagar la cuenta de una reserva")
+	public ResponseEntity<?> pay(@PathVariable Long id) {
+		try {
+			Account cuenta = reservationService.payAccount(id);
+			return ResponseEntity.ok(cuenta);
+		} catch (IllegalStateException e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
 	}
 }

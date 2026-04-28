@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AccountItemRepository extends JpaRepository<AccountItem, Long> {
 	List<AccountItem> findByHotelServiceId(Long hotelServiceId);
+	List<AccountItem> findByAccountIdAndEliminadoFalse(Long accountId);
 }

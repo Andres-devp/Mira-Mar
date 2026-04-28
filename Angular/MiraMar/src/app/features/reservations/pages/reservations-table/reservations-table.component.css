@@ -1,1 +1,18 @@
 :host { display: block; }
+
+.services-page__search {
+  margin-bottom: 1.5rem;
+}
+
+.search-bar__input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-bar__input-group input {
+  flex: 1;
+}
+
+.search-bar__error {
+  margin-top: 0.5rem;
+}

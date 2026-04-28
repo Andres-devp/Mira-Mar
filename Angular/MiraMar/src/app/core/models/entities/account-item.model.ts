@@ -1,3 +1,5 @@
+import type { HotelService } from './hotel-service.model';
+
 export interface AccountItem {
   id: number;
   cantidad: number;
@@ -7,4 +9,5 @@ export interface AccountItem {
   eliminado: boolean;
   accountId?: number;
   hotelServiceId?: number;
+  hotelService?: HotelService;
 }

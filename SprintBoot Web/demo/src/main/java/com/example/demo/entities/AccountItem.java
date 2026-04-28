@@ -40,8 +40,7 @@ public class AccountItem {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hotel_service_id", nullable = false)
     private HotelService hotelService;
 }

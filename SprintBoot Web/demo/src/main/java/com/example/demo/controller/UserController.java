@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Client;
+import com.example.demo.entities.Reservation;
 import com.example.demo.service.ClientService;
+import com.example.demo.service.ReservationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +29,9 @@ public class UserController {
 
     @Autowired
     private ClientService clienteService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping({"/all", ""})
     @Operation(summary = "Listar todos los clientes")
@@ -57,5 +62,11 @@ public class UserController {
     @Operation(summary = "Eliminar cliente por ID")
     public void deleteUser(@PathVariable Long id) {
         clienteService.deleteCliente(id);
+    }
+
+    @GetMapping("/{id}/reservations")
+    @Operation(summary = "Obtener historial de reservas de un cliente")
+    public List<Reservation> getReservaciones(@PathVariable Long id) {
+        return reservationService.getReservacionesByCliente(id);
     }
 }
