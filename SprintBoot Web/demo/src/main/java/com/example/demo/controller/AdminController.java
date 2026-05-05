@@ -1,13 +1,23 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.*;
+    import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.service.ClientService;
+import com.example.demo.service.HotelServiceService;
+import com.example.demo.service.OperatorService;
+import com.example.demo.service.ReservationService;
+import com.example.demo.service.RoomService;
+import com.example.demo.service.RoomTypeService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
