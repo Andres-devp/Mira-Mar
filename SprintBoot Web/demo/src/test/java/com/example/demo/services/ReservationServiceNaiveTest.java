@@ -158,7 +158,7 @@ public class ReservationServiceNaiveTest {
         //arrange
         Long idInexistente = 9999L;
 
-        //act & assert
+        //act y assert
         assertThrows(NotFoundException.class, () -> reservationService.getReservaById(idInexistente));
     }
 
@@ -199,7 +199,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 5),
                 5);
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.createReserva(null, request));
     }
 
@@ -220,7 +220,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 7),
                 2);
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.createReserva(null, request));
     }
 
@@ -237,7 +237,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 1),
                 2);
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.createReserva(null, request));
     }
 
@@ -311,7 +311,7 @@ public class ReservationServiceNaiveTest {
         Reservation reserva = crearReserva(client, room,
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "ACTIVE");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.updateEstado(reserva.getId(), "ACTIVE"));
     }
 
@@ -325,7 +325,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "ACTIVE");
         crearCuenta(reserva, "OPEN");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.updateEstado(reserva.getId(), "INACTIVE"));
     }
 
@@ -338,7 +338,7 @@ public class ReservationServiceNaiveTest {
         Reservation reserva = crearReserva(client, room,
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "PENDING");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalArgumentException.class, () -> reservationService.updateEstado(reserva.getId(), "FANTASMA"));
     }
 
@@ -363,7 +363,7 @@ public class ReservationServiceNaiveTest {
         //arrange
         Long idInexistente = 8888L;
 
-        //act & assert
+        //act y assert
         assertThrows(NotFoundException.class, () -> reservationService.deleteReserva(idInexistente));
     }
 
@@ -453,7 +453,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "ACTIVE");
         HotelService servicio = crearServicio("Spa", 50.0);
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.addItemToReservacion(reserva.getId(), servicio.getId(), 0));
     }
@@ -468,7 +468,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "CANCELED");
         HotelService servicio = crearServicio("Spa", 50.0);
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class,
                 () -> reservationService.addItemToReservacion(reserva.getId(), servicio.getId(), 2));
     }
@@ -498,7 +498,7 @@ public class ReservationServiceNaiveTest {
         //arrange
         Long itemId = 1L;
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.updateItemCantidad(itemId, null));
     }
@@ -508,7 +508,7 @@ public class ReservationServiceNaiveTest {
         //arrange
         Long idInexistente = 6666L;
 
-        //act & assert
+        //act y assert
         assertThrows(NotFoundException.class,
                 () -> reservationService.updateItemCantidad(idInexistente, 2));
     }
@@ -537,7 +537,7 @@ public class ReservationServiceNaiveTest {
         //arrange
         Long idInexistente = 5555L;
 
-        //act & assert
+        //act y assert
         assertThrows(NotFoundException.class, () -> reservationService.removeItem(idInexistente));
     }
 
@@ -620,7 +620,7 @@ public class ReservationServiceNaiveTest {
         Reservation reserva = crearReserva(client, room,
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "ACTIVE");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class,
                 () -> reservationService.updateReservacion(
                         reserva.getId(), tipo.getId(),
@@ -638,7 +638,7 @@ public class ReservationServiceNaiveTest {
         Reservation reserva = crearReserva(client, room,
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "PENDING");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.updateReservacion(
                         reserva.getId(), tipo.getId(),
@@ -678,7 +678,7 @@ public class ReservationServiceNaiveTest {
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "INACTIVE");
         crearCuenta(reserva, "CLOSED");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.payAccount(reserva.getId()));
     }
 
@@ -691,7 +691,7 @@ public class ReservationServiceNaiveTest {
         Reservation reserva = crearReserva(client, room,
                 LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 5), 2, "ACTIVE");
 
-        //act & assert
+        //act y assert
         assertThrows(IllegalStateException.class, () -> reservationService.payAccount(reserva.getId()));
     }
 }

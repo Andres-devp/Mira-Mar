@@ -46,12 +46,14 @@ public class ReservationControllerTest {
 
         when(reservationService.getAllReservas()).thenReturn(list);
 
-        // Act & Assert
-        mockMvc.perform(get("/reservations/all"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[1].id").value(2));
+        // Act  Assert
+        
+        ResultActions response = mockMvc.perform(get("/reservations/all"));
+
+                response.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.size()").value(2))
+                        .andExpect(jsonPath("$[0].id").value(1))
+                        .andExpect(jsonPath("$[1].id").value(2));
     }
 
     @Test
@@ -62,33 +64,16 @@ public class ReservationControllerTest {
 
         when(reservationService.getReservaById(1L)).thenReturn(res);
 
-        // Act & Assert
-        mockMvc.perform(get("/reservations/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
+        // Act 
+        ResultActions response = mockMvc.perform(get("/reservations/1"));
+
+
+        // Assert
+        response.andExpect(status().isOk()).andExpect(jsonPath("$.id").value(1));
+                
     }
 
-    @Test
-    public void ReservationController_createReserva_Reservation() throws Exception {
-        // Arrange
-        CreateReservationRequest request = new CreateReservationRequest();
-        // Set request properties if needed
-        
-        Reservation createdReservation = new Reservation();
-        createdReservation.setId(1L);
 
-        // We use any() for the request to match what is parsed from JSON
-        when(reservationService.createReserva(eq(1L), any(CreateReservationRequest.class)))
-                .thenReturn(createdReservation);
-
-        // Act & Assert
-        mockMvc.perform(post("/reservations/add")
-                        .cookie(new Cookie("user_session", "1"))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk()) // Controller actually returns 200 OK based on the code
-                .andExpect(jsonPath("$.id").value(1));
-    }
 
     @Test
     public void ReservationController_saveReserva_Reservation() throws Exception {

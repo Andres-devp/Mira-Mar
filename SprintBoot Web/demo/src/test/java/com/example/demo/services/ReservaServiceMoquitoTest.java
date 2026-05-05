@@ -83,7 +83,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         when(reservationRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.getReservaById(99L))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("99");
@@ -148,7 +148,7 @@ public class ReservaServiceMoquitoTest {
         when(clientRepository.findById(1L)).thenReturn(Optional.of(client));
         when(roomTypeRepository.findById(10L)).thenReturn(Optional.of(roomType));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.createReserva(null, request))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("capacidad");
@@ -176,7 +176,7 @@ public class ReservaServiceMoquitoTest {
                 anyLong(), any(), any(), anyString()))
                 .thenReturn(List.of(conflicto));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.createReserva(null, request))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("disponibles");
@@ -251,7 +251,7 @@ public class ReservaServiceMoquitoTest {
         Reservation reserva = Reservation.builder().id(1L).estado("ACTIVE").build();
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateEstado(1L, "ACTIVE"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("PENDING");
@@ -265,7 +265,7 @@ public class ReservaServiceMoquitoTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
         when(accountRepository.findByReservationId(1L)).thenReturn(Optional.of(cuentaAbierta));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateEstado(1L, "INACTIVE"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("OPEN");
@@ -277,7 +277,7 @@ public class ReservaServiceMoquitoTest {
         Reservation reserva = Reservation.builder().id(1L).estado("PENDING").build();
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateEstado(1L, "FANTASMA"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("FANTASMA");
@@ -301,7 +301,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         when(reservationRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.deleteReserva(99L))
                 .isInstanceOf(NotFoundException.class);
     }
@@ -398,7 +398,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         // (validacion falla antes de invocar cualquier repositorio)
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.addItemToReservacion(1L, 5L, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("cantidad");
@@ -410,7 +410,7 @@ public class ReservaServiceMoquitoTest {
         Reservation reservaCancelada = Reservation.builder().id(1L).estado("CANCELED").build();
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservaCancelada));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.addItemToReservacion(1L, 5L, 2))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("PENDING o ACTIVE");
@@ -424,7 +424,7 @@ public class ReservaServiceMoquitoTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
         when(accountRepository.findByReservationId(1L)).thenReturn(Optional.of(cuentaCerrada));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.addItemToReservacion(1L, 5L, 2))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("CLOSED");
@@ -458,7 +458,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         // (validacion falla antes de invocar cualquier repositorio)
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateItemCantidad(1L, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("cantidad");
@@ -469,7 +469,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         when(accountItemRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateItemCantidad(99L, 2))
                 .isInstanceOf(NotFoundException.class);
     }
@@ -501,7 +501,7 @@ public class ReservaServiceMoquitoTest {
         // Arrange
         when(accountItemRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.removeItem(99L))
                 .isInstanceOf(NotFoundException.class);
     }
@@ -581,7 +581,7 @@ public class ReservaServiceMoquitoTest {
         Reservation reservaActiva = Reservation.builder().id(1L).estado("ACTIVE").build();
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservaActiva));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateReservacion(
                 1L, 10L,
                 LocalDate.of(2026, 9, 1),
@@ -599,7 +599,7 @@ public class ReservaServiceMoquitoTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
         when(roomTypeRepository.findById(10L)).thenReturn(Optional.of(roomType));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateReservacion(
                 1L, 10L,
                 LocalDate.of(2026, 9, 1),
@@ -627,7 +627,7 @@ public class ReservaServiceMoquitoTest {
                 anyLong(), any(), any(), anyString()))
                 .thenReturn(List.of(conflictoOtro));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.updateReservacion(1L, 10L, inicio, fin, 2))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("disponibles");
@@ -665,7 +665,7 @@ public class ReservaServiceMoquitoTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
         when(accountRepository.findByReservationId(1L)).thenReturn(Optional.of(cuentaCerrada));
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.payAccount(1L))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("CLOSED");
@@ -678,7 +678,7 @@ public class ReservaServiceMoquitoTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reserva));
         when(accountRepository.findByReservationId(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Act y Assert
         assertThatThrownBy(() -> reservationService.payAccount(1L))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("cuenta");

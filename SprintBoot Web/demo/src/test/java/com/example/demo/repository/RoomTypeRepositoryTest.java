@@ -68,6 +68,22 @@ public class RoomTypeRepositoryTest {
     public void RoomTypeRepository_save_roomType() {
 
         RoomType roomType =  roomTypeRepository.save(RoomType.builder()
+                .codigo("ESTANDAR")
+                .nombre("Habitación Estándar")
+                .descripcion("Habitación básica confortable para una o dos personas")
+                .urlImagen("/images/Habitacion1.avif")
+                .precioNoche(80.0)
+                .capacidad(2)
+                .build());
+
+         Assertions.assertThat(roomType).isNotNull();       
+
+    }
+
+        @Test
+    public void RoomTypeRepository_save_Error() {
+
+        RoomType roomType =  roomTypeRepository.save(RoomType.builder()
                 .codigo("NUEVO")
                 .nombre("Habitación Estándar")
                 .descripcion("Habitación básica confortable para una o dos personas")
