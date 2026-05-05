@@ -40,14 +40,14 @@ public class ReservationController {
 
 	@GetMapping({"/all", ""})
 	@Operation(summary = "Listar todas las reservaciones")
-	public List<Reservation> listReservations() {
-		return reservationService.getAllReservas();
+	public ResponseEntity<List<Reservation>> listReservations() {
+		return ResponseEntity.ok(reservationService.getAllReservas());
 	}
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Buscar reservación por ID")
-	public Reservation findById(@PathVariable Long id) {
-		return reservationService.getReservaById(id);
+	public ResponseEntity<Reservation> findById(@PathVariable Long id) {
+		return ResponseEntity.ok(reservationService.getReservaById(id));
 	}
 
 	@PostMapping("/add")
@@ -77,9 +77,9 @@ public class ReservationController {
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar reservación existente")
-	public Reservation updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
+	public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
 		reservation.setId(id);
-		return reservationService.saveReserva(reservation);
+		return ResponseEntity.ok(reservationService.saveReserva(reservation));
 	}
 
 	@PutMapping("/{id}/status")
@@ -99,20 +99,21 @@ public class ReservationController {
 
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Eliminar reservación por ID")
-	public void deleteReservation(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
 		reservationService.deleteReserva(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/{id}/items")
 	@Operation(summary = "Listar servicios adicionales de una reserva")
-	public List<AccountItem> listItems(@PathVariable Long id) {
-		return reservationService.getItemsByReservacion(id);
+	public ResponseEntity<List<AccountItem>> listItems(@PathVariable Long id) {
+		return ResponseEntity.ok(reservationService.getItemsByReservacion(id));
 	}
 
 	@GetMapping("/{id}/items/paid")
 	@Operation(summary = "Listar servicios pagados de una reserva")
-	public List<AccountItem> listPaidItems(@PathVariable Long id) {
-		return reservationService.getPaidItemsByReservacion(id);
+	public ResponseEntity<List<AccountItem>> listPaidItems(@PathVariable Long id) {
+		return ResponseEntity.ok(reservationService.getPaidItemsByReservacion(id));
 	}
 
 	@PostMapping("/{id}/items")
