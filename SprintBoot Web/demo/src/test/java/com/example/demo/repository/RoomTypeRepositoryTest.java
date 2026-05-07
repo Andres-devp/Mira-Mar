@@ -68,9 +68,9 @@ public class RoomTypeRepositoryTest {
     public void RoomTypeRepository_save_roomType() {
 
         RoomType roomType =  roomTypeRepository.save(RoomType.builder()
-                .codigo("ESTANDAR")
-                .nombre("Habitación Estándar")
-                .descripcion("Habitación básica confortable para una o dos personas")
+                .codigo("TESTEABLE")
+                .nombre("Habitación Testeable")
+                .descripcion("Habitación para test")
                 .urlImagen("/images/Habitacion1.avif")
                 .precioNoche(80.0)
                 .capacidad(2)
@@ -154,7 +154,85 @@ public class RoomTypeRepositoryTest {
     }
 
 
+@Test
+    public void RoomTypeRepository_save_nullCodigo_throwsException() {
+        RoomType roomType = RoomType.builder()
+                .nombre("Habitación Sin Código")
+                .precioNoche(80.0)
+                .capacidad(2)
+                .build();
 
+        Assertions.assertThatThrownBy(() -> roomTypeRepository.save(roomType))
+                .isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void RoomTypeRepository_save_nullNombre_throwsException() {
+        RoomType roomType = RoomType.builder()
+                .codigo("SINOMBRE")
+                .precioNoche(80.0)
+                .capacidad(2)
+                .build();
+
+        Assertions.assertThatThrownBy(() -> roomTypeRepository.save(roomType))
+                .isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void RoomTypeRepository_save_nullPrecio_throwsException() {
+        RoomType roomType = RoomType.builder()
+                .codigo("SINPRECIO")
+                .nombre("Habitación Sin Precio")
+                .capacidad(2)
+                .build();
+
+        Assertions.assertThatThrownBy(() -> roomTypeRepository.save(roomType))
+                .isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void RoomTypeRepository_save_nullCapacidad_throwsException() {
+        RoomType roomType = RoomType.builder()
+                .codigo("SINCAPACIDAD")
+                .nombre("Habitación Sin Capacidad")
+                .precioNoche(80.0)
+                .build();
+
+        Assertions.assertThatThrownBy(() -> roomTypeRepository.save(roomType))
+                .isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void RoomTypeRepository_save_duplicateCodigo_throwsException() {
+        RoomType duplicate = RoomType.builder()
+                .codigo("ESTANDAR")
+                .nombre("Otra Habitación")
+                .precioNoche(100.0)
+                .capacidad(3)
+                .build();
+
+        Assertions.assertThatThrownBy(() -> roomTypeRepository.save(duplicate))
+                .isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void RoomTypeRepository_findByCapacidadGreaterThanEqual_noMatch_returnsEmptyList() {
+        List<RoomType> roomTypes = roomTypeRepository.findByCapacidadGreaterThanEqual(100);
+        Assertions.assertThat(roomTypes).isEmpty();
+    }
+
+    @Test
+    public void RoomTypeRepository_findByPrecioNocheLessThanEqual_noMatch_returnsEmptyList() {
+        List<RoomType> roomTypes = roomTypeRepository.findByPrecioNocheLessThanEqual(10);
+        Assertions.assertThat(roomTypes).isEmpty();
+    }
+
+    @Test
+    public void RoomTypeRepository_findByCapacidadAndPrecio_noMatch_returnsEmptyList() {
+        List<RoomType> roomTypes = roomTypeRepository
+                .findByCapacidadGreaterThanEqualAndPrecioNocheLessThanEqual(50, 50);
+        Assertions.assertThat(roomTypes).isEmpty();
+    }
 
 
 
