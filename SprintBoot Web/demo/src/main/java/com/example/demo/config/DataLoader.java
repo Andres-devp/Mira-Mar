@@ -31,11 +31,11 @@ import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.RoomTypeRepository;
 
 import lombok.RequiredArgsConstructor;
-
+@Profile({"default", "test"})
 @Component
 @RequiredArgsConstructor
 @Transactional
-@Profile("default")
+
 public class DataLoader implements CommandLineRunner {
     
     private final RoomTypeRepository tipoHabitacionRepository;

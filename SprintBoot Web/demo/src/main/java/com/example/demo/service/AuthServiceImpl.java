@@ -77,7 +77,9 @@ public class AuthServiceImpl implements AuthService {
         if (clienteRepository.findByEmail(email).isPresent()) {
             throw new RegistrationException("El correo electrónico ya está registrado");
         }
-
+        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+        throw new RegistrationException("El correo no tiene un formato válido");
+        }
         Client nuevo = new Client();
         nuevo.setNombre(nombre);
         nuevo.setUsuario(usuario);
