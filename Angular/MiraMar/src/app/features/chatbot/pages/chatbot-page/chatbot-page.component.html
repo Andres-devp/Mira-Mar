@@ -1,0 +1,50 @@
+<div class="chatbot-container">
+  <div class="chatbot-header">
+    <h1>Chat Inteligente - Mira Mar</h1>
+    <p>Haz tus preguntas sobre nuestro hotel</p>
+  </div>
+
+  <div class="chatbot-context-selector">
+    <label>Selecciona un tema (opcional):</label>
+    <select [(ngModel)]="selectedContext" class="form-control">
+      <option *ngFor="let ctx of contexts" [value]="ctx.value">{{ ctx.label }}</option>
+    </select>
+  </div>
+
+  <div class="chatbot-messages" id="messagesContainer">
+    <div *ngFor="let msg of messages" [ngClass]="{ 'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot' }">
+      <div class="message-bubble">
+        <p>{{ msg.text }}</p>
+        <span class="timestamp">{{ msg.timestamp | date:'short' }}</span>
+      </div>
+    </div>
+    <div *ngIf="isLoading" class="bot-message">
+      <div class="message-bubble loading">
+        <p>Escribiendo...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chatbot-input-area">
+    <div class="input-group">
+      <input 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="userInput"
+        (keyup.enter)="sendMessage()"
+        placeholder="Escribe tu pregunta..."
+        [disabled]="isLoading"
+      />
+      <button 
+        class="btn btn-primary" 
+        (click)="sendMessage()"
+        [disabled]="isLoading || !userInput.trim()"
+      >
+        Enviar
+      </button>
+    </div>
+    <button class="btn btn-secondary btn-clear" (click)="clearChat()">
+      Limpiar Chat
+    </button>
+  </div>
+</div>

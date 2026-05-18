@@ -13,6 +13,7 @@
       <li><a routerLink="/" (click)="closeMenu()">Inicio</a></li>
       <li><a routerLink="/rooms" (click)="closeMenu()">Suites</a></li>
       <li><a routerLink="/services" (click)="closeMenu()">Servicios</a></li>
+      <li><a routerLink="/chatbot" (click)="closeMenu()">Chat</a></li>
       <li>
         <a
           routerLink="/rooms"
@@ -21,6 +22,9 @@
           (click)="closeMenu()"
           >Reservar</a
         >
+      </li>
+      <li class="translator-nav-item">
+        <app-translator-button></app-translator-button>
       </li>
       <li class="profile-dropdown-item" *ngIf="!isAuthenticated">
         <a routerLink="/login" class="user-login-link" (click)="closeMenu()">

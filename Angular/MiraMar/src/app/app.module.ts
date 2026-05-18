@@ -56,6 +56,12 @@ import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { CreateAccountComponent } from './features/auth/pages/create-account/create-account.component';
 
+// Chatbot
+import { ChatbotPageComponent } from './features/chatbot/pages/chatbot-page/chatbot-page.component';
+
+// Translator
+import { TranslatorButtonComponent } from './shared/components/translator-button/translator-button.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +95,8 @@ import { CreateAccountComponent } from './features/auth/pages/create-account/cre
     UsuarioDetailComponent,
     LoginComponent,
     CreateAccountComponent,
+    ChatbotPageComponent,
+    TranslatorButtonComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,6 +26,7 @@ import { UsuarioDetailComponent } from './features/usuarios/pages/usuario-detail
 import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self-form/usuario-self-form.component';
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { CreateAccountComponent } from './features/auth/pages/create-account/create-account.component';
+import { ChatbotPageComponent } from './features/chatbot/pages/chatbot-page/chatbot-page.component';
 
 const routes: Routes = [
   // --- Públicas ---
@@ -66,6 +67,9 @@ const routes: Routes = [
 
   // --- Operadores ---
   { path: 'operadores', component: OperadoresTableComponent },
+
+  // --- Chatbot ---
+  { path: 'chatbot', component: ChatbotPageComponent },
 
   // --- Dashboards (sin navbar ni footer) ---
   {

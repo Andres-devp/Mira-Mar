@@ -1,0 +1,12 @@
+<div class="translator-button-container">
+  <button 
+    class="translator-btn"
+    (click)="toggleLanguage()"
+    [disabled]="isTranslating"
+    [title]="languageTooltip"
+    aria-label="Toggle language"
+  >
+    <span class="language-label">{{ languageLabel }}</span>
+    <span *ngIf="isTranslating" class="spinner"></span>
+  </button>
+</div>
