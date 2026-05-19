@@ -44,10 +44,10 @@ export class ReservationService {
   }
 
   getByClient(clientId: number): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(`http://localhost:8080/usuarios/${clientId}/reservations`).pipe(
-      catchError(this.handleError)
-    );
-  }
+  return this.http.get<Reservation[]>(`${this.apiUrl}/client/${clientId}`).pipe(
+    catchError(this.handleError)
+  );
+}
 
   updateReservacion(id: number, roomTypeId: number, fechaInicio: string, fechaFin: string, cantidadPersonas: number): Observable<Reservation> {
     return this.http.put<Reservation>(`${this.apiUrl}/${id}/update`, {

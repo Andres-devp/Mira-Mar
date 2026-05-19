@@ -5,4 +5,8 @@ export interface Room {
   nombre: string;
   tipoHabitacion?: RoomType;
   tipoHabitacionId?: number;
+  roomTypeId?: number;
+  roomTypeName?: string;
+  capacidad?: number;
+  precioNoche?: number;
 }

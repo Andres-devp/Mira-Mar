@@ -242,6 +242,7 @@ public class ReservationServiceImpl implements ReservationService {
             Account nueva = Account.builder()
                 .saldo(0.0)
                 .estado("OPEN")
+                .createdAt(LocalDateTime.now()) 
                 .reservation(reservation)
                 .build();
             return accountRepository.save(nueva);

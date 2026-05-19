@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controller.dto.OperatorResponseDTO;
 import com.example.demo.entities.Operator;
 import com.example.demo.service.OperatorService;
 
@@ -28,34 +31,55 @@ public class OperatorController {
     @Autowired
     private OperatorService operadorService;
 
-    @GetMapping({"/all", ""})
+    @GetMapping({"all", ""})
     @Operation(summary = "Listar todos los operadores")
-    public List<Operator> listOperators() {
-        return operadorService.getAllOperadores();
+    public ResponseEntity<List<OperatorResponseDTO>> listOperators() {
+        List<OperatorResponseDTO> dtos = operadorService.getAllOperadores()
+            .stream()
+            .map(this::mapToDTO)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar operador por ID")
-    public Operator findById(@PathVariable Long id) {
-        return operadorService.getOperadorById(id);
+    public ResponseEntity<OperatorResponseDTO> findById(@PathVariable Long id) {
+        Operator op = operadorService.getOperadorById(id);
+        return ResponseEntity.ok(mapToDTO(op));
     }
 
     @PostMapping("/add")
     @Operation(summary = "Crear nuevo operador")
-    public Operator createOperator(@RequestBody Operator operador) {
-        return operadorService.saveOperador(operador);
+    public ResponseEntity<OperatorResponseDTO> createOperator(@RequestBody Operator operador) {
+        Operator saved = operadorService.saveOperador(operador);
+        return ResponseEntity.ok(mapToDTO(saved));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar operador existente")
-    public Operator updateOperator(@PathVariable Long id, @RequestBody Operator operador) {
+    public ResponseEntity<OperatorResponseDTO> updateOperator(@PathVariable Long id, @RequestBody Operator operador) {
         operador.setId(id);
-        return operadorService.saveOperador(operador);
+        Operator updated = operadorService.saveOperador(operador);
+        return ResponseEntity.ok(mapToDTO(updated));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar operador por ID")
-    public void deleteOperator(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOperator(@PathVariable Long id) {
         operadorService.deleteOperador(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // DTO Mapping
+    private OperatorResponseDTO mapToDTO(Operator op) {
+        return OperatorResponseDTO.builder()
+            .id(op.getId())
+            .nombre(op.getNombre())
+            .apellido(op.getApellido())
+            .usuario(op.getUsuario())
+            .email(op.getEmail())
+            .cedula(op.getCedula()) 
+            .telefono(op.getTelefono())
+            .build();
     }
 }

@@ -39,12 +39,13 @@ public class Reservation {
     @Column(name = "canceled_at")
     private LocalDateTime canceledAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnoreProperties({"contrasena"})
+    @JsonIgnoreProperties({"contrasena", "telefono", "fotoPerfil"})
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
+    @JsonIgnoreProperties({"reservations", "tipoHabitacion"})
     private Room room;
 }

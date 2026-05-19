@@ -34,9 +34,9 @@
         <tr *ngFor="let room of rooms">
           <td>{{ room.id }}</td>
           <td>{{ room.nombre }}</td>
-          <td>{{ room.tipoHabitacion?.nombre || 'N/A' }}</td>
-          <td>{{ room.tipoHabitacion?.capacidad }}</td>
-          <td>${{ room.tipoHabitacion?.precioNoche }}</td>
+          <td>{{ room.roomTypeName || 'N/A' }}</td>
+          <td>{{ room.capacidad }}</td>
+          <td>${{ room.precioNoche }}</td>
           <td>
             <div class="icon-actions">
               <a [routerLink]="['/rooms', room.id, 'edit']" class="icon-action" title="Editar">

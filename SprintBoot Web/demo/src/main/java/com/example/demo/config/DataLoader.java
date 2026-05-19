@@ -20,6 +20,8 @@ import com.example.demo.entities.Operator;
 import com.example.demo.entities.Reservation;
 import com.example.demo.entities.Room;
 import com.example.demo.entities.RoomType;
+import com.example.demo.entities.UserEntity;
+import com.example.demo.enums.UserRole;
 import com.example.demo.repository.AccountItemRepository;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.AdministratorRepository;
@@ -29,15 +31,17 @@ import com.example.demo.repository.OperatorRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.RoomTypeRepository;
-
+import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 @Profile({"default", "test"})
 @Component
 @RequiredArgsConstructor
 @Transactional
 
 public class DataLoader implements CommandLineRunner {
-    
+
+    private final UserRepository userRepository;
     private final RoomTypeRepository tipoHabitacionRepository;
     private final ClientRepository clienteRepository;
         private final AdministratorRepository administradorRepository;
@@ -241,6 +245,18 @@ public class DataLoader implements CommandLineRunner {
         servicios.add(HotelService.builder().nombre("Eventos y bodas").descripcion("Organización de eventos y bodas en el hotel").imageUrl("https://i.pinimg.com/736x/4e/2a/90/4e2a90524e644f8f95784f3b805d06ae.jpg").price(200.0).build());
         List<HotelService> serviciosGuardados = servicioRepository.saveAll(servicios);
 
+        List<UserEntity> usuarios = new ArrayList<>();
+        usuarios.add(UserEntity.builder().nombre("Cliente Demo").apellido("").usuario("cliente").contrasena("123").email("clienteu@miramar.com").cedula("100000010").telefono("3000000000").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Ohcar").apellido("").usuario("ohca").contrasena("password1234").email("ohcaru@gmail.com").cedula("100000011").telefono("9876543210").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("María García").apellido("").usuario("maria.garcia").contrasena("pass1234").email("maria.garciau@gmail.com").cedula("100000012").telefono("555111222").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Carlos López").apellido("").usuario("carlos.lopez").contrasena("secure789").email("carlos.lopezu@gmail.com").cedula("100000013").telefono("555333444").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Ana Martínez").apellido("").usuario("ana.martinez").contrasena("password555").email("ana.martinezu@gmail.com").cedula("100000014").telefono("555555666").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Juan Rodríguez").apellido("").usuario("juan.rodriguez").contrasena("pass1111").email("juan.rodriguezu@gmail.com").cedula("100000015").telefono("555777888").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Laura Fernández").apellido("").usuario("laura.fernandez").contrasena("laura123").email("laura.fernandezu@gmail.com").cedula("100000016").telefono("555999000").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Pedro Sánchez").apellido("").usuario("pedro.sanchez").contrasena("pedro456").email("pedro.sanchezu@gmail.com").cedula("100000017").telefono("555121212").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("Sofia Gómez").apellido("").usuario("sofia.gomez").contrasena("sofia789").email("sofia.gomezu@gmail.com").cedula("100000018").telefono("555343434").rol(UserRole.CLIENT).activo(true).build());
+        usuarios.add(UserEntity.builder().nombre("nico").apellido("").usuario("nico").contrasena("123").email("nicou@gmail.com").cedula("100000019").telefono("555343435").rol(UserRole.CLIENT).activo(true).build());
+        List<UserEntity> usuariosGuardados = userRepository.saveAll(usuarios);
         // 6. Crear 6 operarios
         List<Operator> operadores = new ArrayList<>();
         operadores.add(Operator.builder()
@@ -355,6 +371,7 @@ public class DataLoader implements CommandLineRunner {
             cuentas.add(Account.builder()
                     .saldo(saldo)
                     .estado(estado)
+                    .createdAt(LocalDateTime.now())
                     .reservation(reservasGuardadas.get(i))
                     .build());
         }
@@ -413,6 +430,10 @@ public class DataLoader implements CommandLineRunner {
                 .hotelService(serviciosGuardados.get(3))
                 .build());
 
+
+        
+        
+
         List<AccountItem> itemsCuentaGuardados = itemCuentaRepository.saveAll(itemsCuenta);
 
         System.out.println(" Datos inicializados: " +
@@ -424,6 +445,7 @@ public class DataLoader implements CommandLineRunner {
                 operadoresGuardados.size() + " operarios, " +
                 reservasGuardadas.size() + " reservas, " +
                 cuentasGuardadas.size() + " cuentas, " +
-                itemsCuentaGuardados.size() + " itemsCuenta");
+                itemsCuentaGuardados.size() + " itemsCuenta"+
+                usuariosGuardados.size() + " usuarios");
     }
 }

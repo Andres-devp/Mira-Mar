@@ -60,8 +60,8 @@
       <tbody>
         <tr *ngFor="let reserva of reservas">
           <td>{{ reserva.id }}</td>
-          <td>{{ reserva.client?.nombre || 'N/A' }}</td>
-          <td>{{ reserva.room?.nombre || 'N/A' }}</td>
+          <td>{{ reserva.clientNombre || 'N/A' }}</td>
+          <td>{{ reserva.roomNombre || 'N/A' }}</td>
           <td>{{ reserva.fechaInicio }}</td>
           <td>{{ reserva.fechaFin }}</td>
           <td>{{ reserva.cantidadPersonas }}</td>

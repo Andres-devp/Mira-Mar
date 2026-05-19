@@ -3,9 +3,16 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.example.demo.controller.dto.ReservationResponseDTO;
+import com.example.demo.controller.dto.ReservationMinimalDTO;
+import com.example.demo.controller.dto.AccountResponseDTO;
+import com.example.demo.controller.dto.AccountItemResponseDTO;
+import com.example.demo.controller.dto.CreateReservationRequest;
 import com.example.demo.entities.Account;
 import com.example.demo.entities.AccountItem;
+import com.example.demo.entities.Reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.controller.dto.CreateReservationRequest;
-import com.example.demo.entities.Reservation;
 import com.example.demo.service.ReservationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,14 +45,19 @@ public class ReservationController {
 
 	@GetMapping({"/all", ""})
 	@Operation(summary = "Listar todas las reservaciones")
-	public ResponseEntity<List<Reservation>> listReservations() {
-		return ResponseEntity.ok(reservationService.getAllReservas());
+	public ResponseEntity<List<ReservationMinimalDTO>> listReservations() {
+		List<ReservationMinimalDTO> dtos = reservationService.getAllReservas()
+			.stream()
+			.map(this::mapToMinimalDTO)
+			.collect(Collectors.toList());
+		return ResponseEntity.ok(dtos);
 	}
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Buscar reservación por ID")
-	public ResponseEntity<Reservation> findById(@PathVariable Long id) {
-		return ResponseEntity.ok(reservationService.getReservaById(id));
+	public ResponseEntity<ReservationResponseDTO> findById(@PathVariable Long id) {
+		Reservation res = reservationService.getReservaById(id);
+		return ResponseEntity.ok(mapToResponseDTO(res));
 	}
 
 	@PostMapping("/add")
@@ -72,14 +82,15 @@ public class ReservationController {
 		}
 
 		Reservation reservation = reservationService.createReserva(sessionUserId, request);
-		return ResponseEntity.ok(reservation);
+		return ResponseEntity.ok(mapToResponseDTO(reservation));
 	}
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar reservación existente")
-	public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
+	public ResponseEntity<ReservationResponseDTO> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
 		reservation.setId(id);
-		return ResponseEntity.ok(reservationService.saveReserva(reservation));
+		Reservation updated = reservationService.saveReserva(reservation);
+		return ResponseEntity.ok(mapToResponseDTO(updated));
 	}
 
 	@PutMapping("/{id}/status")
@@ -91,7 +102,7 @@ public class ReservationController {
 		}
 		try {
 			Reservation updated = reservationService.updateEstado(id, nuevoEstado);
-			return ResponseEntity.ok(updated);
+			return ResponseEntity.ok(mapToResponseDTO(updated));
 		} catch (IllegalStateException | IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
 		}
@@ -106,14 +117,22 @@ public class ReservationController {
 
 	@GetMapping("/{id}/items")
 	@Operation(summary = "Listar servicios adicionales de una reserva")
-	public ResponseEntity<List<AccountItem>> listItems(@PathVariable Long id) {
-		return ResponseEntity.ok(reservationService.getItemsByReservacion(id));
+	public ResponseEntity<List<AccountItemResponseDTO>> listItems(@PathVariable Long id) {
+		List<AccountItemResponseDTO> dtos = reservationService.getItemsByReservacion(id)
+			.stream()
+			.map(this::mapToAccountItemDTO)
+			.collect(Collectors.toList());
+		return ResponseEntity.ok(dtos);
 	}
 
 	@GetMapping("/{id}/items/paid")
 	@Operation(summary = "Listar servicios pagados de una reserva")
-	public ResponseEntity<List<AccountItem>> listPaidItems(@PathVariable Long id) {
-		return ResponseEntity.ok(reservationService.getPaidItemsByReservacion(id));
+	public ResponseEntity<List<AccountItemResponseDTO>> listPaidItems(@PathVariable Long id) {
+		List<AccountItemResponseDTO> dtos = reservationService.getPaidItemsByReservacion(id)
+			.stream()
+			.map(this::mapToAccountItemDTO)
+			.collect(Collectors.toList());
+		return ResponseEntity.ok(dtos);
 	}
 
 	@PostMapping("/{id}/items")
@@ -123,7 +142,7 @@ public class ReservationController {
 		Integer cantidad = Integer.valueOf(body.get("cantidad").toString());
 		try {
 			AccountItem item = reservationService.addItemToReservacion(id, hotelServiceId, cantidad);
-			return ResponseEntity.ok(item);
+			return ResponseEntity.ok(mapToAccountItemDTO(item));
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
 		}
@@ -139,7 +158,7 @@ public class ReservationController {
 		Integer cantidad = Integer.valueOf(body.get("cantidad").toString());
 		try {
 			AccountItem item = reservationService.updateItemCantidad(itemId, cantidad);
-			return ResponseEntity.ok(item);
+			return ResponseEntity.ok(mapToAccountItemDTO(item));
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
 		}
@@ -165,7 +184,7 @@ public class ReservationController {
 			LocalDate fechaFin = LocalDate.parse(body.get("fechaFin").toString());
 			Integer cantidadPersonas = Integer.valueOf(body.get("cantidadPersonas").toString());
 			Reservation updated = reservationService.updateReservacion(id, roomTypeId, fechaInicio, fechaFin, cantidadPersonas);
-			return ResponseEntity.ok(updated);
+			return ResponseEntity.ok(mapToResponseDTO(updated));
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
 		}
@@ -173,8 +192,9 @@ public class ReservationController {
 
 	@GetMapping("/{id}/account")
 	@Operation(summary = "Obtener la cuenta asociada a una reserva")
-	public ResponseEntity<Account> getAccount(@PathVariable Long id) {
+	public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long id) {
 		return reservationService.getAccountByReservacion(id)
+			.map(this::mapToAccountDTO)
 			.map(ResponseEntity::ok)
 			.orElse(ResponseEntity.notFound().build());
 	}
@@ -184,9 +204,73 @@ public class ReservationController {
 	public ResponseEntity<?> pay(@PathVariable Long id) {
 		try {
 			Account cuenta = reservationService.payAccount(id);
-			return ResponseEntity.ok(cuenta);
+			return ResponseEntity.ok(mapToAccountDTO(cuenta));
 		} catch (IllegalStateException e) {
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
 		}
+	}
+
+	// DTO Mapping Methods
+	private ReservationResponseDTO mapToResponseDTO(Reservation res) {
+		return ReservationResponseDTO.builder()
+			.id(res.getId())
+			.fechaInicio(res.getFechaInicio())
+			.fechaFin(res.getFechaFin())
+			.cantidadPersonas(res.getCantidadPersonas())
+			.estado(res.getEstado())
+			.createdAt(res.getCreatedAt())
+			.canceledAt(res.getCanceledAt())
+			.clientId(res.getClient().getId())
+			.clientNombre(res.getClient().getNombre())
+			.clientEmail(res.getClient().getEmail())
+			.roomId(res.getRoom().getId())
+			.roomNombre(res.getRoom().getNombre())
+			.roomTypeId(res.getRoom().getTipoHabitacion().getId())
+			.roomTypeName(res.getRoom().getTipoHabitacion().getNombre())
+			.build();
+	}
+
+	private ReservationMinimalDTO mapToMinimalDTO(Reservation res) {
+    return ReservationMinimalDTO.builder()
+        .id(res.getId())
+        .fechaInicio(res.getFechaInicio())
+        .fechaFin(res.getFechaFin())
+        .estado(res.getEstado())
+        .roomId(res.getRoom().getId())
+        .roomNombre(res.getRoom().getNombre())
+        .clientNombre(res.getClient().getNombre())
+        .cantidadPersonas(res.getCantidadPersonas())
+        .build();
+}
+
+	private AccountResponseDTO mapToAccountDTO(Account account) {
+		return AccountResponseDTO.builder()
+			.id(account.getId())
+			.estado(account.getEstado())
+			.total(account.getSaldo())
+			.createdAt(account.getCreatedAt())
+			.reservationId(account.getReservation().getId())
+			.build();
+	}
+@GetMapping("/client/{clientId}")
+public ResponseEntity<List<ReservationResponseDTO>> getByClient(@PathVariable Long clientId) {
+    List<ReservationResponseDTO> dtos = reservationService.getReservacionesByCliente(clientId)
+        .stream()
+        .map(this::mapToResponseDTO)
+        .collect(Collectors.toList());
+    return ResponseEntity.ok(dtos);
+}
+	private AccountItemResponseDTO mapToAccountItemDTO(AccountItem item) {
+		return AccountItemResponseDTO.builder()
+			.id(item.getId())
+			.cantidad(item.getCantidad())
+			.precioUnitario(item.getPrecioUnitario())
+			.subtotal(item.getSubtotal())
+			.createdAt(item.getCreatedAt())
+			.eliminado(item.getEliminado())
+			.hotelServiceId(item.getHotelService().getId())
+			.hotelServiceNombre(item.getHotelService().getNombre())
+			.hotelServicePrecio(item.getHotelService().getPrice())
+			.build();
 	}
 }

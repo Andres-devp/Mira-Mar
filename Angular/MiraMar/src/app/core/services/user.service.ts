@@ -9,12 +9,12 @@ import { Client } from '../models/entities';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/usuarios';
+  private apiUrl = '//localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Client[]> {
-    return this.http.get<Client[]>(`${this.apiUrl}/all`).pipe(
+    return this.http.get<Client[]>(this.apiUrl).pipe(
       catchError(this.handleError)
     );
   }
