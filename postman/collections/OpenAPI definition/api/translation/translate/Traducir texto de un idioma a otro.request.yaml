@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/translation/translate"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "text": "string",
+      "sourceLanguage": "string",
+      "targetLanguage": "string"
+    }
+examples: ./.resources/Traducir texto de un idioma a otro.resources/examples
+order: 1000

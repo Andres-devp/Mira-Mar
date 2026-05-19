@@ -1,0 +1,20 @@
+$kind: http-request
+name: Actualizar reservación existente con validación de disponibilidad
+url: "{{baseUrl}}/reservations/:id/update"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "key_0": {},
+      "key_1": {},
+      "key_2": {},
+      "key_3": {}
+    }
+examples: ./.resources/Actualizar reservación existente con validación de disponibili.resources/examples
+order: 1000

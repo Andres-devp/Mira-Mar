@@ -1,0 +1,11 @@
+# Use this workspace to collaborate
+workspace:
+  id: 58422fac-35a6-46c6-8a52-3ec83a5dfc1b
+
+localResources:
+  collections:
+    - ../Mira-Mar-API.postman_collection.json
+
+cloudResources:
+  collections:
+    ../postman/collections/OpenAPI definition: 2b22bae3-7483-4e07-8e9a-654f32c6a591

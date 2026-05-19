@@ -27,49 +27,52 @@ import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { CreateAccountComponent } from './features/auth/pages/create-account/create-account.component';
 import { ChatbotPageComponent } from './features/chatbot/pages/chatbot-page/chatbot-page.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
+import { OperatorGuard } from './core/guards/operator.guard';
 
 const routes: Routes = [
   // --- Públicas ---
   { path: '', component: LandingPageComponent },
   { path: 'rooms', component: RoomsListComponent },
 
-  // --- Rooms (admin) — static paths BEFORE parameterized ---
-  { path: 'rooms/table', component: RoomsTableComponent },
-  { path: 'rooms/add', component: RoomFormComponent },
-  { path: 'rooms/:id/edit', component: RoomFormComponent },
+  // --- Rooms — static BEFORE parameterized ---
+  { path: 'rooms/table', component: RoomsTableComponent, canActivate: [OperatorGuard] },
+  { path: 'rooms/add', component: RoomFormComponent, canActivate: [OperatorGuard] },
+  { path: 'rooms/:id/edit', component: RoomFormComponent, canActivate: [OperatorGuard] },
   { path: 'rooms/:id', component: RoomTypeDetailComponent },
 
-  // --- Room Types (admin) ---
+  // --- Room Types — static BEFORE parameterized ---
   { path: 'roomtypes', component: RoomTypeListComponent },
-  { path: 'roomtypes/new', component: RoomTypeFormComponent },
-  { path: 'roomtypes/:id/edit', component: RoomTypeFormComponent },
+  { path: 'roomtypes/new', component: RoomTypeFormComponent, canActivate: [OperatorGuard] },
+  { path: 'roomtypes/:id/edit', component: RoomTypeFormComponent, canActivate: [OperatorGuard] },
   { path: 'roomtypes/:id', component: RoomTypeDetailComponent },
 
-  // --- Hotel Services — static paths BEFORE parameterized ---
+  // --- Hotel Services — static BEFORE parameterized ---
   { path: 'services', component: HotelServiceListComponent },
-  { path: 'services/table', component: HotelServiceTableComponent },
-  { path: 'services/new', component: HotelServiceFormComponent },
-  { path: 'services/:id/edit', component: HotelServiceFormComponent },
+  { path: 'services/table', component: HotelServiceTableComponent, canActivate: [OperatorGuard] },
+  { path: 'services/new', component: HotelServiceFormComponent, canActivate: [OperatorGuard] },
+  { path: 'services/:id/edit', component: HotelServiceFormComponent, canActivate: [OperatorGuard] },
   { path: 'services/:id', component: HotelServiceDetailComponent },
 
   // --- Reservaciones ---
-  { path: 'reservations', component: ReservationsTableComponent },
-  { path: 'reservations/add', component: ReservationFormComponent },
-  { path: 'reservations/user/:id', component: ReservationUserDetailComponent },
-  { path: 'reservations/:id', component: ReservationDetailComponent },
+  { path: 'reservations', component: ReservationsTableComponent, canActivate: [AuthGuard] },
+  { path: 'reservations/add', component: ReservationFormComponent, canActivate: [AuthGuard] },
+  { path: 'reservations/user/:id', component: ReservationUserDetailComponent, canActivate: [AuthGuard] },
+  { path: 'reservations/:id', component: ReservationDetailComponent, canActivate: [AuthGuard] },
 
   // --- Usuarios ---
-  { path: 'usuarios', component: UsuariosTableComponent },
-  { path: 'usuarios/add', component: UsuarioFormComponent },
-  { path: 'usuarios/edit/:id', component: UsuarioFormComponent },
-  { path: 'usuarios/self/edit/:id', component: UsuarioSelfFormComponent },
-  { path: 'usuarios/:id', component: UsuarioDetailComponent },
+  { path: 'usuarios', component: UsuariosTableComponent, canActivate: [OperatorGuard] },
+  { path: 'usuarios/add', component: UsuarioFormComponent, canActivate: [AdminGuard] },
+  { path: 'usuarios/edit/:id', component: UsuarioFormComponent, canActivate: [AdminGuard] },
+  { path: 'usuarios/self/edit/:id', component: UsuarioSelfFormComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios/:id', component: UsuarioDetailComponent, canActivate: [AuthGuard] },
 
   // --- Operadores ---
-  { path: 'operadores', component: OperadoresTableComponent },
+  { path: 'operadores', component: OperadoresTableComponent, canActivate: [OperatorGuard] },
 
   // --- Chatbot ---
-  { path: 'chatbot', component: ChatbotPageComponent },
+  { path: 'chatbot', component: ChatbotPageComponent, canActivate: [AuthGuard] },
 
   // --- Dashboards (sin navbar ni footer) ---
   {

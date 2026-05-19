@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Buscar reservación por ID.resources/examples
+order: 6000

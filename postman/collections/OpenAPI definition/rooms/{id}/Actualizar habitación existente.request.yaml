@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/rooms/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "id": 3163,
+      "nombre": "string",
+      "tipoHabitacion": {
+        "id": 7843,
+        "codigo": "string",
+        "nombre": "string",
+        "descripcion": "string",
+        "urlImagen": "string",
+        "precioNoche": 7682.018701657972,
+        "capacidad": 2114
+      }
+    }
+examples: ./.resources/Actualizar habitación existente.resources/examples
+order: 2000

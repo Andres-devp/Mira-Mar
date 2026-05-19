@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "key_0": "string",
+      "key_1": "string"
+    }
+examples: ./.resources/Iniciar sesión con usuario y contraseña.resources/examples
+order: 1000

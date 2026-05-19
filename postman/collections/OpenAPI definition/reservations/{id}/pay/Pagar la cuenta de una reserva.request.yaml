@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/pay"
+method: POST
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Pagar la cuenta de una reserva.resources/examples
+order: 1000

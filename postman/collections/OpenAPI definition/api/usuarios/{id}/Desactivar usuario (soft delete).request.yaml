@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/usuarios/:id"
+method: DELETE
+pathVariables:
+  id: "7007"
+examples: ./.resources/Desactivar usuario (soft delete).resources/examples
+order: 3000

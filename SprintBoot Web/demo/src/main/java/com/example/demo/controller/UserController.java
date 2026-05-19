@@ -53,7 +53,7 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Listar todos los usuarios")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }

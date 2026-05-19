@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/items/:itemId"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+  itemId: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "key_0": {},
+      "key_1": {},
+      "key_2": {},
+      "key_3": {}
+    }
+examples: ./.resources/Actualizar cantidad de un servicio en la cuenta.resources/examples
+order: 1000

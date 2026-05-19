@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/rooms/add"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "id": 3163,
+      "nombre": "string",
+      "tipoHabitacion": {
+        "id": 7843,
+        "codigo": "string",
+        "nombre": "string",
+        "descripcion": "string",
+        "urlImagen": "string",
+        "precioNoche": 7682.018701657972,
+        "capacidad": 2114
+      }
+    }
+examples: ./.resources/Crear nueva habitación.resources/examples
+order: 1000

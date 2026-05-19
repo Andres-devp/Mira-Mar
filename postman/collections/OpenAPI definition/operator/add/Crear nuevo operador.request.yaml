@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/operator/add"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "id": 1366,
+      "nombre": "string",
+      "apellido": "string",
+      "usuario": "string",
+      "email": "string",
+      "contrasena": "string",
+      "cedula": "string",
+      "telefono": "string",
+      "fotoPerfil": "string"
+    }
+examples: ./.resources/Crear nuevo operador.resources/examples
+order: 1000

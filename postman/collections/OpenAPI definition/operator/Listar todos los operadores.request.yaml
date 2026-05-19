@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/operator"
+method: GET
+headers:
+  Accept: "*/*"
+examples: ./.resources/Listar todos los operadores.resources/examples
+order: 4000

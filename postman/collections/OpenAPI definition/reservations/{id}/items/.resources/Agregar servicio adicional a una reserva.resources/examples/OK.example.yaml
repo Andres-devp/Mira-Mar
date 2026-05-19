@@ -1,0 +1,27 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/reservations/:id/items"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Accept: "*/*"
+  pathVariables:
+    id: "7007"
+  body:
+    type: json
+    content: |-
+      {
+        "key_0": {},
+        "key_1": {},
+        "key_2": {},
+        "key_3": {}
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: "{}"
+order: 1000

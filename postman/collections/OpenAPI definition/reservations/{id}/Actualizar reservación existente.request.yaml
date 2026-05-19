@@ -1,0 +1,41 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "id": 9402,
+      "fechaInicio": "2003-07-22",
+      "fechaFin": "1990-03-26",
+      "cantidadPersonas": 9495,
+      "estado": "string",
+      "createdAt": "2002-08-24T08:52:24.350Z",
+      "canceledAt": "1949-04-28T19:58:36.783Z",
+      "client": {
+        "id": 5653,
+        "nombre": "string",
+        "usuario": "string",
+        "email": "string"
+      },
+      "room": {
+        "id": 1994,
+        "nombre": "string",
+        "tipoHabitacion": {
+          "id": 1405,
+          "codigo": "string",
+          "nombre": "string",
+          "descripcion": "string",
+          "urlImagen": "string",
+          "precioNoche": 7915.469187377256,
+          "capacidad": 36
+        }
+      }
+    }
+examples: ./.resources/Actualizar reservación existente.resources/examples
+order: 7000

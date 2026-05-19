@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/add"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "clientId": 2798,
+      "roomTypeId": 4612,
+      "fechaInicio": "1995-01-24",
+      "fechaFin": "1986-07-18",
+      "cantidadPersonas": 435
+    }
+examples: ./.resources/Crear nueva reservación y asignar habitación disponible.resources/examples
+order: 1000

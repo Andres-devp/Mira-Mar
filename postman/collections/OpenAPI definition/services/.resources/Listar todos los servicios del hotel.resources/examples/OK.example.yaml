@@ -1,0 +1,31 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/services"
+  method: GET
+  headers:
+    Accept: "*/*"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      [
+        {
+          "id": 6378,
+          "nombre": "string",
+          "descripcion": "string",
+          "imageUrl": "string",
+          "price": 1535.0381305262063
+        },
+        {
+          "id": 8873,
+          "nombre": "string",
+          "descripcion": "string",
+          "imageUrl": "string",
+          "price": 4567.9675786356565
+        }
+      ]
+order: 1000

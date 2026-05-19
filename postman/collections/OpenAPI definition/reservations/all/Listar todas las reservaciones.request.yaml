@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/all"
+method: GET
+headers:
+  Accept: "*/*"
+examples: ./.resources/Listar todas las reservaciones.resources/examples
+order: 1000

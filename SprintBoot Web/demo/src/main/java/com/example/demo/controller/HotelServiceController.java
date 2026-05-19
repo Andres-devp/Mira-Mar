@@ -31,14 +31,12 @@ public class HotelServiceController {
 
 	@GetMapping({"/all", ""})
 	@Operation(summary = "Listar todos los servicios del hotel")
-	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public List<HotelService> listServicios() {
 		return servicioService.getAllServicios();
 	}
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Buscar servicio por ID")
-	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public HotelService findById(@PathVariable Long id) {
 		return servicioService.getServicioById(id);
 	}

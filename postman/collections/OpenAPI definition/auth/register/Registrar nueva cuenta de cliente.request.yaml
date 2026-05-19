@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/register"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "key_0": "string",
+      "key_1": "string"
+    }
+examples: ./.resources/Registrar nueva cuenta de cliente.resources/examples
+order: 1000

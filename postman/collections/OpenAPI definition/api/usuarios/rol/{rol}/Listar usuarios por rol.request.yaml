@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/api/usuarios/rol/:rol"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  rol: OPERATOR
+examples: ./.resources/Listar usuarios por rol.resources/examples
+order: 1000

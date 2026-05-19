@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/services/add"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "id": 2706,
+      "nombre": "string",
+      "descripcion": "string",
+      "imageUrl": "string",
+      "price": 4693.011362926658
+    }
+examples: ./.resources/Agregar nuevo servicio.resources/examples
+order: 1000

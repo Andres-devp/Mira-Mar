@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/account"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Obtener la cuenta asociada a una reserva.resources/examples
+order: 1000

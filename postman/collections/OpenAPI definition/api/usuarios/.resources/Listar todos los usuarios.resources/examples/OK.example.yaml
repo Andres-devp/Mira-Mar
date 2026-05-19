@@ -1,0 +1,39 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/usuarios"
+  method: GET
+  headers:
+    Accept: "*/*"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      [
+        {
+          "id": 3123,
+          "usuario": "string",
+          "nombre": "string",
+          "apellido": "string",
+          "email": "string",
+          "telefono": "string",
+          "fotoPerfil": "string",
+          "rol": "ADMIN",
+          "activo": false
+        },
+        {
+          "id": 3736,
+          "usuario": "string",
+          "nombre": "string",
+          "apellido": "string",
+          "email": "string",
+          "telefono": "string",
+          "fotoPerfil": "string",
+          "rol": "OPERATOR",
+          "activo": false
+        }
+      ]
+order: 1000

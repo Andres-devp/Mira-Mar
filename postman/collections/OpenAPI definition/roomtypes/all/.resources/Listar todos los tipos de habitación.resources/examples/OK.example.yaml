@@ -1,0 +1,35 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/roomtypes/all"
+  method: GET
+  headers:
+    Accept: "*/*"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      [
+        {
+          "id": 6554,
+          "codigo": "string",
+          "nombre": "string",
+          "capacidad": 9123,
+          "descripcion": "string",
+          "precioNoche": 201.987621234041,
+          "cantidadHabitaciones": 437
+        },
+        {
+          "id": 3019,
+          "codigo": "string",
+          "nombre": "string",
+          "capacidad": 5413,
+          "descripcion": "string",
+          "precioNoche": 5315.598193835127,
+          "cantidadHabitaciones": 4324
+        }
+      ]
+order: 1000

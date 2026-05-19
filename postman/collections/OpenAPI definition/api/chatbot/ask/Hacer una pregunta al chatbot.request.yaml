@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/chatbot/ask"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "message": "string",
+      "context": "string"
+    }
+examples: ./.resources/Hacer una pregunta al chatbot.resources/examples
+order: 1000

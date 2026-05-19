@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/services/:id"
+method: DELETE
+pathVariables:
+  id: "7007"
+examples: ./.resources/Eliminar servicio por ID.resources/examples
+order: 3000

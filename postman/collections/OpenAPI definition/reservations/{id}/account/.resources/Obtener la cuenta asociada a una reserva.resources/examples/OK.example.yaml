@@ -1,0 +1,24 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/reservations/:id/account"
+  method: GET
+  headers:
+    Accept: "*/*"
+  pathVariables:
+    id: "7007"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      {
+        "id": 6634,
+        "estado": "string",
+        "total": 5255.803989139316,
+        "createdAt": "2023-12-26T19:56:08.261Z",
+        "reservationId": 1642
+      }
+order: 1000

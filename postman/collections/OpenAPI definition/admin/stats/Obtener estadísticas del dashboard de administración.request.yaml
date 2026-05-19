@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/admin/stats"
+method: GET
+headers:
+  Accept: "*/*"
+examples: ./.resources/Obtener estadísticas del dashboard de administración.resources/examples
+order: 1000

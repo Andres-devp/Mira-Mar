@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/operator/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "id": 1366,
+      "nombre": "string",
+      "apellido": "string",
+      "usuario": "string",
+      "email": "string",
+      "contrasena": "string",
+      "cedula": "string",
+      "telefono": "string",
+      "fotoPerfil": "string"
+    }
+examples: ./.resources/Actualizar operador existente.resources/examples
+order: 2000

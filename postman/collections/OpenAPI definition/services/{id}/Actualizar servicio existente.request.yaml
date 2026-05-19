@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/services/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "id": 2706,
+      "nombre": "string",
+      "descripcion": "string",
+      "imageUrl": "string",
+      "price": 4693.011362926658
+    }
+examples: ./.resources/Actualizar servicio existente.resources/examples
+order: 2000

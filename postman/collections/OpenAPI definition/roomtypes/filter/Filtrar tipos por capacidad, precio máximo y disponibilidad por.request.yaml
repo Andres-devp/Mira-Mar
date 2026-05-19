@@ -1,0 +1,13 @@
+$kind: http-request
+name: Filtrar tipos por capacidad, precio máximo y disponibilidad por fechas
+url: "{{baseUrl}}/roomtypes/filter?capacidad=5604&precioMax=4966.9436300205325&fechaInicio=2007-09-28&fechaFin=2007-09-28"
+method: GET
+headers:
+  Accept: "*/*"
+queryParams:
+  capacidad: "5604"
+  precioMax: "4966.9436300205325"
+  fechaInicio: 2007-09-28
+  fechaFin: 2007-09-28
+examples: ./.resources/Filtrar tipos por capacidad, precio máximo y disponibilidad por.resources/examples
+order: 1000

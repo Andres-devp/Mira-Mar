@@ -1,0 +1,41 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/operator/:id"
+  method: PUT
+  headers:
+    Content-Type: application/json
+    Accept: "*/*"
+  pathVariables:
+    id: "7007"
+  body:
+    type: json
+    content: |-
+      {
+        "id": 1366,
+        "nombre": "string",
+        "apellido": "string",
+        "usuario": "string",
+        "email": "string",
+        "contrasena": "string",
+        "cedula": "string",
+        "telefono": "string",
+        "fotoPerfil": "string"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      {
+        "id": 7249,
+        "nombre": "string",
+        "apellido": "string",
+        "usuario": "string",
+        "email": "string",
+        "cedula": "string",
+        "telefono": "string"
+      }
+order: 1000

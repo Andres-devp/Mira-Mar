@@ -33,7 +33,7 @@ public class OperatorController {
     @Autowired
     private OperatorService operadorService;
 
-    @GetMapping({"all", ""})
+    @GetMapping({"/all", ""})
     @Operation(summary = "Listar todos los operadores")
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<List<OperatorResponseDTO>> listOperators() {

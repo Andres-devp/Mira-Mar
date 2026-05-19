@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/rooms"
+method: GET
+headers:
+  Accept: "*/*"
+examples: ./.resources/Listar todas las habitaciones.resources/examples
+order: 4000

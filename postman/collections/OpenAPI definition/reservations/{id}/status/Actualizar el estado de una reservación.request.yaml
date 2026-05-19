@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/status"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "key_0": "string",
+      "key_1": "string"
+    }
+examples: ./.resources/Actualizar el estado de una reservación.resources/examples
+order: 1000

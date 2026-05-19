@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/items/paid"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Listar servicios pagados de una reserva.resources/examples
+order: 1000

@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/usuarios/registro"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+body:
+  type: json
+  content: |-
+    {
+      "contrasena": "string",
+      "contrasenaConfirm": "string",
+      "email": "string",
+      "nombre": "string",
+      "rol": "CLIENT",
+      "usuario": "string",
+      "apellido": "string",
+      "telefono": "string",
+      "cedula": "st"
+    }
+examples: ./.resources/Registrar nuevo usuario.resources/examples
+order: 1000

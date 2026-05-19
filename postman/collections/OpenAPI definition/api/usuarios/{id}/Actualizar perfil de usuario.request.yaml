@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/usuarios/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "string",
+      "apellido": "string",
+      "email": "string",
+      "telefono": "stri",
+      "fotoPerfil": "string",
+      "contrasena": "string",
+      "contrasenaConfirm": "string"
+    }
+examples: ./.resources/Actualizar perfil de usuario.resources/examples
+order: 2000

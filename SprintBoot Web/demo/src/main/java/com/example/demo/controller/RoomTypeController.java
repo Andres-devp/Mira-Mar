@@ -37,7 +37,6 @@ public class RoomTypeController {
 
     @GetMapping({"/all", ""})
     @Operation(summary = "Listar todos los tipos de habitación")
-    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<List<RoomTypeResponseDTO>> listTypes() {
         List<RoomTypeResponseDTO> dtos = tipoHabitacionService.getAllTipos()
             .stream()
@@ -48,7 +47,6 @@ public class RoomTypeController {
 
     @GetMapping("/filter")
     @Operation(summary = "Filtrar tipos por capacidad, precio máximo y disponibilidad por fechas")
-    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<List<RoomTypeResponseDTO>> filterTypes(
             @RequestParam(required = false) Integer capacidad,
             @RequestParam(required = false) Double precioMax,
@@ -67,7 +65,6 @@ public class RoomTypeController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar tipo de habitación por ID")
-    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<RoomTypeResponseDTO> findById(@PathVariable Long id) {
         RoomType tipo = tipoHabitacionService.getTipoById(id);
         return ResponseEntity.ok(mapToDTO(tipo));

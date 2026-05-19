@@ -1,0 +1,35 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/operator/all"
+  method: GET
+  headers:
+    Accept: "*/*"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: |-
+      [
+        {
+          "id": 3639,
+          "nombre": "string",
+          "apellido": "string",
+          "usuario": "string",
+          "email": "string",
+          "cedula": "string",
+          "telefono": "string"
+        },
+        {
+          "id": 4656,
+          "nombre": "string",
+          "apellido": "string",
+          "usuario": "string",
+          "email": "string",
+          "cedula": "string",
+          "telefono": "string"
+        }
+      ]
+order: 1000

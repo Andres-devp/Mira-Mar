@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id/items/:itemId"
+method: DELETE
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+  itemId: "7007"
+examples: ./.resources/Eliminar servicio adicional de la cuenta.resources/examples
+order: 2000

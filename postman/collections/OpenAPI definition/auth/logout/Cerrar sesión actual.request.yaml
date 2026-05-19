@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/logout"
+method: POST
+headers:
+  Accept: "*/*"
+examples: ./.resources/Cerrar sesión actual.resources/examples
+order: 1000

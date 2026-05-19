@@ -1,0 +1,25 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/reservations/:id/status"
+  method: PUT
+  headers:
+    Content-Type: application/json
+    Accept: "*/*"
+  pathVariables:
+    id: "7007"
+  body:
+    type: json
+    content: |-
+      {
+        "key_0": "string",
+        "key_1": "string"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: "{}"
+order: 1000

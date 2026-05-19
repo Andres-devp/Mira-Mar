@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/client/:clientId"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  clientId: "7007"
+examples: ./.resources/get By Client.resources/examples
+order: 1000

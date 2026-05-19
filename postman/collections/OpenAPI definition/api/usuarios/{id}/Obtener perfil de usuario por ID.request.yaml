@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/api/usuarios/:id"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Obtener perfil de usuario por ID.resources/examples
+order: 1000

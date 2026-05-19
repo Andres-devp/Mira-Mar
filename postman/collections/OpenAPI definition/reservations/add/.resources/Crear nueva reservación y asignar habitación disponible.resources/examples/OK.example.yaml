@@ -1,0 +1,26 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/reservations/add"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Accept: "*/*"
+  body:
+    type: json
+    content: |-
+      {
+        "clientId": 2798,
+        "roomTypeId": 4612,
+        "fechaInicio": "1995-01-24",
+        "fechaFin": "1986-07-18",
+        "cantidadPersonas": 435
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: "*/*"
+  body:
+    type: text
+    content: "{}"
+order: 1000

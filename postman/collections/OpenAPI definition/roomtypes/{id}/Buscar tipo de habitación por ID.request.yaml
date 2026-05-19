@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/roomtypes/:id"
+method: GET
+headers:
+  Accept: "*/*"
+pathVariables:
+  id: "7007"
+examples: ./.resources/Buscar tipo de habitación por ID.resources/examples
+order: 1000

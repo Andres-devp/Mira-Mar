@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/reservations/:id"
+method: DELETE
+pathVariables:
+  id: "7007"
+examples: ./.resources/Eliminar reservación por ID.resources/examples
+order: 8000
