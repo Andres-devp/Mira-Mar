@@ -4,8 +4,13 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  id: number;
-  rol: string;
+  accessToken: string;
+  refreshToken: string;
+  tokenType: string;
+  userId: number;
+  role: string;
+  username: string;
+  expiresIn: number;
 }
 
 export interface RegisterRequest {
@@ -23,3 +28,4 @@ export interface RegisterResponse {
 export interface AuthErrorResponse {
   error: string;
 }
+

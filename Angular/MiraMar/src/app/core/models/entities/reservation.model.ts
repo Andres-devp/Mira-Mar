@@ -11,6 +11,7 @@ export interface Reservation {
   canceledAt?: string;
   client?: Client;
   room?: Room;
+  roomTypeName?: string;
   clientId?: number;
   roomId?: number;
   clientNombre?: string;

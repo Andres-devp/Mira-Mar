@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.ClientService;
 import com.example.demo.service.HotelServiceService;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Administración", description = "Panel de administración")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     @Autowired
@@ -45,6 +47,7 @@ public class AdminController {
 
     @GetMapping({"/stats", ""})
     @Operation(summary = "Obtener estadísticas del dashboard de administración")
+    @PreAuthorize("hasRole('ADMIN')")
     public Map<String, Object> adminStats() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("totalClientes", clienteService.getAllClientes().size());

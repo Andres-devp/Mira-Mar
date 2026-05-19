@@ -188,7 +188,7 @@ export class NavbarComponent implements OnInit {
   private updateAuthState(): void {
     const session = this.authService.getSession();
     this.isAuthenticated = session !== null;
-    this.sessionUserId = session?.id ?? null;
-    this.sessionUserRole = session?.rol ?? '';
+    this.sessionUserId = session?.userId ?? null;
+    this.sessionUserRole = session?.role ?? '';
   }
 }

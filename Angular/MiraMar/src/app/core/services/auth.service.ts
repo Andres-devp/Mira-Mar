@@ -21,7 +21,10 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, credentials)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap(response => this.setSession(response)),
+        catchError(this.handleError)
+      );
   }
 
   register(data: RegisterRequest): Observable<RegisterResponse> {
@@ -48,8 +51,23 @@ export class AuthService {
     }
   }
 
+  getToken(): string | null {
+    const session = this.getSession();
+    return session?.accessToken || null;
+  }
+
+  getUserId(): number | null {
+    const session = this.getSession();
+    return session?.userId || null;
+  }
+
+  getRole(): string | null {
+    const session = this.getSession();
+    return session?.role || null;
+  }
+
   isLoggedIn(): boolean {
-    return this.getSession() !== null;
+    return this.getSession() !== null && this.getToken() !== null;
   }
 
   clearSession(): void {
@@ -71,3 +89,4 @@ export class AuthService {
     return throwError(() => error);
   }
 }
+

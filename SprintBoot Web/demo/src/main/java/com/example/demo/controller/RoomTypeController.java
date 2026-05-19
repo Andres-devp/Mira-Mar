@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.demo.controller.dto.RoomTypeResponseDTO;
@@ -36,6 +37,7 @@ public class RoomTypeController {
 
     @GetMapping({"/all", ""})
     @Operation(summary = "Listar todos los tipos de habitación")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<List<RoomTypeResponseDTO>> listTypes() {
         List<RoomTypeResponseDTO> dtos = tipoHabitacionService.getAllTipos()
             .stream()
@@ -46,6 +48,7 @@ public class RoomTypeController {
 
     @GetMapping("/filter")
     @Operation(summary = "Filtrar tipos por capacidad, precio máximo y disponibilidad por fechas")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<List<RoomTypeResponseDTO>> filterTypes(
             @RequestParam(required = false) Integer capacidad,
             @RequestParam(required = false) Double precioMax,
@@ -64,6 +67,7 @@ public class RoomTypeController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar tipo de habitación por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<RoomTypeResponseDTO> findById(@PathVariable Long id) {
         RoomType tipo = tipoHabitacionService.getTipoById(id);
         return ResponseEntity.ok(mapToDTO(tipo));
@@ -71,6 +75,7 @@ public class RoomTypeController {
 
     @PostMapping("/add")
     @Operation(summary = "Crear nuevo tipo de habitación")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<RoomTypeResponseDTO> createType(@RequestBody RoomType tipo) {
         RoomType saved = tipoHabitacionService.saveTipo(tipo);
         return ResponseEntity.ok(mapToDTO(saved));
@@ -78,6 +83,7 @@ public class RoomTypeController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar tipo de habitación existente")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<RoomTypeResponseDTO> updateType(@PathVariable Long id, @RequestBody RoomType tipo) {
         tipo.setId(id);
         RoomType updated = tipoHabitacionService.saveTipo(tipo);
@@ -86,6 +92,7 @@ public class RoomTypeController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar tipo de habitación por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<Void> deleteType(@PathVariable Long id) {
         tipoHabitacionService.deleteTipo(id);
         return ResponseEntity.noContent().build();

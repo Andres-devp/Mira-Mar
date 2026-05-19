@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.controller.dto.RoomResponseDTO;
 import com.example.demo.entities.Room;
@@ -33,6 +34,7 @@ public class RoomController {
 
     @GetMapping({"/all", ""})
     @Operation(summary = "Listar todas las habitaciones")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<List<RoomResponseDTO>> listRooms() {
         List<RoomResponseDTO> dtos = habitacionService.getAllHabitaciones()
             .stream()
@@ -43,6 +45,7 @@ public class RoomController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar habitación por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
     public ResponseEntity<RoomResponseDTO> findById(@PathVariable Long id) {
         Room room = habitacionService.getHabitacionById(id);
         return ResponseEntity.ok(mapToDTO(room));
@@ -50,6 +53,7 @@ public class RoomController {
 
     @PostMapping("/add")
     @Operation(summary = "Crear nueva habitación")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<RoomResponseDTO> createRoom(@RequestBody Room room) {
         Room saved = habitacionService.saveHabitacion(room);
         return ResponseEntity.ok(mapToDTO(saved));
@@ -57,6 +61,7 @@ public class RoomController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar habitación existente")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<RoomResponseDTO> updateRoom(@PathVariable Long id, @RequestBody Room room) {
         room.setId(id);
         Room updated = habitacionService.saveHabitacion(room);
@@ -65,6 +70,7 @@ public class RoomController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar habitación por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         habitacionService.deleteHabitacion(id);
         return ResponseEntity.noContent().build();

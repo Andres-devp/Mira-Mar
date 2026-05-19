@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.demo.service.ReservationService;
 
@@ -38,6 +41,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/reservations")
 @CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Reservaciones", description = "Gestión de reservaciones")
+@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 public class ReservationController {
 
 	@Autowired
@@ -45,6 +49,7 @@ public class ReservationController {
 
 	@GetMapping({"/all", ""})
 	@Operation(summary = "Listar todas las reservaciones")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<List<ReservationMinimalDTO>> listReservations() {
 		List<ReservationMinimalDTO> dtos = reservationService.getAllReservas()
 			.stream()
@@ -55,6 +60,7 @@ public class ReservationController {
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Buscar reservación por ID")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<ReservationResponseDTO> findById(@PathVariable Long id) {
 		Reservation res = reservationService.getReservaById(id);
 		return ResponseEntity.ok(mapToResponseDTO(res));
@@ -62,24 +68,16 @@ public class ReservationController {
 
 	@PostMapping("/add")
 	@Operation(summary = "Crear nueva reservación y asignar habitación disponible")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<?> addReservation(
-		@CookieValue(value = "user_session", required = false) String userSession,
 		@RequestBody CreateReservationRequest request
 	) {
-		if (userSession == null || userSession.isBlank()) {
-			return ResponseEntity.status(HttpStatus.FOUND)
-				.header(HttpHeaders.LOCATION, "http://localhost:4200/login")
-				.build();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null || !auth.isAuthenticated()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
-		Long sessionUserId;
-		try {
-			sessionUserId = Long.valueOf(userSession);
-		} catch (NumberFormatException ex) {
-			return ResponseEntity.status(HttpStatus.FOUND)
-				.header(HttpHeaders.LOCATION, "http://localhost:4200/login")
-				.build();
-		}
+		Long sessionUserId = (Long) auth.getPrincipal();
 
 		Reservation reservation = reservationService.createReserva(sessionUserId, request);
 		return ResponseEntity.ok(mapToResponseDTO(reservation));
@@ -87,6 +85,7 @@ public class ReservationController {
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar reservación existente")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<ReservationResponseDTO> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
 		reservation.setId(id);
 		Reservation updated = reservationService.saveReserva(reservation);
@@ -95,6 +94,7 @@ public class ReservationController {
 
 	@PutMapping("/{id}/status")
 	@Operation(summary = "Actualizar el estado de una reservación")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 	public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
 		String nuevoEstado = body.get("estado");
 		if (nuevoEstado == null || nuevoEstado.isBlank()) {
@@ -110,6 +110,7 @@ public class ReservationController {
 
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Eliminar reservación por ID")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
 		reservationService.deleteReserva(id);
 		return ResponseEntity.noContent().build();
@@ -117,6 +118,7 @@ public class ReservationController {
 
 	@GetMapping("/{id}/items")
 	@Operation(summary = "Listar servicios adicionales de una reserva")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<List<AccountItemResponseDTO>> listItems(@PathVariable Long id) {
 		List<AccountItemResponseDTO> dtos = reservationService.getItemsByReservacion(id)
 			.stream()
@@ -127,6 +129,7 @@ public class ReservationController {
 
 	@GetMapping("/{id}/items/paid")
 	@Operation(summary = "Listar servicios pagados de una reserva")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<List<AccountItemResponseDTO>> listPaidItems(@PathVariable Long id) {
 		List<AccountItemResponseDTO> dtos = reservationService.getPaidItemsByReservacion(id)
 			.stream()
@@ -137,6 +140,7 @@ public class ReservationController {
 
 	@PostMapping("/{id}/items")
 	@Operation(summary = "Agregar servicio adicional a una reserva")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public ResponseEntity<?> addItem(@PathVariable Long id, @RequestBody Map<String, Object> body) {
 		Long hotelServiceId = Long.valueOf(body.get("hotelServiceId").toString());
 		Integer cantidad = Integer.valueOf(body.get("cantidad").toString());

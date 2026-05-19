@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.validation.Valid;
 
 import com.example.demo.controller.dto.*;
@@ -27,6 +28,7 @@ public class UserController {
 
     @PostMapping("/registro")
     @Operation(summary = "Registrar nuevo usuario")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<UserProfileDTO> register(@Valid @RequestBody UserRegisterDTO dto) {
         try {
             UserEntity user = userService.register(dto);
@@ -40,6 +42,7 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "Login de usuario")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<UserProfileDTO> login(@Valid @RequestBody UserLoginDTO dto) {
         var user = userService.login(dto);
         if (user.isPresent()) {
@@ -50,12 +53,14 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Listar todos los usuarios")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Obtener perfil de usuario por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT', 'OPERATOR')")
     public ResponseEntity<UserProfileDTO> getUserById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(userService.findById(id));
@@ -66,12 +71,14 @@ public class UserController {
 
     @GetMapping("/rol/{rol}")
     @Operation(summary = "Listar usuarios por rol")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> getUsersByRol(@PathVariable UserRole rol) {
         return ResponseEntity.ok(userService.findByRol(rol));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar perfil de usuario")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT', 'OPERATOR')")
     public ResponseEntity<UserProfileDTO> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateDTO dto) {
@@ -85,6 +92,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Desactivar usuario (soft delete)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteUser(id);

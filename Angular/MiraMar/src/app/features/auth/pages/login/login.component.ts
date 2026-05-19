@@ -28,7 +28,7 @@ export class LoginComponent {
         next: (response) => {
           this.loading = false;
           this.authService.setSession(response);
-          switch (response.rol) {
+          switch (response.role) {
             case 'ADMIN':
               this.router.navigate(['/admin']);
               break;
@@ -36,7 +36,7 @@ export class LoginComponent {
               this.router.navigate(['/operator']);
               break;
             case 'CLIENT':
-              this.router.navigate(['/usuarios', response.id]);
+              this.router.navigate(['/usuarios', response.userId]);
               break;
             default:
               this.errorMessage = 'Rol desconocido';

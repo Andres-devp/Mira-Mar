@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.controller.dto.OperatorResponseDTO;
 import com.example.demo.entities.Operator;
@@ -26,6 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/operator")
 @CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Operadores", description = "Gestión de operadores")
+@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 public class OperatorController {
 
     @Autowired
@@ -33,6 +35,7 @@ public class OperatorController {
 
     @GetMapping({"all", ""})
     @Operation(summary = "Listar todos los operadores")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<List<OperatorResponseDTO>> listOperators() {
         List<OperatorResponseDTO> dtos = operadorService.getAllOperadores()
             .stream()
@@ -43,6 +46,7 @@ public class OperatorController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar operador por ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<OperatorResponseDTO> findById(@PathVariable Long id) {
         Operator op = operadorService.getOperadorById(id);
         return ResponseEntity.ok(mapToDTO(op));
@@ -50,6 +54,7 @@ public class OperatorController {
 
     @PostMapping("/add")
     @Operation(summary = "Crear nuevo operador")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OperatorResponseDTO> createOperator(@RequestBody Operator operador) {
         Operator saved = operadorService.saveOperador(operador);
         return ResponseEntity.ok(mapToDTO(saved));
@@ -57,6 +62,7 @@ public class OperatorController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar operador existente")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OperatorResponseDTO> updateOperator(@PathVariable Long id, @RequestBody Operator operador) {
         operador.setId(id);
         Operator updated = operadorService.saveOperador(operador);
@@ -65,6 +71,7 @@ public class OperatorController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar operador por ID")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteOperator(@PathVariable Long id) {
         operadorService.deleteOperador(id);
         return ResponseEntity.noContent().build();

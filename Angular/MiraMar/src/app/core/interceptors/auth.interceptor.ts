@@ -13,7 +13,39 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    const authReq = req.clone({ withCredentials: true });
-    return next.handle(authReq);
+    // Get the JWT token from localStorage
+    const token = this.getToken();
+
+    // Clone the request and add the Authorization header if token exists
+    if (token && !this.isAuthEndpoint(req.url)) {
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+
+    return next.handle(req);
+  }
+
+  private getToken(): string | null {
+    try {
+      const sessionData = localStorage.getItem('miramar_session');
+      if (sessionData) {
+        const session = JSON.parse(sessionData);
+        return session.accessToken || null;
+      }
+    } catch (error) {
+      console.error('Error getting token from localStorage:', error);
+    }
+    return null;
+  }
+
+  private isAuthEndpoint(url: string): boolean {
+    // Don't add token to auth endpoints
+    return url.includes('/auth/login') || 
+           url.includes('/auth/register') ||
+           url.includes('/auth/logout');
   }
 }
+

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controller.dto.JwtAuthenticationResponse;
 import com.example.demo.exception.RegistrationException;
+import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.AuthenticatedUser;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -30,9 +32,15 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Value("${jwt.expiration}")
+    private long jwtExpirationInMs;
+
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión con usuario y contraseña")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         String username = credentials.get("username");
         String password = credentials.get("password");
 
@@ -44,16 +52,19 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
 
-        Cookie sessionCookie = new Cookie("user_session", String.valueOf(usuario.getId()));
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setPath("/");
-        sessionCookie.setMaxAge(24 * 60 * 60);
-        response.addCookie(sessionCookie);
+        String accessToken = jwtTokenProvider.generateToken(usuario.getId(), usuario.getRol(), username);
+        String refreshToken = jwtTokenProvider.generateRefreshToken(usuario.getId(), usuario.getRol(), username);
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("id", usuario.getId());
-        body.put("rol", usuario.getRol());
-        return ResponseEntity.ok(body);
+        JwtAuthenticationResponse response = JwtAuthenticationResponse.of(
+            accessToken,
+            refreshToken,
+            usuario.getId(),
+            usuario.getRol(),
+            username,
+            jwtExpirationInMs
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
@@ -79,15 +90,10 @@ public class AuthController {
 
     @PostMapping("/logout")
     @Operation(summary = "Cerrar sesión actual")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        Cookie sessionCookie = new Cookie("user_session", "");
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setPath("/");
-        sessionCookie.setMaxAge(0);
-        response.addCookie(sessionCookie);
-
+    public ResponseEntity<?> logout() {
         Map<String, String> body = new HashMap<>();
         body.put("mensaje", "Sesión cerrada correctamente");
         return ResponseEntity.ok(body);
     }
 }
+

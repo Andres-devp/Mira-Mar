@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.entities.HotelService;
 import com.example.demo.service.HotelServiceService;
@@ -30,30 +31,35 @@ public class HotelServiceController {
 
 	@GetMapping({"/all", ""})
 	@Operation(summary = "Listar todos los servicios del hotel")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public List<HotelService> listServicios() {
 		return servicioService.getAllServicios();
 	}
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Buscar servicio por ID")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR', 'CLIENT')")
 	public HotelService findById(@PathVariable Long id) {
 		return servicioService.getServicioById(id);
 	}
 
 	@PostMapping("/add")
 	@Operation(summary = "Agregar nuevo servicio")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 	public HotelService addServicio(@RequestBody HotelService servicio) {
 		return servicioService.addServicio(servicio);
 	}
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar servicio existente")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 	public HotelService updateServicio(@PathVariable Long id, @RequestBody HotelService servicio) {
 		return servicioService.updateServicio(id, servicio);
 	}
 
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Eliminar servicio por ID")
+	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 	public void deleteServicio(@PathVariable Long id) {
 		servicioService.deleteServicio(id);
 	}
