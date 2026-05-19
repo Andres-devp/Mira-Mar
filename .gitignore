@@ -38,3 +38,6 @@ HELP.md
 *.h2.db
 *.lock.db
 node_modules
+
+### Linux ###
+run.sh
