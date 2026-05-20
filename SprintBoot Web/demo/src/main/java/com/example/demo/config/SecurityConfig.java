@@ -45,7 +45,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             .requestMatchers("/h2/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/roomtypes/**", "/services/**").permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
-            .requestMatchers("/operator/**").hasRole("OPERATOR")
+            .requestMatchers("/operator/**").hasAnyRole("ADMIN", "OPERATOR")
             .requestMatchers("/api/usuarios/**").hasAnyRole("CLIENT", "ADMIN", "OPERATOR")
             .requestMatchers(HttpMethod.GET, "/rooms/**").authenticated()
             .requestMatchers("/rooms/**", "/roomtypes/**", "/services/**").hasAnyRole("ADMIN", "OPERATOR")

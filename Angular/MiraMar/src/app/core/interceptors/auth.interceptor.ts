@@ -17,15 +17,23 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.getToken();
 
     // Clone the request and add the Authorization header if token exists
+    let clonedReq = req;
+    
     if (token && !this.isAuthEndpoint(req.url)) {
-      req = req.clone({
+      clonedReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
+      });
+    } else if (!this.isAuthEndpoint(req.url)) {
+      // Ensure credentials are sent even without token
+      clonedReq = req.clone({
+        withCredentials: true,
       });
     }
 
-    return next.handle(req);
+    return next.handle(clonedReq);
   }
 
   private getToken(): string | null {
