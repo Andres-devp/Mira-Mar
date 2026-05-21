@@ -5,6 +5,7 @@ import { Client, Reservation, RoomType } from '../../../../core/models/entities'
 import { ReservationService } from '../../../../core/services/reservation.service';
 import { RoomTypeService } from '../../../../core/services/room-type.service';
 import { UserService } from '../../../../core/services/user.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-usuario-detail',
@@ -28,7 +29,8 @@ export class UsuarioDetailComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private reservationService: ReservationService,
-    private roomTypeService: RoomTypeService
+    private roomTypeService: RoomTypeService,
+    private authService: AuthService 
   ) {
     this.editForm = this.fb.group({
       roomTypeId: [null, [Validators.required]],
@@ -45,18 +47,19 @@ export class UsuarioDetailComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe((params) => {
-      const id = Number(params.get('id'));
+      const paramId = params.get('id');
+      const id = paramId ? Number(paramId) : this.authService.getUserId();
       if (!id) return;
       this.userService.getById(id).subscribe({
         next: (data) => {
           this.usuario = data;
-          this.loadReservations(id);
+        this.loadReservations(id);
         },
         error: (err) => console.error('Error loading user:', err)
       });
     });
   }
-
+  
   loadReservations(userId: number): void {
     this.reservationService.getByClient(userId).subscribe({
       next: (data) => { this.reservations = data; },

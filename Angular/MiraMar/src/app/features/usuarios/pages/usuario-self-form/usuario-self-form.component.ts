@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../../core/services/user.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-usuario-self-form',
@@ -18,7 +19,8 @@ export class UsuarioSelfFormComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.usuarioForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -28,26 +30,24 @@ export class UsuarioSelfFormComponent {
       telefono: ['']
     });
 
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (!id) {
-        this.router.navigate(['/']);
-        return;
-      }
+    const id = this.authService.getUserId();
+    if (!id) {
+      this.router.navigate(['/']);
+      return;
+    }
 
-      this.currentId = Number(id);
-      this.userService.getById(this.currentId).subscribe({
-        next: (user) => {
-          this.usuarioForm.patchValue({
-            nombre: user.nombre,
-            usuario: user.usuario,
-            contrasena: '',
-            email: user.email,
-            telefono: user.telefono || ''
-          });
-        },
-        error: (err) => console.error('Error loading user:', err)
-      });
+    this.currentId = id;
+    this.userService.getById(this.currentId).subscribe({
+      next: (user) => {
+        this.usuarioForm.patchValue({
+          nombre: user.nombre,
+          usuario: user.usuario,
+          contrasena: '',
+          email: user.email,
+          telefono: user.telefono || ''
+        });
+      },
+      error: (err) => console.error('Error loading user:', err)
     });
   }
 
@@ -58,17 +58,12 @@ export class UsuarioSelfFormComponent {
 
     const payload = this.usuarioForm.value;
     this.userService.update(this.currentId, payload).subscribe({
-      next: () => this.router.navigate(['/usuarios', this.currentId]),
+      next: () => this.router.navigate(['/usuarios/me']),
       error: (err) => console.error('Error updating own profile:', err)
     });
   }
 
   cancel(): void {
-    if (this.currentId === null) {
-      this.router.navigate(['/']);
-      return;
-    }
-
-    this.router.navigate(['/usuarios', this.currentId]);
+    this.router.navigate(['/usuarios/me']);
   }
 }

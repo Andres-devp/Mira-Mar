@@ -66,6 +66,8 @@ const routes: Routes = [
   { path: 'usuarios/add', component: UsuarioFormComponent, canActivate: [AdminGuard] },
   { path: 'usuarios/edit/:id', component: UsuarioFormComponent, canActivate: [AdminGuard] },
   { path: 'usuarios/self/edit/:id', component: UsuarioSelfFormComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios/me', component: UsuarioDetailComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios/self/edit', component: UsuarioSelfFormComponent, canActivate: [AuthGuard] },  
   { path: 'usuarios/:id', component: UsuarioDetailComponent, canActivate: [AuthGuard] },
 
   // --- Operadores ---

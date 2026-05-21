@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RoomType, HotelService } from '../../../../core/models/entities';
 import { RoomTypeService } from '../../../../core/services/room-type.service';
 import { HotelServiceService } from '../../../../core/services/hotel-service.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 interface Amenity {
   icon: string;
@@ -33,7 +34,7 @@ interface ServicioCard {
 export class LandingPageComponent implements OnInit {
   showMap = false;
   tiposDestacados: RoomType[] = [];
-  
+
   fechaInicio: string = '';
   fechaFin: string = '';
   capacidad: string = '';
@@ -42,8 +43,7 @@ export class LandingPageComponent implements OnInit {
     {
       icon: 'ph-waves',
       title: 'Playa Privada',
-      description:
-        'Arenas blancas prístinas con servicio de toallas exclusivo.',
+      description: 'Arenas blancas prístinas con servicio de toallas exclusivo.',
       delay: 1,
     },
     {
@@ -55,8 +55,7 @@ export class LandingPageComponent implements OnInit {
     {
       icon: 'ph-sparkle',
       title: 'Spa & Wellness',
-      description:
-        'Tratamientos con ingredientes locales como sal marina y aloe.',
+      description: 'Tratamientos con ingredientes locales como sal marina y aloe.',
       delay: 3,
     },
     {
@@ -66,29 +65,35 @@ export class LandingPageComponent implements OnInit {
       delay: 4,
     },
   ];
-  
+
   serviciosDestacados: ServicioCard[] = [];
 
   constructor(
     private roomTypeService: RoomTypeService,
     private hotelServiceService: HotelServiceService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // Cargar tipos de habitación
+    if (this.authService.isLoggedIn()) {
+      const role = this.authService.getRole();
+      if (role === 'ADMIN') { this.router.navigate(['/admin']); return; }
+      if (role === 'OPERATOR') { this.router.navigate(['/operator']); return; }
+      if (role === 'CLIENT') { this.router.navigate(['/usuarios/me']); return; }
+    }
+
     this.roomTypeService.getAll().subscribe({
       next: (tipos) => this.tiposDestacados = tipos.slice(0, 3),
       error: (err) => console.error('Error loading room types:', err)
     });
 
-    // Cargar servicios desde Spring Boot
     this.hotelServiceService.getAll().subscribe({
       next: (servicios) => {
         this.serviciosDestacados = servicios.slice(0, 3).map((servicio, index) => ({
           titulo: servicio.nombre,
           descripcion: servicio.descripcion || 'Descubre esta experiencia exclusiva en Mira Mar.',
-          metas: servicio.price 
+          metas: servicio.price
             ? [{ icon: 'ph-currency-dollar', text: `Desde $${servicio.price}` }]
             : [{ icon: 'ph-star', text: 'Servicio exclusivo' }],
           botonTexto: 'Ver detalle',

@@ -19,7 +19,6 @@ export class NavbarComponent implements OnInit {
   isServicesPublicRoute = false;
   isServiceDetailRoute = false;
   isAuthenticated = false;
-  sessionUserId: number | null = null;
   sessionUserRole = '';
 
   constructor(
@@ -27,7 +26,6 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService,
   ) {}
 
-  /** Pages that start transparent navbar and become solid on scroll */
   get usesTransparentTheme(): boolean {
     return (
       this.isLandingRoute ||
@@ -36,7 +34,6 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  /** Pages that always use a solid dusk-blue navbar */
   get usesSolidTheme(): boolean {
     return (
       this.isRoomTypeCrudRoute ||
@@ -47,14 +44,8 @@ export class NavbarComponent implements OnInit {
   }
 
   get applyScrolledStyle(): boolean {
-    if (this.usesSolidTheme) {
-      return true;
-    }
-
-    if (!this.usesTransparentTheme) {
-      return true;
-    }
-
+    if (this.usesSolidTheme) return true;
+    if (!this.usesTransparentTheme) return true;
     return this.isScrolled;
   }
 
@@ -62,40 +53,22 @@ export class NavbarComponent implements OnInit {
     if (this.usesTransparentTheme && !this.isScrolled) {
       return '/images/Mira Mar logo Blanco.png';
     }
-
     return '/images/Mira Mar logo.png';
   }
 
   isUserMenuOpen = false;
 
   get userIconPath(): string {
-    if (this.isUserMenuOpen) {
-      return '/images/usuarioNegro.png';
-    }
-    if (this.usesTransparentTheme && !this.isScrolled) {
-      return '/images/usuarioBlanco.png';
-    }
-
+    if (this.isUserMenuOpen) return '/images/usuarioNegro.png';
+    if (this.usesTransparentTheme && !this.isScrolled) return '/images/usuarioBlanco.png';
     return '/images/usuarioNegro.png';
   }
 
   get profileRoute(): string[] {
-    if (!this.isAuthenticated) {
-      return ['/login'];
-    }
-
-    if (this.sessionUserRole === 'CLIENT' && this.sessionUserId) {
-      return ['/usuarios', String(this.sessionUserId)];
-    }
-
-    if (this.sessionUserRole === 'ADMIN') {
-      return ['/admin'];
-    }
-
-    if (this.sessionUserRole === 'OPERATOR') {
-      return ['/operator'];
-    }
-
+    if (!this.isAuthenticated) return ['/login'];
+    if (this.sessionUserRole === 'CLIENT') return ['/usuarios/me'];
+    if (this.sessionUserRole === 'ADMIN') return ['/admin'];
+    if (this.sessionUserRole === 'OPERATOR') return ['/operator'];
     return ['/'];
   }
 
@@ -104,11 +77,7 @@ export class NavbarComponent implements OnInit {
     this.updateAuthState();
 
     this.router.events
-      .pipe(
-        filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd,
-        ),
-      )
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {
         this.updateRouteState(event.urlAfterRedirects);
         this.updateAuthState();
@@ -134,12 +103,8 @@ export class NavbarComponent implements OnInit {
 
   closeMenu(): void {
     this.isNavOpen = false;
-    const openedMenus = document.querySelectorAll<HTMLDetailsElement>(
-      '.navbar-user-menu[open]',
-    );
-    openedMenus.forEach((menu) => {
-      menu.open = false;
-    });
+    const openedMenus = document.querySelectorAll<HTMLDetailsElement>('.navbar-user-menu[open]');
+    openedMenus.forEach((menu) => { menu.open = false; });
   }
 
   logout(): void {
@@ -186,9 +151,7 @@ export class NavbarComponent implements OnInit {
   }
 
   private updateAuthState(): void {
-    const session = this.authService.getSession();
-    this.isAuthenticated = session !== null;
-    this.sessionUserId = session?.userId ?? null;
-    this.sessionUserRole = session?.role ?? '';
+    this.isAuthenticated = this.authService.isLoggedIn();
+    this.sessionUserRole = this.authService.getRole() ?? '';
   }
 }
