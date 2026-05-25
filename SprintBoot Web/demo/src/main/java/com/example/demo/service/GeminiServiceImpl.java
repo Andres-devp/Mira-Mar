@@ -3,10 +3,15 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +19,14 @@ import org.slf4j.LoggerFactory;
 public class GeminiServiceImpl implements GeminiService {
     private static final Logger logger = LoggerFactory.getLogger(GeminiServiceImpl.class);
 
-    @Value("${gemini.api.key}")
+    @Value("${groq.api.key}")
     private String apiKey;
 
-    @Value("${gemini.model:gemini-1.5-flash}")
+    @Value("${groq.model:mixtral-8x7b-32768}")
     private String model;
+
+    @Value("${groq.api.url:https://api.groq.com/openai/v1/chat/completions}")
+    private String apiUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -26,37 +34,70 @@ public class GeminiServiceImpl implements GeminiService {
     @Override
     public String askChatbot(String message, String context) {
         try {
+            // Validar que la API key esté configurada
+            if (apiKey == null || apiKey.isEmpty() || apiKey.equals("${groq.api.key}")) {
+                logger.error("API key de Groq no está configurada correctamente");
+                return "Error: API key de Groq no está configurada. Contacta al administrador.";
+            }
+            
             String prompt = buildPrompt(message, context);
-            String url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
             
+            // Construir request para Groq (compatible con OpenAI)
             Map<String, Object> requestBody = new HashMap<>();
-            Map<String, Object> partMap = new HashMap<>();
-            partMap.put("text", prompt);
-            Map<String, Object> contentMap = new HashMap<>();
-            contentMap.put("parts", new Object[]{partMap});
-            requestBody.put("contents", new Object[]{contentMap});
+            requestBody.put("model", model);
+            requestBody.put("max_tokens", 1024);
+            requestBody.put("temperature", 0.7);
             
-            String response = restTemplate.postForObject(url, requestBody, String.class);
-            JsonNode responseNode = objectMapper.readTree(response);
+            // Construir lista de mensajes
+            List<Map<String, String>> messages = new ArrayList<>();
+            Map<String, String> systemMessage = new HashMap<>();
+            systemMessage.put("role", "system");
+            systemMessage.put("content", "Eres un asistente inteligente para un hotel boutique llamado Mira Mar. Debes ser amable, profesional y proporcionar información útil. Responde siempre en español.");
+            messages.add(systemMessage);
             
-            if (responseNode.has("candidates") && responseNode.get("candidates").isArray()) {
-                var candidate = responseNode.get("candidates").get(0);
-                if (candidate.has("content") && candidate.get("content").has("parts")) {
-                    return candidate.get("content").get("parts").get(0).get("text").asText();
+            Map<String, String> userMessage = new HashMap<>();
+            userMessage.put("role", "user");
+            userMessage.put("content", prompt);
+            messages.add(userMessage);
+            
+            requestBody.put("messages", messages);
+            
+            // Preparar headers con autenticación
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + apiKey);
+            
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+            
+            logger.debug("Enviando solicitud a Groq API con modelo: " + model);
+            
+            HttpEntity<String> response = restTemplate.postForEntity(apiUrl, request, String.class);
+            String responseBody = response.getBody();
+            JsonNode responseNode = objectMapper.readTree(responseBody);
+            
+            // Verificar si hay errores en la respuesta de Groq
+            if (responseNode.has("error")) {
+                String errorMessage = responseNode.get("error").get("message").asText();
+                logger.error("Error de Groq API: " + errorMessage);
+                return "Error del servicio de IA: " + errorMessage;
+            }
+            
+            // Extraer respuesta del formato OpenAI
+            if (responseNode.has("choices") && responseNode.get("choices").isArray()) {
+                var choice = responseNode.get("choices").get(0);
+                if (choice.has("message") && choice.get("message").has("content")) {
+                    return choice.get("message").get("content").asText();
                 }
             }
-            return "No se pudo generar una respuesta.";
+            return "No se pudo generar una respuesta. Por favor intenta de nuevo.";
         } catch (Exception e) {
-            logger.error("Error en chatbot:", e);
-            return "Error al procesar tu pregunta. Intenta de nuevo.";
+            logger.error("Error en chatbot: " + e.getClass().getName() + " - " + e.getMessage(), e);
+            return "Error al procesar tu pregunta: " + e.getMessage();
         }
     }
 
     private String buildPrompt(String message, String context) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append("Eres un asistente inteligente para un hotel boutique llamado Mira Mar. ");
-        prompt.append("Debes ser amable, profesional y proporcionar información útil. ");
-        prompt.append("Responde siempre en español. ");
         
         if ("rooms".equals(context)) {
             prompt.append("El usuario pregunta sobre habitaciones. Proporciona información sobre tipos de habitaciones disponibles. ");

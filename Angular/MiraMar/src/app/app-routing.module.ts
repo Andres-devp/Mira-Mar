@@ -30,10 +30,11 @@ import { ChatbotPageComponent } from './features/chatbot/pages/chatbot-page/chat
 import { AuthGuard } from './core/guards/auth.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { OperatorGuard } from './core/guards/operator.guard';
+import { AutoRedirectGuard } from './core/guards/auto-redirect.guard';
 
 const routes: Routes = [
   // --- Públicas ---
-  { path: '', component: LandingPageComponent },
+  { path: '', component: LandingPageComponent, canActivate: [AutoRedirectGuard] },
   { path: 'rooms', component: RoomsListComponent },
 
   // --- Rooms — static BEFORE parameterized ---

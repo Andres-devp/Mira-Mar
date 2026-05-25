@@ -103,6 +103,7 @@ public class RoomTypeController {
             .nombre(tipo.getNombre())
             .capacidad(tipo.getCapacidad())
             .descripcion(tipo.getDescripcion())
+            .urlImagen(tipo.getUrlImagen())
             .precioNoche(tipo.getPrecioNoche())
             .cantidadHabitaciones(tipo.getHabitaciones() != null ? tipo.getHabitaciones().size() : 0)
             .build();

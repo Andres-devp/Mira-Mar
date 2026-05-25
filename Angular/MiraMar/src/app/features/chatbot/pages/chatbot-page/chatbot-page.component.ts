@@ -66,9 +66,26 @@ export class ChatbotPageComponent implements OnInit {
         this.isLoading = false;
       },
       (error) => {
-        console.error('Error:', error);
+        console.error('Error completo:', error);
+        let errorMsg = 'Disculpa, ocurrió un error. Por favor intenta de nuevo.';
+        
+        // Mostrar detalles del error para debug
+        if (error.error && typeof error.error === 'object') {
+          errorMsg = error.error.message || error.error;
+        } else if (error.error) {
+          errorMsg = error.error;
+        } else if (error.message) {
+          errorMsg = error.message;
+        } else if (error.status === 401) {
+          errorMsg = 'No autorizado. Por favor inicia sesión.';
+        } else if (error.status === 403) {
+          errorMsg = 'Acceso denegado. No tienes permisos para usar el chatbot.';
+        } else if (error.status === 0) {
+          errorMsg = 'No se puede conectar al servidor. Verifica que el backend esté corriendo en localhost:8080.';
+        }
+        
         this.messages.push({
-          text: 'Disculpa, ocurrió un error. Por favor intenta de nuevo.',
+          text: errorMsg,
           sender: 'bot',
           timestamp: new Date()
         });

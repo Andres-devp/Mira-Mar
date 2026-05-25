@@ -5,7 +5,7 @@
   [class.roomtypes-nav]="usesSolidTheme"
 >
   <div class="container nav-container">
-    <a routerLink="/" class="logo" (click)="closeMenu()">
+    <a [routerLink]="homeRoute" class="logo" (click)="closeMenu()">
       <img id="nav-logo" [src]="logoPath" alt="Mira Mar logo" width="120" />
     </a>
 
@@ -22,9 +22,6 @@
           (click)="closeMenu()"
           >Reservar</a
         >
-      </li>
-      <li class="translator-nav-item">
-        <app-translator-button></app-translator-button>
       </li>
       <li class="profile-dropdown-item" *ngIf="!isAuthenticated">
         <a routerLink="/login" class="user-login-link" (click)="closeMenu()">

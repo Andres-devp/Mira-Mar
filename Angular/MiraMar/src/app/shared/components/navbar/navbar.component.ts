@@ -72,6 +72,14 @@ export class NavbarComponent implements OnInit {
     return ['/'];
   }
 
+  get homeRoute(): string[] {
+    if (!this.isAuthenticated) return ['/'];
+    if (this.sessionUserRole === 'CLIENT') return ['/usuarios/me'];
+    if (this.sessionUserRole === 'ADMIN') return ['/admin'];
+    if (this.sessionUserRole === 'OPERATOR') return ['/operator'];
+    return ['/'];
+  }
+
   ngOnInit(): void {
     this.updateRouteState(this.router.url);
     this.updateAuthState();

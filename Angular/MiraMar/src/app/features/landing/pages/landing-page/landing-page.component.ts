@@ -76,12 +76,8 @@ export class LandingPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      const role = this.authService.getRole();
-      if (role === 'ADMIN') { this.router.navigate(['/admin']); return; }
-      if (role === 'OPERATOR') { this.router.navigate(['/operator']); return; }
-      if (role === 'CLIENT') { this.router.navigate(['/usuarios/me']); return; }
-    }
+    // La redirección al perfil se maneja en AutoRedirectGuard
+    // Si llegamos aquí, significa que no hay sesión activa
 
     this.roomTypeService.getAll().subscribe({
       next: (tipos) => this.tiposDestacados = tipos.slice(0, 3),

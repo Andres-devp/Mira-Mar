@@ -45,8 +45,14 @@ public class ChatbotController {
 
             return ResponseEntity.ok(chatResponse);
         } catch (Exception e) {
+            String errorMessage = "Error al procesar la pregunta";
+            if (e.getMessage() != null) {
+                errorMessage += ": " + e.getMessage();
+            }
+            System.out.println("ERROR EN CHATBOT CONTROLLER: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al procesar la pregunta: " + e.getMessage());
+                    .body(errorMessage);
         }
     }
 }

@@ -14,6 +14,7 @@ public class RoomTypeResponseDTO {
     private String nombre;
     private Integer capacidad;
     private String descripcion;
+    private String urlImagen;
     private Double precioNoche;
     private Integer cantidadHabitaciones;
 }

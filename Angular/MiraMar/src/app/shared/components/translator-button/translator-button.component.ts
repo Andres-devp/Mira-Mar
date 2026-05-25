@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslationService } from 'src/app/core/services/translator.service';
 
 @Component({
@@ -6,38 +6,46 @@ import { TranslationService } from 'src/app/core/services/translator.service';
   templateUrl: './translator-button.component.html',
   styleUrls: ['./translator-button.component.css']
 })
-export class TranslatorButtonComponent {
+export class TranslatorButtonComponent implements OnInit {
   currentLanguage: string = 'es';
   isTranslating: boolean = false;
 
-  constructor(private translationService: TranslationService) { }
+  constructor(private translationService: TranslationService) {
+    // Cargar idioma guardado
+    const savedLanguage = localStorage.getItem('currentLanguage');
+    if (savedLanguage) {
+      this.currentLanguage = savedLanguage;
+    }
+  }
+
+  ngOnInit(): void {
+    // Aplicar idioma guardado
+    document.documentElement.lang = this.currentLanguage;
+  }
 
   toggleLanguage(): void {
     this.isTranslating = true;
-    const pageText = document.body.innerText;
-    
-    // Nota: Para una verdadera traducción de página, necesitarías integrar
-    // con una solución como Google Translate o i18n
-    // Por ahora, esto es una demostración de la API
-    
     const newLanguage = this.currentLanguage === 'es' ? 'en' : 'es';
     
-    this.translationService.toggleLanguage(pageText.substring(0, 500), this.currentLanguage)
-      .subscribe(
-        (response) => {
-          // En una implementación real, aplicarías la traducción al DOM
-          console.log('Traducción:', response);
-          this.currentLanguage = newLanguage;
-          this.isTranslating = false;
-          
-          // Cambiar el idioma en el localStorage si es necesario
-          localStorage.setItem('currentLanguage', this.currentLanguage);
-        },
-        (error) => {
-          console.error('Error en traducción:', error);
-          this.isTranslating = false;
-        }
-      );
+    // Cambiar el idioma de manera simple
+    this.currentLanguage = newLanguage;
+    document.documentElement.lang = newLanguage;
+    
+    // Guardar preferencia
+    localStorage.setItem('currentLanguage', newLanguage);
+    
+    // Recargar página para aplicar cambios (opcional, pero asegura que todo se actualice)
+    // Comentado para permitir cambio sin recarga, pero disponible si es necesario
+    // window.location.reload();
+    
+    this.isTranslating = false;
+    
+    console.log('Idioma cambiado a: ' + (newLanguage === 'es' ? 'Español' : 'English'));
+    
+    // Emitir evento para que otros componentes puedan reaccionar
+    window.dispatchEvent(new CustomEvent('languageChanged', { 
+      detail: { language: newLanguage }
+    }));
   }
 
   get languageLabel(): string {
