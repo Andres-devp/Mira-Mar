@@ -10,9 +10,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.validation.Valid;
 
 import com.example.demo.controller.dto.*;
+import com.example.demo.entities.Client;
 import com.example.demo.entities.UserEntity;
 import com.example.demo.enums.UserRole;
+import com.example.demo.service.ClientService;
 import com.example.demo.service.UserService;
+
+import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ClientService clientService;
 
     @PostMapping("/registro")
     @Operation(summary = "Registrar nuevo usuario")
@@ -52,21 +59,27 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos los usuarios")
+    @Operation(summary = "Listar clientes activos")
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<List<Client>> getAllUsers() {
+        List<Client> activos = clientService.getAllClientes().stream()
+            .filter(c -> Boolean.TRUE.equals(c.getActivo()))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(activos);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener perfil de usuario por ID")
+    @Operation(summary = "Obtener perfil de cliente por ID")
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT', 'OPERATOR')")
-    public ResponseEntity<UserProfileDTO> getUserById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(userService.findById(id));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Client> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(clientService.getClienteById(id));
+    }
+
+    @PostMapping("/add")
+    @Operation(summary = "Crear cliente")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
+    public ResponseEntity<Client> createUser(@RequestBody Client cliente) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveCliente(cliente));
     }
 
     @GetMapping("/rol/{rol}")
@@ -77,28 +90,19 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar perfil de usuario")
-    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT', 'OPERATOR')")
-    public ResponseEntity<UserProfileDTO> updateUser(
+    @Operation(summary = "Actualizar perfil de cliente")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR') or #id == authentication.principal")
+    public ResponseEntity<Client> updateUser(
             @PathVariable Long id,
-            @Valid @RequestBody UserUpdateDTO dto) {
-        try {
-            userService.updateProfile(id, dto);
-            return ResponseEntity.ok(userService.findById(id));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+            @RequestBody Client datos) {
+        return ResponseEntity.ok(clientService.updateCliente(id, datos));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Desactivar usuario (soft delete)")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Eliminar cuenta de cliente (bloquea si hay reservas/servicios activos)")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR') or #id == authentication.principal")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        clientService.eliminarCuenta(id);
+        return ResponseEntity.noContent().build();
     }
 }

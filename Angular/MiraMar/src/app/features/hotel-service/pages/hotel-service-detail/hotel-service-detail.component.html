@@ -1,7 +1,7 @@
 <ng-container *ngIf="servicio; else notFound">
   <main class="detail-page luxury-room-detail">
     <!-- Hero Original Restaurado -->
-    <header class="detail-hero" [style.--hero-image]="'url(' + (servicio.imageUrl || '/images/Ocean View Interior.avif') + ')'">
+    <header class="detail-hero" [style.--hero-image]="'url(' + serviceHeroImage + ')'">
       <div class="container">
         <div class="detail-hero__content">
           <div class="detail-hero__badge">Experiencia</div>
@@ -54,15 +54,15 @@
             </section>
 
             <!-- Galería de Imágenes -->
-            <section class="room-gallery-section" style="margin-top: 3rem; margin-bottom: 0;">
+            <section class="detail-section room-gallery-section" style="margin-top: 2rem; margin-bottom: 0;">
               <h2 class="editorial-subtitle">Galería de la experiencia</h2>
               <div class="room-gallery-grid" style="height: 350px;">
                 <div class="gallery-main">
-                  <img [src]="servicio.imageUrl || '/images/Ocean View Interior.avif'" [alt]="servicio.nombre" class="gallery-img">
+                  <img [src]="galleryImages[0]" [alt]="servicio.nombre" class="gallery-img">
                 </div>
                 <div class="gallery-side">
-                  <img src="/images/habitacionFamiliar.jpg" alt="Instalaciones" class="gallery-img">
-                  <img src="/images/Habitacion3.avif" alt="Detalles" class="gallery-img">
+                  <img [src]="galleryImages[1]" [alt]="servicio.nombre + ' - ambiente'" class="gallery-img">
+                  <img [src]="galleryImages[2]" [alt]="servicio.nombre + ' - detalle'" class="gallery-img">
                 </div>
               </div>
             </section>

@@ -2,10 +2,219 @@
   display: block;
 }
 
-.detail-aside__status h3 {
-  margin-top: 0;
+/* Compact hero — no gap before content */
+.ru-page .ru-hero {
+  margin-bottom: 0;
+  padding: 3.4rem 0 2.6rem;
 }
 
-.detail-aside__status p {
-  margin-bottom: 0;
+.ru-hero__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ru-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.ru-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.26rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: var(--white, #fff);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ru-hero__title {
+  margin: 0;
+  color: var(--white, #fff);
+  font-family: var(--font-serif, "Marcellus", serif);
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+/* Solid, legible back button */
+.ru-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--white, #fff);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--ocean-900, #10273f);
+  border-radius: 999px;
+  padding: 0.45rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 1.1rem;
+  box-shadow: 0 6px 18px rgba(9, 23, 41, 0.18);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.ru-back-btn i {
+  font-size: 1rem;
+}
+
+.ru-back-btn:hover {
+  background: var(--sand-50, #faf7f0);
+  transform: translateX(-2px);
+  box-shadow: 0 8px 22px rgba(9, 23, 41, 0.24);
+}
+
+/* Main area */
+.ru-main {
+  padding: 1.75rem 0 4rem;
+  background: #f0f2f7;
+}
+
+.ru-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.92fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.ru-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Cards */
+.ru-card {
+  background: white;
+  border-radius: var(--radius-lg, 18px);
+  box-shadow: 0 4px 16px rgba(48, 76, 137, 0.08);
+  padding: 1.5rem;
+}
+
+.ru-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dusk-blue, #304c89);
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #eef0f6;
+}
+
+.ru-card__title i {
+  font-size: 1.15rem;
+  color: var(--cornflower, #648de5);
+}
+
+/* Rows */
+.ru-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ru-rows--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.ru-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.ru-row__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: rgba(100, 141, 229, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cornflower, #648de5);
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+.ru-row__label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8892b0;
+  margin: 0 0 0.1rem;
+}
+
+.ru-row__value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #2d3a55;
+  margin: 0;
+}
+
+/* Status chip */
+.ru-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #eef2f9;
+  border: 1px solid #dbe3f0;
+  color: #2d3a55;
+}
+
+.ru-status-chip--block {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.ru-status-chip--confirmed { background: #e6f6ec; border-color: #bfe6cd; color: #15803d; }
+.ru-status-chip--pending { background: #fef3e0; border-color: #f6dcb0; color: #b45309; }
+.ru-status-chip--canceled,
+.ru-status-chip--inactive { background: #fdecec; border-color: #f6cccc; color: #b91c1c; }
+.ru-status-chip--active { background: #e6f2fb; border-color: #c2ddf2; color: #1f5f8a; }
+
+/* hero chip stays light over image */
+.ru-hero .ru-status-chip {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.42);
+  color: var(--white, #fff);
+}
+
+.ru-status-text {
+  font-size: 0.88rem;
+  color: #5f6b85;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.ru-status-action {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .ru-layout {
+    grid-template-columns: 1fr;
+  }
 }

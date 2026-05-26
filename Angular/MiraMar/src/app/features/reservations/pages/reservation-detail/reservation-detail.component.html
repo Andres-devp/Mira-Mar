@@ -1,225 +1,310 @@
 <ng-container *ngIf="reservation; else notFoundTemplate">
-  <main class="detail-page">
-    <header class="detail-hero" [style.--hero-image]="'url(/images/Habitacion1.avif)'">
+  <main class="detail-page res-detail-page">
+    <header class="detail-hero res-hero" [style.--hero-image]="'url(/images/Habitacion1.avif)'">
       <div class="container">
-        <div class="detail-hero__content">
-          <div class="detail-hero__badge">Reserva #{{ reservation.id }}</div>
-          <h1 class="detail-hero__title">Detalle de Reserva</h1>
-          <p class="detail-hero__location">
-            <i class="ph ph-calendar-check"></i>
-            <span>{{ reservation.estado }}</span>
-          </p>
+        <div class="res-hero__heading">
+          <div class="res-hero__meta">
+            <span class="res-hero__badge">Reserva #{{ reservation.id }}</span>
+            <span class="res-status-chip" [ngClass]="'res-status-chip--' + reservation.estado.toLowerCase()">
+              <i class="ph ph-calendar-check"></i>
+              <span>{{ reservation.estado }}</span>
+            </span>
+          </div>
+          <h1 class="res-hero__title">Detalle de Reserva</h1>
         </div>
       </div>
     </header>
 
-    <section class="detail-main">
+    <!-- Tabs -->
+    <div class="res-tabs-bar">
       <div class="container">
-        <div class="detail-layout">
-          <div>
-            <section class="detail-section">
-              <h2 class="detail-section__title">Cliente</h2>
-              <p><strong>Nombre:</strong> {{ reservation.client?.nombre || 'N/A' }}</p>
-              <p><strong>Usuario:</strong> {{ reservation.client?.usuario || 'N/A' }}</p>
-              <p><strong>Email:</strong> {{ reservation.client?.email || 'N/A' }}</p>
-            </section>
-
-            <section class="detail-section">
-              <h2 class="detail-section__title">Habitación asignada</h2>
-              <p><strong>Habitación:</strong> {{ reservation.room?.nombre || 'N/A' }}</p>
-              <p><strong>Tipo:</strong> {{ reservation.room?.tipoHabitacion?.nombre || 'N/A' }}</p>
-              <p><strong>Capacidad:</strong> {{ reservation.room?.tipoHabitacion?.capacidad || 'N/A' }} huéspedes</p>
-            </section>
-
-            <section class="detail-section">
-              <h2 class="detail-section__title">Fechas y estado</h2>
-              <p><strong>Inicio:</strong> {{ reservation.fechaInicio }}</p>
-              <p><strong>Fin:</strong> {{ reservation.fechaFin }}</p>
-              <p><strong>Personas:</strong> {{ reservation.cantidadPersonas }}</p>
-              <p><strong>Estado:</strong> {{ reservation.estado }}</p>
-              <p><strong>Creada:</strong> {{ reservation.createdAt | date: 'medium' }}</p>
-            </section>
-
-            <section class="detail-section">
-              <h2 class="detail-section__title">Servicios adquiridos</h2>
-
-              <div *ngIf="paidItemsError" class="alert alert--danger">
-                <i class="ph ph-warning-circle"></i>
-                <span>{{ paidItemsError }}</span>
-                <button type="button" class="alert__close" (click)="paidItemsError = ''">&times;</button>
-              </div>
-
-              <div class="items-table-wrapper" *ngIf="paidItems.length > 0">
-                <table class="items-table">
-                  <thead>
-                    <tr>
-                      <th>Servicio</th>
-                      <th>Cant.</th>
-                      <th>P. Unit.</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of paidItems">
-                      <td>{{ item.hotelService?.nombre || 'N/A' }}</td>
-                      <td>{{ item.cantidad }}</td>
-                      <td>{{ item.precioUnitario | currency:'COP':'symbol':'1.0-0' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <p *ngIf="paidItems.length === 0" class="items-empty">No hay servicios pagados.</p>
-            </section>
-          </div>
-
-          <aside class="detail-aside">
-            <div class="detail-aside__panel">
-              <h3 class="detail-aside__panel-title">Estado de la reserva</h3>
-
-              <div class="detail-aside__status-badge">
-                <i class="ph ph-calendar-check"></i>
-                <span>{{ reservation.estado }}</span>
-              </div>
-
-              <div *ngIf="actionError" class="alert alert--danger">
-                <i class="ph ph-warning-circle"></i>
-                <span>{{ actionError }}</span>
-                <button type="button" class="alert__close" (click)="actionError = ''">&times;</button>
-              </div>
-
-              <div class="form-actions" *ngIf="reservation.estado === 'PENDING'">
-                <button
-                  type="button"
-                  class="btn btn--primary"
-                  [disabled]="actionLoading"
-                  (click)="activar()"
-                >
-                  {{ actionLoading ? 'Procesando...' : 'Activar' }}
-                </button>
-                <button
-                  type="button"
-                  class="btn btn--ghost"
-                  [disabled]="actionLoading"
-                  (click)="cancelar()"
-                >
-                  Cancelar reserva
-                </button>
-              </div>
-
-              <div class="form-actions" *ngIf="reservation.estado === 'ACTIVE'">
-                <button
-                  type="button"
-                  class="btn btn--ghost"
-                  [disabled]="actionLoading || !canInactivar"
-                  (click)="inactivar()"
-                >
-                  {{ actionLoading ? 'Procesando...' : 'Inactivar' }}
-                </button>
-                <p *ngIf="!canInactivar" class="state-warning">
-                  <i class="ph ph-warning"></i> Paga la cuenta antes de inactivar
-                </p>
-              </div>
-            </div>
-
-            <div class="detail-aside__panel">
-              <div class="detail-aside__panel-header">
-                <h3 class="detail-aside__panel-title">Servicios adicionales</h3>
-                <button
-                  type="button"
-                  class="btn btn--primary"
-                  [disabled]="!canEditServices"
-                  (click)="openModal()"
-                >
-                  <i class="ph ph-plus"></i> Agregar servicio
-                </button>
-              </div>
-
-              <div *ngIf="itemsError" class="alert alert--danger">
-                <i class="ph ph-warning-circle"></i>
-                <span>{{ itemsError }}</span>
-                <button type="button" class="alert__close" (click)="itemsError = ''">&times;</button>
-              </div>
-
-              <div class="items-table-wrapper" *ngIf="items.length > 0">
-                <table class="items-table">
-                  <thead>
-                    <tr>
-                      <th>Servicio</th>
-                      <th>Cant.</th>
-                      <th>P. Unit.</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of items">
-                      <td>{{ item.hotelService?.nombre || 'N/A' }}</td>
-                      <td>
-                        <div class="quantity-ctrl">
-                          <button type="button" (click)="updateCantidad(item, -1)" [disabled]="item.cantidad <= 1 || !canEditServices">−</button>
-                          <span>{{ item.cantidad }}</span>
-                          <button type="button" (click)="updateCantidad(item, 1)" [disabled]="!canEditServices">+</button>
-                        </div>
-                      </td>
-                      <td>{{ item.precioUnitario | currency:'COP':'symbol':'1.0-0' }}</td>
-                      <td>
-                        <button type="button" class="icon-action" title="Eliminar" (click)="removeItem(item.id)" [disabled]="!canEditServices">
-                          <i class="ph ph-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr class="items-table__total">
-                      <td colspan="2"><strong>Total</strong></td>
-                      <td><strong>{{ totalSubtotal | currency:'COP':'symbol':'1.0-0' }}</strong></td>
-                      <td></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              <p *ngIf="items.length === 0" class="items-empty">No hay servicios adicionales agregados.</p>
-            </div>
-
-            <div class="detail-aside__panel">
-              <h3 class="detail-aside__panel-title">Cuenta</h3>
-
-              <div class="detail-aside__status-badge" *ngIf="account; else sinCuenta">
-                <i class="ph ph-receipt"></i>
-                <span class="cuenta-estado" [class.cuenta-estado--closed]="account.estado === 'CLOSED'">
-                  {{ account.estado }}
-                </span>
-              </div>
-
-              <ng-template #sinCuenta>
-                <p class="items-empty">Sin cuenta generada aún.</p>
-              </ng-template>
-
-              <div *ngIf="payError" class="alert alert--danger">
-                <i class="ph ph-warning-circle"></i>
-                <span>{{ payError }}</span>
-                <button type="button" class="alert__close" (click)="payError = ''">&times;</button>
-              </div>
-
-              <div class="form-actions" *ngIf="account">
-                <button
-                  type="button"
-                  class="btn btn--primary"
-                  [disabled]="account.estado !== 'OPEN' || payLoading"
-                  (click)="pay()"
-                >
-                  {{ payLoading ? 'Procesando...' : 'Pagar' }}
-                </button>
-              </div>
-            </div>
-
-            <div class="detail-aside__panel">
-              <div class="form-actions">
-                <a routerLink="/reservations" class="btn btn--ghost">Volver a reservas</a>
-              </div>
-            </div>
-          </aside>
+        <div class="detail-tabs">
+          <button
+            type="button"
+            class="detail-tab"
+            [class.detail-tab--active]="activeTab === 'info'"
+            (click)="activeTab = 'info'"
+          >
+            <i class="ph ph-info"></i> Información
+          </button>
+          <button
+            type="button"
+            class="detail-tab"
+            [class.detail-tab--active]="activeTab === 'cuenta'"
+            (click)="activeTab = 'cuenta'"
+          >
+            <i class="ph ph-receipt"></i> Cuenta / Check-out
+          </button>
         </div>
+      </div>
+    </div>
+
+    <section class="res-detail-main">
+      <div class="container">
+
+        <!-- TAB: Información -->
+        <ng-container *ngIf="activeTab === 'info'">
+          <div class="detail-layout res-layout">
+
+            <!-- Left column -->
+            <div class="res-left">
+              <div class="res-card">
+                <h2 class="res-card__title"><i class="ph ph-user-circle"></i> Cliente</h2>
+                <div class="res-rows">
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-user"></i></span>
+                    <div>
+                      <p class="res-row__label">Nombre</p>
+                      <p class="res-row__value">{{ reservation.clientNombre || 'N/A' }}</p>
+                    </div>
+                  </div>
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-envelope"></i></span>
+                    <div>
+                      <p class="res-row__label">Email</p>
+                      <p class="res-row__value">{{ reservation.clientEmail || 'N/A' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="res-card">
+                <h2 class="res-card__title"><i class="ph ph-bed"></i> Habitación asignada</h2>
+                <div class="res-rows res-rows--grid">
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-door"></i></span>
+                    <div>
+                      <p class="res-row__label">Habitación</p>
+                      <p class="res-row__value">{{ reservation.roomNombre || 'N/A' }}</p>
+                    </div>
+                  </div>
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-bed"></i></span>
+                    <div>
+                      <p class="res-row__label">Tipo</p>
+                      <p class="res-row__value">{{ reservation.roomTypeName || 'N/A' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="res-card">
+                <h2 class="res-card__title"><i class="ph ph-calendar-dots"></i> Fechas y estancia</h2>
+                <div class="res-rows res-rows--grid">
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-calendar-blank"></i></span>
+                    <div>
+                      <p class="res-row__label">Inicio</p>
+                      <p class="res-row__value">{{ reservation.fechaInicio }}</p>
+                    </div>
+                  </div>
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-calendar-check"></i></span>
+                    <div>
+                      <p class="res-row__label">Fin</p>
+                      <p class="res-row__value">{{ reservation.fechaFin }}</p>
+                    </div>
+                  </div>
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-users"></i></span>
+                    <div>
+                      <p class="res-row__label">Personas</p>
+                      <p class="res-row__value">{{ reservation.cantidadPersonas }}</p>
+                    </div>
+                  </div>
+                  <div class="res-row">
+                    <span class="res-row__icon"><i class="ph ph-clock"></i></span>
+                    <div>
+                      <p class="res-row__label">Creada</p>
+                      <p class="res-row__value">{{ reservation.createdAt | date: 'mediumDate' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="res-card">
+                <h2 class="res-card__title"><i class="ph ph-check-circle"></i> Servicios pagados</h2>
+
+                <div *ngIf="paidItemsError" class="alert alert--danger">
+                  <i class="ph ph-warning-circle"></i>
+                  <span>{{ paidItemsError }}</span>
+                  <button type="button" class="alert__close" (click)="paidItemsError = ''">&times;</button>
+                </div>
+
+                <div class="items-table-wrapper" *ngIf="paidItems.length > 0">
+                  <table class="items-table">
+                    <thead>
+                      <tr>
+                        <th>Servicio</th>
+                        <th>Cant.</th>
+                        <th>P. Unit.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of paidItems">
+                        <td>{{ item.hotelServiceNombre || 'N/A' }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ item.precioUnitario | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p *ngIf="paidItems.length === 0" class="items-empty">No hay servicios pagados.</p>
+              </div>
+            </div>
+
+            <!-- Right aside -->
+            <aside class="detail-aside">
+              <div class="detail-aside__panel res-status-panel">
+                <h3 class="detail-aside__panel-title">Estado de la reserva</h3>
+
+                <div class="res-status-chip res-status-chip--block" [ngClass]="'res-status-chip--' + reservation.estado.toLowerCase()">
+                  <i class="ph ph-calendar-check"></i>
+                  <span>{{ reservation.estado }}</span>
+                </div>
+
+                <div *ngIf="actionError" class="alert alert--danger">
+                  <i class="ph ph-warning-circle"></i>
+                  <span>{{ actionError }}</span>
+                  <button type="button" class="alert__close" (click)="actionError = ''">&times;</button>
+                </div>
+
+                <div class="form-actions form-actions--centered" *ngIf="reservation.estado === 'PENDING'">
+                  <button type="button" class="btn btn--primary" [disabled]="actionLoading" (click)="activar()">
+                    {{ actionLoading ? 'Procesando...' : 'Confirmar reserva' }}
+                  </button>
+                  <button type="button" class="btn btn--ghost" [disabled]="actionLoading" (click)="cancelar()">
+                    Cancelar reserva
+                  </button>
+                </div>
+
+                <div class="form-actions form-actions--centered" *ngIf="reservation.estado === 'CONFIRMED'">
+                  <button type="button" class="btn btn--primary" [disabled]="actionLoading || !canInactivar" (click)="inactivar()">
+                    {{ actionLoading ? 'Procesando...' : 'Check-out' }}
+                  </button>
+                  <p *ngIf="!canInactivar" class="state-warning">
+                    <i class="ph ph-warning"></i> Paga la cuenta antes del check-out
+                  </p>
+                </div>
+
+                <div class="res-status-panel__divider"></div>
+
+                <div class="form-actions form-actions--centered">
+                  <button type="button" class="btn btn--primary" (click)="activeTab = 'cuenta'">
+                    <i class="ph ph-receipt"></i> Ver cuenta
+                  </button>
+                  <a routerLink="/reservations" class="btn btn--ghost">Volver a reservas</a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </ng-container>
+
+        <!-- TAB: Cuenta / Check-out -->
+        <ng-container *ngIf="activeTab === 'cuenta'">
+          <div class="detail-layout res-layout">
+
+            <!-- Left column -->
+            <div class="res-left">
+              <div class="res-card">
+                <h2 class="res-card__title"><i class="ph ph-list-plus"></i> Servicios adicionales</h2>
+
+                <div *ngIf="itemsError" class="alert alert--danger">
+                  <i class="ph ph-warning-circle"></i>
+                  <span>{{ itemsError }}</span>
+                  <button type="button" class="alert__close" (click)="itemsError = ''">&times;</button>
+                </div>
+
+                <div class="items-table-wrapper" *ngIf="items.length > 0">
+                  <table class="items-table">
+                    <thead>
+                      <tr>
+                        <th>Servicio</th>
+                        <th>Cant.</th>
+                        <th>P. Unit.</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of items">
+                        <td>{{ item.hotelServiceNombre || 'N/A' }}</td>
+                        <td>
+                          <div class="quantity-ctrl">
+                            <button type="button" (click)="updateCantidad(item, -1)" [disabled]="item.cantidad <= 1 || !canEditServices">−</button>
+                            <span>{{ item.cantidad }}</span>
+                            <button type="button" (click)="updateCantidad(item, 1)" [disabled]="!canEditServices">+</button>
+                          </div>
+                        </td>
+                        <td>{{ item.precioUnitario | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+                        <td>
+                          <button type="button" class="icon-action" title="Eliminar" (click)="removeItem(item.id)" [disabled]="!canEditServices">
+                            <i class="ph ph-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr class="items-table__total">
+                        <td colspan="2"><strong>Total servicios</strong></td>
+                        <td><strong>{{ totalSubtotal | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <p *ngIf="items.length === 0" class="items-empty">No hay servicios adicionales agregados.</p>
+              </div>
+            </div>
+
+            <!-- Right aside -->
+            <aside class="detail-aside">
+              <div class="detail-aside__panel res-status-panel">
+                <h3 class="detail-aside__panel-title">Estado de la cuenta</h3>
+
+                <div class="res-status-chip res-status-chip--block" *ngIf="account; else sinCuenta"
+                     [ngClass]="account.estado === 'CLOSED' ? 'res-status-chip--closed' : 'res-status-chip--open'">
+                  <i class="ph ph-receipt"></i>
+                  <span>{{ account.estado }}</span>
+                </div>
+
+                <ng-template #sinCuenta>
+                  <p class="items-empty">Sin cuenta generada aún.</p>
+                </ng-template>
+
+                <div *ngIf="payError" class="alert alert--danger">
+                  <i class="ph ph-warning-circle"></i>
+                  <span>{{ payError }}</span>
+                  <button type="button" class="alert__close" (click)="payError = ''">&times;</button>
+                </div>
+
+                <div class="form-actions form-actions--centered" *ngIf="account">
+                  <button
+                    type="button"
+                    class="btn btn--primary"
+                    [disabled]="account.estado !== 'OPEN' || payLoading"
+                    (click)="pay()"
+                  >
+                    {{ payLoading ? 'Procesando...' : 'Pagar cuenta' }}
+                  </button>
+                </div>
+
+                <div class="res-status-panel__divider"></div>
+
+                <div class="form-actions form-actions--centered">
+                  <button type="button" class="btn btn--primary" [disabled]="!canEditServices" (click)="openModal()">
+                    <i class="ph ph-plus"></i> Agregar servicio
+                  </button>
+                  <button type="button" class="btn btn--ghost" (click)="activeTab = 'info'">
+                    Volver a información
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </ng-container>
+
       </div>
     </section>
   </main>
@@ -243,7 +328,7 @@
             <div class="modal-service-card__body">
               <h3 class="modal-service-card__name">{{ service.nombre }}</h3>
               <p class="modal-service-card__desc" *ngIf="service.descripcion">{{ service.descripcion }}</p>
-              <p class="modal-service-card__price">{{ service.price | currency:'COP':'symbol':'1.0-0' }}</p>
+              <p class="modal-service-card__price">{{ service.price | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
             </div>
             <div class="modal-service-card__actions">
               <div class="quantity-ctrl">
@@ -251,12 +336,7 @@
                 <span>{{ serviceQuantities[service.id] || 1 }}</span>
                 <button type="button" (click)="incrementQty(service.id)">+</button>
               </div>
-              <button
-                type="button"
-                class="btn btn--primary"
-                (click)="addService(service)"
-                [disabled]="modalLoading"
-              >
+              <button type="button" class="btn btn--primary" (click)="addService(service)" [disabled]="modalLoading">
                 Agregar
               </button>
             </div>

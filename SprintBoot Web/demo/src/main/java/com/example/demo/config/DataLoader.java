@@ -69,43 +69,43 @@ public class DataLoader implements CommandLineRunner {
                 .nombre("Habitación Estándar")
                 .descripcion("Habitación básica confortable para una o dos personas")
                 .urlImagen("/images/Habitacion1.avif")
-                .precioNoche(80.0)
+                .precioNoche(180_000.0)
                 .capacidad(2)
                 .build());
-        
+
         tipos.add(RoomType.builder()
                 .codigo("DOBLE")
                 .nombre("Habitación Doble")
                 .descripcion("Amplia habitación con cama doble y amenidades")
                 .urlImagen("/images/Habitacion2.avif")
-                .precioNoche(120.0)
+                .precioNoche(280_000.0)
                 .capacidad(2)
                 .build());
-        
+
         tipos.add(RoomType.builder()
                 .codigo("SUITE")
                 .nombre("Suite Ejecutiva")
                 .descripcion("Suite de lujo con sala de estar y vistas al mar")
                 .urlImagen("/images/Habitacion3.avif")
-                .precioNoche(200.0)
+                .precioNoche(450_000.0)
                 .capacidad(3)
                 .build());
-        
+
         tipos.add(RoomType.builder()
                 .codigo("FAMILIAR")
                 .nombre("Habitación Familiar")
                 .descripcion("Espaciosa habitación para familias con múltiples camas")
                 .urlImagen("/images/habitacionFamiliar.jpg")
-                .precioNoche(180.0)
+                .precioNoche(380_000.0)
                 .capacidad(4)
                 .build());
-        
+
         tipos.add(RoomType.builder()
                 .codigo("PRESIDENCIAL")
                 .nombre("Suite Presidencial")
                 .descripcion("La mejor suite del hotel con lujos y servicios premium")
                 .urlImagen("/images/Hero.avif")
-                .precioNoche(350.0)
+                .precioNoche(750_000.0)
                 .capacidad(4)
                 .build());
         
@@ -233,16 +233,16 @@ public class DataLoader implements CommandLineRunner {
 
         // 5. Crear 10 servicios
         List<HotelService> servicios = new ArrayList<>();
-        servicios.add(HotelService.builder().nombre("Restaurante").descripcion("Restaurante gourmet con menú internacional").imageUrl("https://i.pinimg.com/736x/49/be/79/49be795193f4d6bd20b7a7d1dbc644f3.jpg").price(45.0).build());
-        servicios.add(HotelService.builder().nombre("Clases de surf").descripcion("Clases de surf para todos los niveles").imageUrl("https://mojosurf.es/wp-content/uploads/2024/12/Clases-de-surf-que-tener-en-cuenta.jpg").price(30.0).build());
-        servicios.add(HotelService.builder().nombre("Caminatas guiadas").descripcion("Excursiones y caminatas por la naturaleza").imageUrl("https://i.pinimg.com/736x/17/95/d9/1795d9b9e9734035ea365debecc48267.jpg").price(20.0).build());
-        servicios.add(HotelService.builder().nombre("Spa & Wellness").descripcion("Masajes, sauna y tratamientos de spa").imageUrl("https://i.pinimg.com/736x/91/9a/fc/919afcf0663bf853bf584e8672166dd0.jpg").price(80.0).build());
-        servicios.add(HotelService.builder().nombre("Alquiler de bicicletas").descripcion("Bicicletas para recorrer la zona").imageUrl("https://i.pinimg.com/736x/54/26/0d/54260d946194dd1ac4a500cda97194ad.jpg").price(15.0).build());
+        servicios.add(HotelService.builder().nombre("Restaurante").descripcion("Restaurante gourmet con menú internacional").imageUrl("https://i.pinimg.com/736x/49/be/79/49be795193f4d6bd20b7a7d1dbc644f3.jpg").price(85_000.0).build());
+        servicios.add(HotelService.builder().nombre("Clases de surf").descripcion("Clases de surf para todos los niveles").imageUrl("https://mojosurf.es/wp-content/uploads/2024/12/Clases-de-surf-que-tener-en-cuenta.jpg").price(120_000.0).build());
+        servicios.add(HotelService.builder().nombre("Caminatas guiadas").descripcion("Excursiones y caminatas por la naturaleza").imageUrl("https://i.pinimg.com/736x/17/95/d9/1795d9b9e9734035ea365debecc48267.jpg").price(65_000.0).build());
+        servicios.add(HotelService.builder().nombre("Spa & Wellness").descripcion("Masajes, sauna y tratamientos de spa").imageUrl("https://i.pinimg.com/736x/91/9a/fc/919afcf0663bf853bf584e8672166dd0.jpg").price(200_000.0).build());
+        servicios.add(HotelService.builder().nombre("Alquiler de bicicletas").descripcion("Bicicletas para recorrer la zona").imageUrl("https://i.pinimg.com/736x/54/26/0d/54260d946194dd1ac4a500cda97194ad.jpg").price(45_000.0).build());
         servicios.add(HotelService.builder().nombre("Piscina").descripcion("Piscina exterior con bar y solárium").imageUrl("https://i.pinimg.com/736x/04/35/9b/04359b99919a8debaaba2173b988927d.jpg").price(0.0).build());
-        servicios.add(HotelService.builder().nombre("Transporte al aeropuerto").descripcion("Servicio de traslado desde/hacia el aeropuerto").imageUrl("https://i.pinimg.com/736x/1d/1c/95/1d1c9548a787dbf89974fc4e957d5a13.jpg").price(25.0).build());
-        servicios.add(HotelService.builder().nombre("Bar en la playa").descripcion("Bar con cócteles y snacks en la playa").imageUrl("https://i.pinimg.com/736x/5c/c3/d4/5cc3d4c5021bdaf8ebdcbfdf33f4757f.jpg").price(10.0).build());
-        servicios.add(HotelService.builder().nombre("Club infantil").descripcion("Actividades y juegos para niños").imageUrl("https://i.pinimg.com/736x/02/46/41/024641a99c2aada4e851b2ebd80e3a13.jpg").price(5.0).build());
-        servicios.add(HotelService.builder().nombre("Eventos y bodas").descripcion("Organización de eventos y bodas en el hotel").imageUrl("https://i.pinimg.com/736x/4e/2a/90/4e2a90524e644f8f95784f3b805d06ae.jpg").price(200.0).build());
+        servicios.add(HotelService.builder().nombre("Transporte al aeropuerto").descripcion("Servicio de traslado desde/hacia el aeropuerto").imageUrl("https://i.pinimg.com/736x/1d/1c/95/1d1c9548a787dbf89974fc4e957d5a13.jpg").price(95_000.0).build());
+        servicios.add(HotelService.builder().nombre("Bar en la playa").descripcion("Bar con cócteles y snacks en la playa").imageUrl("https://i.pinimg.com/736x/5c/c3/d4/5cc3d4c5021bdaf8ebdcbfdf33f4757f.jpg").price(35_000.0).build());
+        servicios.add(HotelService.builder().nombre("Club infantil").descripcion("Actividades y juegos para niños").imageUrl("https://i.pinimg.com/736x/02/46/41/024641a99c2aada4e851b2ebd80e3a13.jpg").price(50_000.0).build());
+        servicios.add(HotelService.builder().nombre("Eventos y bodas").descripcion("Organización de eventos y bodas en el hotel").imageUrl("https://i.pinimg.com/736x/4e/2a/90/4e2a90524e644f8f95784f3b805d06ae.jpg").price(2_500_000.0).build());
         List<HotelService> serviciosGuardados = servicioRepository.saveAll(servicios);
 
         List<UserEntity> usuarios = new ArrayList<>();
@@ -361,9 +361,9 @@ public class DataLoader implements CommandLineRunner {
         // 8. Crear 20 cuentas (una por cada reserva)
         List<Account> cuentas = new ArrayList<>();
         for (int i = 0; i < reservasGuardadas.size(); i++) {
-            double saldo = reservasGuardadas.get(i).getEstado().equals("CANCELED") 
-                ? 0.0 
-                : (random.nextDouble() * 1000);
+            double saldo = reservasGuardadas.get(i).getEstado().equals("CANCELED")
+                ? 0.0
+                : (random.nextDouble() * 500_000.0);
             String estado = reservasGuardadas.get(i).getEstado().equals("CANCELED") 
                 ? "CLOSED" 
                 : "OPEN";

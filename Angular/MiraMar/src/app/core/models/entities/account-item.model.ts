@@ -9,5 +9,7 @@ export interface AccountItem {
   eliminado: boolean;
   accountId?: number;
   hotelServiceId?: number;
+  hotelServiceNombre?: string;
+  hotelServicePrecio?: number;
   hotelService?: HotelService;
 }

@@ -12,6 +12,7 @@ import { ReservationService } from '../../../../core/services/reservation.servic
 })
 export class ReservationDetailComponent implements OnInit {
   reservation?: Reservation;
+  activeTab: 'info' | 'cuenta' = 'info';
   actionLoading = false;
   actionError = '';
 
@@ -32,7 +33,7 @@ export class ReservationDetailComponent implements OnInit {
   modalError = '';
 
   get canEditServices(): boolean {
-    return (this.reservation?.estado === 'PENDING' || this.reservation?.estado === 'ACTIVE')
+    return (this.reservation?.estado === 'PENDING' || this.reservation?.estado === 'CONFIRMED' || this.reservation?.estado === 'ACTIVE')
       && this.account?.estado !== 'CLOSED';
   }
 
@@ -48,6 +49,12 @@ export class ReservationDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((qp) => {
+      if (qp.get('tab') === 'cuenta') {
+        this.activeTab = 'cuenta';
+      }
+    });
+
     this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
       if (!id) return;
@@ -88,7 +95,7 @@ export class ReservationDetailComponent implements OnInit {
     return this.items.reduce((sum, item) => sum + item.subtotal, 0);
   }
 
-  activar(): void { this.changeEstado('ACTIVE'); }
+  activar(): void { this.changeEstado('CONFIRMED'); }
   cancelar(): void { this.changeEstado('CANCELED'); }
   inactivar(): void { this.changeEstado('INACTIVE'); }
 

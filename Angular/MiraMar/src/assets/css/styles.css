@@ -227,10 +227,7 @@ nav {
     color 0.3s var(--ease);
 }
 
-.book-btn-nav:hover {
-  background-color: var(--secondary);
-  color: var(--white) !important;
-}
+/* book-btn-nav hover controlled by main styles.css */
 
 #navbar.scrolled .book-btn-nav {
   background-color: var(--secondary);
@@ -239,8 +236,7 @@ nav {
 }
 
 #navbar.scrolled .book-btn-nav:hover {
-  background-color: var(--white);
-  color: var(--secondary) !important;
+  filter: brightness(1.08);
 }
 
 /* Mobile Menu */

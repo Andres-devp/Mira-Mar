@@ -159,20 +159,25 @@ public class ReservationServiceImpl implements ReservationService {
         String estadoActual = reserva.getEstado();
 
         switch (nuevoEstado) {
-            case "ACTIVE":
+            case "CONFIRMED":
                 if (!"PENDING".equals(estadoActual)) {
-                    throw new IllegalStateException("Solo se puede activar una reserva en estado PENDING");
+                    throw new IllegalStateException("Solo se puede confirmar una reserva en estado PENDING");
+                }
+                break;
+            case "ACTIVE":
+                if (!"PENDING".equals(estadoActual) && !"CONFIRMED".equals(estadoActual)) {
+                    throw new IllegalStateException("Solo se puede activar una reserva en estado PENDING o CONFIRMED");
                 }
                 break;
             case "CANCELED":
-                if (!"PENDING".equals(estadoActual)) {
-                    throw new IllegalStateException("Solo se puede cancelar una reserva en estado PENDING");
+                if (!"PENDING".equals(estadoActual) && !"CONFIRMED".equals(estadoActual)) {
+                    throw new IllegalStateException("Solo se puede cancelar una reserva en estado PENDING o CONFIRMED");
                 }
                 reserva.setCanceledAt(LocalDateTime.now());
                 break;
             case "INACTIVE":
-                if (!"ACTIVE".equals(estadoActual)) {
-                    throw new IllegalStateException("Solo se puede inactivar una reserva en estado ACTIVE");
+                if (!"ACTIVE".equals(estadoActual) && !"CONFIRMED".equals(estadoActual)) {
+                    throw new IllegalStateException("Solo se puede inactivar una reserva en estado ACTIVE o CONFIRMED");
                 }
                 accountRepository.findByReservationId(id).ifPresent(cuenta -> {
                     if ("OPEN".equals(cuenta.getEstado())) {
@@ -214,8 +219,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void validateEdicionPermitida(Reservation reserva) {
         String estado = reserva.getEstado();
-        if (!"PENDING".equals(estado) && !"ACTIVE".equals(estado)) {
-            throw new IllegalStateException("Solo se pueden modificar servicios cuando la reserva está en estado PENDING o ACTIVE");
+        if (!"PENDING".equals(estado) && !"ACTIVE".equals(estado) && !"CONFIRMED".equals(estado)) {
+            throw new IllegalStateException("Solo se pueden modificar servicios cuando la reserva está en estado PENDING, CONFIRMED o ACTIVE");
         }
 
         Account cuenta = accountRepository.findByReservationId(reserva.getId()).orElse(null);

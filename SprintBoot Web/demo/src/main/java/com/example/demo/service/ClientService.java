@@ -12,5 +12,9 @@ public interface ClientService {
 
     Client saveCliente(Client cliente);
 
+    Client updateCliente(Long id, Client datos);
+
     void deleteCliente(Long id);
+
+    void eliminarCuenta(Long id);
 }

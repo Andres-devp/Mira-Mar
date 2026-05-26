@@ -68,7 +68,7 @@
           <td>{{ reserva.estado }}</td>
           <td>
             <div class="icon-actions">
-              <a [routerLink]="['/reservations', reserva.id]" class="icon-action" title="Ver detalle">
+              <a [routerLink]="['/reservations', reserva.id]" [queryParamsHandling]="'merge'" class="icon-action" title="Ver detalle">
                 <i class="ph ph-eye"></i>
               </a>
             </div>

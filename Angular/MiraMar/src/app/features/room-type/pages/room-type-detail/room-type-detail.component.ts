@@ -54,7 +54,7 @@ export class RoomTypeDetailComponent implements OnInit {
   }
 
   formatPrice(value: number): string {
-    return `$${value.toFixed(1)}`;
+    return `$${Math.round(value).toLocaleString('es-CO')}`;
   }
 
   goToReservation(): void {

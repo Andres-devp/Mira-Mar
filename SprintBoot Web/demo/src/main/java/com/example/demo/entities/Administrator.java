@@ -21,4 +21,8 @@ public class Administrator {
 
     @Column(nullable = false, length = 255)
     private String contrasena;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean activo = true;
 }

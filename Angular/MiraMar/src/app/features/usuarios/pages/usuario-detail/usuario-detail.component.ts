@@ -76,7 +76,7 @@ export class UsuarioDetailComponent implements OnInit {
     this.editingReservation = reservation;
     this.editError = '';
     this.editForm.reset({
-      roomTypeId: reservation.room?.tipoHabitacion?.id ?? null,
+      roomTypeId: reservation.roomTypeId ?? null,
       fechaInicio: reservation.fechaInicio,
       fechaFin: reservation.fechaFin,
       cantidadPersonas: reservation.cantidadPersonas
@@ -122,12 +122,28 @@ export class UsuarioDetailComponent implements OnInit {
     });
   }
 
+  get activeReservationsCount(): number {
+    return this.reservations.filter(r => r.estado === 'CONFIRMED' || r.estado === 'ACTIVE' || r.estado === 'PENDING').length;
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => this.router.navigate(['/']));
+  }
+
   deleteAccount(): void {
     if (!this.usuario) return;
     const confirmed = confirm('¿Seguro que deseas eliminar esta cuenta? Esta acción no se puede deshacer.');
     if (confirmed) {
+      const deletingSelf = this.usuario.id === this.authService.getUserId();
       this.userService.delete(this.usuario.id).subscribe({
-        next: () => { this.router.navigate(['/usuarios']); },
+        next: () => {
+          if (deletingSelf) {
+            this.authService.clearSession();
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/usuarios']);
+          }
+        },
         error: (err) => {
           alert(err.error?.error || 'Error al eliminar la cuenta. Puede que tenga reservas asociadas.');
         }

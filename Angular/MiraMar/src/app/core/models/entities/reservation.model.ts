@@ -13,9 +13,11 @@ export interface Reservation {
   room?: Room;
   roomTypeName?: string;
   clientId?: number;
-  roomId?: number;
   clientNombre?: string;
+  clientEmail?: string;
+  roomId?: number;
   roomNombre?: string;
+  roomTypeId?: number;
 }
 
 export interface ReservationCreateRequest {

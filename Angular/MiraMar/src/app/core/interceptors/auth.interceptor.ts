@@ -4,11 +4,16 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private router: Router) {}
+
   intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler,
@@ -22,15 +27,18 @@ export class AuthInterceptor implements HttpInterceptor {
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
-      });
-    } else if (!this.isAuthEndpoint(req.url)) {
-      clonedReq = req.clone({
-        withCredentials: true,
       });
     }
 
-    return next.handle(clonedReq);
+    return next.handle(clonedReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !this.isAuthEndpoint(req.url)) {
+          localStorage.removeItem('miramar_token');
+          this.router.navigate(['/login']);
+        }
+        return throwError(() => error);
+      }),
+    );
   }
 
   private getToken(): string | null {

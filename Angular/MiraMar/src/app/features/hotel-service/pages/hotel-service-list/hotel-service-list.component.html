@@ -27,22 +27,19 @@
                         [alt]="servicio.nombre"
                         (error)="onImageError($event)"
                     />
-                    <div class="service-icon" aria-hidden="true">
-                        <i class="ph ph-sparkle"></i>
-                    </div>
                 </div>
 
                 <div class="card__body">
                     <div class="service-titleRow">
                         <h2 class="card__title">{{ servicio.nombre }}</h2>
                         <div class="service-price" *ngIf="servicio.price !== null && servicio.price !== undefined">
-                            {{ servicio.price | currency: 'USD' : 'symbol' : '1.0-0' }}
+                            {{ servicio.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
                         </div>
                     </div>
                     <p class="card__subtitle">{{ servicio.descripcion }}</p>
 
                     <div class="card__meta">
-                        <span><i class="ph ph-clock"></i> <span>Todo el dia</span></span>
+                        <span><i class="ph ph-clock"></i> Todo el día</span>
                     </div>
 
                     <div class="card__actions">

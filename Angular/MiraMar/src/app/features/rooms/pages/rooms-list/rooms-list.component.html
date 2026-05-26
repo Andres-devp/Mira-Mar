@@ -42,10 +42,10 @@
         <label for="precioMax">Precio máximo / noche</label>
         <select id="precioMax" name="precioMax" [(ngModel)]="precioMax">
           <option value="">Todos</option>
-          <option [ngValue]="100">Hasta $100</option>
-          <option [ngValue]="200">Hasta $200</option>
-          <option [ngValue]="300">Hasta $300</option>
-          <option [ngValue]="500">Hasta $500</option>
+          <option [ngValue]="200000">Hasta $200.000</option>
+          <option [ngValue]="400000">Hasta $400.000</option>
+          <option [ngValue]="600000">Hasta $600.000</option>
+          <option [ngValue]="800000">Hasta $800.000</option>
         </select>
       </div>
       <div class="rooms-filter__actions">
@@ -73,7 +73,7 @@
             <div>
               <h2 class="card__title">{{ tipo.nombre }}</h2>
               <div class="room-card__priceLine">
-                <span>${{ tipo.precioNoche }}</span>
+                <span>{{ tipo.precioNoche | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
                 <small>/noche</small>
               </div>
             </div>
@@ -81,14 +81,8 @@
           <p class="card__subtitle">{{ tipo.descripcion }}</p>
 
           <div class="card__meta">
-            <span>
-              <i class="ph ph-star"></i>
-              <span>{{ tipo.codigo }}</span>
-            </span>
-            <span>
-              <i class="ph ph-users"></i>
-              <span>{{ tipo.capacidad }} huéspedes</span>
-            </span>
+            <span><i class="ph ph-star"></i> {{ tipo.codigo }}</span>
+            <span><i class="ph ph-users"></i> {{ tipo.capacidad }} huéspedes</span>
           </div>
 
           <div class="card__actions">

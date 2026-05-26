@@ -29,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthenticatedUser autenticar(String username, String password) {
         Administrator administrador = administratorRepository.findByUsuario(username)
                 .filter(a -> a.getContrasena().equals(password))
+                .filter(a -> Boolean.TRUE.equals(a.getActivo()))
                 .orElse(null);
         if (administrador != null) {
             return new AuthenticatedUser(administrador.getId(), "ADMIN");
@@ -38,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
             .or(() -> operatorRepository.findByEmail(username))
             .or(() -> operatorRepository.findByCedula(username))
             .filter(o -> o.getContrasena().equals(password))
+            .filter(o -> Boolean.TRUE.equals(o.getActivo()))
             .orElse(null);
         if (operador != null) {
             return new AuthenticatedUser(operador.getId(), "OPERATOR");
@@ -45,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
 
         Client cliente = clienteRepository.findByUsuario(username)
                 .filter(c -> c.getContrasena().equals(password))
+                .filter(c -> Boolean.TRUE.equals(c.getActivo()))
                 .orElse(null);
         if (cliente != null) {
             return new AuthenticatedUser(cliente.getId(), "CLIENT");
@@ -86,6 +89,7 @@ public class AuthServiceImpl implements AuthService {
         nuevo.setEmail(email);
         nuevo.setContrasena(contrasena);
         nuevo.setTelefono("");
+        nuevo.setActivo(true);
         return clienteRepository.save(nuevo);
     }
 }

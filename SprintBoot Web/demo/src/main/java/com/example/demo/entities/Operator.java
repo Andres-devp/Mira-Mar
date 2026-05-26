@@ -40,4 +40,8 @@ public class Operator {
 
     @Column(length = 255)
     private String fotoPerfil;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean activo = true;
 }
