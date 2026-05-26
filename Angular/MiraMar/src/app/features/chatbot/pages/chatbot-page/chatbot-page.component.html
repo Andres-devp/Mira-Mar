@@ -1,50 +1,90 @@
-<div class="chatbot-container">
-  <div class="chatbot-header">
-    <h1>Chat Inteligente - Mira Mar</h1>
-    <p>Haz tus preguntas sobre nuestro hotel</p>
-  </div>
+<div class="chatbot-page">
+  <section class="chatbot-shell chat-focus">
+    <div class="container shell-grid">
+      <div class="chat-card chat-card--focus">
+        <div class="chat-card-header">
+          <div class="chat-title">
+            <span class="status-dot"></span>
+            <div>
+              <h1>Chat Mira Mar</h1>
+              <p>Concierge digital para reservas y servicios.</p>
+            </div>
+          </div>
+          <div class="chat-controls">
+            <label class="context-inline">
+              <i class="ph ph-funnel"></i>
+              <select [(ngModel)]="selectedContext" aria-label="Tema">
+                <option *ngFor="let ctx of contexts" [value]="ctx.value">
+                  {{ ctx.label }}
+                </option>
+              </select>
+            </label>
+            <button class="btn chat-ghost" type="button" (click)="clearChat()">
+              Nuevo chat
+            </button>
+          </div>
+        </div>
 
-  <div class="chatbot-context-selector">
-    <label>Selecciona un tema (opcional):</label>
-    <select [(ngModel)]="selectedContext" class="form-control">
-      <option *ngFor="let ctx of contexts" [value]="ctx.value">{{ ctx.label }}</option>
-    </select>
-  </div>
+        <div class="chat-stream" aria-live="polite">
+          <div
+            *ngFor="let msg of messages"
+            class="chat-message"
+            [ngClass]="{ 'from-user': msg.sender === 'user', 'from-bot': msg.sender === 'bot' }"
+          >
+            <div class="message-avatar" aria-hidden="true">
+              <span *ngIf="msg.sender === 'bot'">MM</span>
+              <span *ngIf="msg.sender === 'user'">TU</span>
+            </div>
+            <div class="message-bubble">
+              <ng-container *ngIf="msg.sender === 'bot'; else userMessage">
+                <div class="message-content" [innerHTML]="msg.html"></div>
+              </ng-container>
+              <ng-template #userMessage>
+                <p>{{ msg.text }}</p>
+              </ng-template>
+              <span class="timestamp">{{ msg.timestamp | date:'short' }}</span>
+            </div>
+          </div>
 
-  <div class="chatbot-messages" id="messagesContainer">
-    <div *ngFor="let msg of messages" [ngClass]="{ 'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot' }">
-      <div class="message-bubble">
-        <p>{{ msg.text }}</p>
-        <span class="timestamp">{{ msg.timestamp | date:'short' }}</span>
+          <div *ngIf="isLoading" class="chat-message from-bot loading">
+            <div class="message-avatar" aria-hidden="true">
+              <span>MM</span>
+            </div>
+            <div class="message-bubble">
+              <span class="typing-dots" aria-label="Escribiendo">
+                <span></span><span></span><span></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-composer">
+          <div class="composer-input">
+            <i class="ph ph-chat-teardrop-text"></i>
+            <input
+              type="text"
+              [(ngModel)]="userInput"
+              (keyup.enter)="sendMessage()"
+              placeholder="Escribe tu pregunta..."
+              [disabled]="isLoading"
+              aria-label="Escribe tu pregunta"
+            />
+          </div>
+          <div class="composer-actions">
+            <button
+              class="btn chat-primary"
+              type="button"
+              (click)="sendMessage()"
+              [disabled]="isLoading || !userInput.trim()"
+            >
+              Enviar
+            </button>
+            <button class="btn chat-outline" type="button" (click)="clearChat()">
+              Limpiar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div *ngIf="isLoading" class="bot-message">
-      <div class="message-bubble loading">
-        <p>Escribiendo...</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="chatbot-input-area">
-    <div class="input-group">
-      <input 
-        type="text" 
-        class="form-control" 
-        [(ngModel)]="userInput"
-        (keyup.enter)="sendMessage()"
-        placeholder="Escribe tu pregunta..."
-        [disabled]="isLoading"
-      />
-      <button 
-        class="btn btn-primary" 
-        (click)="sendMessage()"
-        [disabled]="isLoading || !userInput.trim()"
-      >
-        ENVIAR
-      </button>
-    </div>
-    <button class="btn btn-clear" (click)="clearChat()">
-      LIMPIAR CHAT
-    </button>
-  </div>
+  </section>
 </div>

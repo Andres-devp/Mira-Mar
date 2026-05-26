@@ -48,6 +48,7 @@ import { ReservationUserDetailComponent } from './features/reservations/pages/re
 // Usuarios
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
+import { OperadorFormComponent } from './features/usuarios/pages/operador-form/operador-form.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
 import { UsuarioDetailComponent } from './features/usuarios/pages/usuario-detail/usuario-detail.component';
 import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self-form/usuario-self-form.component';
@@ -90,6 +91,7 @@ import { TranslatorButtonComponent } from './shared/components/translator-button
     ReservationUserDetailComponent,
     UsuariosTableComponent,
     OperadoresTableComponent,
+    OperadorFormComponent,
     UsuarioFormComponent,
     UsuarioSelfFormComponent,
     UsuarioDetailComponent,

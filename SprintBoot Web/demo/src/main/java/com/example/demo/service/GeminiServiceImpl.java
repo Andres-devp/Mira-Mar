@@ -45,14 +45,14 @@ public class GeminiServiceImpl implements GeminiService {
             // Construir request para Groq (compatible con OpenAI)
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("model", model);
-            requestBody.put("max_tokens", 1024);
-            requestBody.put("temperature", 0.7);
+            requestBody.put("max_tokens", 320);
+            requestBody.put("temperature", 0.4);
             
             // Construir lista de mensajes
             List<Map<String, String>> messages = new ArrayList<>();
             Map<String, String> systemMessage = new HashMap<>();
             systemMessage.put("role", "system");
-            systemMessage.put("content", "Eres un asistente inteligente para un hotel boutique llamado Mira Mar. Debes ser amable, profesional y proporcionar información útil. Responde siempre en español.");
+            systemMessage.put("content", "Eres el concierge digital de un hotel boutique llamado Mira Mar. Responde en español, breve y directo. No uses Markdown ni asteriscos. Evita introducciones largas y da respuestas claras.");
             messages.add(systemMessage);
             
             Map<String, String> userMessage = new HashMap<>();
@@ -98,15 +98,27 @@ public class GeminiServiceImpl implements GeminiService {
 
     private String buildPrompt(String message, String context) {
         StringBuilder prompt = new StringBuilder();
+        String normalizedContext = context == null ? "" : context.trim();
+        String normalizedMessage = message == null ? "" : message.toLowerCase();
+        boolean looksLikeRooms = normalizedContext.isEmpty()
+            && (normalizedMessage.contains("habitacion") || normalizedMessage.contains("suite"));
+
+        prompt.append("Responde breve y directo. ");
+        prompt.append("Sin Markdown, sin asteriscos y sin emojis. ");
+        prompt.append("Usa texto plano. ");
+        prompt.append("Si incluyes lista, usa guion '-' al inicio de cada linea. ");
+        prompt.append("Maximo 4 o 5 items. ");
+        prompt.append("Evita saludos largos. ");
         
-        if ("rooms".equals(context)) {
-            prompt.append("El usuario pregunta sobre habitaciones. Proporciona información sobre tipos de habitaciones disponibles. ");
-        } else if ("prices".equals(context)) {
-            prompt.append("El usuario pregunta sobre precios. Proporciona información sobre tarifas y disponibilidad. ");
-        } else if ("services".equals(context)) {
-            prompt.append("El usuario pregunta sobre servicios del hotel. Menciona servicios como: Wi-Fi gratuito, piscina, spa, restaurante, gym. ");
-        } else if ("reservations".equals(context)) {
-            prompt.append("El usuario quiere hacer una reserva. Explica el proceso de reservación. ");
+        if ("rooms".equals(normalizedContext) || looksLikeRooms) {
+            prompt.append("El usuario pregunta sobre habitaciones. Responde con lista corta de opciones. ");
+            prompt.append("Formato por item: Nombre - detalle corto - precio por noche. ");
+        } else if ("prices".equals(normalizedContext)) {
+            prompt.append("El usuario pregunta sobre precios. Da un rango o ejemplos claros y pregunta por fechas si faltan. ");
+        } else if ("services".equals(normalizedContext)) {
+            prompt.append("El usuario pregunta sobre servicios del hotel. Da una lista corta de servicios clave. ");
+        } else if ("reservations".equals(normalizedContext)) {
+            prompt.append("El usuario quiere hacer una reserva. Explica el proceso en 2 o 3 pasos maximo. ");
         }
         
         prompt.append("\n\nPregunta del cliente: ").append(message);

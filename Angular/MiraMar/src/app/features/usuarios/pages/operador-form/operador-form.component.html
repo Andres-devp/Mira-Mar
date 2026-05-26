@@ -1,0 +1,60 @@
+<main class="form-page page-services">
+  <div class="container">
+    <div class="form-shell">
+      <h1 class="form-shell__title">{{ pageTitle }}</h1>
+
+      <form [formGroup]="operadorForm" (ngSubmit)="save()">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" formControlName="nombre" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="apellido">Apellido *</label>
+            <input type="text" id="apellido" formControlName="apellido" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="usuario">Usuario *</label>
+            <input type="text" id="usuario" formControlName="usuario" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" formControlName="email" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="contrasena">Contraseña {{ isNew ? '*' : '(dejar en blanco para no cambiar)' }}</label>
+            <input type="password" id="contrasena" formControlName="contrasena" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="cedula">Cédula *</label>
+            <input type="text" id="cedula" formControlName="cedula" />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" formControlName="telefono" />
+            <div class="form-error"></div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" [disabled]="operadorForm.invalid">
+            <span>{{ submitLabel }}</span>
+          </button>
+          <a routerLink="/operadores" class="btn btn--ghost">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

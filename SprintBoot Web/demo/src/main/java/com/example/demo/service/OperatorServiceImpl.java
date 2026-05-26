@@ -31,6 +31,14 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public Operator saveOperador(Operator operador) {
+        if (operador.getId() != null) {
+            String incoming = operador.getContrasena();
+            if (incoming == null || incoming.isBlank()) {
+                operadorRepository.findById(operador.getId()).ifPresent(existing ->
+                    operador.setContrasena(existing.getContrasena())
+                );
+            }
+        }
         return operadorRepository.save(operador);
     }
 

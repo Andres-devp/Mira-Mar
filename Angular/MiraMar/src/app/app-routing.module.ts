@@ -21,6 +21,7 @@ import { ReservationDetailComponent } from './features/reservations/pages/reserv
 import { ReservationUserDetailComponent } from './features/reservations/pages/reservation-user-detail/reservation-user-detail.component';
 import { UsuariosTableComponent } from './features/usuarios/pages/usuarios-table/usuarios-table.component';
 import { OperadoresTableComponent } from './features/usuarios/pages/operadores-table/operadores-table.component';
+import { OperadorFormComponent } from './features/usuarios/pages/operador-form/operador-form.component';
 import { UsuarioFormComponent } from './features/usuarios/pages/usuario-form/usuario-form.component';
 import { UsuarioDetailComponent } from './features/usuarios/pages/usuario-detail/usuario-detail.component';
 import { UsuarioSelfFormComponent } from './features/usuarios/pages/usuario-self-form/usuario-self-form.component';
@@ -71,7 +72,9 @@ const routes: Routes = [
   { path: 'usuarios/self/edit', component: UsuarioSelfFormComponent, canActivate: [AuthGuard] },  
   { path: 'usuarios/:id', component: UsuarioDetailComponent, canActivate: [AuthGuard] },
 
-  // --- Operadores ---
+  // --- Operadores — static BEFORE parameterized ---
+  { path: 'operadores/add', component: OperadorFormComponent, canActivate: [AdminGuard] },
+  { path: 'operadores/edit/:id', component: OperadorFormComponent, canActivate: [AdminGuard] },
   { path: 'operadores', component: OperadoresTableComponent, canActivate: [OperatorGuard] },
 
   // --- Chatbot ---
@@ -81,11 +84,13 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminDashboardComponent,
+    canActivate: [AdminGuard],
     data: { showNavbar: false, showFooter: false },
   },
   {
     path: 'operator',
     component: OperatorDashboardComponent,
+    canActivate: [OperatorGuard],
     data: { showNavbar: false, showFooter: false },
   },
 

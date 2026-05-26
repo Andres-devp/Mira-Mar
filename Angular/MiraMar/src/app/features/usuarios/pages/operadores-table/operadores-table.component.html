@@ -7,6 +7,7 @@
       </div>
       <div class="services-page__sectionActions">
         <a routerLink="/admin" class="btn btn--ghost">Volver</a>
+        <a *ngIf="isAdmin" routerLink="/operadores/add" class="btn btn--primary">Crear Operador</a>
       </div>
     </section>
 
@@ -20,6 +21,7 @@
           <th>Email</th>
           <th>Cédula</th>
           <th>Teléfono</th>
+          <th *ngIf="isAdmin">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +33,21 @@
           <td>{{ operador.email }}</td>
           <td>{{ operador.cedula }}</td>
           <td>{{ operador.telefono }}</td>
+          <td *ngIf="isAdmin">
+            <div class="icon-actions">
+              <a [routerLink]="['/operadores/edit', operador.id]" class="icon-action" title="Editar">
+                <i class="ph ph-pencil-simple"></i>
+              </a>
+              <button
+                type="button"
+                class="icon-action icon-action--danger"
+                title="Eliminar"
+                (click)="deleteOperador(operador.id)"
+              >
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
